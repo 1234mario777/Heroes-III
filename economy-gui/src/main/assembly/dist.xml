@@ -8,13 +8,6 @@
     </formats>
     <fileSets>
         <fileSet>
-            <directory>${project.build.directory}/classes</directory>
-            <includes>
-                <include>start.bat</include>
-            </includes>
-            <outputDirectory>/</outputDirectory>
-        </fileSet>
-        <fileSet>
             <directory>${env.JAVA_HOME}</directory>
             <outputDirectory>/java</outputDirectory>
             <filtered>true</filtered>
@@ -24,6 +17,11 @@
         <file>
             <source>${project.build.directory}/${project.artifactId}-${project.version}.jar</source>
             <outputDirectory>/</outputDirectory>
+        </file>
+        <file>
+            <source>${project.build.directory}/classes/start.bat</source>
+            <outputDirectory>/</outputDirectory>
+            <filtered>true</filtered>
         </file>
     </files>
     <dependencySets>
