@@ -23,4 +23,16 @@ class GameEngineTest {
         assertFalse(engine.canAttack(0,1));
     }
 
+    @Test
+    void shouldCorrectRecognizeIfHeroHasCreature()
+    {
+        //given
+        NecropolisFactory factory = new NecropolisFactory();
+        Creature creature = factory.create( false, 1, 1 );
+        GameEngine engine = new GameEngine(List.of( ),List.of( creature ));
+
+        //when && then
+        assertFalse( engine.isHeroOneCreature( creature ) );
+        assertTrue( engine.isHeroTwoCreature( creature ) );
+    }
 }
