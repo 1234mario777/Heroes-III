@@ -10,7 +10,7 @@ import java.util.Set;
 
 public class Creature implements PropertyChangeListener {
 
-    private final CreatureStatistic stats;
+    private final CreatureStatisticIf stats;
     private int currentHp;
     private boolean counterAttackedInThisTurn;
     private CalculateDamageStrategy calculateDamageStrategy;
@@ -18,10 +18,10 @@ public class Creature implements PropertyChangeListener {
 
     // Constructor for mockito. Don't use it! You have builder here.
     Creature(){
-        stats = new CreatureStatistic("name",1,1,1,1,Range.closed(2,2));
+        stats = CreatureStatistic.TEST;
     }
 
-    Creature(CreatureStatistic aStats){
+    Creature(CreatureStatisticIf aStats){
         stats = aStats;
         currentHp = stats.getMaxHp();
     }
@@ -80,7 +80,7 @@ public class Creature implements PropertyChangeListener {
     }
 
     public String getName(){
-        return stats.getName();
+        return stats.getTranslatedName();
     }
 
     public boolean canCounterAttack() {
@@ -123,7 +123,7 @@ public class Creature implements PropertyChangeListener {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(stats.getName());
+        sb.append(stats.getTranslatedName());
         sb.append(System.lineSeparator());
         sb.append(getCurrentHp());
         sb.append("/");
@@ -146,6 +146,54 @@ public class Creature implements PropertyChangeListener {
     }
 
     static class Builder {
+        private CreatureStatisticIf stats;
+        private CalculateDamageStrategy damageCalculator;
+        private Integer amount;
+
+        Builder statistic (CreatureStatisticIf aStats){
+            this.stats = aStats;
+            return this;
+        };
+        Builder amount(int amount){
+            this.amount=amount;
+            return this;
+        }
+        Builder damageCalculator (CalculateDamageStrategy aCalculateDamageStrategy){
+            this.damageCalculator = aCalculateDamageStrategy;
+            return this;
+        }
+
+        Creature build(){
+            Set<String> emptyFields = new HashSet<>();
+            if (stats == null){
+                emptyFields.add("stats");
+            }
+            if (!emptyFields.isEmpty()){
+                throw new IllegalStateException("These fileds: " + Arrays.toString(emptyFields.toArray()) + " cannot be empty");
+            }
+
+            Creature ret = createInstance(stats);
+            if(amount == null){
+                ret.amount=1;
+            }
+            else{
+                ret.amount = amount;
+            }
+            if (damageCalculator != null){
+                ret.calculateDamageStrategy = damageCalculator;
+            }
+            else{
+                ret.calculateDamageStrategy = new DefaultCalculateStrategy();
+            }
+            return ret;
+        }
+
+        Creature createInstance(CreatureStatisticIf aStats) {
+            return new Creature(aStats);
+        }
+    }
+
+    static class BuilderForTesting {
         private String name;
         private Integer attack;
         private Integer armor;
@@ -155,35 +203,35 @@ public class Creature implements PropertyChangeListener {
         private CalculateDamageStrategy damageCalculator;
         private Integer amount;
 
-        Builder name (String name){
+        BuilderForTesting name (String name){
             this.name = name;
             return this;
         }
-        Builder attack (int attack){
+        BuilderForTesting attack (int attack){
             this.attack = attack;
             return this;
         }
-        Builder armor (int armor){
+        BuilderForTesting armor (int armor){
             this.armor = armor;
             return this;
         }
-        Builder maxHp (int maxHp){
+        BuilderForTesting maxHp (int maxHp){
             this.maxHp = maxHp;
             return this;
         }
-        Builder moveRange (int moveRange){
+        BuilderForTesting moveRange (int moveRange){
             this.moveRange = moveRange;
             return this;
         }
-        Builder damage (Range<Integer> damage){
+        BuilderForTesting damage (Range<Integer> damage){
             this.damage = damage;
             return this;
         };
-        Builder amount(int amount){
+        BuilderForTesting amount(int amount){
             this.amount=amount;
             return this;
         }
-        Builder damageCalculator (CalculateDamageStrategy aCalculateDamageStrategy){
+        BuilderForTesting damageCalculator (CalculateDamageStrategy aCalculateDamageStrategy){
             this.damageCalculator = aCalculateDamageStrategy;
             return this;
         }
@@ -212,7 +260,7 @@ public class Creature implements PropertyChangeListener {
                 throw new IllegalStateException("These fileds: " + Arrays.toString(emptyFields.toArray()) + " cannot be empty");
             }
 
-            CreatureStatistic stats = new CreatureStatistic(name, attack, armor, maxHp, moveRange, damage);
+            CreatureStatisticIf stats = new CreatureStatisticForTesting(name, attack, armor, maxHp, moveRange, damage);
             Creature ret = createInstance(stats);
             if(amount == null){
                 ret.amount=1;
@@ -229,7 +277,7 @@ public class Creature implements PropertyChangeListener {
             return ret;
         }
 
-        Creature createInstance(CreatureStatistic aStats) {
+        Creature createInstance(CreatureStatisticIf aStats) {
             return new Creature(aStats);
         }
     }

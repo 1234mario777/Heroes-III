@@ -3,7 +3,6 @@ package pl.sdk.creatures;
 import com.google.common.collect.Range;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import pl.sdk.creatures.Creature;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -15,7 +14,7 @@ public class ApplyDamageTest {
 
     @BeforeEach
     void init(){
-        defender = new Creature.Builder()
+        defender = new Creature.BuilderForTesting()
                 .name("Name")
                 .attack(NOT_IMPORTANT)
                 .armor(NOT_IMPORTANT)
@@ -27,7 +26,7 @@ public class ApplyDamageTest {
     }
     @Test
     void shouldLostOneCreatureFromStackAndHasFullHp(){
-        Creature attacker = new Creature.Builder()
+        Creature attacker = new Creature.BuilderForTesting()
                 .name("Name")
                 .attack(NOT_IMPORTANT)
                 .armor(NOT_IMPORTANT)
@@ -44,7 +43,7 @@ public class ApplyDamageTest {
 
     @Test
     void shouldLostTwoCreatureFromStackAndHasFullHp(){
-        Creature attacker = new Creature.Builder()
+        Creature attacker = new Creature.BuilderForTesting()
                 .name("Name")
                 .attack(NOT_IMPORTANT)
                 .armor(NOT_IMPORTANT)
@@ -61,7 +60,7 @@ public class ApplyDamageTest {
 
     @Test
     void shouldLostOneCreatureFromStackAndHas1Hp(){
-        Creature attacker = new Creature.Builder()
+        Creature attacker = new Creature.BuilderForTesting()
                 .name("Name")
                 .attack(NOT_IMPORTANT)
                 .armor(NOT_IMPORTANT)
@@ -78,7 +77,7 @@ public class ApplyDamageTest {
 
     @Test
     void shouldLost99HpButWithoutCreatureFromStack(){
-        Creature attacker = new Creature.Builder()
+        Creature attacker = new Creature.BuilderForTesting()
                 .name("Name")
                 .attack(NOT_IMPORTANT)
                 .armor(NOT_IMPORTANT)
@@ -95,7 +94,7 @@ public class ApplyDamageTest {
 
     @Test
     void shouldLost198HpBecauseAttackTwiceShouldBe9StackAnd2Hp(){
-        Creature attacker = new Creature.Builder()
+        Creature attacker = new Creature.BuilderForTesting()
                 .name("Name")
                 .attack(NOT_IMPORTANT)
                 .armor(NOT_IMPORTANT)
