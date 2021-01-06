@@ -23,23 +23,27 @@ public class BattleMapController implements PropertyChangeListener {
     private Button passButton;
 
     private final GameEngine gameEngine;
+    List<Creature> heroOneCreatures;
+    List<Creature> heroTwoCreatures;
 
     public BattleMapController() {
-        List<Creature> notUpgradedCreatures = new ArrayList<>();
-        List<Creature> upgradedCreatures = new ArrayList<>();
+        heroOneCreatures = new ArrayList<>();
+        heroTwoCreatures = new ArrayList<>();
         NecropolisFactory factory = new NecropolisFactory();
         for (int i = 1; i <= 7; i++) {
-            notUpgradedCreatures.add(factory.create(false, i, 10));
+            heroOneCreatures.add(factory.create(false, i, 10));
         }
 
         for (int i = 1; i <= 7; i++) {
-            upgradedCreatures.add(factory.create(true, i, 10));
+            heroTwoCreatures.add(factory.create(true, i, 10));
         }
 
-        gameEngine = new GameEngine(notUpgradedCreatures, upgradedCreatures);
+        gameEngine = new GameEngine(heroOneCreatures, heroTwoCreatures);
     }
 
     public BattleMapController(List<Creature> aCreatures1, List<Creature> aCreatures2){
+        heroOneCreatures = aCreatures1;
+        heroTwoCreatures = aCreatures2;
         gameEngine = new GameEngine(aCreatures1, aCreatures2);
     }
 
@@ -64,7 +68,8 @@ public class BattleMapController implements PropertyChangeListener {
 
                 Creature c = gameEngine.get(x, y);
                 if (c != null) {
-                    rec.addCreature(c.getName(), c.getAmount());
+                    boolean shouldFlip = heroTwoCreatures.contains( c );
+                    rec.addCreature(c.getName(), c.getAmount(), shouldFlip);
 
                     if (c == gameEngine.getActiveCreature()) {
                         rec.setBackground(Color.GREEN);
