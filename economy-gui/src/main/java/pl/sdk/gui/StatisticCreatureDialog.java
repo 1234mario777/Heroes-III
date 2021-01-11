@@ -45,6 +45,7 @@ public class StatisticCreatureDialog
 	private void prepareTop(HBox aTopPane) {
 
 		Label creatureName = new Label(economyCreature.getName());
+		creatureName.getStyleClass().add("creature-name-text");
 		aTopPane.getChildren().add( creatureName );
 		aTopPane.setAlignment( Pos.CENTER );
 
@@ -53,6 +54,7 @@ public class StatisticCreatureDialog
 	private void prepareBottom(HBox aBottom)
 	{
 		Label description = new Label(economyCreature.getDescription());
+		description.getStyleClass().add("desc-text");
 		aBottom.getChildren().add( description );
 	}
 	private void prepareLeft(VBox aLeftPane)
