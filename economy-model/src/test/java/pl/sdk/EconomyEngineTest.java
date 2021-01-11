@@ -48,4 +48,25 @@ class EconomyEngineTest {
         assertEquals(900, h2.getGold());
         assertEquals(940, h1.getGold());
     }
+
+    @Test
+    void shouldCountTurnAndRoundCorrectly()
+    {
+        assertEquals( 1, economyEngine.getRoundNumber() );
+        assertEquals( 1, economyEngine.getTurnNumber() );
+        economyEngine.pass();
+        assertEquals( 1, economyEngine.getRoundNumber() );
+        assertEquals( 1, economyEngine.getTurnNumber() );
+        economyEngine.pass();
+        assertEquals( 2, economyEngine.getRoundNumber() );
+        assertEquals( 1, economyEngine.getTurnNumber() );
+        economyEngine.pass();
+        economyEngine.pass();
+        assertEquals( 3, economyEngine.getRoundNumber() );
+        assertEquals( 1, economyEngine.getTurnNumber() );
+        economyEngine.pass();
+        economyEngine.pass();
+        assertEquals( 1, economyEngine.getRoundNumber() );
+        assertEquals( 2, economyEngine.getTurnNumber() );
+    }
 }

@@ -15,6 +15,8 @@ import pl.sdk.hero.EconomyHero;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+import static pl.sdk.EconomyEngine.END_OF_TURN;
+
 public class EcoController implements PropertyChangeListener {
     @FXML
     HBox heroStateHBox;
@@ -41,16 +43,9 @@ public class EcoController implements PropertyChangeListener {
         economyEngine.addObserver(EconomyEngine.ACTIVE_HERO_CHANGED,this);
         economyEngine.addObserver(EconomyEngine.HERO_BOUGHT_CREATURE,this);
         economyEngine.addObserver(EconomyEngine.NEXT_ROUND,this);
+        economyEngine.addObserver( END_OF_TURN,this );
 
-        readyButton.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) ->
-        {
-            if (economyEngine.getRoundNumber() < 4){
-                economyEngine.pass();
-            }
-            else{
-                goToBattle();
-            }
-        });
+        readyButton.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> economyEngine.pass() );
     }
 
     private void goToBattle() {
@@ -89,6 +84,14 @@ public class EcoController implements PropertyChangeListener {
 
     @Override
     public void propertyChange(PropertyChangeEvent aPropertyChangeEvent) {
-        refreshGui();
+        if (aPropertyChangeEvent.getPropertyName().equals( END_OF_TURN ))
+        {
+            goToBattle();
+        }
+        else
+        {
+            refreshGui();
+
+        }
     }
 }

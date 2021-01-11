@@ -4,6 +4,7 @@ import pl.sdk.creatures.EconomyCreature;
 import pl.sdk.hero.CreatureShop;
 import pl.sdk.hero.EconomyHero;
 
+import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
@@ -11,18 +12,21 @@ public class EconomyEngine {
     public static final String HERO_BOUGHT_CREATURE = "HERO_BOUGHT_CREATURE";
     public static final String ACTIVE_HERO_CHANGED = "ACTIVE_HERO_CHANGED";
     public static final String NEXT_ROUND = "NEXT_ROUND";
+    public static final String END_OF_TURN = "END_OF_TURN";
     private final EconomyHero hero1;
     private final EconomyHero hero2;
     private EconomyHero activeHero;
     private final CreatureShop creatureShop = new CreatureShop();
     private int roundNumber;
     private final PropertyChangeSupport observerSupport;
+    private int turnNumber;
 
     public EconomyEngine(EconomyHero aHero1, EconomyHero aHero2) {
         hero1 = aHero1;
         hero2 = aHero2;
         activeHero = hero1;
         roundNumber = 1;
+        turnNumber = 1;
         observerSupport = new PropertyChangeSupport(this);
     }
 
@@ -43,15 +47,29 @@ public class EconomyEngine {
         else{
             activeHero = hero1;
             observerSupport.firePropertyChange(ACTIVE_HERO_CHANGED, hero2, activeHero);
-            endTurn();
+            nextRound();
         }
     }
 
-    private void endTurn() {
+    private void nextRound() {
         roundNumber += 1;
         hero1.addGold(2000*roundNumber);
         hero2.addGold(2000*roundNumber);
-        observerSupport.firePropertyChange(NEXT_ROUND, roundNumber - 1, roundNumber);
+        if(roundNumber == 4)
+        {
+            endTurn();
+        }
+        else
+        {
+            observerSupport.firePropertyChange(NEXT_ROUND, roundNumber - 1, roundNumber);
+        }
+    }
+
+    private void endTurn()
+    {
+        turnNumber += 1;
+        roundNumber = 1;
+        observerSupport.firePropertyChange( END_OF_TURN, turnNumber - 1, turnNumber );
     }
 
     public int getRoundNumber() {
@@ -70,5 +88,10 @@ public class EconomyEngine {
     public EconomyHero getPlayer2() {
         //TODO make copy
         return hero2;
+    }
+
+    int getTurnNumber()
+    {
+        return turnNumber;
     }
 }
