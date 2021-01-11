@@ -72,7 +72,7 @@ public class StatisticCreatureDialog
 		aRightPane.getChildren().add(new Label ("Damage: " + economyCreature.getDamage()));
 		aRightPane.getChildren().add(new Label ("Health: " + economyCreature.getMaxHp()));
 		aRightPane.getChildren().add(new Label ("Speed: " + economyCreature.getMoveRange()));
-		aRightPane.setPadding(new Insets(0, 80, 30, 0) );;
+		aRightPane.setPadding(new Insets(20, 80, 30, 0) );;
 	}
 
 	private Stage prepareWindow( Pane aTop, Pane aRight, Pane aLeft, Pane aBottom ) {
