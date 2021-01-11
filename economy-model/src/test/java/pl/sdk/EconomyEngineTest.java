@@ -69,4 +69,29 @@ class EconomyEngineTest {
         assertEquals( 1, economyEngine.getRoundNumber() );
         assertEquals( 2, economyEngine.getTurnNumber() );
     }
+
+    @Test
+    void shouldAddGoldAfterRoundEnd()
+    {
+        assertEquals( 1000, h1.getGold() );
+        assertEquals( 1000, h2.getGold() );
+
+        economyEngine.pass();
+        economyEngine.pass();
+
+        assertEquals( 5000, h1.getGold() );
+        assertEquals( 5000, h2.getGold() );
+
+        economyEngine.pass();
+        economyEngine.pass();
+
+        assertEquals( 11000, h1.getGold() );
+        assertEquals( 11000, h2.getGold() );
+
+        economyEngine.pass();
+        economyEngine.pass();
+
+        assertEquals( 11000, h1.getGold() );
+        assertEquals( 11000, h2.getGold() );
+    }
 }

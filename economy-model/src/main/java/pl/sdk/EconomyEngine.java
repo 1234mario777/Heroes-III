@@ -53,14 +53,14 @@ public class EconomyEngine {
 
     private void nextRound() {
         roundNumber += 1;
-        hero1.addGold(2000*roundNumber);
-        hero2.addGold(2000*roundNumber);
         if(roundNumber == 4)
         {
             endTurn();
         }
         else
         {
+            hero1.addGold(2000*roundNumber);
+            hero2.addGold(2000*roundNumber);
             observerSupport.firePropertyChange(NEXT_ROUND, roundNumber - 1, roundNumber);
         }
     }
