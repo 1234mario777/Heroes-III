@@ -13,6 +13,8 @@ import javafx.scene.text.Text;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+import static pl.sdk.GameEngine.AFTER_ATTACK;
+import static pl.sdk.GameEngine.AFTER_MOVE;
 
 class MapTile extends StackPane implements PropertyChangeListener
 {
@@ -61,6 +63,32 @@ class MapTile extends StackPane implements PropertyChangeListener
     @Override
     public void propertyChange( PropertyChangeEvent aPropertyChangeEvent )
     {
-
+        if(aPropertyChangeEvent.getPropertyName().equals( AFTER_MOVE ))
+        {
+            if(getState().equals( "Move Possible" ))
+            {
+                afterMove( );
+            }
+        }
+        else if(aPropertyChangeEvent.getPropertyName().equals( AFTER_ATTACK ))
+        {
+            if(getState().equals( "Attack Possible" ))
+            {
+                afterAttack( );
+            }
+        }
     }
+
+    private void afterAttack( )
+    {
+        changeState( new MapTileAfterAttackState( this ) );
+        handleState();
+    }
+
+    private void afterMove( )
+    {
+        changeState( new MapTileAfterMoveState( this ) );
+        handleState();
+    }
+
 }
