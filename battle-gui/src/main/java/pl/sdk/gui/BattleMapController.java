@@ -73,17 +73,20 @@ public class BattleMapController implements PropertyChangeListener {
                     rec.addCreature(c.getName(), c.getAmount(), shouldFlip);
 
                     if (c == gameEngine.getActiveCreature()) {
-                        rec.setBackground(Color.GREEN);
+                        rec.changeState( new MapTileActiveCreatureState( rec ) );
+                        rec.handleState();
                     } else if (gameEngine.canAttack(x, y)) {
                         final int x1 = x;
                         final int y1 = y;
-                        rec.setBackground(Color.RED);
+                        rec.changeState( new MapTileAttackPossibleState( rec ) );
+                        rec.handleState();
                         rec.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> gameEngine.attack(x1, y1));
                     }
                 } else if (gameEngine.canMove(x, y)) {
                     final int x1 = x;
                     final int y1 = y;
-                    rec.setBackground(Color.GREY);
+                    rec.changeState( new MapTileMovePossibleState( rec ) );
+                    rec.handleState();
                     rec.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> gameEngine.move(new Point(x1, y1)));
                 }
 
