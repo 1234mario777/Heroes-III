@@ -18,11 +18,27 @@ class MapTile extends StackPane implements PropertyChangeListener
 {
 
     private final Rectangle rec;
+    private MapTileState state;
 
     public MapTile() {
-        rec = new Rectangle(60, 60, Color.WHITE);
+        rec = new Rectangle(60, 60);
         rec.setStroke(Color.BLACK);
+        state = new MapTileDefaultState(this);
+        handleState();
         getChildren().add(rec);
+    }
+
+    void changeState(MapTileState aState)
+    {
+        state = aState;
+    }
+
+    String getState()
+    {
+        return state.currentState();
+    }
+    void handleState(){
+        state.updateBackground(rec);
     }
 
     void addCreature( String aName, int aAmount, boolean aShouldFlip ){
@@ -40,10 +56,6 @@ class MapTile extends StackPane implements PropertyChangeListener
         text.setFont(new Font(10.0));
         vbox.getChildren().add(text);
         getChildren().add(vbox);
-    }
-
-    void setBackground(Color aColor){
-        rec.setFill(aColor);
     }
 
     @Override
