@@ -10,8 +10,12 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
-class MapTile extends StackPane {
+
+class MapTile extends StackPane implements PropertyChangeListener
+{
 
     private final Rectangle rec;
 
@@ -40,5 +44,11 @@ class MapTile extends StackPane {
 
     void setBackground(Color aColor){
         rec.setFill(aColor);
+    }
+
+    @Override
+    public void propertyChange( PropertyChangeEvent aPropertyChangeEvent )
+    {
+
     }
 }

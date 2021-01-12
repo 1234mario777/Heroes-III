@@ -14,6 +14,9 @@ import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import static pl.sdk.GameEngine.AFTER_ATTACK;
+import static pl.sdk.GameEngine.AFTER_MOVE;
+
 public class BattleMapController implements PropertyChangeListener {
 
     @FXML
@@ -62,7 +65,8 @@ public class BattleMapController implements PropertyChangeListener {
             for (int y = 0; y < 15; y++) {
                 MapTile rec = new MapTile();
                 gridMap.add(rec, x, y);
-
+                gameEngine.addObserver( AFTER_MOVE, rec );
+                gameEngine.addObserver( AFTER_ATTACK, rec );
                 Creature c = gameEngine.get(x, y);
                 if (c != null) {
                     boolean shouldFlip = gameEngine.isHeroTwoCreature(c);
