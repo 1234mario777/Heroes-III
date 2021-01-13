@@ -12,13 +12,13 @@ import javafx.stage.Stage;
 
 class BuyCreatureDialog
 {
-	private CreatureButton creatureButton;
+	private String creatureName;
 	private Stage dialog;
 	private Slider slider;
 
-	public BuyCreatureDialog( CreatureButton aCreatureButton )
+	public BuyCreatureDialog( String aCreatureName )
 	{
-		creatureButton = aCreatureButton;
+		creatureName = aCreatureName;
 	}
 
 	void startDialog() {
@@ -54,9 +54,8 @@ class BuyCreatureDialog
 		Scene scene = new Scene(pane, 500,300);
 		scene.getStylesheets().add("fxml/main.css");
 		dialog.setScene(scene);
-		dialog.initOwner(creatureButton.getScene().getWindow());
 		dialog.initModality( Modality.APPLICATION_MODAL );
-		dialog.setTitle("Buying " + creatureButton.getCreatureName());
+		dialog.setTitle("Buying " + creatureName );
 
 		pane.setTop(aTop);
 		pane.setCenter(aCenter);
