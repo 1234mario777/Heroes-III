@@ -12,17 +12,14 @@ import javafx.stage.Stage;
 
 class BuyCreatureDialog
 {
-	private final int heroGold;
-	private final int creatureGold;
+	private final CreatureSlider creatureSlider;
 	private String creatureName;
 	private Stage dialog;
-	private Slider slider;
 
 	public BuyCreatureDialog( String aCreatureName, int aGold, int aGoldCost )
 	{
 		creatureName = aCreatureName;
-		heroGold = aGold;
-		creatureGold = aGoldCost;
+		creatureSlider = new CreatureSlider( aGold, aGoldCost );
 	}
 
 	void startDialog() {
@@ -30,7 +27,7 @@ class BuyCreatureDialog
 		HBox bottomPane = new HBox();
 		HBox topPane = new HBox();
 		Stage dialog = prepareWindow(centerPane, bottomPane, topPane);
-		slider = createSlider();
+		Slider slider = creatureSlider.createSlider();
 		prepareConfirmAndCancelButton(bottomPane, slider);
 		prepareTop(topPane, slider);
 		centerPane.getChildren().add(slider);
@@ -40,7 +37,7 @@ class BuyCreatureDialog
 
 	int getCreatureAmount()
 	{
-		return (int)slider.getValue();
+		return (int)creatureSlider.getCreatureAmount();
 	}
 
 	private void prepareTop(HBox aTopPane, Slider aSlider) {
@@ -85,16 +82,4 @@ class BuyCreatureDialog
 		aBottomPane.getChildren().add(cancelButton);
 	}
 
-	private Slider createSlider() {
-		Slider slider = new Slider();
-		slider.setMin(0);
-		slider.setMax(heroGold/creatureGold);
-		slider.setValue(0);
-		slider.setShowTickLabels(true);
-		slider.setShowTickMarks(true);
-		slider.setMajorTickUnit(10);
-		slider.setMinorTickCount(5);
-		slider.setBlockIncrement(10);
-		return slider;
-	}
 }
