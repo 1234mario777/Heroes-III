@@ -12,13 +12,17 @@ import javafx.stage.Stage;
 
 class BuyCreatureDialog
 {
+	private final int heroGold;
+	private final int creatureGold;
 	private String creatureName;
 	private Stage dialog;
 	private Slider slider;
 
-	public BuyCreatureDialog( String aCreatureName )
+	public BuyCreatureDialog( String aCreatureName, int aGold, int aGoldCost )
 	{
 		creatureName = aCreatureName;
+		heroGold = aGold;
+		creatureGold = aGoldCost;
 	}
 
 	void startDialog() {
