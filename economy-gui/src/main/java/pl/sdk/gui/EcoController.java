@@ -54,7 +54,7 @@ public class EcoController implements PropertyChangeListener {
 
     void refreshGui() {
         playerLabel.setText(economyEngine.getActiveHero().toString());
-        currentGoldLabel.setText(String.valueOf(economyEngine.getActiveHero().getGold()));
+        currentGoldLabel.setText(String.valueOf( getGold() ) );
         roundNumberLabel.setText(String.valueOf(economyEngine.getRoundNumber()));
         shopsBox.getChildren().clear();
         heroStateHBox.getChildren().clear();
@@ -76,6 +76,11 @@ public class EcoController implements PropertyChangeListener {
             creaturesBox.getChildren().add(tempHbox);
         });
         heroStateHBox.getChildren().add(creaturesBox);
+    }
+
+    public int getGold()
+    {
+        return economyEngine.getActiveHero().getGold();
     }
 
     void buy(EconomyCreature aCreature) {

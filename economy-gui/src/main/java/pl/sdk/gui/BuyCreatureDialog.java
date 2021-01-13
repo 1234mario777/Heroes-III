@@ -12,13 +12,17 @@ import javafx.stage.Stage;
 
 class BuyCreatureDialog
 {
+	private final int heroGold;
+	private final int creatureGold;
 	private String creatureName;
 	private Stage dialog;
 	private Slider slider;
 
-	public BuyCreatureDialog( String aCreatureName )
+	public BuyCreatureDialog( String aCreatureName, int aGold, int aGoldCost )
 	{
 		creatureName = aCreatureName;
+		heroGold = aGold;
+		creatureGold = aGoldCost;
 	}
 
 	void startDialog() {
@@ -84,7 +88,7 @@ class BuyCreatureDialog
 	private Slider createSlider() {
 		Slider slider = new Slider();
 		slider.setMin(0);
-		slider.setMax(100);
+		slider.setMax(heroGold/creatureGold);
 		slider.setValue(0);
 		slider.setShowTickLabels(true);
 		slider.setShowTickMarks(true);
