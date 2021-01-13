@@ -37,7 +37,7 @@ class BuyCreatureDialog
 
 	int getCreatureAmount()
 	{
-		return (int)creatureSlider.getCreatureAmount();
+		return creatureSlider.getCreatureAmount();
 	}
 
 	private void prepareTop(HBox aTopPane, Slider aSlider) {
