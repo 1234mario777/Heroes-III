@@ -5,10 +5,12 @@ public abstract class AbstractSpell {
 
     protected final int manaCost;
     protected final SpellStatistic.TargetType targetType;
+    protected final SpellStatistic.SpellElement element;
 
-    public AbstractSpell(int aManaCost, SpellStatistic.TargetType aTargetType) {
+    public AbstractSpell(int aManaCost, SpellStatistic.TargetType aTargetType, SpellStatistic.SpellElement aElement) {
         manaCost = aManaCost;
         targetType = aTargetType;
+        element = aElement;
     }
 
     public int getManaCost() {

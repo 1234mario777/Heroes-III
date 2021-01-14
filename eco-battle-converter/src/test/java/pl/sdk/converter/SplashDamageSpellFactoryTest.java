@@ -1,6 +1,7 @@
 package pl.sdk.converter;
 
 import org.junit.jupiter.api.Test;
+import pl.sdk.spells.EconomySpell;
 import pl.sdk.spells.SpellStatistic;
 import pl.sdk.spells.SplashDamageSpell;
 
@@ -10,7 +11,8 @@ class SplashDamageSpellFactoryTest {
 
     @Test
     void shouldConvertFireBallCorrectly(){
-        SplashDamageSpell fireBallSpell = (SplashDamageSpell) SplashDamageSpellFactory.create(SpellStatistic.FIRE_BALL,1);
+        EconomySpell toConvert = new EconomySpell(SpellStatistic.FIRE_BALL);
+        SplashDamageSpell fireBallSpell = (SplashDamageSpell) SplashDamageSpellFactory.create(toConvert, 1);
 
         assertEquals(3, fireBallSpell.getSplashRange());
         assertEquals(25, fireBallSpell.getDamage());

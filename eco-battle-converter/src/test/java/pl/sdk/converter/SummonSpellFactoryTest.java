@@ -1,6 +1,7 @@
 package pl.sdk.converter;
 
 import org.junit.jupiter.api.Test;
+import pl.sdk.spells.EconomySpell;
 import pl.sdk.spells.SpellStatistic;
 import pl.sdk.spells.SummonSpell;
 
@@ -10,7 +11,7 @@ class SummonSpellFactoryTest {
 
     @Test
     void shouldConvertSlowSpellsCorrectly(){
-        SpellStatistic toCovert = SpellStatistic.SUMMON_AIR_ELEMENTAL;
+        EconomySpell toCovert = new EconomySpell(SpellStatistic.SUMMON_AIR_ELEMENTAL);
 
         SummonSpell spell = (SummonSpell) SummonSpellFactory.create(toCovert, 1);
 
