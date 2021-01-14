@@ -9,4 +9,32 @@ public class EconomySpell {
         spellStats = aSpellStats;
         goldCost = spellStats.getLevel() * 300;
     }
+
+    public String getName() {
+        return spellStats.getName();
+    }
+
+    public String getDescription() {
+        return spellStats.getDescription();
+    }
+
+    public int getLevel() {
+        return spellStats.getLevel();
+    }
+
+    public SpellStatistic.SpellElement getElement() {
+        return spellStats.getElement();
+    }
+
+    public SpellStatistic.SpellType getSpellType() {
+        return spellStats.getSpellType();
+    }
+
+    public SpellStatistic.SplashType getSplashType() {
+        return spellStats.getSplashType();
+    }
+
+    public int getManaCost() {
+        return spellStats.getManaCost();
+    }
 }

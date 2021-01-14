@@ -12,15 +12,15 @@ public enum SpellStatistic {
     MAGIC_ARROW("Magic Arrow", "Causes a bolt of magical energy to strike the selected unit.", 1 , SpellElement.ALL, SpellType.DAMAGE, SplashType.TARGET_ENEMY,5),
     ;
 
-    private enum SpellElement {
+    public enum SpellElement {
         AIR, FIRE, WATER, EARTH, ALL;
     }
 
-    private enum SpellType {
+    public enum SpellType {
         BUFF, DEBUFF, DAMAGE, SPECIAL, SUMMON, MAP_CHANGE;
     }
 
-    private enum SplashType {
+    public enum SplashType {
         TARGET_ALLY, TARGET_ENEMY, TARGET_CREATURE, TARGET_MAP, TARGET_SPLASH_MAP, ALL, SPECIAL
     }
 

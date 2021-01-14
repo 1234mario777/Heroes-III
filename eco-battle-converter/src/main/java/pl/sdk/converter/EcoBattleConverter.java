@@ -8,10 +8,13 @@ import pl.sdk.creatures.Creature;
 import pl.sdk.creatures.NecropolisFactory;
 import pl.sdk.gui.BattleMapController;
 import pl.sdk.hero.EconomyHero;
+import pl.sdk.spells.Spell;
+import pl.sdk.spells.SpellStatistic;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class EcoBattleConverter {
 
@@ -33,10 +36,15 @@ public class EcoBattleConverter {
     }
 
     public static Hero convert(EconomyHero aPlayer1) {
-        List<Creature>ret = new ArrayList<>();
+        List<Creature>creatures = new ArrayList<>();
         NecropolisFactory factory = new NecropolisFactory();
         aPlayer1.getCreatures().forEach(ecoCreature ->
-                ret.add(factory.create(ecoCreature.isUpgraded(),ecoCreature.getTier(),ecoCreature.getAmount())));
-        return new Hero(ret);
+                creatures.add(factory.create(ecoCreature.isUpgraded(),ecoCreature.getTier(),ecoCreature.getAmount())));
+
+        List<Spell> spells = aPlayer1.getSpells().stream()
+                .filter(es -> es.getSpellType() == (SpellStatistic.SpellType.DAMAGE))
+                .map(DamageSpellFactory::create)
+                .collect(Collectors.toList());
+        return new Hero(creatures, spells);
     }
 }
