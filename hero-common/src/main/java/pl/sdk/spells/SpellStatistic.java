@@ -7,7 +7,7 @@ public enum SpellStatistic {
     TELEPORT("Teleport", "Teleports any friendly unit to any unoccupied spot on the battlefield.", 5 , SpellElement.WATER, SpellType.SPECIAL, TargetType.ALLY,15),
     FIRE_BALL("Fire Ball", "Causes the selected target to burst into flames, inflicting fire damage to the target and any adjacent units.", 3 , SpellElement.FIRE, SpellType.DAMAGE, TargetType.SPLASH_MAP,15),
     IMPLOSION("Implosion", "Inflicts massive damage to a single creature stack.", 5 , SpellElement.EARTH, SpellType.DAMAGE, TargetType.ENEMY,30),
-    SLOW("Slow", "Reduces the speed of the selected enemy unit.", 1 , SpellElement.EARTH, SpellType.DEBUFF, TargetType.ENEMY,5),
+    SLOW("Slow", "Reduces the speed of the selected enemy unit.", 1 , SpellElement.EARTH, SpellType.DEBUFF, TargetType.ENEMY,6),
     DEATH_RIPPLE("Death Ripple", "Sends a wave of death across the battlefield which damages all non-undead units.", 2 , SpellElement.EARTH, SpellType.DAMAGE, TargetType.SPECIAL,10),
     MAGIC_ARROW("Magic Arrow", "Causes a bolt of magical energy to strike the selected unit.", 1 , SpellElement.ALL, SpellType.DAMAGE, TargetType.ENEMY,5),
     ;
