@@ -21,7 +21,7 @@ public enum SpellStatistic {
     }
 
     public enum TargetType {
-        ALLY, ENEMY, CREATURE, MAP, SPLASH_MAP, ALL, SPECIAL
+        ALLY, ALL_ALLIES, ENEMY, ALL_ENEMIES, CREATURE, MAP, SPLASH_MAP, ALL, SPECIAL
     }
 
     SpellStatistic(String aName, String aDescription, int aLevel, SpellElement aElement, SpellType aSpellType, TargetType aTargetType, int aManaCost) {

@@ -16,6 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static pl.sdk.converter.SpellMasteries.SpellMasterLevel.BASIC;
+
 public class EcoBattleConverter {
 
     public static void startBattle(EconomyHero aPlayer1, EconomyHero aPlayer2) {
@@ -41,9 +43,13 @@ public class EcoBattleConverter {
         aPlayer1.getCreatures().forEach(ecoCreature ->
                 creatures.add(factory.create(ecoCreature.isUpgraded(),ecoCreature.getTier(),ecoCreature.getAmount())));
 
+        // -> artefakty
+        SpellMasteries masteries = new SpellMasteries(BASIC, BASIC, BASIC, BASIC);
+        //Artefacts skills itd.
+
         List<AbstractSpell> spells = aPlayer1.getSpells().stream()
                 .filter(es -> es.getSpellType() == (SpellStatistic.SpellType.DAMAGE))
-                .map(es -> DamageSpellFactory.create(es, aPlayer1.getPower()))
+                .map(es -> DamageSpellFactory.create(es, aPlayer1.getPower(), masteries))
                 .collect(Collectors.toList());
         return new Hero(creatures, spells);
     }
