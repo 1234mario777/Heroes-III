@@ -1,6 +1,6 @@
 package pl.sdk.spells;
 
-enum SpellStatistic {
+public enum SpellStatistic {
     HASTE("Haste", "Increases the speed of the selected unit.", 1 , SpellElement.AIR, SpellType.BUFF, SplashType.TARGET_ALLY,6),
     SUMMON_AIR_ELEMENTAL("Summon Air Elemental", "Allows you to summon elementals. Once cast, no other elemental types may be summoned.", 5 , SpellElement.AIR, SpellType.SUMMON, SplashType.TARGET_MAP,6),
     DISPEL("Dispel", "Protects the selected unit from all low level spells.", 1 , SpellElement.WATER, SpellType.SPECIAL, SplashType.TARGET_CREATURE,5),

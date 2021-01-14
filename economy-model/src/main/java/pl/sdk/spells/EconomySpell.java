@@ -5,8 +5,8 @@ public class EconomySpell {
     private final SpellStatistic spellStats;
     private final int goldCost;
 
-    EconomySpell(SpellStatistic aSpellStats, int aGoldCost) {
+    public EconomySpell(SpellStatistic aSpellStats) {
         spellStats = aSpellStats;
-        goldCost = aGoldCost;
+        goldCost = spellStats.getLevel() * 300;
     }
 }

@@ -1,9 +1,9 @@
 package pl.sdk.hero;
 
 import pl.sdk.creatures.EconomyCreature;
+import pl.sdk.spells.EconomySpell;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 public class EconomyHero {
@@ -12,13 +12,21 @@ public class EconomyHero {
         NECROPOLIS;
     }
     private final Fraction fraction;
+    private final HeroStats stats;
 
     private final List<EconomyCreature> creatureList;
+    private final List<EconomySpell> spellList;
     private int gold;
+
     public EconomyHero(Fraction aFraction, int aGold) {
+        this(aFraction, aGold, new HeroStats(0,0,0,0));
+    }
+    public EconomyHero(Fraction aFraction, int aGold, HeroStats aStats) {
         fraction = aFraction;
         gold = aGold;
         creatureList = new ArrayList<>();
+        spellList = new ArrayList<>();
+        stats = aStats;
     }
 
     void addCreature(EconomyCreature aCreature){
@@ -26,6 +34,10 @@ public class EconomyHero {
             throw new IllegalStateException("Hero has not empty slot for creature");
         }
         creatureList.add(aCreature);
+    }
+
+    void addSpell(EconomySpell aEconomySpell) {
+        spellList.add(aEconomySpell);
     }
 
     public int getGold() {
