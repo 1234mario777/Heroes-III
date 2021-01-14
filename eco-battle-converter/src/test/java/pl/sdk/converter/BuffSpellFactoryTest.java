@@ -1,5 +1,6 @@
 package pl.sdk.converter;
 
+import org.junit.jupiter.api.Test;
 import pl.sdk.spells.BuffSpell;
 import pl.sdk.spells.EconomySpell;
 import pl.sdk.spells.SingeTargetDamageSpell;
@@ -9,6 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class BuffSpellFactoryTest {
 
+    @Test
     void shouldConvertHasteSpellsCorrectly(){
         EconomySpell toCovert = new EconomySpell(SpellStatistic.HASTE);
 
