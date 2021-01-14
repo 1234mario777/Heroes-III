@@ -8,6 +8,7 @@ import pl.sdk.creatures.Creature;
 import pl.sdk.creatures.NecropolisFactory;
 import pl.sdk.gui.BattleMapController;
 import pl.sdk.hero.EconomyHero;
+import pl.sdk.spells.AbstractSpell;
 import pl.sdk.spells.SingeTargetDamageSpell;
 import pl.sdk.spells.SpellStatistic;
 
@@ -41,7 +42,7 @@ public class EcoBattleConverter {
         aPlayer1.getCreatures().forEach(ecoCreature ->
                 creatures.add(factory.create(ecoCreature.isUpgraded(),ecoCreature.getTier(),ecoCreature.getAmount())));
 
-        List<SingeTargetDamageSpell> spells = aPlayer1.getSpells().stream()
+        List<AbstractSpell> spells = aPlayer1.getSpells().stream()
                 .filter(es -> es.getSpellType() == (SpellStatistic.SpellType.DAMAGE))
                 .map(es -> DamageSpellFactory.create(es, aPlayer1.getPower()))
                 .collect(Collectors.toList());

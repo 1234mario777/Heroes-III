@@ -58,7 +58,7 @@ class EcoBattleConverterTest {
         EconomyHero ecoHero = new EconomyHero(EconomyHero.Fraction.NECROPOLIS, 1000, new HeroStats(1,1,1,1));
         ecoHero.addSpell(new EconomySpell(SpellStatistic.IMPLOSION));
 
-        SingeTargetDamageSpell spell = EcoBattleConverter.convert(ecoHero).getSpells().get(0);
+        SingeTargetDamageSpell spell = (SingeTargetDamageSpell) EcoBattleConverter.convert(ecoHero).getSpells().get(0);
 
         assertEquals(175, spell.getDamage());
         assertEquals(0, spell.getSplashRange());

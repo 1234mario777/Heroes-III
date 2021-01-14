@@ -13,7 +13,7 @@ public class DamageSpellFactoryTest {
     void shouldConvertMagicArrowSpellsCorrectly(){
         EconomySpell toCovert = new EconomySpell(SpellStatistic.MAGIC_ARROW);
 
-        SingeTargetDamageSpell spell = DamageSpellFactory.create(toCovert, 1);
+        SingeTargetDamageSpell spell = (SingeTargetDamageSpell) DamageSpellFactory.create(toCovert, 1);
 
         assertEquals(20, spell.getDamage());
         assertEquals(0, spell.getSplashRange());
@@ -25,7 +25,7 @@ public class DamageSpellFactoryTest {
     void shouldConvertMagicImplosionSpellsCorrectly(){
         EconomySpell toCovert = new EconomySpell(SpellStatistic.IMPLOSION);
 
-        SingeTargetDamageSpell spell = DamageSpellFactory.create(toCovert, 1);
+        SingeTargetDamageSpell spell = (SingeTargetDamageSpell) DamageSpellFactory.create(toCovert, 1);
 
         assertEquals(175, spell.getDamage());
         assertEquals(0, spell.getSplashRange());
