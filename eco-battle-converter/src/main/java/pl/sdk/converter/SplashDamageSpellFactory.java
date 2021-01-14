@@ -5,7 +5,13 @@ import pl.sdk.spells.SpellStatistic;
 import pl.sdk.spells.SplashDamageSpell;
 
 public class SplashDamageSpellFactory {
-    static AbstractSpell create(SpellStatistic aFireBall) {
-        return new SplashDamageSpell(1,1,1);
+    static AbstractSpell create(SpellStatistic aEs, int aHeroPower) {
+        switch (aEs){
+            case FIRE_BALL:
+                return new SplashDamageSpell(aHeroPower * 10 + 15,15,3);
+            default:
+                throw new UnsupportedOperationException("Cannot recognize spell");
+        }
+
     }
 }

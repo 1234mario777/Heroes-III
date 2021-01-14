@@ -4,7 +4,7 @@ public class SplashDamageSpell extends SingeTargetDamageSpell{
 
     private final int splashRange;
 
-    public SplashDamageSpell(int aSpellDamage, int aManaCost, int aSplashRange) {
+    public SplashDamageSpell(int aManaCost, int aSpellDamage, int aSplashRange) {
         super(aManaCost, aSpellDamage);
         splashRange = aSplashRange;
     }
