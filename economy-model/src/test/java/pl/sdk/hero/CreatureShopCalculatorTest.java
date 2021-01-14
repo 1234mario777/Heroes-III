@@ -1,8 +1,9 @@
-package pl.sdk.creatures;
+package pl.sdk.hero;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import pl.sdk.hero.EconomyHero;
+import pl.sdk.creatures.EconomyCreature;
+import pl.sdk.creatures.EconomyNecropolisFactory;
 
 import java.util.Random;
 

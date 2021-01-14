@@ -1,6 +1,6 @@
-package pl.sdk.creatures;
+package pl.sdk.hero;
 
-import pl.sdk.hero.EconomyHero;
+import pl.sdk.creatures.EconomyCreature;
 
 import java.util.Random;
 
@@ -9,19 +9,19 @@ public class CreatureShopCalculator
 	private final Random rand;
 	private double randomFactor;
 
-	public CreatureShopCalculator(  )
+	CreatureShopCalculator(  )
 	{
 		rand = new Random(  );
 		generateRandomFactor();
 	}
 
-	public CreatureShopCalculator( Random aRand )
+	CreatureShopCalculator( Random aRand )
 	{
 		rand = aRand;
 		generateRandomFactor();
 	}
 
-	private void generateRandomFactor()
+	void generateRandomFactor()
 	{
 		randomFactor = 0.5 + (1 - 0.5) * rand.nextDouble();
 	}
