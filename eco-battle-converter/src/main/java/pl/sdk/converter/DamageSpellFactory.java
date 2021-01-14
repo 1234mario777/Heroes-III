@@ -1,9 +1,6 @@
 package pl.sdk.converter;
 
-import pl.sdk.spells.AbstractSpell;
-import pl.sdk.spells.EconomySpell;
-import pl.sdk.spells.DamageSpell;
-import pl.sdk.spells.SpellStatistic;
+import pl.sdk.spells.*;
 
 public class DamageSpellFactory {
     static AbstractSpell create(EconomySpell aEs, int aHeroPower) {
@@ -14,6 +11,8 @@ public class DamageSpellFactory {
                 return new DamageSpell(aEs.getManaCost(), SpellStatistic.TargetType.ENEMY, aEs.getElement(), 75 * aHeroPower + 100, 0);
             case MAGIC_ARROW:
                 return new DamageSpell(aEs.getManaCost(), SpellStatistic.TargetType.ENEMY, aEs.getElement(), 10 * aHeroPower + 10, 0);
+            case DEATH_RIPPLE:
+                return new DamageSpell(aEs.getManaCost(), SpellStatistic.TargetType.ALL, aEs.getElement(), 5 * aHeroPower + 10, 0);
             default:
                 throw new UnsupportedOperationException("Cannot recognize spell");
         }

@@ -42,4 +42,15 @@ public class DamageSpellFactoryTest {
         assertEquals(25, fireBallSpell.getDamage());
         assertEquals(15, fireBallSpell.getManaCost());
     }
+
+    @Test
+    void shouldConvertDeathRipplelCorrectly(){
+        EconomySpell toConvert = new EconomySpell(SpellStatistic.DEATH_RIPPLE);
+        DamageSpell deathRiple = (DamageSpell) DamageSpellFactory.create(toConvert, 1);
+
+        assertEquals(0, deathRiple.getSplashRange());
+        assertEquals(SpellStatistic.TargetType.ALL, deathRiple.getTargetType());
+        assertEquals(15, deathRiple.getDamage());
+        assertEquals(10, deathRiple.getManaCost());
+    }
 }
