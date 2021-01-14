@@ -30,8 +30,8 @@ public class EconomySpell {
         return spellStats.getSpellType();
     }
 
-    public SpellStatistic.SplashType getSplashType() {
-        return spellStats.getSplashType();
+    public SpellStatistic.TargetType getTargetType() {
+        return spellStats.getTargetType();
     }
 
     public int getManaCost() {

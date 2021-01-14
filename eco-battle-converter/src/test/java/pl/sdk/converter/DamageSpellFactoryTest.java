@@ -17,6 +17,8 @@ public class DamageSpellFactoryTest {
 
         assertEquals(20, spell.getDamage());
         assertEquals(0, spell.getSplashRange());
+        assertEquals(5, spell.getManaCost());
+        assertEquals(SpellStatistic.TargetType.ENEMY, spell.getTargetType());
     }
 
     @Test
@@ -27,5 +29,7 @@ public class DamageSpellFactoryTest {
 
         assertEquals(175, spell.getDamage());
         assertEquals(0, spell.getSplashRange());
+        assertEquals(30, spell.getManaCost());
+        assertEquals(SpellStatistic.TargetType.ENEMY, spell.getTargetType());
     }
 }
