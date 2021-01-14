@@ -7,9 +7,9 @@ public class DamageSpellFactory {
     static SingeTargetDamageSpell create(EconomySpell aEs, int aHeroPower) {
         switch (aEs.getSpellStatistic()) {
             case IMPLOSION:
-                return new SingeTargetDamageSpell(75 * aHeroPower + 100, aEs.getManaCost(), aEs.getTargetType());
+                return new SingeTargetDamageSpell(75 * aHeroPower + 100, aEs.getManaCost());
             case MAGIC_ARROW:
-                return new SingeTargetDamageSpell(10 * aHeroPower + 10, aEs.getManaCost(), aEs.getTargetType());
+                return new SingeTargetDamageSpell(10 * aHeroPower + 10, aEs.getManaCost());
             default: throw new UnsupportedOperationException("Cannot recognize spell");
         }
     }

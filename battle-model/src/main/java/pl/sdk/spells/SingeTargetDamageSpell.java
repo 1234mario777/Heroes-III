@@ -4,8 +4,8 @@ public class SingeTargetDamageSpell extends AbstractSpell{
 
     private final int damage;
 
-    public SingeTargetDamageSpell(int aSpellDamage, int aManaCost, SpellStatistic.TargetType aTargetType) {
-        super(aManaCost, aTargetType);
+    public SingeTargetDamageSpell(int aSpellDamage, int aManaCost) {
+        super(aManaCost, SpellStatistic.TargetType.ENEMY);
         damage = aSpellDamage;
     }
 
