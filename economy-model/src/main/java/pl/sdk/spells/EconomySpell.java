@@ -37,4 +37,8 @@ public class EconomySpell {
     public int getManaCost() {
         return spellStats.getManaCost();
     }
+
+    public SpellStatistic getSpellStatistic() {
+        return spellStats;
+    }
 }

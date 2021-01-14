@@ -1,7 +1,7 @@
 package pl.sdk;
 
 import pl.sdk.creatures.Creature;
-import pl.sdk.spells.Spell;
+import pl.sdk.spells.SingeTargetDamageSpell;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,13 +9,13 @@ import java.util.List;
 public class Hero {
 
     private final List<Creature> creatures;
-    private final List<Spell> spells;
+    private final List<SingeTargetDamageSpell> spells;
 
     public Hero(List<Creature> aCreatures) {
         this(aCreatures, new ArrayList<>());
     }
 
-    public Hero(List<Creature> aCreatures, List<Spell> aSpells) {
+    public Hero(List<Creature> aCreatures, List<SingeTargetDamageSpell> aSpells) {
         creatures = aCreatures;
         spells = aSpells;
     }
@@ -24,7 +24,7 @@ public class Hero {
         return creatures;
     }
 
-    public List<Spell> getSpells() {
+    public List<SingeTargetDamageSpell> getSpells() {
         return spells;
     }
 

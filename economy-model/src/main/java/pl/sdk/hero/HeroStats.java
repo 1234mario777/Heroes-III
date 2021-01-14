@@ -14,4 +14,19 @@ public class HeroStats {
         power = aPower;
     }
 
+    int getAttack() {
+        return attack;
+    }
+
+    int getDefence() {
+        return defence;
+    }
+
+    int getWisdom() {
+        return wisdom;
+    }
+
+    int getPower() {
+        return power;
+    }
 }

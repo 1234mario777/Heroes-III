@@ -56,6 +56,10 @@ public class EconomyHero {
         return List.copyOf(spellList);
     }
 
+    public int getPower() {
+        return stats.getPower();
+    }
+
     void substractGold(int aAmount){
         if (aAmount > gold){
             throw new IllegalStateException("Hero has not enought money");

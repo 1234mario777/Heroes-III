@@ -6,7 +6,7 @@ import pl.sdk.converter.EcoBattleConverter;
 import pl.sdk.creatures.Creature;
 import pl.sdk.creatures.EconomyNecropolisFactory;
 import pl.sdk.spells.EconomySpell;
-import pl.sdk.spells.Spell;
+import pl.sdk.spells.SingeTargetDamageSpell;
 import pl.sdk.spells.SpellStatistic;
 
 import java.util.List;
@@ -58,10 +58,9 @@ class EcoBattleConverterTest {
         EconomyHero ecoHero = new EconomyHero(EconomyHero.Fraction.NECROPOLIS, 1000, new HeroStats(1,1,1,1));
         ecoHero.addSpell(new EconomySpell(SpellStatistic.IMPLOSION));
 
-        Spell spell = EcoBattleConverter.convert(ecoHero).getSpells().get(0);
+        SingeTargetDamageSpell spell = EcoBattleConverter.convert(ecoHero).getSpells().get(0);
 
         assertEquals(175, spell.getDamage());
         assertEquals(0, spell.getSplashRange());
     }
-
 }
