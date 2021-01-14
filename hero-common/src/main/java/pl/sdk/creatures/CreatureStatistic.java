@@ -82,4 +82,9 @@ enum CreatureStatistic implements CreatureStatisticIf{
     boolean isUpgraded() {
         return isUpgraded;
     }
+
+    int getGrowth()
+    {
+        return growth;
+    }
 }
