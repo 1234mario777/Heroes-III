@@ -1,7 +1,6 @@
 package pl.sdk.converter;
 
 import org.junit.jupiter.api.Test;
-import pl.sdk.spells.BuffSpell;
 import pl.sdk.spells.DebuffSpell;
 import pl.sdk.spells.EconomySpell;
 import pl.sdk.spells.SpellStatistic;
