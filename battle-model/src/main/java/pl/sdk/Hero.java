@@ -2,7 +2,6 @@ package pl.sdk;
 
 import pl.sdk.creatures.Creature;
 import pl.sdk.spells.AbstractSpell;
-import pl.sdk.spells.SingeTargetDamageSpell;
 
 import java.util.ArrayList;
 import java.util.List;

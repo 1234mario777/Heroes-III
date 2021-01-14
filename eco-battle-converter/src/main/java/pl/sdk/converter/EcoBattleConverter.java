@@ -9,7 +9,6 @@ import pl.sdk.creatures.NecropolisFactory;
 import pl.sdk.gui.BattleMapController;
 import pl.sdk.hero.EconomyHero;
 import pl.sdk.spells.AbstractSpell;
-import pl.sdk.spells.SingeTargetDamageSpell;
 import pl.sdk.spells.SpellStatistic;
 
 import java.io.IOException;
