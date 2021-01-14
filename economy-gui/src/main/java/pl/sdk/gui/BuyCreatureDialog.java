@@ -16,10 +16,10 @@ class BuyCreatureDialog
 	private String creatureName;
 	private Stage dialog;
 
-	public BuyCreatureDialog( String aCreatureName, int aGold, int aGoldCost )
+	public BuyCreatureDialog( String aCreatureName, int aMaxValue )
 	{
 		creatureName = aCreatureName;
-		creatureSlider = new CreatureSlider( aGold, aGoldCost );
+		creatureSlider = new CreatureSlider( aMaxValue );
 	}
 
 	void startDialog() {

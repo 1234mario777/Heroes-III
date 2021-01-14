@@ -57,4 +57,9 @@ public class EconomyCreature {
     public String getDescription() {
         return stats.getDescription();
     }
+
+    public int getGrowth()
+    {
+        return stats.getGrowth();
+    }
 }

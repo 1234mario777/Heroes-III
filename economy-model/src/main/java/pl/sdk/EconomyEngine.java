@@ -35,6 +35,11 @@ public class EconomyEngine {
         observerSupport.firePropertyChange(HERO_BOUGHT_CREATURE, null, null);
     }
 
+    public int calculateMaxAmount( EconomyHero aHero, EconomyCreature aCreature )
+    {
+        return creatureShop.calculateMaxAmount(aHero, aCreature);
+    }
+
     public EconomyHero getActiveHero() {
         return activeHero;
     }
@@ -61,6 +66,7 @@ public class EconomyEngine {
         {
             hero1.addGold(2000*roundNumber);
             hero2.addGold(2000*roundNumber);
+            creatureShop.generateRandom();
             observerSupport.firePropertyChange(NEXT_ROUND, roundNumber - 1, roundNumber);
         }
     }
