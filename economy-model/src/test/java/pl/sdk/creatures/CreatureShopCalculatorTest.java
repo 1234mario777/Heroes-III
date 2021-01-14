@@ -2,7 +2,6 @@ package pl.sdk.creatures;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import pl.sdk.EconomyEngine;
 import pl.sdk.hero.EconomyHero;
 
 import java.util.Random;
@@ -44,11 +43,11 @@ class CreatureShopCalculatorTest
 	@Test
 	void shouldCorrectlyCalculateMaxAmountToBuyWhenGrowthEqualsPurchaseOpportunity()
 	{
-		EconomyHero hero = new EconomyHero(EconomyHero.Fraction.NECROPOLIS, 300);
+		EconomyHero hero = new EconomyHero(EconomyHero.Fraction.NECROPOLIS, 720);
 		rand = mock(Random.class);
 		when( rand.nextDouble() ).thenReturn( 1.0 );
 		CreatureShopCalculator calculator = new CreatureShopCalculator(rand);
-		assertEquals( 5,  calculator.calculateMaxAmount( hero, creature ));
+		assertEquals( 12,  calculator.calculateMaxAmount( hero, creature ));
 	}
 
 }
