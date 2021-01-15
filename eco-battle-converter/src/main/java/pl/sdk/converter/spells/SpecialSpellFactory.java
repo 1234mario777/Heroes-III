@@ -1,10 +1,12 @@
-package pl.sdk.converter;
+package pl.sdk.converter.spells;
 
+import pl.sdk.converter.SpellMasteries;
 import pl.sdk.spells.*;
 
-public class SpecialSpellFactory {
+class SpecialSpellFactory extends SpellFactory {
 
-    static AbstractSpell create(EconomySpell aEs) {
+    @Override
+    AbstractSpell createInner(EconomySpell aEs, int aHeroPower, SpellMasteries aMasteries) {
         switch (aEs.getSpellStatistic()) {
             case DISPEL:
                 return new DispelSpell();

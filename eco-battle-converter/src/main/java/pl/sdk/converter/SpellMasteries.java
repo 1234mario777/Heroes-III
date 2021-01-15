@@ -11,7 +11,14 @@ public class SpellMasteries {
     private final SpellMasterLevel earth;
     private final SpellMasterLevel water;
 
-    SpellMasteries(SpellMasterLevel aAir, SpellMasterLevel aFire, SpellMasterLevel aEarth, SpellMasterLevel aWater) {
+    public SpellMasteries() {
+        air = SpellMasterLevel.BASIC;
+        fire = SpellMasterLevel.BASIC;
+        earth = SpellMasterLevel.BASIC;
+        water = SpellMasterLevel.BASIC;
+    }
+
+    public SpellMasteries(SpellMasterLevel aAir, SpellMasterLevel aFire, SpellMasterLevel aEarth, SpellMasterLevel aWater) {
         air = aAir;
         fire = aFire;
         earth = aEarth;

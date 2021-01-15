@@ -1,12 +1,14 @@
-package pl.sdk.converter;
+package pl.sdk.converter.spells;
 
+import pl.sdk.converter.SpellMasteries;
 import pl.sdk.spells.AbstractSpell;
 import pl.sdk.spells.EconomySpell;
 import pl.sdk.spells.SummonSpell;
 
-public class SummonSpellFactory {
+class SummonSpellFactory extends SpellFactory{
 
-    static AbstractSpell create(EconomySpell aEs, int aHeroPower) {
+    @Override
+    AbstractSpell createInner(EconomySpell aEs, int aHeroPower, SpellMasteries aMasteries) {
         switch (aEs.getSpellStatistic()) {
             case SUMMON_AIR_ELEMENTAL:
                 return new SummonSpell(25, aHeroPower, 2 * aHeroPower, "Air Elemental", aEs.getElement());

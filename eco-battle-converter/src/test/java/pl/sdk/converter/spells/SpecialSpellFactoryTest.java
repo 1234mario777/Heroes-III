@@ -1,6 +1,7 @@
-package pl.sdk.converter;
+package pl.sdk.converter.spells;
 
 import org.junit.jupiter.api.Test;
+import pl.sdk.converter.spells.SpecialSpellFactory;
 import pl.sdk.spells.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -11,7 +12,7 @@ public class SpecialSpellFactoryTest {
     void shouldConvertDispelSpellsCorrectly(){
         EconomySpell toCovert = new EconomySpell(SpellStatistic.DISPEL);
 
-        DispelSpell spell = (DispelSpell) SpecialSpellFactory.create(toCovert);
+        DispelSpell spell = (DispelSpell) new SpecialSpellFactory().createInner(toCovert, 0);
 
         assertEquals(0, spell.getSplashRange());
         assertEquals(5, spell.getManaCost());
@@ -22,7 +23,7 @@ public class SpecialSpellFactoryTest {
     void shouldConvertTeleportSpellsCorrectly(){
         EconomySpell toCovert = new EconomySpell(SpellStatistic.TELEPORT);
 
-        TeleportSpell spell = (TeleportSpell) SpecialSpellFactory.create(toCovert);
+        TeleportSpell spell = (TeleportSpell) new SpecialSpellFactory().createInner(toCovert, 0);
 
         assertEquals(0, spell.getSplashRange());
         assertEquals(15, spell.getManaCost());

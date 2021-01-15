@@ -1,6 +1,7 @@
-package pl.sdk.converter;
+package pl.sdk.converter.spells;
 
 import org.junit.jupiter.api.Test;
+import pl.sdk.converter.spells.SummonSpellFactory;
 import pl.sdk.spells.EconomySpell;
 import pl.sdk.spells.SpellStatistic;
 import pl.sdk.spells.SummonSpell;
@@ -13,7 +14,7 @@ class SummonSpellFactoryTest {
     void shouldConvertSlowSpellsCorrectly(){
         EconomySpell toCovert = new EconomySpell(SpellStatistic.SUMMON_AIR_ELEMENTAL);
 
-        SummonSpell spell = (SummonSpell) SummonSpellFactory.create(toCovert, 1);
+        SummonSpell spell = (SummonSpell) new SummonSpellFactory().createInner(toCovert, 1);
 
         assertEquals(1, spell.getDuration());
         assertEquals("Air Elemental", spell.getSummoningCreatureAmount());

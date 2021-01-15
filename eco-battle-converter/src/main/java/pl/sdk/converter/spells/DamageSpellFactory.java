@@ -1,9 +1,11 @@
-package pl.sdk.converter;
+package pl.sdk.converter.spells;
 
+import pl.sdk.converter.SpellMasteries;
 import pl.sdk.spells.*;
 
-public class DamageSpellFactory {
-    static AbstractSpell create(EconomySpell aEs, int aHeroPower) {
+class DamageSpellFactory extends SpellFactory{
+
+    AbstractSpell createInner(EconomySpell aEs, int aHeroPower, SpellMasteries aMasteries) {
         switch (aEs.getSpellStatistic()) {
             case FIRE_BALL:
                 return new DamageSpell(15, SpellStatistic.TargetType.MAP, aEs.getElement(), aHeroPower * 10 + 15, 3);
@@ -16,6 +18,5 @@ public class DamageSpellFactory {
             default:
                 throw new UnsupportedOperationException("Cannot recognize spell");
         }
-
     }
 }
