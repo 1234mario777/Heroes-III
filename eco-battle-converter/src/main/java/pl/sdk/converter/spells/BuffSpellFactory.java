@@ -1,9 +1,7 @@
 package pl.sdk.converter.spells;
 
 import pl.sdk.converter.SpellMasteries;
-import pl.sdk.spells.AbstractSpell;
-import pl.sdk.spells.BuffSpell;
-import pl.sdk.spells.EconomySpell;
+import pl.sdk.spells.*;
 
 class BuffSpellFactory extends SpellFactory{
 
@@ -11,7 +9,16 @@ class BuffSpellFactory extends SpellFactory{
     AbstractSpell createInner(EconomySpell aEs, int aHeroPower, SpellMasteries aMasteries) {
         switch (aEs.getSpellStatistic()) {
             case HASTE:
-                return new BuffSpell(aEs.getManaCost(), aHeroPower, aEs.getElement());
+                switch (aMasteries.getAir()){
+                    case BASIC:
+                        return new BuffSpell(aEs.getManaCost(), aHeroPower, aEs.getElement(), SpellStatistic.TargetType.ALLY);
+                    case ADVANCED:
+                        return new BuffSpell(aEs.getManaCost(), aHeroPower, aEs.getElement(), SpellStatistic.TargetType.ALLY);
+                    case MASTER:
+                        return new BuffSpell(aEs.getManaCost(), aHeroPower, aEs.getElement(), SpellStatistic.TargetType.ALL_ALLIES);
+                    default:
+                        throw new UnsupportedOperationException("Cannot recognize mastery level");
+                }
             default: throw new UnsupportedOperationException("Cannot recognize spell");
         }
     }
