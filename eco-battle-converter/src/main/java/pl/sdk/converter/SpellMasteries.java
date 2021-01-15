@@ -1,9 +1,16 @@
 package pl.sdk.converter;
 
+import java.util.List;
+
 public class SpellMasteries {
 
-    enum SpellMasterLevel{
-        BASIC, ADVANCED, MASTER
+    public enum SpellMasterLevel{
+        BASIC(0), ADVANCED(1), MASTER(2);
+
+        private final int value;
+        SpellMasterLevel(int aValue) {
+            value = aValue;
+        }
     }
 
     private final SpellMasterLevel air;
@@ -25,19 +32,23 @@ public class SpellMasteries {
         water = aWater;
     }
 
-    SpellMasterLevel getAir() {
+    public SpellMasterLevel getAir() {
         return air;
     }
 
-    SpellMasterLevel getFire() {
+    public SpellMasterLevel findMaxLevel() {
+        return List.of(air, fire, earth, water).stream().max((l1, l2) ->l1.value - l2.value).get();
+    }
+
+    public SpellMasterLevel getFire() {
         return fire;
     }
 
-    SpellMasterLevel getEarth() {
+    public SpellMasterLevel getEarth() {
         return earth;
     }
 
-    SpellMasterLevel getWater() {
+    public SpellMasterLevel getWater() {
         return water;
     }
 }

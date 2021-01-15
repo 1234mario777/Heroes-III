@@ -8,13 +8,51 @@ class DamageSpellFactory extends SpellFactory{
     AbstractSpell createInner(EconomySpell aEs, int aHeroPower, SpellMasteries aMasteries) {
         switch (aEs.getSpellStatistic()) {
             case FIRE_BALL:
-                return new DamageSpell(15, SpellStatistic.TargetType.MAP, aEs.getElement(), aHeroPower * 10 + 15, 3);
+                switch (aMasteries.getFire()){
+                    case BASIC:
+                        return new DamageSpell(15, SpellStatistic.TargetType.MAP, aEs.getElement(), aHeroPower * 10 + 15, 3);
+                    case ADVANCED:
+                        return new DamageSpell(15, SpellStatistic.TargetType.MAP, aEs.getElement(), aHeroPower * 10 + 30, 3);
+                    case MASTER:
+                        return new DamageSpell(15, SpellStatistic.TargetType.MAP, aEs.getElement(), aHeroPower * 10 + 60, 3);
+                    default:
+                        throw new UnsupportedOperationException("Cannot recognize mastery level");
+                }
+
             case IMPLOSION:
-                return new DamageSpell(aEs.getManaCost(), SpellStatistic.TargetType.ENEMY, aEs.getElement(), 75 * aHeroPower + 100, 0);
+                switch (aMasteries.getEarth()){
+                    case BASIC:
+                        return new DamageSpell(aEs.getManaCost(), SpellStatistic.TargetType.ENEMY, aEs.getElement(), 75 * aHeroPower + 100, 0);
+                    case ADVANCED:
+                        return new DamageSpell(aEs.getManaCost(), SpellStatistic.TargetType.ENEMY, aEs.getElement(), 75 * aHeroPower + 200, 0);
+                    case MASTER:
+                        return new DamageSpell(aEs.getManaCost(), SpellStatistic.TargetType.ENEMY, aEs.getElement(), 75 * aHeroPower + 300, 0);
+                    default:
+                        throw new UnsupportedOperationException("Cannot recognize mastery level");
+                }
+
             case MAGIC_ARROW:
-                return new DamageSpell(aEs.getManaCost(), SpellStatistic.TargetType.ENEMY, aEs.getElement(), 10 * aHeroPower + 10, 0);
+                switch (aMasteries.findMaxLevel()){
+                    case BASIC:
+                        return new DamageSpell(aEs.getManaCost(), SpellStatistic.TargetType.ENEMY, aEs.getElement(), 10 * aHeroPower + 10, 0);
+                    case ADVANCED:
+                        return new DamageSpell(aEs.getManaCost(), SpellStatistic.TargetType.ENEMY, aEs.getElement(), 10 * aHeroPower + 20, 0);
+                    case MASTER:
+                        return new DamageSpell(aEs.getManaCost(), SpellStatistic.TargetType.ENEMY, aEs.getElement(), 10 * aHeroPower + 30, 0);
+                    default:
+                        throw new UnsupportedOperationException("Cannot recognize mastery level");
+                }
             case DEATH_RIPPLE:
-                return new DamageSpell(aEs.getManaCost(), SpellStatistic.TargetType.ALL, aEs.getElement(), 5 * aHeroPower + 10, 0);
+                switch (aMasteries.getEarth()){
+                    case BASIC:
+                        return new DamageSpell(aEs.getManaCost(), SpellStatistic.TargetType.ALL, aEs.getElement(), 5 * aHeroPower + 10, 0);
+                    case ADVANCED:
+                        return new DamageSpell(aEs.getManaCost(), SpellStatistic.TargetType.ALL, aEs.getElement(), 5 * aHeroPower + 20, 0);
+                    case MASTER:
+                        return new DamageSpell(aEs.getManaCost(), SpellStatistic.TargetType.ALL, aEs.getElement(), 5 * aHeroPower + 30, 0);
+                    default:
+                        throw new UnsupportedOperationException("Cannot recognize mastery level");
+                }
             default:
                 throw new UnsupportedOperationException("Cannot recognize spell");
         }
