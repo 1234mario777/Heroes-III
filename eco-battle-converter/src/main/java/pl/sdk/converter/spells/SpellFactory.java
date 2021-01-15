@@ -25,9 +25,5 @@ public abstract class SpellFactory {
         }
     }
 
-    AbstractSpell createInner(EconomySpell aEs, int aHeroPower){
-        return createInner(aEs, aHeroPower, new SpellMasteries());
-    };
-
     abstract AbstractSpell createInner(EconomySpell aEs, int aHeroPower, SpellMasteries aMasteries);
 }

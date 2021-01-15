@@ -1,6 +1,7 @@
 package pl.sdk.converter.spells;
 
 import org.junit.jupiter.api.Test;
+import pl.sdk.converter.SpellMasteries;
 import pl.sdk.converter.spells.DamageSpellFactory;
 import pl.sdk.spells.DamageSpell;
 import pl.sdk.spells.EconomySpell;
@@ -14,7 +15,7 @@ public class DamageSpellFactoryTest {
     void shouldConvertMagicArrowSpellsCorrectly(){
         EconomySpell toCovert = new EconomySpell(SpellStatistic.MAGIC_ARROW);
 
-        DamageSpell spell = (DamageSpell) new DamageSpellFactory().createInner(toCovert, 1);
+        DamageSpell spell = (DamageSpell) new DamageSpellFactory().createInner(toCovert, 1, new SpellMasteries());
 
         assertEquals(20, spell.getDamage());
         assertEquals(0, spell.getSplashRange());
@@ -26,7 +27,7 @@ public class DamageSpellFactoryTest {
     void shouldConvertMagicImplosionSpellsCorrectly(){
         EconomySpell toCovert = new EconomySpell(SpellStatistic.IMPLOSION);
 
-        DamageSpell spell = (DamageSpell) new DamageSpellFactory().createInner(toCovert, 1);
+        DamageSpell spell = (DamageSpell) new DamageSpellFactory().createInner(toCovert, 1, new SpellMasteries());
 
         assertEquals(175, spell.getDamage());
         assertEquals(0, spell.getSplashRange());
@@ -37,7 +38,7 @@ public class DamageSpellFactoryTest {
     @Test
     void shouldConvertFireBallCorrectly(){
         EconomySpell toConvert = new EconomySpell(SpellStatistic.FIRE_BALL);
-        DamageSpell fireBallSpell = (DamageSpell) new DamageSpellFactory().createInner(toConvert, 1);
+        DamageSpell fireBallSpell = (DamageSpell) new DamageSpellFactory().createInner(toConvert, 1, new SpellMasteries());
 
         assertEquals(3, fireBallSpell.getSplashRange());
         assertEquals(25, fireBallSpell.getDamage());
@@ -47,7 +48,7 @@ public class DamageSpellFactoryTest {
     @Test
     void shouldConvertDeathRipplelCorrectly(){
         EconomySpell toConvert = new EconomySpell(SpellStatistic.DEATH_RIPPLE);
-        DamageSpell deathRiple = (DamageSpell) new DamageSpellFactory().createInner(toConvert, 1);
+        DamageSpell deathRiple = (DamageSpell) new DamageSpellFactory().createInner(toConvert, 1, new SpellMasteries());
 
         assertEquals(0, deathRiple.getSplashRange());
         assertEquals(SpellStatistic.TargetType.ALL, deathRiple.getTargetType());
