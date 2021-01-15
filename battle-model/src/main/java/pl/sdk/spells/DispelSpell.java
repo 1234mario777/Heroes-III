@@ -2,8 +2,8 @@ package pl.sdk.spells;
 
 public class DispelSpell extends AbstractSpell{
 
-    public DispelSpell() {
-        super(5, SpellStatistic.TargetType.ALLY, SpellStatistic.SpellElement.WATER);
+    public DispelSpell(SpellStatistic.TargetType aTargetType) {
+        super(5, aTargetType, SpellStatistic.SpellElement.WATER);
     }
 
     @Override

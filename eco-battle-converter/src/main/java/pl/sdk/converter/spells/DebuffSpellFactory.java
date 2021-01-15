@@ -15,7 +15,7 @@ class DebuffSpellFactory extends SpellFactory{
                     case ADVANCED:
                         return new DebuffSpell(aEs.getManaCost(), aHeroPower, aEs.getElement(), SpellStatistic.TargetType.ENEMY);
                     case MASTER:
-                        return new DebuffSpell(aEs.getManaCost(), aHeroPower, aEs.getElement(), SpellStatistic.TargetType.ALL_ALLIES);
+                        return new DebuffSpell(aEs.getManaCost(), aHeroPower, aEs.getElement(), SpellStatistic.TargetType.ALL_ENEMIES);
                     default:
                         throw new UnsupportedOperationException("Cannot recognize mastery level");
                 }

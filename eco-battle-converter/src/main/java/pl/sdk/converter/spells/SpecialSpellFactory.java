@@ -9,10 +9,30 @@ class SpecialSpellFactory extends SpellFactory {
     AbstractSpell createInner(EconomySpell aEs, int aHeroPower, SpellMasteries aMasteries) {
         switch (aEs.getSpellStatistic()) {
             case DISPEL:
-                return new DispelSpell();
+                switch (aMasteries.getWater()) {
+                    case BASIC:
+                        return new DispelSpell(SpellStatistic.TargetType.ALLY);
+                    case ADVANCED:
+                        return new DispelSpell(SpellStatistic.TargetType.CREATURE);
+                    case MASTER:
+                        return new DispelSpell(SpellStatistic.TargetType.ALL_CREATURES);
+                    default:
+                        throw new UnsupportedOperationException("Cannot recognize mastery level");
+                }
             case TELEPORT:
-                return new TeleportSpell();
-            default: throw new UnsupportedOperationException("Cannot recognize spell");
+                switch (aMasteries.getWater()) {
+                    case BASIC:
+                        return new TeleportSpell();
+                    case ADVANCED:
+                        return new TeleportSpell();
+                    case MASTER:
+                        return new TeleportSpell();
+                    default:
+                        throw new UnsupportedOperationException("Cannot recognize mastery level");
+                }
+
+            default:
+                throw new UnsupportedOperationException("Cannot recognize spell");
         }
     }
 }
