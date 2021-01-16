@@ -14,7 +14,6 @@ import static org.mockito.Mockito.when;
 class CreatureShopCalculatorTest
 {
 	private final EconomyNecropolisFactory creatureFactory = new EconomyNecropolisFactory();
-	private Random rand;
 	EconomyCreature creature;
 	@BeforeEach
 	void init() {
@@ -24,31 +23,25 @@ class CreatureShopCalculatorTest
 	@Test
 	void shouldCorrectlyCalculateMaxAmountToBuyWhenGrowthIsSmallerThanPurchaseOpportunity()
 	{
-		EconomyHero hero1 = new EconomyHero(EconomyHero.Fraction.NECROPOLIS, 3000);
-		rand = mock(Random.class);
-		when( rand.nextDouble() ).thenReturn( 0.5 );
-		CreatureShopCalculator calculator = new CreatureShopCalculator(rand);
-		assertEquals( 9,  calculator.calculateMaxAmount( hero1, creature ));
+		EconomyHero hero = new EconomyHero(EconomyHero.Fraction.NECROPOLIS, 3000);
+		CreatureShopCalculator calculator = new CreatureShopCalculator();
+		assertEquals( 12,  calculator.calculateMaxAmount( hero.getGold(), creature.getGrowth(), creature.getGoldCost() ) );
 	}
 
 	@Test
 	void shouldCorrectlyCalculateMaxAmountToBuyWhenGrowthIsBiggerThanPurchaseOpportunity()
 	{
 		EconomyHero hero = new EconomyHero(EconomyHero.Fraction.NECROPOLIS, 600);
-		rand = mock(Random.class);
-		when( rand.nextDouble() ).thenReturn( 1.0 );
-		CreatureShopCalculator calculator = new CreatureShopCalculator(rand);
-		assertEquals( 10,  calculator.calculateMaxAmount( hero, creature ));
+		CreatureShopCalculator calculator = new CreatureShopCalculator();
+		assertEquals( 10,  calculator.calculateMaxAmount( hero.getGold(), creature.getGrowth(), creature.getGoldCost() ) );
 	}
 
 	@Test
 	void shouldCorrectlyCalculateMaxAmountToBuyWhenGrowthEqualsPurchaseOpportunity()
 	{
 		EconomyHero hero = new EconomyHero(EconomyHero.Fraction.NECROPOLIS, 720);
-		rand = mock(Random.class);
-		when( rand.nextDouble() ).thenReturn( 1.0 );
-		CreatureShopCalculator calculator = new CreatureShopCalculator(rand);
-		assertEquals( 12,  calculator.calculateMaxAmount( hero, creature ));
+		CreatureShopCalculator calculator = new CreatureShopCalculator();
+		assertEquals( 12,  calculator.calculateMaxAmount( hero.getGold(), creature.getGrowth(), creature.getGoldCost() ) );
 	}
 
 }
