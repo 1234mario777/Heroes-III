@@ -25,9 +25,9 @@ public class CreatureShopCalculator
 		randomFactor = 0.5 + (1 - 0.5) * rand.nextDouble();
 	}
 
-	int calculateMaxAmount( int aHeroGold, int aPopulation )
+	int calculateMaxAmount( int aHeroGold, int aPopulation, int aGoldCost )
 	{
-		return aHeroGold/aPopulation;
+		return Math.min(aHeroGold/aGoldCost, aPopulation);
 	}
 
 	int randomize(int aPopulation)
