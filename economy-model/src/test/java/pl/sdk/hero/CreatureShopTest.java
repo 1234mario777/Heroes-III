@@ -51,33 +51,33 @@ class CreatureShopTest
 		assertEquals( 2, economyEngine.getCurrentPopulation(6) );
 		assertEquals( 1, economyEngine.getCurrentPopulation(7) );
 	}
-//
-//	@Test
-//	void afterRoundEndPopulationInShopShouldIncreaseByCreatureGrowth()
-//	{
-//		//when
-//		economyEngine.pass();
-//		economyEngine.pass();
-//		//then
-//		assertEquals( 24, economyEngine.getCurrentPopulation(1) );
-//		assertEquals( 16, economyEngine.getCurrentPopulation(2) );
-//		assertEquals( 14, economyEngine.getCurrentPopulation(3) );
-//		assertEquals( 8, economyEngine.getCurrentPopulation(4) );
-//		assertEquals( 6, economyEngine.getCurrentPopulation(5) );
-//		assertEquals( 4, economyEngine.getCurrentPopulation(6) );
-//		assertEquals( 2, economyEngine.getCurrentPopulation(7) );
-//
-//		economyEngine.pass();
-//
-//		assertEquals( 24, economyEngine.getCurrentPopulation(1) );
-//		assertEquals( 16, economyEngine.getCurrentPopulation(2) );
-//		assertEquals( 14, economyEngine.getCurrentPopulation(3) );
-//		assertEquals( 8, economyEngine.getCurrentPopulation(4) );
-//		assertEquals( 6, economyEngine.getCurrentPopulation(5) );
-//		assertEquals( 4, economyEngine.getCurrentPopulation(6) );
-//		assertEquals( 2, economyEngine.getCurrentPopulation(7) );
-//
-//	}
+
+	@Test
+	void afterRoundEndPopulationInShopShouldIncreaseByCreatureGrowth()
+	{
+		//when
+		economyEngine.pass();
+		economyEngine.pass();
+		//then
+		assertEquals( 24, economyEngine.getCurrentPopulation(1) );
+		assertEquals( 16, economyEngine.getCurrentPopulation(2) );
+		assertEquals( 14, economyEngine.getCurrentPopulation(3) );
+		assertEquals( 8, economyEngine.getCurrentPopulation(4) );
+		assertEquals( 6, economyEngine.getCurrentPopulation(5) );
+		assertEquals( 4, economyEngine.getCurrentPopulation(6) );
+		assertEquals( 2, economyEngine.getCurrentPopulation(7) );
+
+		economyEngine.pass();
+
+		assertEquals( 24, economyEngine.getCurrentPopulation(1) );
+		assertEquals( 16, economyEngine.getCurrentPopulation(2) );
+		assertEquals( 14, economyEngine.getCurrentPopulation(3) );
+		assertEquals( 8, economyEngine.getCurrentPopulation(4) );
+		assertEquals( 6, economyEngine.getCurrentPopulation(5) );
+		assertEquals( 4, economyEngine.getCurrentPopulation(6) );
+		assertEquals( 2, economyEngine.getCurrentPopulation(7) );
+
+	}
 //
 //	@Test
 //	void afterPurchaseCreaturePopulationShouldBeDecreasedByBoughtAmount()
