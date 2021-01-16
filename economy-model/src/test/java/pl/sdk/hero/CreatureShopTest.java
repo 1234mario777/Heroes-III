@@ -78,16 +78,16 @@ class CreatureShopTest
 		assertEquals( 2, economyEngine.getCurrentPopulation(7) );
 
 	}
-//
-//	@Test
-//	void afterPurchaseCreaturePopulationShouldBeDecreasedByBoughtAmount()
-//	{
-//		//when
-//		economyEngine.buy(creatureFactory.create(false, 1, 10));
-//		//then
-//		assertEquals( 2, economyEngine.getCurrentPopulation(1) );
-//	}
-//
+
+	@Test
+	void afterPurchaseCreaturePopulationShouldBeDecreasedByBoughtAmount()
+	{
+		//when
+		economyEngine.buy(creatureFactory.create(false, 1, 10));
+		//then
+		assertEquals( 2, economyEngine.getCurrentPopulation(1) );
+	}
+
 //	@Test
 //	void heroOnePurchaseShouldNotAffectOnHeroTwoPopulation()
 //	{
