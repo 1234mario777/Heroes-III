@@ -88,36 +88,40 @@ class CreatureShopTest
 		assertEquals( 2, economyEngine.getCurrentPopulation(1) );
 	}
 
-//	@Test
-//	void heroOnePurchaseShouldNotAffectOnHeroTwoPopulation()
-//	{
-//		//when
-//		economyEngine.buy(creatureFactory.create(false, 1, 10));
-//		//then
-//		assertEquals( 2, economyEngine.getCurrentPopulation(1) );
-//		economyEngine.pass();
-//		assertEquals( 12, economyEngine.getCurrentPopulation(1) );
-//	}
-//
-//	@Test
-//	void shouldThrowExceptionWhenTryToPurchaseMoreCreatureThanPopulationIs()
-//	{
-//		assertThrows(IllegalStateException.class, () ->economyEngine.buy(creatureFactory.create(false, 1, 13)));
-//	}
-//
-//	@Test
-//	void afterPurchaseAndRoundEndPopulationAmountShouldBeCorrect()
-//	{
-//		//when
-//		economyEngine.buy(creatureFactory.create(false, 1, 12));
-//		economyEngine.pass();
-//		economyEngine.buy( creatureFactory.create(false, 2, 3) );
-//		economyEngine.pass();
-//		//then
-//		assertEquals( 12, economyEngine.getCurrentPopulation(1) );
-//		assertEquals( 13, economyEngine.getCurrentPopulation(2) );
-//	}
-//
+	@Test
+	void heroOnePurchaseShouldNotAffectOnHeroTwoPopulation()
+	{
+		//when
+		economyEngine.buy(creatureFactory.create(false, 1, 10));
+		//then
+		assertEquals( 2, economyEngine.getCurrentPopulation(1) );
+		economyEngine.pass();
+		assertEquals( 12, economyEngine.getCurrentPopulation(1) );
+	}
+
+	@Test
+	void shouldThrowExceptionWhenTryToPurchaseMoreCreatureThanPopulationIs()
+	{
+		assertThrows(IllegalStateException.class, () ->economyEngine.buy(creatureFactory.create(false, 1, 13)));
+		assertEquals( 12, economyEngine.getCurrentPopulation( 1 ) );
+	}
+
+	@Test
+	void afterPurchaseAndRoundEndPopulationAmountShouldBeCorrect()
+	{
+		//when
+		economyEngine.buy(creatureFactory.create(false, 1, 12));
+		economyEngine.pass();
+		economyEngine.buy( creatureFactory.create(false, 2, 3) );
+		economyEngine.pass();
+		//then
+		assertEquals( 12, economyEngine.getCurrentPopulation(1) );
+		assertEquals( 16, economyEngine.getCurrentPopulation(2) );
+		economyEngine.pass();
+		assertEquals( 24, economyEngine.getCurrentPopulation(1) );
+		assertEquals( 13, economyEngine.getCurrentPopulation(2) );
+	}
+
 //	@Test
 //	void shouldCorrectlyRandomizePopulationGrowthForBothPlayers()
 //	{
