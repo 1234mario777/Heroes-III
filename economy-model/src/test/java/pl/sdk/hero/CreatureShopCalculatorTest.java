@@ -24,11 +24,11 @@ class CreatureShopCalculatorTest
 	@Test
 	void shouldCorrectlyCalculateMaxAmountToBuyWhenGrowthIsSmallerThanPurchaseOpportunity()
 	{
-		EconomyHero hero1 = new EconomyHero(EconomyHero.Fraction.NECROPOLIS, 3000);
+		EconomyHero hero = new EconomyHero(EconomyHero.Fraction.NECROPOLIS, 3000);
 		rand = mock(Random.class);
 		when( rand.nextDouble() ).thenReturn( 0.5 );
 		CreatureShopCalculator calculator = new CreatureShopCalculator(rand);
-		assertEquals( 9,  calculator.calculateMaxAmount( hero1, creature ));
+		assertEquals( 250,  calculator.calculateMaxAmount( hero.getGold(), creature.getGrowth() ));
 	}
 
 	@Test
@@ -38,7 +38,7 @@ class CreatureShopCalculatorTest
 		rand = mock(Random.class);
 		when( rand.nextDouble() ).thenReturn( 1.0 );
 		CreatureShopCalculator calculator = new CreatureShopCalculator(rand);
-		assertEquals( 10,  calculator.calculateMaxAmount( hero, creature ));
+		assertEquals( 50,  calculator.calculateMaxAmount( hero.getGold(), creature.getGrowth() ));
 	}
 
 	@Test
@@ -48,7 +48,7 @@ class CreatureShopCalculatorTest
 		rand = mock(Random.class);
 		when( rand.nextDouble() ).thenReturn( 1.0 );
 		CreatureShopCalculator calculator = new CreatureShopCalculator(rand);
-		assertEquals( 12,  calculator.calculateMaxAmount( hero, creature ));
+		assertEquals( 60,  calculator.calculateMaxAmount( hero.getGold(), creature.getGrowth() ));
 	}
 
 }
