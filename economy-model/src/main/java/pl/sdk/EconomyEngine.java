@@ -16,7 +16,7 @@ public class EconomyEngine {
     private final EconomyHero hero1;
     private final EconomyHero hero2;
     private EconomyHero activeHero;
-    private final CreatureShop creatureShop = new CreatureShop();
+    private final CreatureShop creatureShop;
     private int roundNumber;
     private final PropertyChangeSupport observerSupport;
     private int turnNumber;
@@ -27,6 +27,18 @@ public class EconomyEngine {
         activeHero = hero1;
         roundNumber = 1;
         turnNumber = 1;
+        creatureShop = new CreatureShop();
+        observerSupport = new PropertyChangeSupport(this);
+    }
+
+    public EconomyEngine( EconomyHero aHero1, EconomyHero aHero2, CreatureShop aShop )
+    {
+        hero1 = aHero1;
+        hero2 = aHero2;
+        activeHero = hero1;
+        roundNumber = 1;
+        turnNumber = 1;
+        creatureShop = aShop;
         observerSupport = new PropertyChangeSupport(this);
     }
 
@@ -99,5 +111,10 @@ public class EconomyEngine {
     int getTurnNumber()
     {
         return turnNumber;
+    }
+
+    public int getCurrentPopulation( int aTier )
+    {
+        return creatureShop.getCurrentPopulation(aTier);
     }
 }

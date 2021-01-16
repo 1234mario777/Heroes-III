@@ -2,9 +2,21 @@ package pl.sdk.hero;
 
 import pl.sdk.creatures.EconomyCreature;
 
+import java.util.Random;
+
 public class CreatureShop {
 
-    private CreatureShopCalculator calculator = new CreatureShopCalculator(  );
+    private CreatureShopCalculator calculator;
+
+    public CreatureShop()
+    {
+        calculator = new CreatureShopCalculator(  );
+    }
+
+    CreatureShop( Random aRand )
+    {
+        calculator = new CreatureShopCalculator(aRand);
+    }
 
     public void buy(EconomyHero aHero, EconomyCreature aEconomyCreature) {
         aHero.substractGold(aEconomyCreature.getGoldCost() * aEconomyCreature.getAmount());
@@ -23,4 +35,8 @@ public class CreatureShop {
 
     public void generateRandom(){calculator.generateRandomFactor();}
 
+    public int getCurrentPopulation( int aTier )
+    {
+        return 0;
+    }
 }
