@@ -6,6 +6,8 @@
     -fx-text-fill: black;
     -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
     -fx-font: bold 15pt "Garamond";
+    -fx-border-color: black;
+    -fx-background-size: 15;
 }
 .creatureButton {
     -fx-max-width: infinity;
@@ -13,13 +15,14 @@
 }
 
 .label {
-   -fx-font: 15pt "Garamond";
-   -fx-padding: 5px
+   -fx-font: 20pt "Garamond";
+   -fx-padding: 10px;
+    -fx-text-fill: black;
 }
 
 .centerHBox {
     -fx-border-color: black;
-    -fx-border-width: 1;
+    -fx-border-width: 6;
     -fx-pref-width: 800;
 }
 
