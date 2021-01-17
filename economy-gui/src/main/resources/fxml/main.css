@@ -5,16 +5,15 @@
         linear-gradient(#dddddd 0%, #f6f6f6 50%);
     -fx-text-fill: black;
     -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
-    -fx-font: bold 15pt "Arial";
+    -fx-font: bold 15pt "Garamond";
 }
-
 .creatureButton {
     -fx-max-width: infinity;
     -fx-hgrow-policy:always;
 }
 
 .label {
-   -fx-font: bold 15pt "Arial";
+   -fx-font: 15pt "Garamond";
    -fx-padding: 5px
 }
 
@@ -53,4 +52,11 @@
     -fx-text-fill:#000000;
     -fx-font-family: "Verdana";
     -fx-font-size:16px;
+}
+
+.buy-creature-text{
+    -fx-font-weight:bold;
+    -fx-text-fill:#000000;
+    -fx-font-family: "Garamond";
+    -fx-font-size:20px;
 }
