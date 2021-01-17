@@ -3,6 +3,7 @@ package pl.sdk.gui;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Separator;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -60,11 +61,17 @@ public class EcoController implements PropertyChangeListener {
         heroStateHBox.getChildren().clear();
 
         EconomyNecropolisFactory factory = new EconomyNecropolisFactory();
-        VBox creatureShop = new VBox();
+        HBox creatureShop = new HBox( );
+        VBox creatureNotUpgraded = new VBox();
+        VBox creatureUpgraded = new VBox();
         for (int i = 1; i < 8; i++) {
-            creatureShop.getChildren().add(new CreatureButton(this, factory, false,i));
-            creatureShop.getChildren().add(new CreatureButton(this, factory, true,i));
+            creatureNotUpgraded.getChildren().add(new CreatureButton(this, factory, false,i));
+            creatureUpgraded.getChildren().add(new CreatureButton(this, factory, true,i));
         }
+        creatureShop.getChildren().add( creatureNotUpgraded );
+        Separator separator = new Separator(  );
+        creatureShop.getChildren().add( separator );
+        creatureShop.getChildren().add( creatureUpgraded );
         shopsBox.getChildren().add(creatureShop);
 
         VBox creaturesBox = new VBox();
