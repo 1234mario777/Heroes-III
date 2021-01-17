@@ -21,17 +21,15 @@ class BuyCreatureDialog
 	private final CreatureSlider creatureSlider;
 	private String creatureName;
 	private int goldCost;
-	private int currentPopulation;
 	private int maxValue;
 	private Stage dialog;
 
-	public BuyCreatureDialog( String aCreatureName, int aMaxValue, int aGoldCost, int aCurrentPopulation)
+	public BuyCreatureDialog( String aCreatureName, int aMaxValue, int aGoldCost)
 	{
 		creatureName = aCreatureName;
 		creatureSlider = new CreatureSlider( aMaxValue );
 		goldCost = aGoldCost;
 		maxValue = aMaxValue;
-		currentPopulation = aCurrentPopulation;
 	}
 
 	void startDialog() {
@@ -136,7 +134,7 @@ class BuyCreatureDialog
 	private Stage prepareWindow( Pane aCenter, Pane aBottom, Pane aTop ) {
 		dialog = new Stage();
 		BorderPane pane = new BorderPane();
-		Scene scene = new Scene(pane, 700,700);
+		Scene scene = new Scene(pane, 700,550);
 		scene.getStylesheets().add("fxml/main.css");
 		dialog.setScene(scene);
 		dialog.initModality( Modality.APPLICATION_MODAL );
@@ -153,6 +151,11 @@ class BuyCreatureDialog
 		aBottomPane.setAlignment( Pos.CENTER );
 		okButton.addEventHandler( MouseEvent.MOUSE_CLICKED, (e) -> dialog.close() );
 		okButton.setPrefWidth(200);
+
+		Button maxButton = new Button("MAX");
+		maxButton.setPrefWidth(200);
+		maxButton.addEventHandler( MouseEvent.MOUSE_CLICKED, (e) -> aSlider.setValue( maxValue ) );
+
 		Button cancelButton = new Button("CLOSE");
 		cancelButton.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) ->
 		{
@@ -161,9 +164,14 @@ class BuyCreatureDialog
 		});
 		cancelButton.setPrefWidth(200);
 		HBox.setHgrow(okButton, Priority.ALWAYS );
+		HBox.setHgrow(maxButton, Priority.ALWAYS );
 		HBox.setHgrow(cancelButton, Priority.ALWAYS);
 		aBottomPane.getChildren().add(okButton);
+		aBottomPane.getChildren().add(maxButton);
 		aBottomPane.getChildren().add(cancelButton);
+		HBox.setMargin( okButton, new Insets(0, 10, 70, 0) );
+		HBox.setMargin( maxButton, new Insets(0, 10, 70, 10) );
+		HBox.setMargin( cancelButton, new Insets(0, 0, 70, 10) );
 	}
 
 }
