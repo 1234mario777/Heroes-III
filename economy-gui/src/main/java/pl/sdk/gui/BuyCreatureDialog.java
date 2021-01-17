@@ -7,6 +7,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Separator;
 import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -53,47 +54,75 @@ class BuyCreatureDialog
 
 		VBox leftPane = new VBox();
 		leftPane.getChildren().add(new Label("Cost Per Troop") );
+		Separator separator1 = new Separator(  );
+		leftPane.getChildren().add( separator1 );
 		ImageView image = new ImageView(new Image(getClass().getResourceAsStream("/icons/gold-bars.png" )));
 		image.setFitHeight(50);
 		image.setFitWidth(50);
 		leftPane.getChildren().add(image);
-		leftPane.getChildren().add(new Label(String.valueOf( goldCost ) ));
-		leftPane.getStyleClass().add( "vbox" );
+		VBox.setMargin(image, new Insets(0, 0, 0, 65) );
+		Separator separator2 = new Separator(  );
+		leftPane.getChildren().add( separator2 );
 
+		Label goldCostLabel = new Label(String.valueOf( goldCost ) );
+		leftPane.getChildren().add(goldCostLabel);
+		VBox.setMargin(goldCostLabel, new Insets(0, 0, 0, 60) );
+		leftPane.getStyleClass().add( "border" );
 		VBox centerPane = new VBox();
 		HBox statePane = new HBox();
 		VBox availablePane = new VBox( );
 		VBox recruitPane = new VBox( );
 
-		availablePane.getChildren().add(new Label("Available") );
-		availablePane.getChildren().add(new Label(String.valueOf( maxValue )) );
+		Label availableText = new Label("Available");
+		availablePane.getChildren().add(availableText );
+		Separator separator3 = new Separator(  );
+		availablePane.getChildren().add( separator3 );
+		Label maxValueLabel = new Label(String.valueOf( maxValue ));
+		availablePane.getChildren().add(maxValueLabel );
+		VBox.setMargin(maxValueLabel, new Insets(0, 0, 0, 40) );
+		availablePane.getStyleClass().add( "border" );
 		statePane.getChildren().add( availablePane );
 
-		recruitPane.getChildren().add(new Label("Recruit") );
+		Label recruitTextLabel = new Label("Recruit");
+		recruitPane.getChildren().add(recruitTextLabel);
+		Separator separator4 = new Separator(  );
+		recruitPane.getChildren().add( separator4 );
 		Label recruitValue = new Label( String.valueOf( 0 ) );
 		recruitPane.getChildren().add(recruitValue );
+		VBox.setMargin(recruitValue, new Insets(0, 0, 0, 30) );;
+		recruitPane.getStyleClass().add( "border" );
 		statePane.getChildren().add( recruitPane );
 
 		centerPane.getChildren().add( statePane );
 
-		centerPane.getChildren().add( slider );
-
-		centerPane.getStyleClass().add( "vbox" );
+		VBox sliderPane = new VBox(  );
+		sliderPane.getChildren().add( slider );
+		sliderPane.setMargin( slider, new Insets(0, 0, 0 ,0) );
+		Button maxButton = new Button("MAX");
+		maxButton.setPrefWidth(150);
+		maxButton.addEventHandler( MouseEvent.MOUSE_CLICKED, (e) -> aSlider.setValue( maxValue ) );
+		sliderPane.getChildren().add( maxButton );
+		sliderPane.setMargin( maxButton, new Insets(0, 10, 10 ,40) );
+		centerPane.getChildren().add( sliderPane );
 
 		VBox rightPane = new VBox();
 		Label totalCostText = new Label("Total Cost");
 		rightPane.getChildren().add(totalCostText );
-		VBox.setMargin(totalCostText, new Insets(0, 0, 0, 20) );
+		VBox.setMargin(totalCostText, new Insets(0, 30, 0 ,30));
+		Separator separator5 = new Separator(  );
+		rightPane.getChildren().add( separator5 );
 		ImageView image2 = new ImageView(new Image(getClass().getResourceAsStream("/icons/gold-bars.png" )));
 		image2.setFitHeight(50);
 		image2.setFitWidth(50);
-		VBox.setMargin(image2, new Insets(0, 0, 0, 45) );
+		VBox.setMargin(image2, new Insets(0, 0, 0, 65) );
 		rightPane.getChildren().add(image2);
+		Separator separator6 = new Separator(  );
+		rightPane.getChildren().add( separator6 );
+		rightPane.getStyleClass().add( "border" );
 		Label totalCost = new Label(String.valueOf( 0 ));
 		rightPane.getChildren().add(totalCost);
-		VBox.setMargin(totalCost, new Insets(0, 0, 0, 50) );
-		rightPane.getStyleClass().add( "vbox" );
-
+		VBox.setMargin(totalCost, new Insets(0, 0, 0, 75) );
+		rightPane.getStyleClass().add( "border" );
 		slider.valueProperty()
 		      .addListener( new ChangeListener<Number>()
 		      {
@@ -110,7 +139,10 @@ class BuyCreatureDialog
 		aCenterPane.getChildren().add( leftPane );
 		aCenterPane.getChildren().add( centerPane );
 		aCenterPane.getChildren().add( rightPane );
-		aCenterPane.setMargin( rightPane, new Insets(0, 0, 0, 40) );
+		aCenterPane.setMargin( rightPane, new Insets(0, 0, 100, 40) );
+		aCenterPane.setMargin( leftPane, new Insets(0, 40, 100, 0) );
+		aCenterPane.setPadding( new Insets(0, 0, 0, 25) );
+		aCenterPane.getStyleClass().add("border");
 	}
 
 	int getCreatureAmount()
@@ -134,7 +166,7 @@ class BuyCreatureDialog
 	private Stage prepareWindow( Pane aCenter, Pane aBottom, Pane aTop ) {
 		dialog = new Stage();
 		BorderPane pane = new BorderPane();
-		Scene scene = new Scene(pane, 700,550);
+		Scene scene = new Scene(pane, 790,650);
 		scene.getStylesheets().add("fxml/main.css");
 		dialog.setScene(scene);
 		dialog.initModality( Modality.APPLICATION_MODAL );
@@ -155,7 +187,6 @@ class BuyCreatureDialog
 		Button maxButton = new Button("MAX");
 		maxButton.setPrefWidth(200);
 		maxButton.addEventHandler( MouseEvent.MOUSE_CLICKED, (e) -> aSlider.setValue( maxValue ) );
-
 		Button cancelButton = new Button("CLOSE");
 		cancelButton.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) ->
 		{
@@ -164,14 +195,11 @@ class BuyCreatureDialog
 		});
 		cancelButton.setPrefWidth(200);
 		HBox.setHgrow(okButton, Priority.ALWAYS );
-		HBox.setHgrow(maxButton, Priority.ALWAYS );
 		HBox.setHgrow(cancelButton, Priority.ALWAYS);
 		aBottomPane.getChildren().add(okButton);
-		aBottomPane.getChildren().add(maxButton);
 		aBottomPane.getChildren().add(cancelButton);
-		HBox.setMargin( okButton, new Insets(0, 10, 70, 0) );
-		HBox.setMargin( maxButton, new Insets(0, 10, 70, 10) );
-		HBox.setMargin( cancelButton, new Insets(0, 0, 70, 10) );
+		HBox.setMargin( okButton, new Insets(10, 10, 150, 0) );
+		HBox.setMargin( cancelButton, new Insets(10, 0, 150, 10) );
 	}
 
 }
