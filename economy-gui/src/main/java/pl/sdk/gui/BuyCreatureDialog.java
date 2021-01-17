@@ -1,5 +1,8 @@
 package pl.sdk.gui;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -12,29 +15,104 @@ import javafx.scene.layout.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+
 class BuyCreatureDialog
 {
 	private final CreatureSlider creatureSlider;
 	private String creatureName;
+	private int goldCost;
+	private int currentPopulation;
+	private int maxValue;
 	private Stage dialog;
 
-	public BuyCreatureDialog( String aCreatureName, int aMaxValue )
+	public BuyCreatureDialog( String aCreatureName, int aMaxValue, int aGoldCost, int aCurrentPopulation)
 	{
 		creatureName = aCreatureName;
 		creatureSlider = new CreatureSlider( aMaxValue );
+		goldCost = aGoldCost;
+		maxValue = aMaxValue;
+		currentPopulation = aCurrentPopulation;
 	}
 
 	void startDialog() {
-		VBox centerPane = new VBox();
+		HBox centerPane = new HBox();
 		HBox bottomPane = new HBox();
 		VBox topPane = new VBox();
 		Stage dialog = prepareWindow(centerPane, bottomPane, topPane);
 		Slider slider = creatureSlider.createSlider();
+
 		prepareConfirmAndCancelButton(bottomPane, slider);
-		prepareTop(topPane, slider);
-		centerPane.getChildren().add(slider);
+		prepareTop(topPane);
+		prepareCenter(centerPane, slider);
+
 
 		dialog.showAndWait();
+	}
+
+	private void prepareCenter( HBox aCenterPane, Slider aSlider )
+	{
+		Slider slider = aSlider;
+
+		VBox leftPane = new VBox();
+		leftPane.getChildren().add(new Label("Cost Per Troop") );
+		ImageView image = new ImageView(new Image(getClass().getResourceAsStream("/icons/gold-bars.png" )));
+		image.setFitHeight(50);
+		image.setFitWidth(50);
+		leftPane.getChildren().add(image);
+		leftPane.getChildren().add(new Label(String.valueOf( goldCost ) ));
+		leftPane.getStyleClass().add( "vbox" );
+
+		VBox centerPane = new VBox();
+		HBox statePane = new HBox();
+		VBox availablePane = new VBox( );
+		VBox recruitPane = new VBox( );
+
+		availablePane.getChildren().add(new Label("Available") );
+		availablePane.getChildren().add(new Label(String.valueOf( maxValue )) );
+		statePane.getChildren().add( availablePane );
+
+		recruitPane.getChildren().add(new Label("Recruit") );
+		Label recruitValue = new Label( String.valueOf( 0 ) );
+		recruitPane.getChildren().add(recruitValue );
+		statePane.getChildren().add( recruitPane );
+
+		centerPane.getChildren().add( statePane );
+
+		centerPane.getChildren().add( slider );
+
+		centerPane.getStyleClass().add( "vbox" );
+
+		VBox rightPane = new VBox();
+		Label totalCostText = new Label("Total Cost");
+		rightPane.getChildren().add(totalCostText );
+		VBox.setMargin(totalCostText, new Insets(0, 0, 0, 20) );
+		ImageView image2 = new ImageView(new Image(getClass().getResourceAsStream("/icons/gold-bars.png" )));
+		image2.setFitHeight(50);
+		image2.setFitWidth(50);
+		VBox.setMargin(image2, new Insets(0, 0, 0, 45) );
+		rightPane.getChildren().add(image2);
+		Label totalCost = new Label(String.valueOf( 0 ));
+		rightPane.getChildren().add(totalCost);
+		VBox.setMargin(totalCost, new Insets(0, 0, 0, 50) );
+		rightPane.getStyleClass().add( "vbox" );
+
+		slider.valueProperty()
+		      .addListener( new ChangeListener<Number>()
+		      {
+
+			      @Override
+			      public void changed( ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue )
+			      {
+				      totalCost.setText( String.valueOf( newValue.intValue() * goldCost ) );
+				      recruitValue.setText( String.valueOf( newValue.intValue() ) );
+			      }
+		      } );
+
+
+		aCenterPane.getChildren().add( leftPane );
+		aCenterPane.getChildren().add( centerPane );
+		aCenterPane.getChildren().add( rightPane );
+		aCenterPane.setMargin( rightPane, new Insets(0, 0, 0, 40) );
 	}
 
 	int getCreatureAmount()
@@ -42,7 +120,7 @@ class BuyCreatureDialog
 		return creatureSlider.getCreatureAmount();
 	}
 
-	private void prepareTop(VBox aTopPane, Slider aSlider) {
+	private void prepareTop(VBox aTopPane) {
 
 		Label recruitLabel = new Label("Recruit " + creatureName );
 		recruitLabel.getStyleClass().add("buy-creature-text");
@@ -53,12 +131,6 @@ class BuyCreatureDialog
 		image.setFitWidth(200);
 		aTopPane.getChildren().add(image);
 		aTopPane.setAlignment( Pos.CENTER );
-//		//TODO creature cops should be visible here
-//		aTopPane.getChildren().add(new Label("Single Cost: " + "0") );
-//		Label slideValueLabel = new Label("0");
-//		aSlider.valueProperty().addListener((slider, aOld, aNew) -> slideValueLabel.setText(String.valueOf(aNew.intValue())));
-//		aTopPane.getChildren().add(slideValueLabel);
-//		aTopPane.getChildren().add(new Label ("Purchase Cost: "));
 	}
 
 	private Stage prepareWindow( Pane aCenter, Pane aBottom, Pane aTop ) {

@@ -63,3 +63,10 @@
     -fx-font-family: "Garamond";
     -fx-font-size:20px;
 }
+.vbox{
+    -fx-border-color: black;
+    -fx-border-insets: 5;
+    -fx-border-width: 3;
+    -fx-border-style: dashed;
+
+}

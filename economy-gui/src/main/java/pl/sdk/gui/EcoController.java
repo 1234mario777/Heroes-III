@@ -104,4 +104,9 @@ public class EcoController implements PropertyChangeListener {
 
         }
     }
+
+	int getCurrentPopulation( int aTier )
+	{
+	    return economyEngine.getCurrentPopulation( aTier );
+	}
 }
