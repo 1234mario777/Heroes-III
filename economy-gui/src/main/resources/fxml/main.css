@@ -78,3 +78,9 @@
     -fx-text-fill: black;
     -fx-font-weight:bold;
 }
+
+.troop-box {
+    -fx-border-color: black;
+    -fx-border-width: thin;
+    -fx-pref-width: 220;
+}

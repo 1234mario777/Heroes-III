@@ -23,14 +23,16 @@ class BuyCreatureDialog
 	private String creatureName;
 	private int goldCost;
 	private int maxValue;
+	private int population;
 	private Stage dialog;
 
-	public BuyCreatureDialog( String aCreatureName, int aMaxValue, int aGoldCost)
+	public BuyCreatureDialog( String aCreatureName, int aMaxValue, int aGoldCost, int aPopulation)
 	{
 		creatureName = aCreatureName;
 		creatureSlider = new CreatureSlider( aMaxValue );
 		goldCost = aGoldCost;
 		maxValue = aMaxValue;
+		population = aPopulation;
 	}
 
 	void startDialog() {
@@ -50,79 +52,88 @@ class BuyCreatureDialog
 
 	private void prepareCenter( HBox aCenterPane, Slider aSlider )
 	{
+		VBox centerPane = new VBox();
 		Slider slider = aSlider;
 
 		VBox leftPane = new VBox();
+
 		leftPane.getChildren().add(new Label("Cost Per Troop") );
-		Separator separator1 = new Separator(  );
-		leftPane.getChildren().add( separator1 );
+		leftPane.getChildren().add( getSeparator() );
+
 		ImageView image = new ImageView(new Image(getClass().getResourceAsStream("/icons/gold-bars.png" )));
 		image.setFitHeight(50);
 		image.setFitWidth(50);
 		leftPane.getChildren().add(image);
-		VBox.setMargin(image, new Insets(0, 0, 0, 65) );
-		Separator separator2 = new Separator(  );
-		leftPane.getChildren().add( separator2 );
+		leftPane.getChildren().add( getSeparator() );
 
 		Label goldCostLabel = new Label(String.valueOf( goldCost ) );
 		leftPane.getChildren().add(goldCostLabel);
-		VBox.setMargin(goldCostLabel, new Insets(0, 0, 0, 60) );
-		leftPane.getStyleClass().add( "border" );
-		VBox centerPane = new VBox();
+		leftPane.getStyleClass().add( "troop-box" );
+		leftPane.setAlignment( Pos.CENTER );
+
+
 		HBox statePane = new HBox();
 		VBox availablePane = new VBox( );
+		VBox populationPane = new VBox( );
 		VBox recruitPane = new VBox( );
+
+		Label populationText = new Label("Population");
+		populationPane.getChildren().add(populationText );
+		populationPane.getChildren().add( getSeparator() );
+		Label populationValueLabel = new Label(String.valueOf( population ));
+		populationPane.getChildren().add(populationValueLabel );
+		populationPane.setAlignment( Pos.CENTER );
+		statePane.getChildren().add( populationPane );
 
 		Label availableText = new Label("Available");
 		availablePane.getChildren().add(availableText );
-		Separator separator3 = new Separator(  );
-		availablePane.getChildren().add( separator3 );
+		availablePane.getChildren().add( getSeparator() );
 		Label maxValueLabel = new Label(String.valueOf( maxValue ));
 		availablePane.getChildren().add(maxValueLabel );
-		VBox.setMargin(maxValueLabel, new Insets(0, 0, 0, 40) );
-		availablePane.getStyleClass().add( "border" );
+		availablePane.setAlignment( Pos.CENTER );
 		statePane.getChildren().add( availablePane );
 
 		Label recruitTextLabel = new Label("Recruit");
 		recruitPane.getChildren().add(recruitTextLabel);
-		Separator separator4 = new Separator(  );
-		recruitPane.getChildren().add( separator4 );
+		recruitPane.getChildren().add( getSeparator() );
 		Label recruitValue = new Label( String.valueOf( 0 ) );
 		recruitPane.getChildren().add(recruitValue );
-		VBox.setMargin(recruitValue, new Insets(0, 0, 0, 30) );;
-		recruitPane.getStyleClass().add( "border" );
+		recruitPane.setAlignment( Pos.CENTER );
 		statePane.getChildren().add( recruitPane );
 
+		statePane.getStyleClass().add( "border" );
 		centerPane.getChildren().add( statePane );
+
 
 		VBox sliderPane = new VBox(  );
 		sliderPane.getChildren().add( slider );
-		sliderPane.setMargin( slider, new Insets(0, 0, 0 ,0) );
+
 		Button maxButton = new Button("MAX");
 		maxButton.setPrefWidth(150);
 		maxButton.addEventHandler( MouseEvent.MOUSE_CLICKED, (e) -> aSlider.setValue( maxValue ) );
 		sliderPane.getChildren().add( maxButton );
-		sliderPane.setMargin( maxButton, new Insets(0, 10, 10 ,40) );
+
+		sliderPane.setAlignment( Pos.CENTER );
 		centerPane.getChildren().add( sliderPane );
+
 
 		VBox rightPane = new VBox();
 		Label totalCostText = new Label("Total Cost");
 		rightPane.getChildren().add(totalCostText );
-		VBox.setMargin(totalCostText, new Insets(0, 30, 0 ,30));
-		Separator separator5 = new Separator(  );
-		rightPane.getChildren().add( separator5 );
+		rightPane.getChildren().add( getSeparator() );
+
 		ImageView image2 = new ImageView(new Image(getClass().getResourceAsStream("/icons/gold-bars.png" )));
 		image2.setFitHeight(50);
 		image2.setFitWidth(50);
-		VBox.setMargin(image2, new Insets(0, 0, 0, 65) );
 		rightPane.getChildren().add(image2);
-		Separator separator6 = new Separator(  );
-		rightPane.getChildren().add( separator6 );
-		rightPane.getStyleClass().add( "border" );
+		rightPane.getChildren().add( getSeparator() );
+
 		Label totalCost = new Label(String.valueOf( 0 ));
 		rightPane.getChildren().add(totalCost);
-		VBox.setMargin(totalCost, new Insets(0, 0, 0, 75) );
-		rightPane.getStyleClass().add( "border" );
+
+		rightPane.setAlignment( Pos.CENTER );
+		rightPane.getStyleClass().add( "troop-box" );
+
 		slider.valueProperty()
 		      .addListener( new ChangeListener<Number>()
 		      {
@@ -139,10 +150,14 @@ class BuyCreatureDialog
 		aCenterPane.getChildren().add( leftPane );
 		aCenterPane.getChildren().add( centerPane );
 		aCenterPane.getChildren().add( rightPane );
-		aCenterPane.setMargin( rightPane, new Insets(0, 0, 100, 40) );
-		aCenterPane.setMargin( leftPane, new Insets(0, 40, 100, 0) );
-		aCenterPane.setPadding( new Insets(0, 0, 0, 25) );
-		aCenterPane.getStyleClass().add("border");
+		HBox.setMargin( rightPane, new Insets(0, 0, 100, 40) );
+		HBox.setMargin( leftPane, new Insets(0, 40, 100, 0) );
+		aCenterPane.setAlignment( Pos.CENTER );
+	}
+
+	private Separator getSeparator()
+	{
+		return new Separator();
 	}
 
 	int getCreatureAmount()
@@ -166,7 +181,7 @@ class BuyCreatureDialog
 	private Stage prepareWindow( Pane aCenter, Pane aBottom, Pane aTop ) {
 		dialog = new Stage();
 		BorderPane pane = new BorderPane();
-		Scene scene = new Scene(pane, 790,650);
+		Scene scene = new Scene(pane, 900,600);
 		scene.getStylesheets().add("fxml/main.css");
 		dialog.setScene(scene);
 		dialog.initModality( Modality.APPLICATION_MODAL );
@@ -198,8 +213,8 @@ class BuyCreatureDialog
 		HBox.setHgrow(cancelButton, Priority.ALWAYS);
 		aBottomPane.getChildren().add(okButton);
 		aBottomPane.getChildren().add(cancelButton);
-		HBox.setMargin( okButton, new Insets(10, 10, 150, 0) );
-		HBox.setMargin( cancelButton, new Insets(10, 0, 150, 10) );
+		HBox.setMargin( okButton, new Insets(20, 10, 150, 0) );
+		HBox.setMargin( cancelButton, new Insets(20, 0, 150, 10) );
 	}
 
 }
