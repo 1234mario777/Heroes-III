@@ -60,7 +60,7 @@ class BuyCreatureDialog
 		leftPane.getChildren().add(new Label("Cost Per Troop") );
 		leftPane.getChildren().add( getSeparator() );
 
-		ImageView image = new ImageView(new Image(getClass().getResourceAsStream("/icons/gold-bars.png" )));
+		ImageView image = new ImageView(new Image(getClass().getResourceAsStream( "/icons/gold-bars.png" )));
 		image.setFitHeight(50);
 		image.setFitWidth(50);
 		leftPane.getChildren().add(image);
@@ -122,7 +122,7 @@ class BuyCreatureDialog
 		rightPane.getChildren().add(totalCostText );
 		rightPane.getChildren().add( getSeparator() );
 
-		ImageView image2 = new ImageView(new Image(getClass().getResourceAsStream("/icons/gold-bars.png" )));
+		ImageView image2 = new ImageView(new Image(getClass().getResourceAsStream( "/icons/gold-bars.png" )));
 		image2.setFitHeight(50);
 		image2.setFitWidth(50);
 		rightPane.getChildren().add(image2);

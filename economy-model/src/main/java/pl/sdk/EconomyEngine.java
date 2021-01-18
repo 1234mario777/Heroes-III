@@ -120,4 +120,16 @@ public class EconomyEngine {
     {
         return creatureShop.getCurrentPopulation(aTier);
     }
+
+    public String heroToString()
+    {
+        if(activeHero == hero1)
+        {
+            return "Hero I";
+        }
+        else
+        {
+            return "Hero II";
+        }
+    }
 }

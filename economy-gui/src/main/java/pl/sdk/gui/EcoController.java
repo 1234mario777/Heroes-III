@@ -31,6 +31,12 @@ public class EcoController implements PropertyChangeListener {
     @FXML
     Label playerLabel;
     @FXML
+    ImageView playerIcon;
+    @FXML
+    ImageView goldIcon;
+    @FXML
+    ImageView roundIcon;
+    @FXML
     Label currentGoldLabel;
     @FXML
     Label roundNumberLabel;
@@ -57,7 +63,7 @@ public class EcoController implements PropertyChangeListener {
     }
 
     void refreshGui() {
-        playerLabel.setText(economyEngine.getActiveHero().toString());
+        playerLabel.setText(economyEngine.heroToString());
         currentGoldLabel.setText(String.valueOf( getGold() ) );
         roundNumberLabel.setText(String.valueOf(economyEngine.getRoundNumber()));
         shopsBox.getChildren().clear();
