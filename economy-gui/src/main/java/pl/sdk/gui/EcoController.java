@@ -1,6 +1,7 @@
 package pl.sdk.gui;
 
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
@@ -73,6 +74,7 @@ public class EcoController implements PropertyChangeListener {
         creatureShop.getChildren().add( separator );
         creatureShop.getChildren().add( creatureUpgraded );
         shopsBox.getChildren().add(creatureShop);
+        shopsBox.setAlignment( Pos.CENTER );
 
         VBox creaturesBox = new VBox();
         economyEngine.getActiveHero().getCreatures().forEach(c ->
