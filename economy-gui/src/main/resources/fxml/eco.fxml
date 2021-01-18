@@ -7,6 +7,9 @@
 
 
 <?import java.net.URL?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.geometry.Insets?>
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1000.0"
             prefWidth="1600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
     <center>
@@ -18,13 +21,52 @@
         </HBox>
     </center>
     <top>
-        <HBox BorderPane.alignment="CENTER">
+        <HBox>
             <children>
-                <Label fx:id="playerLabel" text="Player"/>
-                <Label fx:id="roundNumberStaticLabel" text="Round: "/>
-                <Label fx:id="roundNumberLabel" text="X"/>
-                <Label fx:id="currentStaticLabel" text="GOLD: "/>
-                <Label fx:id="currentGoldLabel" text="XXXX"/>
+                <HBox>
+                    <children>
+                        <ImageView fx:id="playerIcon" fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="/icons/knight.png" />
+                            </image>
+                        </ImageView>
+                        <Label fx:id="playerLabel" text="Player"/>
+                    </children>
+                    <padding>
+                        <Insets left="15.0" right="10.0" top="10.0" />
+                    </padding>
+                </HBox>
+
+                <HBox>
+                    <children>
+                        <ImageView fx:id="roundIcon" fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="/icons/shield.png" />
+
+                            </image>
+                        </ImageView>
+                        <Label fx:id="roundNumberStaticLabel" text="Round: "/>
+                        <Label fx:id="roundNumberLabel" text="X"/>
+                    </children>
+                    <padding>
+                        <Insets left="10.0" right="10.0" top="10.0" />
+                    </padding>
+                </HBox>
+
+                <HBox>
+                    <children>
+                        <ImageView fx:id="goldIcon" fitHeight="41.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="/icons/hero-gold.png" />
+                            </image>
+                        </ImageView>
+                        <Label fx:id="currentStaticLabel" text="GOLD: "/>
+                        <Label fx:id="currentGoldLabel" text="XXXX"/>
+                    </children>
+                    <padding>
+                        <Insets left="10.0" right="10.0" top="10.0" />
+                    </padding>
+                </HBox>
             </children>
         </HBox>
     </top>
