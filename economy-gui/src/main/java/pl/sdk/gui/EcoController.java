@@ -5,6 +5,8 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -80,9 +82,25 @@ public class EcoController implements PropertyChangeListener {
         economyEngine.getActiveHero().getCreatures().forEach(c ->
         {
             HBox tempHbox = new HBox();
-            tempHbox.getChildren().add(new Label(String.valueOf(c.getAmount())));
-            tempHbox.getChildren().add(new Label(c.getName()));
+
+            ImageView image = new ImageView(new Image(getClass().getResourceAsStream("/graphics/creatures/" + c.getName() + ".png" )));
+            image.setFitHeight(100);
+            image.setFitWidth(100);
+            tempHbox.getChildren().add(image);
+
+            Label creatureName = new Label(c.getName());
+            creatureName.getStyleClass().add( "hero-state" );
+            tempHbox.getChildren().add(creatureName);
+
+
+            Label creatureAmount = new Label(String.valueOf( c.getAmount()));
+            tempHbox.getChildren().add(creatureAmount);
+            creatureAmount.getStyleClass().add( "hero-state" );
+
+            tempHbox.setAlignment( Pos.CENTER_LEFT );
             creaturesBox.getChildren().add(tempHbox);
+            Separator stateSeparator = new Separator(  );
+            creaturesBox.getChildren().add( stateSeparator );
         });
         heroStateHBox.getChildren().add(creaturesBox);
     }

@@ -82,3 +82,9 @@
     -fx-border-color: black;
     -fx-pref-width: 220;
 }
+.hero-state{
+    -fx-font-weight:bold;
+    -fx-text-fill:#000000;
+    -fx-font-family: "Garamond";
+    -fx-font-size:30px;
+}
