@@ -21,6 +21,19 @@ public class CreatureButton extends Button {
         super();
         EconomyCreature creature = aFactory.create(aUpgraded,aTier,1 );
 
+        addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
+            if(e.getButton() == MouseButton.PRIMARY)
+            {
+                BuyCreatureDialog buyCreatureDialog = new BuyCreatureDialog( creature.getName(), aEcoController.calculateMaxAmount(creature ), creature.getGoldCost(), aEcoController.getCurrentPopulation( creature.getTier() ));
+                buyCreatureDialog.startDialog();
+                int amount = buyCreatureDialog.getCreatureAmount();
+                if(amount != 0){
+                    aEcoController.buy(aFactory.create(aUpgraded,aTier,amount));
+                }
+                aEcoController.refreshGui();
+            }
+        });
+
         HBox topPane = new HBox( );
         ImageView image = new ImageView(new Image(getClass().getResourceAsStream("/graphics/creatures/" + creature.getName() + ".png" )));
         image.setFitHeight(50);
@@ -30,7 +43,6 @@ public class CreatureButton extends Button {
         creatureName.getStyleClass().add( "buy-creature-text" );
         topPane.getChildren().add( creatureName );
         topPane.setAlignment( Pos.CENTER );
-
 
         HBox statisticBox = new HBox(  );
         Label attackLabel = new Label ("Attack: " + creature.getAttack());
@@ -49,41 +61,13 @@ public class CreatureButton extends Button {
         damageLabel.getStyleClass().add( "creature-button-statistic" );
         statisticBox.getChildren().add(damageLabel );
         statisticBox.setAlignment( Pos.CENTER );
-
         statisticBox.getStyleClass().add( "border" );
+
         VBox buttonContent = new VBox(  );
         buttonContent.getChildren().add( topPane );
         buttonContent.getChildren().add( statisticBox );
-
         this.setGraphic( buttonContent );
         getStyleClass().add("creatureButton");
-
-
-
-
-
-
-
-
-
-        addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
-            if(e.getButton() == MouseButton.PRIMARY)
-            {
-                BuyCreatureDialog buyCreatureDialog = new BuyCreatureDialog( creature.getName(), aEcoController.calculateMaxAmount(creature ), creature.getGoldCost(), aEcoController.getCurrentPopulation( creature.getTier() ));
-                buyCreatureDialog.startDialog();
-                int amount = buyCreatureDialog.getCreatureAmount();
-                if(amount != 0){
-                    aEcoController.buy(aFactory.create(aUpgraded,aTier,amount));
-                }
-                aEcoController.refreshGui();
-            }
-            else if(e.getButton() == MouseButton.SECONDARY)
-            {
-                StatisticCreatureDialog statisticCreatureDialog = new StatisticCreatureDialog( this, aFactory.create(aUpgraded,aTier,1) );
-                statisticCreatureDialog.startDialog();
-            }
-
-        });
     }
 
 }
