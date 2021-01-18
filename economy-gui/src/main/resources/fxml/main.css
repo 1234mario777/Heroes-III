@@ -68,7 +68,6 @@
 .border{
     -fx-border-color: black;
     -fx-border-insets: 5;
-    -fx-border-width: thin;
 
 }
 
@@ -81,6 +80,5 @@
 
 .troop-box {
     -fx-border-color: black;
-    -fx-border-width: thin;
     -fx-pref-width: 220;
 }
