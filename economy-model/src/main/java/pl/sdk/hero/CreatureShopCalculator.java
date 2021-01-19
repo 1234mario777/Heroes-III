@@ -30,8 +30,8 @@ public class CreatureShopCalculator
 		return Math.min(aHeroGold/aGoldCost, aPopulation);
 	}
 
-	int randomize(int aPopulation)
+	int randomize(int aGrowth)
 	{
-		return ( int ) (aPopulation * randomFactor);
+		return ( int ) (aGrowth * randomFactor);
 	}
 }
