@@ -23,7 +23,9 @@ class CreatureShopTest
 		CreatureShop shop = new CreatureShop(rand);
 		EconomyHero hero1 = new EconomyHero(EconomyHero.Fraction.NECROPOLIS, 1000);
 		EconomyHero hero2 = new EconomyHero(EconomyHero.Fraction.NECROPOLIS, 1000);
-		economyEngine = new EconomyEngine(hero1, hero2, shop);
+		Player player1 = new Player( hero1 );
+		Player player2 = new Player( hero2 );
+		economyEngine = new EconomyEngine(player1, player2, shop);
 	}
 
 	@Test
@@ -130,7 +132,9 @@ class CreatureShopTest
 		CreatureShop shop = new CreatureShop(rand);
 		EconomyHero hero1 = new EconomyHero(EconomyHero.Fraction.NECROPOLIS, 1000);
 		EconomyHero hero2 = new EconomyHero(EconomyHero.Fraction.NECROPOLIS, 1000);
-		EconomyEngine economyEngine = new EconomyEngine(hero1, hero2, shop);
+		Player player1 = new Player( hero1 );
+		Player player2 = new Player( hero2 );
+		economyEngine = new EconomyEngine(player1, player2, shop);
 
 		assertEquals( 9, economyEngine.getCurrentPopulation(1) );
 		assertEquals( 6, economyEngine.getCurrentPopulation(2) );

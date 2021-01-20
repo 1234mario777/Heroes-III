@@ -3,71 +3,71 @@ package pl.sdk;
 import pl.sdk.creatures.EconomyCreature;
 import pl.sdk.hero.CreatureShop;
 import pl.sdk.hero.EconomyHero;
+import pl.sdk.hero.Player;
 
-import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
 public class EconomyEngine {
-    public static final String HERO_BOUGHT_CREATURE = "HERO_BOUGHT_CREATURE";
-    public static final String ACTIVE_HERO_CHANGED = "ACTIVE_HERO_CHANGED";
+    public static final String PLAYER_BOUGHT_CREATURE = "PLAYER_BOUGHT_CREATURE";
+    public static final String ACTIVE_PLAYER_CHANGED = "ACTIVE_PLAYER_CHANGED";
     public static final String NEXT_ROUND = "NEXT_ROUND";
     public static final String END_OF_TURN = "END_OF_TURN";
-    private final EconomyHero hero1;
-    private final EconomyHero hero2;
-    private EconomyHero activeHero;
+    private final Player player1;
+    private final Player player2;
+    private Player activePlayer;
     private final CreatureShop creatureShop;
     private int roundNumber;
     private final PropertyChangeSupport observerSupport;
     private int turnNumber;
 
-    public EconomyEngine(EconomyHero aHero1, EconomyHero aHero2) {
-        hero1 = aHero1;
-        hero2 = aHero2;
-        activeHero = hero1;
+    public EconomyEngine(Player aPlayer1, Player aPlayer2) {
+        player1 = aPlayer1;
+        player2 = aPlayer2;
+        activePlayer = player1;
         roundNumber = 1;
         turnNumber = 1;
         creatureShop = new CreatureShop();
         observerSupport = new PropertyChangeSupport(this);
-        addObserver(EconomyEngine.ACTIVE_HERO_CHANGED,creatureShop);
+        addObserver(EconomyEngine.ACTIVE_PLAYER_CHANGED,creatureShop);
         addObserver(EconomyEngine.NEXT_ROUND,creatureShop);
     }
 
-    public EconomyEngine( EconomyHero aHero1, EconomyHero aHero2, CreatureShop aShop )
+    public EconomyEngine( Player aPlayer1, Player aPlayer2, CreatureShop aShop )
     {
-        hero1 = aHero1;
-        hero2 = aHero2;
-        activeHero = hero1;
+        player1 = aPlayer1;
+        player2 = aPlayer2;
+        activePlayer = player1;
         roundNumber = 1;
         turnNumber = 1;
         creatureShop = aShop;
         observerSupport = new PropertyChangeSupport(this);
-        addObserver(EconomyEngine.ACTIVE_HERO_CHANGED,creatureShop);
+        addObserver(EconomyEngine.ACTIVE_PLAYER_CHANGED,creatureShop);
         addObserver(EconomyEngine.NEXT_ROUND,creatureShop);
     }
 
     public void buy(EconomyCreature aEconomyCreature) {
-        creatureShop.buy(activeHero,aEconomyCreature);
-        observerSupport.firePropertyChange(HERO_BOUGHT_CREATURE, null, null);
+        creatureShop.buy(activePlayer,aEconomyCreature);
+        observerSupport.firePropertyChange( PLAYER_BOUGHT_CREATURE, null, null );
     }
 
-    public int calculateMaxAmount( EconomyHero aHero, EconomyCreature aCreature )
+    public int calculateMaxAmount( Player aPlayer, EconomyCreature aCreature )
     {
-        return creatureShop.calculateMaxAmount(aHero, aCreature);
+        return creatureShop.calculateMaxAmount(aPlayer, aCreature);
     }
 
-    public EconomyHero getActiveHero() {
-        return activeHero;
+    public Player getActivePlayer() {
+        return activePlayer;
     }
 
     public void pass() {
-        if (activeHero == hero1){
-            activeHero = hero2;
-            observerSupport.firePropertyChange(ACTIVE_HERO_CHANGED, hero1, activeHero);
+        if (activePlayer == player1){
+            activePlayer = player2;
+            observerSupport.firePropertyChange(ACTIVE_PLAYER_CHANGED, player1, activePlayer);
         }
         else{
-            activeHero = hero1;
-            observerSupport.firePropertyChange(ACTIVE_HERO_CHANGED, hero2, activeHero);
+            activePlayer = player1;
+            observerSupport.firePropertyChange(ACTIVE_PLAYER_CHANGED, player2, activePlayer);
             nextRound();
         }
     }
@@ -80,8 +80,8 @@ public class EconomyEngine {
         }
         else
         {
-            hero1.addGold(2000*roundNumber);
-            hero2.addGold(2000*roundNumber);
+            player1.addGold(2000*roundNumber);
+            player2.addGold(2000*roundNumber);
             observerSupport.firePropertyChange(NEXT_ROUND, roundNumber - 1, roundNumber);
         }
     }
@@ -101,14 +101,14 @@ public class EconomyEngine {
         observerSupport.addPropertyChangeListener(aPropertyName, aObserver);
     }
 
-    public EconomyHero getPlayer1() {
+    public Player getPlayer1() {
         //TODO make copy
-        return hero1;
+        return player1;
     }
 
-    public EconomyHero getPlayer2() {
+    public Player getPlayer2() {
         //TODO make copy
-        return hero2;
+        return player2;
     }
 
     int getTurnNumber()

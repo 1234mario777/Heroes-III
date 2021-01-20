@@ -5,11 +5,8 @@ import org.junit.jupiter.api.Test;
 import pl.sdk.creatures.EconomyCreature;
 import pl.sdk.creatures.EconomyNecropolisFactory;
 
-import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 class CreatureShopCalculatorTest
 {

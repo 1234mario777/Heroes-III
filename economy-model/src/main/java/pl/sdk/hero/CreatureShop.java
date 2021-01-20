@@ -8,8 +8,7 @@ import java.beans.PropertyChangeListener;
 import java.util.HashMap;
 import java.util.Random;
 
-import static pl.sdk.EconomyEngine.ACTIVE_HERO_CHANGED;
-import static pl.sdk.EconomyEngine.NEXT_ROUND;
+import static pl.sdk.EconomyEngine.*;
 
 public class CreatureShop implements PropertyChangeListener
 {
@@ -58,13 +57,13 @@ public class CreatureShop implements PropertyChangeListener
         return calculator.randomize( creatureFactory.create( false, aTier, 1 ).getGrowth() );
     }
 
-    public void buy(EconomyHero aHero, EconomyCreature aEconomyCreature) {
-        aHero.substractGold(aEconomyCreature.getGoldCost() * aEconomyCreature.getAmount());
+    public void buy(Player aPlayer, EconomyCreature aEconomyCreature) {
+        aPlayer.substractGold(aEconomyCreature.getGoldCost() * aEconomyCreature.getAmount());
         subtractPopulation(aEconomyCreature.getTier(), aEconomyCreature.getAmount());
         try{
-            aHero.addCreature(aEconomyCreature);
+            aPlayer.addCreature(aEconomyCreature);
         }catch(Exception e){
-            aHero.addGold(aEconomyCreature.getGoldCost() * aEconomyCreature.getAmount());
+            aPlayer.addGold(aEconomyCreature.getGoldCost() * aEconomyCreature.getAmount());
             restorePopulation( aEconomyCreature.getTier(), aEconomyCreature.getAmount() );
             throw new IllegalStateException("hero cannot consume more creature");
         }
@@ -87,7 +86,7 @@ public class CreatureShop implements PropertyChangeListener
         currentPopulation.put( aTier, currentPopulation.get( aTier ) + aAmount );
     }
 
-    public int calculateMaxAmount( EconomyHero aHero, EconomyCreature aCreature )
+    public int calculateMaxAmount( Player aHero, EconomyCreature aCreature )
     {
         return calculator.calculateMaxAmount(aHero.getGold(), currentPopulation.get( aCreature.getTier() ), aCreature.getGoldCost());
     }
@@ -114,7 +113,7 @@ public class CreatureShop implements PropertyChangeListener
     @Override
     public void propertyChange( PropertyChangeEvent aPropertyChangeEvent )
     {
-        if ( aPropertyChangeEvent.getPropertyName().equals( ACTIVE_HERO_CHANGED ) )
+        if ( aPropertyChangeEvent.getPropertyName().equals( ACTIVE_PLAYER_CHANGED ) )
         {
             changeCurrentPopulation();
         }

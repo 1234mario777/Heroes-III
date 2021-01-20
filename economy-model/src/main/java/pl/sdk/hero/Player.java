@@ -1,5 +1,9 @@
 package pl.sdk.hero;
 
+import pl.sdk.creatures.EconomyCreature;
+
+import java.util.List;
+
 public class Player
 {
 	EconomyHero hero;
@@ -26,5 +30,30 @@ public class Player
 	CreatureShop getCreatureShop()
 	{
 		return creatureShop;
+	}
+
+	void substractGold( int aGold )
+	{
+		hero.substractGold( aGold );
+	}
+
+	public void addGold( int aGold )
+	{
+		hero.addGold( aGold );
+	}
+
+	void addCreature( EconomyCreature aEconomyCreature )
+	{
+		hero.addCreature( aEconomyCreature );
+	}
+
+	public List<EconomyCreature> getCreatures()
+	{
+		return hero.getCreatures();
+	}
+
+	public int getGold()
+	{
+		return hero.getGold();
 	}
 }
