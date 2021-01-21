@@ -6,16 +6,16 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class EconomyHero {
+class EconomyHero {
 
-    public enum Fraction {
+    enum Fraction {
         NECROPOLIS;
     }
     private final Fraction fraction;
 
     private final List<EconomyCreature> creatureList;
     private int gold;
-    public EconomyHero(Fraction aFraction, int aGold) {
+    EconomyHero(Fraction aFraction, int aGold) {
         fraction = aFraction;
         gold = aGold;
         creatureList = new ArrayList<>();
@@ -28,15 +28,15 @@ public class EconomyHero {
         creatureList.add(aCreature);
     }
 
-    public int getGold() {
+    int getGold() {
         return gold;
     }
 
-    public void addGold(int aAmount){
+    void addGold(int aAmount){
         gold += aAmount;
     }
 
-    public List<EconomyCreature> getCreatures() {
+    List<EconomyCreature> getCreatures() {
         return List.copyOf(creatureList);
     }
 

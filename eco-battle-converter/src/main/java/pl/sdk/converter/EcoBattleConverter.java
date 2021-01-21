@@ -6,15 +6,14 @@ import javafx.stage.Stage;
 import pl.sdk.creatures.Creature;
 import pl.sdk.creatures.NecropolisFactory;
 import pl.sdk.gui.BattleMapController;
-import pl.sdk.hero.EconomyHero;
-
+import pl.sdk.hero.Player;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class EcoBattleConverter {
 
-    public static void startBattle(EconomyHero aPlayer1, EconomyHero aPlayer2) {
+    public static void startBattle( Player aPlayer1, Player aPlayer2 ) {
         Scene scene = null;
         try {
             FXMLLoader loader = new FXMLLoader();
@@ -31,10 +30,10 @@ public class EcoBattleConverter {
         }
     }
 
-    public static List<Creature> convert(EconomyHero aPlayer1) {
+    public static List<Creature> convert(Player aPlayer) {
         List<Creature>ret = new ArrayList<>();
         NecropolisFactory factory = new NecropolisFactory();
-        aPlayer1.getCreatures().forEach(ecoCreature ->
+        aPlayer.getCreatures().forEach(ecoCreature ->
                 ret.add(factory.create(ecoCreature.isUpgraded(),ecoCreature.getTier(),ecoCreature.getAmount())));
         return ret;
     }

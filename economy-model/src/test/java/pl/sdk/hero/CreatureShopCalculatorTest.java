@@ -3,17 +3,14 @@ package pl.sdk.hero;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import pl.sdk.creatures.EconomyCreature;
-import pl.sdk.creatures.EconomyNecropolisFactory;
+import pl.sdk.creatures.EconomyTestFractionFactory;
 
-import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 class CreatureShopCalculatorTest
 {
-	private final EconomyNecropolisFactory creatureFactory = new EconomyNecropolisFactory();
+	private final EconomyTestFractionFactory creatureFactory = new EconomyTestFractionFactory();
 	EconomyCreature creature;
 	@BeforeEach
 	void init() {

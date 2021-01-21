@@ -14,7 +14,7 @@ import pl.sdk.EconomyEngine;
 import pl.sdk.converter.EcoBattleConverter;
 import pl.sdk.creatures.EconomyCreature;
 import pl.sdk.creatures.EconomyNecropolisFactory;
-import pl.sdk.hero.EconomyHero;
+import pl.sdk.hero.Player;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -43,15 +43,15 @@ public class EcoController implements PropertyChangeListener {
 
     private final EconomyEngine economyEngine;
 
-    public EcoController(EconomyHero aHero1, EconomyHero aHero2) {
-        economyEngine = new EconomyEngine(aHero1, aHero2);
+    public EcoController( Player aPlayer1, Player aPlayer2 ) {
+        economyEngine = new EconomyEngine(aPlayer1, aPlayer2);
     }
 
     @FXML
     void initialize(){
         refreshGui();
-        economyEngine.addObserver(EconomyEngine.ACTIVE_HERO_CHANGED,this);
-        economyEngine.addObserver(EconomyEngine.HERO_BOUGHT_CREATURE,this);
+        economyEngine.addObserver(EconomyEngine.ACTIVE_PLAYER_CHANGED,this);
+        economyEngine.addObserver(EconomyEngine.PLAYER_BOUGHT_CREATURE,this );
         economyEngine.addObserver(EconomyEngine.NEXT_ROUND,this);
         economyEngine.addObserver( END_OF_TURN,this );
 
@@ -63,7 +63,7 @@ public class EcoController implements PropertyChangeListener {
     }
 
     void refreshGui() {
-        playerLabel.setText(economyEngine.heroToString());
+        playerLabel.setText(economyEngine.getActivePlayer().toString() );
         currentGoldLabel.setText(String.valueOf( getGold() ) );
         roundNumberLabel.setText(String.valueOf(economyEngine.getRoundNumber()));
         shopsBox.getChildren().clear();
@@ -85,7 +85,7 @@ public class EcoController implements PropertyChangeListener {
         shopsBox.setAlignment( Pos.CENTER );
 
         VBox creaturesBox = new VBox();
-        economyEngine.getActiveHero().getCreatures().forEach(c ->
+        economyEngine.getActivePlayer().getCreatures().forEach(c ->
         {
             HBox tempHbox = new HBox();
 
@@ -113,7 +113,7 @@ public class EcoController implements PropertyChangeListener {
 
     public int getGold()
     {
-        return economyEngine.getActiveHero().getGold();
+        return economyEngine.getActivePlayer().getGold();
     }
 
     void buy(EconomyCreature aCreature) {
@@ -122,7 +122,7 @@ public class EcoController implements PropertyChangeListener {
 
     public int calculateMaxAmount( EconomyCreature aCreature )
     {
-        return economyEngine.calculateMaxAmount(economyEngine.getActiveHero(), aCreature);
+        return economyEngine.calculateMaxAmount( aCreature );
     }
 
     @Override

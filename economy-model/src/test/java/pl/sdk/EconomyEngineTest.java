@@ -2,31 +2,31 @@ package pl.sdk;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import pl.sdk.creatures.EconomyNecropolisFactory;
-import pl.sdk.hero.EconomyHero;
+import pl.sdk.creatures.EconomyTestFractionFactory;
+import pl.sdk.hero.Player;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class EconomyEngineTest {
 
     private EconomyEngine economyEngine;
-    private EconomyHero h1;
-    private EconomyHero h2;
-    private EconomyNecropolisFactory creatureFactory;
+    private EconomyTestFractionFactory creatureFactory;
+    Player player1;
+    Player player2;
 
     @BeforeEach
     void init(){
-        h1 = new EconomyHero(EconomyHero.Fraction.NECROPOLIS, 1000);
-        h2 = new EconomyHero(EconomyHero.Fraction.NECROPOLIS, 1000);
-        economyEngine = new EconomyEngine(h1, h2);
-        creatureFactory = new EconomyNecropolisFactory();
+        player1 = new Player( );
+        player2 = new Player( );
+        economyEngine = new EconomyEngine(player1, player2);
+        creatureFactory = new EconomyTestFractionFactory();
     }
 
     @Test
     void shouldChangeActiveHeroAfterPass(){
-        assertEquals(h1,economyEngine.getActiveHero());
+        assertEquals(player1,economyEngine.getActivePlayer() );
         economyEngine.pass();
-        assertEquals(h2,economyEngine.getActiveHero());
+        assertEquals(player2,economyEngine.getActivePlayer() );
     }
 
     @Test
@@ -41,12 +41,12 @@ class EconomyEngineTest {
     @Test
     void shouldBuyCreatureCreatureInCorrectHero(){
         economyEngine.buy(creatureFactory.create(false,1,1));
-        assertEquals(940, h1.getGold());
-        assertEquals(1000, h2.getGold());
+        assertEquals(940, player1.getGold());
+        assertEquals(1000, player2.getGold());
         economyEngine.pass();
         economyEngine.buy(creatureFactory.create(false,2,1));
-        assertEquals(900, h2.getGold());
-        assertEquals(940, h1.getGold());
+        assertEquals(900, player2.getGold());
+        assertEquals(940, player1.getGold());
     }
 
     @Test
@@ -73,25 +73,25 @@ class EconomyEngineTest {
     @Test
     void shouldAddGoldAfterRoundEnd()
     {
-        assertEquals( 1000, h1.getGold() );
-        assertEquals( 1000, h2.getGold() );
+        assertEquals( 1000, player1.getGold() );
+        assertEquals( 1000, player2.getGold() );
 
         economyEngine.pass();
         economyEngine.pass();
 
-        assertEquals( 5000, h1.getGold() );
-        assertEquals( 5000, h2.getGold() );
+        assertEquals( 5000, player1.getGold() );
+        assertEquals( 5000, player2.getGold() );
 
         economyEngine.pass();
         economyEngine.pass();
 
-        assertEquals( 11000, h1.getGold() );
-        assertEquals( 11000, h2.getGold() );
+        assertEquals( 11000, player1.getGold() );
+        assertEquals( 11000, player2.getGold() );
 
         economyEngine.pass();
         economyEngine.pass();
 
-        assertEquals( 11000, h1.getGold() );
-        assertEquals( 11000, h2.getGold() );
+        assertEquals( 11000, player1.getGold() );
+        assertEquals( 11000, player2.getGold() );
     }
 }

@@ -2,7 +2,7 @@ package pl.sdk.hero;
 
 import java.util.Random;
 
-public class CreatureShopCalculator
+class CreatureShopCalculator
 {
 	private final Random rand;
 

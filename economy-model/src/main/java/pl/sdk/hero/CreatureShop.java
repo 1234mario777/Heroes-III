@@ -8,38 +8,27 @@ import java.beans.PropertyChangeListener;
 import java.util.HashMap;
 import java.util.Random;
 
-import static pl.sdk.EconomyEngine.ACTIVE_HERO_CHANGED;
-import static pl.sdk.EconomyEngine.NEXT_ROUND;
+import static pl.sdk.EconomyEngine.*;
 
-public class CreatureShop implements PropertyChangeListener
+class CreatureShop implements PropertyChangeListener
 {
 
     private CreatureShopCalculator calculator;
-    private final HashMap<Integer, Integer> heroOnePopulation;
-    private final HashMap<Integer, Integer> heroTwoPopulation;
-    private HashMap<Integer, Integer> currentPopulation;
+    private final HashMap<Integer, Integer> creaturePopulation;
     private final EconomyNecropolisFactory creatureFactory = new EconomyNecropolisFactory();
 
-    public CreatureShop()
+    CreatureShop()
     {
         calculator = new CreatureShopCalculator(  );
-        heroOnePopulation = new HashMap<>();
-        heroTwoPopulation = new HashMap<>();
-        currentPopulation = new HashMap<>();
-        createPopulation(heroOnePopulation);
-        createPopulation(heroTwoPopulation);
-        currentPopulation = heroOnePopulation;
+        creaturePopulation = new HashMap<>();
+        createPopulation(creaturePopulation);
     }
 
     CreatureShop( Random aRand )
     {
         calculator = new CreatureShopCalculator(aRand);
-        heroOnePopulation = new HashMap<>();
-        heroTwoPopulation = new HashMap<>();
-        currentPopulation = new HashMap<>();
-        createPopulation(heroOnePopulation);
-        createPopulation(heroTwoPopulation);
-        currentPopulation = heroOnePopulation;
+        creaturePopulation = new HashMap<>();
+        createPopulation(creaturePopulation);
     }
 
     private void createPopulation( HashMap<Integer, Integer> aPopulationMap )
@@ -58,13 +47,13 @@ public class CreatureShop implements PropertyChangeListener
         return calculator.randomize( creatureFactory.create( false, aTier, 1 ).getGrowth() );
     }
 
-    public void buy(EconomyHero aHero, EconomyCreature aEconomyCreature) {
-        aHero.substractGold(aEconomyCreature.getGoldCost() * aEconomyCreature.getAmount());
+    void buy(Player aPlayer, EconomyCreature aEconomyCreature) {
+        aPlayer.substractGold(aEconomyCreature.getGoldCost() * aEconomyCreature.getAmount());
         subtractPopulation(aEconomyCreature.getTier(), aEconomyCreature.getAmount());
         try{
-            aHero.addCreature(aEconomyCreature);
+            aPlayer.addCreature(aEconomyCreature);
         }catch(Exception e){
-            aHero.addGold(aEconomyCreature.getGoldCost() * aEconomyCreature.getAmount());
+            aPlayer.addGold(aEconomyCreature.getGoldCost() * aEconomyCreature.getAmount());
             restorePopulation( aEconomyCreature.getTier(), aEconomyCreature.getAmount() );
             throw new IllegalStateException("hero cannot consume more creature");
         }
@@ -72,9 +61,9 @@ public class CreatureShop implements PropertyChangeListener
 
     private void subtractPopulation( int aTier, int aAmount )
     {
-        if(currentPopulation.get( aTier ) >= aAmount)
+        if(creaturePopulation.get( aTier ) >= aAmount)
         {
-            currentPopulation.put( aTier, currentPopulation.get( aTier ) - aAmount );
+            creaturePopulation.put( aTier, creaturePopulation.get( aTier ) - aAmount );
         }
         else
         {
@@ -84,45 +73,29 @@ public class CreatureShop implements PropertyChangeListener
 
     private void restorePopulation( int aTier, int aAmount )
     {
-        currentPopulation.put( aTier, currentPopulation.get( aTier ) + aAmount );
+        creaturePopulation.put( aTier, creaturePopulation.get( aTier ) + aAmount );
     }
 
-    public int calculateMaxAmount( EconomyHero aHero, EconomyCreature aCreature )
+    public int calculateMaxAmount( Player aHero, EconomyCreature aCreature )
     {
-        return calculator.calculateMaxAmount(aHero.getGold(), currentPopulation.get( aCreature.getTier() ), aCreature.getGoldCost());
+        return calculator.calculateMaxAmount(aHero.getGold(), creaturePopulation.get( aCreature.getTier() ), aCreature.getGoldCost());
     }
 
     public void generateRandom(){calculator.generateRandomFactor();}
 
     public int getCurrentPopulation( int aTier )
     {
-        return currentPopulation.get( aTier );
+        return creaturePopulation.get( aTier );
     }
 
-    void changeCurrentPopulation()
-    {
-        if(currentPopulation == heroOnePopulation)
-        {
-            currentPopulation = heroTwoPopulation;
-        }
-        else
-        {
-            currentPopulation = heroOnePopulation;
-        }
-    }
 
     @Override
     public void propertyChange( PropertyChangeEvent aPropertyChangeEvent )
     {
-        if ( aPropertyChangeEvent.getPropertyName().equals( ACTIVE_HERO_CHANGED ) )
-        {
-            changeCurrentPopulation();
-        }
-        else if ( aPropertyChangeEvent.getPropertyName().equals( NEXT_ROUND ) )
+        if ( aPropertyChangeEvent.getPropertyName().equals( NEXT_ROUND ) )
         {
             generateRandom();
-            addPopulation(heroTwoPopulation);
-            addPopulation(heroOnePopulation);
+            addPopulation(creaturePopulation);
         }
     }
 

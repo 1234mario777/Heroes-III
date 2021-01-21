@@ -2,7 +2,7 @@ package pl.sdk.hero;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import pl.sdk.creatures.EconomyNecropolisFactory;
+import pl.sdk.creatures.EconomyTestFractionFactory;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -18,7 +18,7 @@ class EconomyHeroTest {
 
     @Test
     void shouldThrowExceptionWhileHeroHas7CreatureAndYoTryToAddNextOne(){
-        EconomyNecropolisFactory factory = new EconomyNecropolisFactory();
+        EconomyTestFractionFactory factory = new EconomyTestFractionFactory();
         hero.addCreature(factory.create(true,1,1));
         hero.addCreature(factory.create(true,1,1));
         hero.addCreature(factory.create(true,1,1));
