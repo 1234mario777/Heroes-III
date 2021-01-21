@@ -3,7 +3,7 @@ package pl.sdk.hero;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import pl.sdk.EconomyEngine;
-import pl.sdk.creatures.EconomyNecropolisFactory;
+import pl.sdk.creatures.EconomyTestFractionFactory;
 
 import java.util.Random;
 
@@ -15,7 +15,7 @@ import static org.mockito.Mockito.when;
 public class BuyingCreatureTest {
 
     private EconomyHero hero1;
-    private final EconomyNecropolisFactory creatureFactory = new EconomyNecropolisFactory();
+    private final EconomyTestFractionFactory creatureFactory = new EconomyTestFractionFactory();
     private EconomyEngine economyEngine;
     private EconomyHero hero2;
     private Player player1;
