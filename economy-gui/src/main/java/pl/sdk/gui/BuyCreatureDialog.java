@@ -198,10 +198,6 @@ class BuyCreatureDialog
 		aBottomPane.setAlignment( Pos.CENTER );
 		okButton.addEventHandler( MouseEvent.MOUSE_CLICKED, (e) -> dialog.close() );
 		okButton.setPrefWidth(200);
-
-		Button maxButton = new Button("MAX");
-		maxButton.setPrefWidth(200);
-		maxButton.addEventHandler( MouseEvent.MOUSE_CLICKED, (e) -> aSlider.setValue( maxValue ) );
 		Button cancelButton = new Button("CLOSE");
 		cancelButton.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) ->
 		{
