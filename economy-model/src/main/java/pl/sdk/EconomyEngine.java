@@ -28,9 +28,7 @@ public class EconomyEngine {
         turnNumber = 1;
 
         observerSupport = new PropertyChangeSupport(this);
-        addObserver(EconomyEngine.ACTIVE_PLAYER_CHANGED,player1.getCreatureShop());
         addObserver(EconomyEngine.NEXT_ROUND,player1.getCreatureShop());
-        addObserver(EconomyEngine.ACTIVE_PLAYER_CHANGED,player2.getCreatureShop());
         addObserver(EconomyEngine.NEXT_ROUND,player2.getCreatureShop());
     }
 

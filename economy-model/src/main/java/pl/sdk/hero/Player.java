@@ -9,7 +9,6 @@ public class Player
 	EconomyHero hero;
 	CreatureShop creatureShop;
 
-
 	public Player( EconomyHero aHero )
 	{
 		hero = aHero;

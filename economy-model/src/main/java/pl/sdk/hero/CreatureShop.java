@@ -14,31 +14,21 @@ public class CreatureShop implements PropertyChangeListener
 {
 
     private CreatureShopCalculator calculator;
-    private final HashMap<Integer, Integer> heroOnePopulation;
-    private final HashMap<Integer, Integer> heroTwoPopulation;
-    private HashMap<Integer, Integer> currentPopulation;
+    private final HashMap<Integer, Integer> creaturePopulation;
     private final EconomyNecropolisFactory creatureFactory = new EconomyNecropolisFactory();
 
     public CreatureShop()
     {
         calculator = new CreatureShopCalculator(  );
-        heroOnePopulation = new HashMap<>();
-        heroTwoPopulation = new HashMap<>();
-        currentPopulation = new HashMap<>();
-        createPopulation(heroOnePopulation);
-        createPopulation(heroTwoPopulation);
-        currentPopulation = heroOnePopulation;
+        creaturePopulation = new HashMap<>();
+        createPopulation(creaturePopulation);
     }
 
     CreatureShop( Random aRand )
     {
         calculator = new CreatureShopCalculator(aRand);
-        heroOnePopulation = new HashMap<>();
-        heroTwoPopulation = new HashMap<>();
-        currentPopulation = new HashMap<>();
-        createPopulation(heroOnePopulation);
-        createPopulation(heroTwoPopulation);
-        currentPopulation = heroOnePopulation;
+        creaturePopulation = new HashMap<>();
+        createPopulation(creaturePopulation);
     }
 
     private void createPopulation( HashMap<Integer, Integer> aPopulationMap )
@@ -71,9 +61,9 @@ public class CreatureShop implements PropertyChangeListener
 
     private void subtractPopulation( int aTier, int aAmount )
     {
-        if(currentPopulation.get( aTier ) >= aAmount)
+        if(creaturePopulation.get( aTier ) >= aAmount)
         {
-            currentPopulation.put( aTier, currentPopulation.get( aTier ) - aAmount );
+            creaturePopulation.put( aTier, creaturePopulation.get( aTier ) - aAmount );
         }
         else
         {
@@ -83,45 +73,29 @@ public class CreatureShop implements PropertyChangeListener
 
     private void restorePopulation( int aTier, int aAmount )
     {
-        currentPopulation.put( aTier, currentPopulation.get( aTier ) + aAmount );
+        creaturePopulation.put( aTier, creaturePopulation.get( aTier ) + aAmount );
     }
 
     public int calculateMaxAmount( Player aHero, EconomyCreature aCreature )
     {
-        return calculator.calculateMaxAmount(aHero.getGold(), currentPopulation.get( aCreature.getTier() ), aCreature.getGoldCost());
+        return calculator.calculateMaxAmount(aHero.getGold(), creaturePopulation.get( aCreature.getTier() ), aCreature.getGoldCost());
     }
 
     public void generateRandom(){calculator.generateRandomFactor();}
 
     public int getCurrentPopulation( int aTier )
     {
-        return currentPopulation.get( aTier );
+        return creaturePopulation.get( aTier );
     }
 
-    void changeCurrentPopulation()
-    {
-        if(currentPopulation == heroOnePopulation)
-        {
-            currentPopulation = heroTwoPopulation;
-        }
-        else
-        {
-            currentPopulation = heroOnePopulation;
-        }
-    }
 
     @Override
     public void propertyChange( PropertyChangeEvent aPropertyChangeEvent )
     {
-        if ( aPropertyChangeEvent.getPropertyName().equals( ACTIVE_PLAYER_CHANGED ) )
-        {
-            changeCurrentPopulation();
-        }
-        else if ( aPropertyChangeEvent.getPropertyName().equals( NEXT_ROUND ) )
+        if ( aPropertyChangeEvent.getPropertyName().equals( NEXT_ROUND ) )
         {
             generateRandom();
-            addPopulation(heroTwoPopulation);
-            addPopulation(heroOnePopulation);
+            addPopulation(creaturePopulation);
         }
     }
 
