@@ -105,7 +105,7 @@ public class EconomyEngine {
         return activePlayer.getCurrentPopulation(aTier);
     }
 
-    public String heroToString()
+    public String playerToString()
     {
         if(activePlayer == player1)
         {

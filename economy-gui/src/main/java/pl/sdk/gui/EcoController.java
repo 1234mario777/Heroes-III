@@ -63,7 +63,7 @@ public class EcoController implements PropertyChangeListener {
     }
 
     void refreshGui() {
-        playerLabel.setText(economyEngine.getActivePlayer().toString() );
+        playerLabel.setText(economyEngine.playerToString() );
         currentGoldLabel.setText(String.valueOf( getGold() ) );
         roundNumberLabel.setText(String.valueOf(economyEngine.getRoundNumber()));
         shopsBox.getChildren().clear();
