@@ -10,14 +10,14 @@ import java.util.Random;
 
 import static pl.sdk.EconomyEngine.*;
 
-public class CreatureShop implements PropertyChangeListener
+class CreatureShop implements PropertyChangeListener
 {
 
     private CreatureShopCalculator calculator;
     private final HashMap<Integer, Integer> creaturePopulation;
     private final EconomyNecropolisFactory creatureFactory = new EconomyNecropolisFactory();
 
-    public CreatureShop()
+    CreatureShop()
     {
         calculator = new CreatureShopCalculator(  );
         creaturePopulation = new HashMap<>();
@@ -47,7 +47,7 @@ public class CreatureShop implements PropertyChangeListener
         return calculator.randomize( creatureFactory.create( false, aTier, 1 ).getGrowth() );
     }
 
-    public void buy(Player aPlayer, EconomyCreature aEconomyCreature) {
+    void buy(Player aPlayer, EconomyCreature aEconomyCreature) {
         aPlayer.substractGold(aEconomyCreature.getGoldCost() * aEconomyCreature.getAmount());
         subtractPopulation(aEconomyCreature.getTier(), aEconomyCreature.getAmount());
         try{

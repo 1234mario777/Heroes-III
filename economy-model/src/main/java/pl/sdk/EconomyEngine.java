@@ -1,8 +1,6 @@
 package pl.sdk;
 
 import pl.sdk.creatures.EconomyCreature;
-import pl.sdk.hero.CreatureShop;
-import pl.sdk.hero.EconomyHero;
 import pl.sdk.hero.Player;
 
 import java.beans.PropertyChangeListener;

@@ -1,15 +1,12 @@
 package pl.sdk.converter;
 
 import javafx.fxml.FXMLLoader;
-import javafx.scene.PointLight;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import pl.sdk.creatures.Creature;
 import pl.sdk.creatures.NecropolisFactory;
 import pl.sdk.gui.BattleMapController;
-import pl.sdk.hero.EconomyHero;
 import pl.sdk.hero.Player;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;

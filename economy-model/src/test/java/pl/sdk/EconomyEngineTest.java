@@ -3,7 +3,6 @@ package pl.sdk;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import pl.sdk.creatures.EconomyNecropolisFactory;
-import pl.sdk.hero.EconomyHero;
 import pl.sdk.hero.Player;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -11,18 +10,14 @@ import static org.junit.jupiter.api.Assertions.*;
 class EconomyEngineTest {
 
     private EconomyEngine economyEngine;
-    private EconomyHero h1;
-    private EconomyHero h2;
     private EconomyNecropolisFactory creatureFactory;
     Player player1;
     Player player2;
 
     @BeforeEach
     void init(){
-        h1 = new EconomyHero(EconomyHero.Fraction.NECROPOLIS, 1000);
-        h2 = new EconomyHero(EconomyHero.Fraction.NECROPOLIS, 1000);
-        player1 = new Player( h1 );
-        player2 = new Player( h2 );
+        player1 = new Player( );
+        player2 = new Player( );
         economyEngine = new EconomyEngine(player1, player2);
         creatureFactory = new EconomyNecropolisFactory();
     }
