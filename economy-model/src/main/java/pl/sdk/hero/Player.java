@@ -27,7 +27,7 @@ public class Player
 		return hero;
 	}
 
-	CreatureShop getCreatureShop()
+	public CreatureShop getCreatureShop()
 	{
 		return creatureShop;
 	}
@@ -55,5 +55,20 @@ public class Player
 	public int getGold()
 	{
 		return hero.getGold();
+	}
+
+	public void buy( Player aActivePlayer, EconomyCreature aEconomyCreature )
+	{
+		creatureShop.buy( aActivePlayer, aEconomyCreature );
+	}
+
+	public int calculateMaxAmount( EconomyCreature aCreature )
+	{
+		return creatureShop.calculateMaxAmount(this, aCreature );
+	}
+
+	public int getCurrentPopulation( int aTier )
+	{
+		return creatureShop.getCurrentPopulation( aTier );
 	}
 }

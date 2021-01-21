@@ -89,7 +89,7 @@ public class EcoController implements PropertyChangeListener {
 
     public int calculateMaxAmount( EconomyCreature aCreature )
     {
-        return economyEngine.calculateMaxAmount(economyEngine.getActivePlayer(), aCreature );
+        return economyEngine.calculateMaxAmount( aCreature );
     }
 
     @Override

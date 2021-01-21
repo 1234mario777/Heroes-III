@@ -20,12 +20,13 @@ class CreatureShopTest
 	{
 		Random rand = mock( Random.class );
 		when( rand.nextDouble() ).thenReturn( 1.0 );
-		CreatureShop shop = new CreatureShop(rand);
+		CreatureShop shop1 = new CreatureShop(rand);
+		CreatureShop shop2 = new CreatureShop(rand);
 		EconomyHero hero1 = new EconomyHero(EconomyHero.Fraction.NECROPOLIS, 1000);
 		EconomyHero hero2 = new EconomyHero(EconomyHero.Fraction.NECROPOLIS, 1000);
-		Player player1 = new Player( hero1 );
-		Player player2 = new Player( hero2 );
-		economyEngine = new EconomyEngine(player1, player2, shop);
+		Player player1 = new Player( hero1, shop1 );
+		Player player2 = new Player( hero2, shop2 );
+		economyEngine = new EconomyEngine(player1, player2);
 	}
 
 	@Test
@@ -129,12 +130,13 @@ class CreatureShopTest
 	{
 		Random rand = mock( Random.class );
 		when( rand.nextDouble() ).thenReturn( 0.5 );
-		CreatureShop shop = new CreatureShop(rand);
+		CreatureShop shop1 = new CreatureShop(rand);
+		CreatureShop shop2 = new CreatureShop(rand);
 		EconomyHero hero1 = new EconomyHero(EconomyHero.Fraction.NECROPOLIS, 1000);
 		EconomyHero hero2 = new EconomyHero(EconomyHero.Fraction.NECROPOLIS, 1000);
-		Player player1 = new Player( hero1 );
-		Player player2 = new Player( hero2 );
-		economyEngine = new EconomyEngine(player1, player2, shop);
+		Player player1 = new Player( hero1, shop1 );
+		Player player2 = new Player( hero2, shop2 );
+		economyEngine = new EconomyEngine(player1, player2);
 
 		assertEquals( 9, economyEngine.getCurrentPopulation(1) );
 		assertEquals( 6, economyEngine.getCurrentPopulation(2) );

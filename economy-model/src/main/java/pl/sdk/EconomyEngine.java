@@ -16,7 +16,6 @@ public class EconomyEngine {
     private final Player player1;
     private final Player player2;
     private Player activePlayer;
-    private final CreatureShop creatureShop;
     private int roundNumber;
     private final PropertyChangeSupport observerSupport;
     private int turnNumber;
@@ -27,33 +26,22 @@ public class EconomyEngine {
         activePlayer = player1;
         roundNumber = 1;
         turnNumber = 1;
-        creatureShop = new CreatureShop();
-        observerSupport = new PropertyChangeSupport(this);
-        addObserver(EconomyEngine.ACTIVE_PLAYER_CHANGED,creatureShop);
-        addObserver(EconomyEngine.NEXT_ROUND,creatureShop);
-    }
 
-    public EconomyEngine( Player aPlayer1, Player aPlayer2, CreatureShop aShop )
-    {
-        player1 = aPlayer1;
-        player2 = aPlayer2;
-        activePlayer = player1;
-        roundNumber = 1;
-        turnNumber = 1;
-        creatureShop = aShop;
         observerSupport = new PropertyChangeSupport(this);
-        addObserver(EconomyEngine.ACTIVE_PLAYER_CHANGED,creatureShop);
-        addObserver(EconomyEngine.NEXT_ROUND,creatureShop);
+        addObserver(EconomyEngine.ACTIVE_PLAYER_CHANGED,player1.getCreatureShop());
+        addObserver(EconomyEngine.NEXT_ROUND,player1.getCreatureShop());
+        addObserver(EconomyEngine.ACTIVE_PLAYER_CHANGED,player2.getCreatureShop());
+        addObserver(EconomyEngine.NEXT_ROUND,player2.getCreatureShop());
     }
 
     public void buy(EconomyCreature aEconomyCreature) {
-        creatureShop.buy(activePlayer,aEconomyCreature);
+        activePlayer.buy(activePlayer,aEconomyCreature);
         observerSupport.firePropertyChange( PLAYER_BOUGHT_CREATURE, null, null );
     }
 
-    public int calculateMaxAmount( Player aPlayer, EconomyCreature aCreature )
+    public int calculateMaxAmount( EconomyCreature aCreature )
     {
-        return creatureShop.calculateMaxAmount(aPlayer, aCreature);
+        return activePlayer.calculateMaxAmount(aCreature);
     }
 
     public Player getActivePlayer() {
@@ -118,6 +106,6 @@ public class EconomyEngine {
 
     public int getCurrentPopulation( int aTier )
     {
-        return creatureShop.getCurrentPopulation(aTier);
+        return activePlayer.getCurrentPopulation(aTier);
     }
 }

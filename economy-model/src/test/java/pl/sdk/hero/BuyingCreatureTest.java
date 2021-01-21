@@ -26,12 +26,13 @@ public class BuyingCreatureTest {
 
         Random rand = mock( Random.class );
         when( rand.nextDouble() ).thenReturn( 1.0 );
-        CreatureShop shop = new CreatureShop(rand);
+        CreatureShop shop1 = new CreatureShop(rand);
+        CreatureShop shop2 = new CreatureShop(rand);
         hero1 = new EconomyHero(EconomyHero.Fraction.NECROPOLIS, 1000);
         hero2 = new EconomyHero(EconomyHero.Fraction.NECROPOLIS, 1000);
-        player1 = new Player( hero1 );
-        player2 = new Player( hero2 );
-        economyEngine = new EconomyEngine(player1, player2, shop);
+        player1 = new Player( hero1, shop1 );
+        player2 = new Player( hero2, shop2 );
+        economyEngine = new EconomyEngine(player1, player2);
     }
 
     @Test
