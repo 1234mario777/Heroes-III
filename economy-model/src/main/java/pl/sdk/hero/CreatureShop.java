@@ -18,18 +18,18 @@ class CreatureShop implements PropertyChangeListener
     private final HashMap<Integer, Integer> creaturePopulation;
     private final AbstractEconomyFractionFactory creatureFactory;
 
-    CreatureShop(AbstractEconomyFractionFactory aCreatureFactory)
+    CreatureShop(Fraction aFraction)
     {
         calculator = new CreatureShopCalculator(  );
-        creatureFactory = aCreatureFactory;
+        creatureFactory = AbstractEconomyFractionFactory.getInstance( aFraction );
         creaturePopulation = new HashMap<>();
         createPopulation(creaturePopulation);
     }
 
-    CreatureShop( Random aRand, AbstractEconomyFractionFactory aCreatureFactory )
+    CreatureShop( Random aRand, Fraction aFraction )
     {
         calculator = new CreatureShopCalculator(aRand);
-        creatureFactory = aCreatureFactory;
+        creatureFactory = AbstractEconomyFractionFactory.getInstance( aFraction );
         creaturePopulation = new HashMap<>();
         createPopulation(creaturePopulation);
     }

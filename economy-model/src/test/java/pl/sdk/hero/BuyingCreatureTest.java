@@ -23,15 +23,15 @@ public class BuyingCreatureTest {
     private EconomyHero hero2;
     private Player player1;
     private Player player2;
-
+    private Fraction fraction = NECROPOLIS;
     @BeforeEach
     void init() {
         Random rand = mock( Random.class );
         when( rand.nextDouble() ).thenReturn( 1.0 );
-        CreatureShop shop1 = new CreatureShop(rand);
-        CreatureShop shop2 = new CreatureShop(rand);
-        hero1 = new EconomyHero(NECROPOLIS, 1000);
-        hero2 = new EconomyHero(NECROPOLIS, 1000);
+        CreatureShop shop1 = new CreatureShop(rand, fraction);
+        CreatureShop shop2 = new CreatureShop(rand, fraction);
+        hero1 = new EconomyHero(fraction, 1000);
+        hero2 = new EconomyHero(fraction, 1000);
         player1 = new Player( hero1, shop1 );
         player2 = new Player( hero2, shop2 );
         economyEngine = new EconomyEngine(player1, player2);

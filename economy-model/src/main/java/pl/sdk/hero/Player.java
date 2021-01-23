@@ -12,7 +12,7 @@ public class Player
 	public Player( Fraction aFraction )
 	{
 		hero = new EconomyHero(aFraction, 1000);
-		creatureShop = new CreatureShop(  );
+		creatureShop = new CreatureShop( aFraction );
 	}
 
 	Player( EconomyHero aHero, CreatureShop aCreatureShop )
