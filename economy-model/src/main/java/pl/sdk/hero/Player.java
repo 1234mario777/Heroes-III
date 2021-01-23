@@ -15,12 +15,6 @@ public class Player
 		creatureShop = new CreatureShop(  );
 	}
 
-	public Player( EconomyHero aHero )
-	{
-		hero = aHero;
-		creatureShop = new CreatureShop(  );
-	}
-
 	Player( EconomyHero aHero, CreatureShop aCreatureShop )
 	{
 		hero = aHero;
