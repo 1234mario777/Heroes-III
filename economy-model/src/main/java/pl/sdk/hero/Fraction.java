@@ -2,5 +2,6 @@ package pl.sdk.hero;
 
 public enum Fraction
 {
-	NECROPOLIS
+	NECROPOLIS,
+	TEST_FRACTION
 }
