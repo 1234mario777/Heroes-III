@@ -21,25 +21,25 @@ class CreatureShopCalculatorTest
 	@Test
 	void shouldCorrectlyCalculateMaxAmountToBuyWhenGrowthIsSmallerThanPurchaseOpportunity()
 	{
-		EconomyHero hero = new EconomyHero(NECROPOLIS, 3000);
+		Player player = new Player(NECROPOLIS, 3000);
 		CreatureShopCalculator calculator = new CreatureShopCalculator();
-		assertEquals( 12,  calculator.calculateMaxAmount( hero.getGold(), creature.getGrowth(), creature.getGoldCost() ) );
+		assertEquals( 12,  calculator.calculateMaxAmount( player.getGold(), creature.getGrowth(), creature.getGoldCost() ) );
 	}
 
 	@Test
 	void shouldCorrectlyCalculateMaxAmountToBuyWhenGrowthIsBiggerThanPurchaseOpportunity()
 	{
-		EconomyHero hero = new EconomyHero(NECROPOLIS, 600);
+		Player player = new Player(NECROPOLIS, 600);
 		CreatureShopCalculator calculator = new CreatureShopCalculator();
-		assertEquals( 10,  calculator.calculateMaxAmount( hero.getGold(), creature.getGrowth(), creature.getGoldCost() ) );
+		assertEquals( 10,  calculator.calculateMaxAmount( player.getGold(), creature.getGrowth(), creature.getGoldCost() ) );
 	}
 
 	@Test
 	void shouldCorrectlyCalculateMaxAmountToBuyWhenGrowthEqualsPurchaseOpportunity()
 	{
-		EconomyHero hero = new EconomyHero(NECROPOLIS, 720);
+		Player player = new Player(NECROPOLIS, 720);
 		CreatureShopCalculator calculator = new CreatureShopCalculator();
-		assertEquals( 12,  calculator.calculateMaxAmount( hero.getGold(), creature.getGrowth(), creature.getGoldCost() ) );
+		assertEquals( 12,  calculator.calculateMaxAmount( player.getGold(), creature.getGrowth(), creature.getGoldCost() ) );
 	}
 
 }

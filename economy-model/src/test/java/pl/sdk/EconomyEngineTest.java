@@ -17,8 +17,8 @@ class EconomyEngineTest {
 
     @BeforeEach
     void init(){
-        player1 = new Player( Fraction.NECROPOLIS );
-        player2 = new Player( Fraction.NECROPOLIS );
+        player1 = new Player( Fraction.NECROPOLIS, 1000 );
+        player2 = new Player( Fraction.NECROPOLIS, 1000 );
         economyEngine = new EconomyEngine(player1, player2);
         creatureFactory = new EconomyTestFractionFactory();
     }

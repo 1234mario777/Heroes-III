@@ -7,8 +7,6 @@ import pl.sdk.creatures.EconomyTestFractionFactory;
 
 import java.util.Random;
 
-import java.util.Random;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
@@ -30,10 +28,10 @@ public class BuyingCreatureTest {
         when( rand.nextDouble() ).thenReturn( 1.0 );
         CreatureShop shop1 = new CreatureShop(rand, fraction);
         CreatureShop shop2 = new CreatureShop(rand, fraction);
-        hero1 = new EconomyHero(fraction, 1000);
-        hero2 = new EconomyHero(fraction, 1000);
-        player1 = new Player( hero1, shop1 );
-        player2 = new Player( hero2, shop2 );
+        hero1 = new EconomyHero();
+        hero2 = new EconomyHero();
+        player1 = new Player( hero1, shop1, 1000 );
+        player2 = new Player( hero2, shop2, 1000 );
         economyEngine = new EconomyEngine(player1, player2);
     }
 

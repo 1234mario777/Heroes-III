@@ -8,17 +8,20 @@ public class Player
 {
 	EconomyHero hero;
 	CreatureShop creatureShop;
+	private int gold;
 
-	public Player( Fraction aFraction )
+	public Player( Fraction aFraction, int aGold )
 	{
-		hero = new EconomyHero(aFraction, 1000);
+		hero = new EconomyHero();
 		creatureShop = new CreatureShop( aFraction );
+		gold = aGold;
 	}
 
-	Player( EconomyHero aHero, CreatureShop aCreatureShop )
+	Player( EconomyHero aHero, CreatureShop aCreatureShop, int aGold )
 	{
 		hero = aHero;
 		creatureShop = aCreatureShop;
+		gold = aGold;
 	}
 
 	EconomyHero getHero()
@@ -31,14 +34,15 @@ public class Player
 		return creatureShop;
 	}
 
-	void substractGold( int aGold )
-	{
-		hero.substractGold( aGold );
+	void substractGold(int aAmount){
+		if (aAmount > gold){
+			throw new IllegalStateException("Player has not enought money");
+		}
+		gold -= aAmount;
 	}
 
-	public void addGold( int aGold )
-	{
-		hero.addGold( aGold );
+	public void addGold(int aAmount){
+		gold += aAmount;
 	}
 
 	void addCreature( EconomyCreature aEconomyCreature )
@@ -53,7 +57,7 @@ public class Player
 
 	public int getGold()
 	{
-		return hero.getGold();
+		return gold;
 	}
 
 	public void buy( Player aActivePlayer, EconomyCreature aEconomyCreature )
