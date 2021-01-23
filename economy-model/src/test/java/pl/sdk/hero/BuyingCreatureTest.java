@@ -13,6 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+import static pl.sdk.hero.Fraction.NECROPOLIS;
 
 public class BuyingCreatureTest {
 
@@ -29,8 +30,8 @@ public class BuyingCreatureTest {
         when( rand.nextDouble() ).thenReturn( 1.0 );
         CreatureShop shop1 = new CreatureShop(rand);
         CreatureShop shop2 = new CreatureShop(rand);
-        hero1 = new EconomyHero(EconomyHero.Fraction.NECROPOLIS, 1000);
-        hero2 = new EconomyHero(EconomyHero.Fraction.NECROPOLIS, 1000);
+        hero1 = new EconomyHero(NECROPOLIS, 1000);
+        hero2 = new EconomyHero(NECROPOLIS, 1000);
         player1 = new Player( hero1, shop1 );
         player2 = new Player( hero2, shop2 );
         economyEngine = new EconomyEngine(player1, player2);

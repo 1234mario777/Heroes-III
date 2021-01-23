@@ -8,9 +8,6 @@ import java.util.List;
 
 class EconomyHero {
 
-    enum Fraction {
-        NECROPOLIS;
-    }
     private final Fraction fraction;
 
     private final List<EconomyCreature> creatureList;

@@ -10,6 +10,7 @@ import java.util.Random;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+import static pl.sdk.hero.Fraction.NECROPOLIS;
 
 class CreatureShopTest
 {
@@ -22,8 +23,8 @@ class CreatureShopTest
 		when( rand.nextDouble() ).thenReturn( 1.0 );
 		CreatureShop shop1 = new CreatureShop(rand);
 		CreatureShop shop2 = new CreatureShop(rand);
-		EconomyHero hero1 = new EconomyHero(EconomyHero.Fraction.NECROPOLIS, 1000);
-		EconomyHero hero2 = new EconomyHero(EconomyHero.Fraction.NECROPOLIS, 1000);
+		EconomyHero hero1 = new EconomyHero(NECROPOLIS, 1000);
+		EconomyHero hero2 = new EconomyHero(NECROPOLIS, 1000);
 		Player player1 = new Player( hero1, shop1 );
 		Player player2 = new Player( hero2, shop2 );
 		economyEngine = new EconomyEngine(player1, player2);
@@ -132,8 +133,8 @@ class CreatureShopTest
 		when( rand.nextDouble() ).thenReturn( 0.5 );
 		CreatureShop shop1 = new CreatureShop(rand);
 		CreatureShop shop2 = new CreatureShop(rand);
-		EconomyHero hero1 = new EconomyHero(EconomyHero.Fraction.NECROPOLIS, 1000);
-		EconomyHero hero2 = new EconomyHero(EconomyHero.Fraction.NECROPOLIS, 1000);
+		EconomyHero hero1 = new EconomyHero(NECROPOLIS, 1000);
+		EconomyHero hero2 = new EconomyHero(NECROPOLIS, 1000);
 		Player player1 = new Player( hero1, shop1 );
 		Player player2 = new Player( hero2, shop2 );
 		economyEngine = new EconomyEngine(player1, player2);

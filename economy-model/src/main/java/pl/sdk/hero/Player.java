@@ -9,9 +9,9 @@ public class Player
 	EconomyHero hero;
 	CreatureShop creatureShop;
 
-	public Player()
+	public Player( Fraction aFraction )
 	{
-		hero = new EconomyHero(EconomyHero.Fraction.NECROPOLIS, 1000);
+		hero = new EconomyHero(aFraction, 1000);
 		creatureShop = new CreatureShop(  );
 	}
 

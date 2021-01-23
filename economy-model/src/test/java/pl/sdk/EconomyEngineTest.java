@@ -3,6 +3,7 @@ package pl.sdk;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import pl.sdk.creatures.EconomyTestFractionFactory;
+import pl.sdk.hero.Fraction;
 import pl.sdk.hero.Player;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -16,8 +17,8 @@ class EconomyEngineTest {
 
     @BeforeEach
     void init(){
-        player1 = new Player( );
-        player2 = new Player( );
+        player1 = new Player( Fraction.NECROPOLIS );
+        player2 = new Player( Fraction.NECROPOLIS );
         economyEngine = new EconomyEngine(player1, player2);
         creatureFactory = new EconomyTestFractionFactory();
     }

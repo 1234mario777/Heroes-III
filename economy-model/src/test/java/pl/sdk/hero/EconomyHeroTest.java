@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import pl.sdk.creatures.EconomyTestFractionFactory;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static pl.sdk.hero.Fraction.NECROPOLIS;
 
 class EconomyHeroTest {
 
@@ -13,7 +14,7 @@ class EconomyHeroTest {
 
     @BeforeEach
     void init(){
-        hero = new EconomyHero(EconomyHero.Fraction.NECROPOLIS, 3000);
+        hero = new EconomyHero(NECROPOLIS, 3000);
     }
 
     @Test
