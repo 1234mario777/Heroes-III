@@ -1,5 +1,6 @@
 package pl.sdk.hero;
 
+import pl.sdk.creatures.AbstractEconomyFractionFactory;
 import pl.sdk.creatures.EconomyCreature;
 import pl.sdk.creatures.EconomyNecropolisFactory;
 
@@ -15,18 +16,20 @@ class CreatureShop implements PropertyChangeListener
 
     private CreatureShopCalculator calculator;
     private final HashMap<Integer, Integer> creaturePopulation;
-    private final EconomyNecropolisFactory creatureFactory = new EconomyNecropolisFactory();
+    private final AbstractEconomyFractionFactory creatureFactory;
 
-    CreatureShop()
+    CreatureShop(Fraction aFraction)
     {
         calculator = new CreatureShopCalculator(  );
+        creatureFactory = AbstractEconomyFractionFactory.getInstance( aFraction );
         creaturePopulation = new HashMap<>();
         createPopulation(creaturePopulation);
     }
 
-    CreatureShop( Random aRand )
+    CreatureShop( Random aRand, Fraction aFraction )
     {
         calculator = new CreatureShopCalculator(aRand);
+        creatureFactory = AbstractEconomyFractionFactory.getInstance( aFraction );
         creaturePopulation = new HashMap<>();
         createPopulation(creaturePopulation);
     }
