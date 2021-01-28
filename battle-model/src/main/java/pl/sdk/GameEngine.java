@@ -20,6 +20,8 @@ public class GameEngine {
     private final Board board;
     private final CreatureTurnQueue queue;
     private final PropertyChangeSupport observerSupport;
+    private final Hero hero1;
+    private final Hero hero2;
     private boolean blockMoving;
     private boolean blockAttacking;
     private List<Creature> creatures1;
@@ -31,6 +33,8 @@ public class GameEngine {
 
     GameEngine(Hero aHero1, Hero aHero2, Board aBoard) {
         board = aBoard;
+        hero1 = aHero1;
+        hero2 = aHero2;
         creatures1 = aHero1.getCreatures();
         creatures2 = aHero2.getCreatures();
         putCreaturesToBoard(creatures1, creatures2);
@@ -135,5 +139,9 @@ public class GameEngine {
         }
 
         return !theSamePlayerUnit && board.get(getActiveCreature()).distance(new Point(aX, aY)) <= getActiveCreature().getAttackRange();
+    }
+
+    public boolean canCastSpell() {
+        return queue.getActiveHero().canCastSpell();
     }
 }

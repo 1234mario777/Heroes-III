@@ -50,4 +50,8 @@ class CreatureTurnQueue {
         }
         activeCreature = creaturesQueue.poll();
     }
+
+    Hero getActiveHero() {
+        return null;
+    }
 }

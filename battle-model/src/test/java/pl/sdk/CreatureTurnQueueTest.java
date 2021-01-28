@@ -1,14 +1,11 @@
 package pl.sdk;
 
-import com.google.common.collect.Range;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import pl.sdk.CreatureTurnQueue;
 import pl.sdk.creatures.Creature;
 import pl.sdk.creatures.NecropolisFactory;
 
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -17,23 +14,26 @@ class CreatureTurnQueueTest {
     private Creature a;
     private Creature b;
     private Creature c;
-    private Collection<Creature> creatureList;
+    private Hero hero1;
+    private Hero hero2;
 
 
     @BeforeEach
     void init(){
-        a = NecropolisFactory.createDefaultForTests();
-        b = NecropolisFactory.createDefaultForTests();
-        c = NecropolisFactory.createDefaultForTests();
-        creatureList = new ArrayList<>();
-        creatureList.add(a);
-        creatureList.add(b);
-        creatureList.add(c);
+        NecropolisFactory necroFactory = new NecropolisFactory();
+        a = necroFactory.create(false,3,1);
+        b = necroFactory.create(false,1,1);
+        c = necroFactory.create(false,7,1);
+        hero1 = new Hero(List.of(a,b));
+        hero2 = new Hero(List.of(c));
     }
 
     @Test
     void shouldChangeActiveCreature(){
-        CreatureTurnQueue creatureTurnQueue = new CreatureTurnQueue(creatureList);
+        CreatureTurnQueue creatureTurnQueue = new CreatureTurnQueue(hero1, hero2);
+
+        assertEquals(c,creatureTurnQueue.getActiveCreature());
+        creatureTurnQueue.next();
 
         assertEquals(a,creatureTurnQueue.getActiveCreature());
         creatureTurnQueue.next();
@@ -41,9 +41,22 @@ class CreatureTurnQueueTest {
         assertEquals(b,creatureTurnQueue.getActiveCreature());
         creatureTurnQueue.next();
 
-        assertEquals(c,creatureTurnQueue.getActiveCreature());
+        assertEquals(c, creatureTurnQueue.getActiveCreature());
+    }
+
+    @Test
+    void shouldChangeActiveHero(){
+        CreatureTurnQueue creatureTurnQueue = new CreatureTurnQueue(hero1, hero2);
+
+        assertEquals(hero2,creatureTurnQueue.getActiveHero());
         creatureTurnQueue.next();
 
-        assertEquals(a, creatureTurnQueue.getActiveCreature());
+        assertEquals(hero1,creatureTurnQueue.getActiveHero());
+        creatureTurnQueue.next();
+
+        assertEquals(hero1,creatureTurnQueue.getActiveHero());
+        creatureTurnQueue.next();
+
+        assertEquals(hero2, creatureTurnQueue.getActiveHero());
     }
 }
