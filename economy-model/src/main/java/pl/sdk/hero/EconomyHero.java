@@ -60,6 +60,10 @@ public class EconomyHero {
         return stats.getPower();
     }
 
+    public int getWisdom(){
+        return stats.getWisdom();
+    }
+
     void substractGold(int aAmount){
         if (aAmount > gold){
             throw new IllegalStateException("Hero has not enought money");

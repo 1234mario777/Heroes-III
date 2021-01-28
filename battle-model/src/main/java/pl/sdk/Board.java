@@ -41,6 +41,10 @@ class Board {
         return map.get(new Point(aX,aY));
     }
 
+    Creature get(Point aPoint) {
+        return map.get(aPoint);
+    }
+
     Point get(Creature aCreature){
         return map.keySet().stream().filter(p -> map.get(p).equals(aCreature)).findAny().get();
     }

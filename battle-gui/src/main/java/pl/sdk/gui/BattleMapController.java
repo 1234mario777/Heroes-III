@@ -22,6 +22,9 @@ public class BattleMapController implements PropertyChangeListener {
     @FXML
     private Button passButton;
 
+    @FXML
+    private Button spellBookButton;
+
     private final GameEngine gameEngine;
 
     public BattleMapController() {
@@ -53,10 +56,16 @@ public class BattleMapController implements PropertyChangeListener {
             gameEngine.pass();
         });
 
+        spellBookButton.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) ->{
+            throw new UnsupportedOperationException("spellbook not implemented yet");
+        });
+
         refreshGui();
     }
 
     private void refreshGui() {
+        spellBookButton.setDisable(!gameEngine.canCastSpell());
+
         for (int x = 0; x < 20; x++) {
             for (int y = 0; y < 15; y++) {
                 MapTile rec = new MapTile();

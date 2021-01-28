@@ -1,11 +1,11 @@
 package pl.sdk;
 
 import pl.sdk.creatures.Creature;
+import pl.sdk.spells.AbstractSpell;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
-import java.util.ArrayList;
 import java.util.List;
 
 public class GameEngine {
@@ -18,8 +18,10 @@ public class GameEngine {
     public static final String CREATURE_ATTACKED = "CREATURE_ATTACKED";
     public static final String END_OF_TURN = "END_OF_TURN";
     private final Board board;
-    private final CreatureTurnQueue queue;
+    private final TurnQueue queue;
     private final PropertyChangeSupport observerSupport;
+    private final Hero hero1;
+    private final Hero hero2;
     private boolean blockMoving;
     private boolean blockAttacking;
     private List<Creature> creatures1;
@@ -31,16 +33,16 @@ public class GameEngine {
 
     GameEngine(Hero aHero1, Hero aHero2, Board aBoard) {
         board = aBoard;
+        hero1 = aHero1;
+        hero2 = aHero2;
+        queue = new TurnQueue(aHero1, aHero2);
+        hero1.toSubscribeEndOfTurn(queue);
+        hero2.toSubscribeEndOfTurn(queue);
         creatures1 = aHero1.getCreatures();
         creatures2 = aHero2.getCreatures();
         putCreaturesToBoard(creatures1, creatures2);
-        List<Creature> twoSidesCreatures = new ArrayList<>();
-        twoSidesCreatures.addAll(creatures1);
-        twoSidesCreatures.addAll(creatures2);
-        twoSidesCreatures.sort((c1, c2) -> c2.getMoveRange() - c1.getMoveRange());
-        queue = new CreatureTurnQueue(twoSidesCreatures);
 
-        twoSidesCreatures.forEach(queue::addObserver);
+
         observerSupport = new PropertyChangeSupport(this);
     }
 
@@ -135,5 +137,30 @@ public class GameEngine {
         }
 
         return !theSamePlayerUnit && board.get(getActiveCreature()).distance(new Point(aX, aY)) <= getActiveCreature().getAttackRange();
+    }
+
+    public boolean canCastSpell() {
+        return queue.getActiveHero().canCastSpell();
+    }
+
+    public boolean canCastSpell(AbstractSpell aSpell){
+        return queue.getActiveHero().canCastSpell(aSpell);
+    }
+
+    public boolean canCastSpell(AbstractSpell aSpell, Point aPoint){
+        SpellCastingRulesManager calc = new SpellCastingRulesManager();
+        return calc.canCast(aSpell, aPoint, this, board);
+    }
+
+    void cast(AbstractSpell aSpell) {
+        queue.getActiveHero().castSpell(aSpell);
+    }
+
+    boolean isAllyCreature(Point aP) {
+        return queue.getActiveHero().getCreatures().contains(board.get(aP));
+    }
+
+    boolean isEnemyCreature(Point aP) {
+        return board.get(aP) != null && !queue.getActiveHero().getCreatures().contains(board.get(aP));
     }
 }
