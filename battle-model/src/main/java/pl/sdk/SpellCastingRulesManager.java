@@ -7,7 +7,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class SpellSplashCalculator {
+public class SpellCastingRulesManager {
     Set<Point> calc(AbstractSpell aSpell, Board aBoard, Point aTargetPoint, GameEngine aGameEngine) {
         Set<Point> ret = new HashSet<>();
         if (isTileTargetSpell(aTargetPoint)){

@@ -148,7 +148,7 @@ public class GameEngine {
     }
 
     public boolean canCastSpell(AbstractSpell aSpell, Point aPoint){
-        SpellSplashCalculator calc = new SpellSplashCalculator();
+        SpellCastingRulesManager calc = new SpellCastingRulesManager();
         return calc.canCast(aSpell, aPoint, this, board);
     }
 

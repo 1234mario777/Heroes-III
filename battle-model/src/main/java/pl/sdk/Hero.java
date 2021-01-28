@@ -13,7 +13,7 @@ public class Hero {
     private final SpellBook spellBook;
 
     public Hero(List<Creature> aCreatures) {
-        this(aCreatures, new SpellBook(10));
+        this(aCreatures, new SpellBook(10, new ArrayList<>()));
     }
 
     public Hero(List<Creature> aCreatures, SpellBook aSpellBook) {

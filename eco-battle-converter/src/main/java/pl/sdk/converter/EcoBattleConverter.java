@@ -10,6 +10,7 @@ import pl.sdk.creatures.NecropolisFactory;
 import pl.sdk.gui.BattleMapController;
 import pl.sdk.hero.EconomyHero;
 import pl.sdk.spells.AbstractSpell;
+import pl.sdk.spells.SpellBook;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -50,6 +51,6 @@ public class EcoBattleConverter {
         List<AbstractSpell> spells = aPlayer1.getSpells().stream()
                 .map(es -> SpellFactory.create(es, aPlayer1.getPower(), masteries))
                 .collect(Collectors.toList());
-        return new Hero(creatures, spells);
+        return new Hero(creatures, new SpellBook(aPlayer1.getWisdom(), spells));
     }
 }

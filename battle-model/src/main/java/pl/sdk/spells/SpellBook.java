@@ -7,13 +7,15 @@ import java.util.List;
 public class SpellBook implements PropertyChangeListener {
     private boolean spellWasCastedInThisTurn;
     private int mana;
+    private List<AbstractSpell> spells;
 
-    public SpellBook(int aMana) {
+    public SpellBook(int aMana, List<AbstractSpell> aSpells) {
         mana = aMana;
+        spells = aSpells;
     }
 
     public List<AbstractSpell> getSpells() {
-        return null;
+        return spells;
     }
 
     public void cast(AbstractSpell aSpell){
