@@ -8,7 +8,7 @@ class SpellBookTest {
 
     @Test
     void shouldNotAllowToCastMoreThanOneSpellInRound(){
-        SpellBook spellBook = new SpellBook();
+        SpellBook spellBook = new SpellBook(10);
         assertTrue(spellBook.canCastSpell());
 
         spellBook.cast(SpellFactoryForTests.createMagicArrow());
@@ -17,7 +17,7 @@ class SpellBookTest {
 
     @Test
     void shouldAllowToCastSecondSpellAfterEndOfTurn(){
-        SpellBook spellBook = new SpellBook();
+        SpellBook spellBook = new SpellBook(10);
         assertTrue(spellBook.canCastSpell());
         spellBook.cast(SpellFactoryForTests.createMagicArrow());
         assertFalse(spellBook.canCastSpell());
@@ -25,5 +25,17 @@ class SpellBookTest {
         spellBook.endOfTurn();
 
         assertTrue(spellBook.canCastSpell());
+    }
+
+    @Test
+    void shouldCanCastSpellIfHasEnoughtMana(){
+        SpellBook spellBook = new SpellBook(10);
+        assertTrue(spellBook.canCastSpell(SpellFactoryForTests.createMagicArrow()));
+    }
+
+    @Test
+    void shouldCannotCastSpellIfHasNotEnoughtMana(){
+        SpellBook spellBook = new SpellBook(2);
+        assertFalse(spellBook.canCastSpell(SpellFactoryForTests.createMagicArrow()));
     }
 }

@@ -11,10 +11,9 @@ public class Hero {
 
     private final List<Creature> creatures;
     private final SpellBook spellBook;
-    private boolean spellWasCastedInThisTurn;
 
     public Hero(List<Creature> aCreatures) {
-        this(aCreatures, new SpellBook());
+        this(aCreatures, new SpellBook(10));
     }
 
     public Hero(List<Creature> aCreatures, SpellBook aSpellBook) {
@@ -31,6 +30,14 @@ public class Hero {
     }
 
     boolean canCastSpell() {
-        return false;
+        return spellBook.canCastSpell();
+    }
+
+    void castSpell(AbstractSpell aMagicArrow) {
+        spellBook.cast(aMagicArrow);
+    }
+
+    void toSubscribeEndOfTurn(TurnQueue aQueue) {
+        aQueue.addObserver(spellBook);
     }
 }

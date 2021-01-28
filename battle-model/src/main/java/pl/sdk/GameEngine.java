@@ -1,11 +1,11 @@
 package pl.sdk;
 
 import pl.sdk.creatures.Creature;
+import pl.sdk.spells.AbstractSpell;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
-import java.util.ArrayList;
 import java.util.List;
 
 public class GameEngine {
@@ -35,11 +35,14 @@ public class GameEngine {
         board = aBoard;
         hero1 = aHero1;
         hero2 = aHero2;
+        queue = new TurnQueue(aHero1, aHero2);
+        hero1.toSubscribeEndOfTurn(queue);
+        hero2.toSubscribeEndOfTurn(queue);
         creatures1 = aHero1.getCreatures();
         creatures2 = aHero2.getCreatures();
         putCreaturesToBoard(creatures1, creatures2);
 
-        queue = new TurnQueue(aHero1, aHero2);
+
         observerSupport = new PropertyChangeSupport(this);
     }
 
@@ -138,5 +141,9 @@ public class GameEngine {
 
     public boolean canCastSpell() {
         return queue.getActiveHero().canCastSpell();
+    }
+
+    void cast(AbstractSpell aMagicArrow) {
+        queue.getActiveHero().castSpell(aMagicArrow);
     }
 }
