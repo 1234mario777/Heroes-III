@@ -18,7 +18,7 @@ public class GameEngine {
     public static final String CREATURE_ATTACKED = "CREATURE_ATTACKED";
     public static final String END_OF_TURN = "END_OF_TURN";
     private final Board board;
-    private final CreatureTurnQueue queue;
+    private final TurnQueue queue;
     private final PropertyChangeSupport observerSupport;
     private final Hero hero1;
     private final Hero hero2;
@@ -38,13 +38,8 @@ public class GameEngine {
         creatures1 = aHero1.getCreatures();
         creatures2 = aHero2.getCreatures();
         putCreaturesToBoard(creatures1, creatures2);
-        List<Creature> twoSidesCreatures = new ArrayList<>();
-        twoSidesCreatures.addAll(creatures1);
-        twoSidesCreatures.addAll(creatures2);
-        twoSidesCreatures.sort((c1, c2) -> c2.getMoveRange() - c1.getMoveRange());
-        queue = new CreatureTurnQueue(twoSidesCreatures);
 
-        twoSidesCreatures.forEach(queue::addObserver);
+        queue = new TurnQueue(aHero1, aHero2);
         observerSupport = new PropertyChangeSupport(this);
     }
 

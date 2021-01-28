@@ -28,4 +28,7 @@ public class Hero {
         return spells;
     }
 
+    boolean canCastSpell() {
+        return false;
+    }
 }

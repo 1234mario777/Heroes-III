@@ -7,7 +7,7 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.*;
 
-class CreatureTurnQueue {
+class TurnQueue {
 
 
     private final Collection<Creature> creatures;
@@ -15,10 +15,15 @@ class CreatureTurnQueue {
     private Creature activeCreature;
     private final PropertyChangeSupport observerSupport;
 
-    public CreatureTurnQueue(Collection<Creature> aCreatureList) {
-        creatures = aCreatureList;
-        creaturesQueue = new LinkedList<>();
+    public TurnQueue(Hero aHero1, Hero aHero2) {
         observerSupport = new PropertyChangeSupport(this);
+        creaturesQueue = new LinkedList<>();
+        List<Creature> twoSidesCreatures = new ArrayList<>();
+        twoSidesCreatures.addAll(aHero1.getCreatures());
+        twoSidesCreatures.addAll(aHero2.getCreatures());
+        twoSidesCreatures.sort((c1, c2) -> c2.getMoveRange() - c1.getMoveRange());
+        twoSidesCreatures.forEach(this::addObserver);
+        creatures = twoSidesCreatures;
         initQueue();
         next();
     }

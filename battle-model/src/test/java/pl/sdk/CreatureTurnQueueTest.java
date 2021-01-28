@@ -30,7 +30,7 @@ class CreatureTurnQueueTest {
 
     @Test
     void shouldChangeActiveCreature(){
-        CreatureTurnQueue creatureTurnQueue = new CreatureTurnQueue(hero1, hero2);
+        TurnQueue creatureTurnQueue = new TurnQueue(hero1, hero2);
 
         assertEquals(c,creatureTurnQueue.getActiveCreature());
         creatureTurnQueue.next();
@@ -46,7 +46,7 @@ class CreatureTurnQueueTest {
 
     @Test
     void shouldChangeActiveHero(){
-        CreatureTurnQueue creatureTurnQueue = new CreatureTurnQueue(hero1, hero2);
+        TurnQueue creatureTurnQueue = new TurnQueue(hero1, hero2);
 
         assertEquals(hero2,creatureTurnQueue.getActiveHero());
         creatureTurnQueue.next();
