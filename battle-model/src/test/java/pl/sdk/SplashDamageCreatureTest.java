@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Test;
 import pl.sdk.creatures.Creature;
 import pl.sdk.creatures.NecropolisFactory;
 
-import java.beans.PropertyChangeEvent;
 import java.util.Collections;
 import java.util.List;
 
