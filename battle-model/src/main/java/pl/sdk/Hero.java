@@ -33,6 +33,10 @@ public class Hero {
         return spellBook.canCastSpell();
     }
 
+    boolean canCastSpell(AbstractSpell aSpell){
+        return spellBook.canCastSpell(aSpell);
+    }
+
     void castSpell(AbstractSpell aMagicArrow) {
         spellBook.cast(aMagicArrow);
     }

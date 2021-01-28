@@ -143,7 +143,24 @@ public class GameEngine {
         return queue.getActiveHero().canCastSpell();
     }
 
-    void cast(AbstractSpell aMagicArrow) {
-        queue.getActiveHero().castSpell(aMagicArrow);
+    public boolean canCastSpell(AbstractSpell aSpell){
+        return queue.getActiveHero().canCastSpell(aSpell);
+    }
+
+    public boolean canCastSpell(AbstractSpell aSpell, Point aPoint){
+        SpellSplashCalculator calc = new SpellSplashCalculator();
+        calc.canCast(aSpell, aPoint);
+    }
+
+    void cast(AbstractSpell aSpell) {
+        queue.getActiveHero().castSpell(aSpell);
+    }
+
+    boolean isAllyCreature(Point aP) {
+        return queue.getActiveHero().getCreatures().contains(board.get(aP));
+    }
+
+    boolean isEnemyCreature(Point aP) {
+        return board.get(aP) != null && !queue.getActiveHero().getCreatures().contains(board.get(aP));
     }
 }
