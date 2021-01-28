@@ -1,6 +1,7 @@
 package pl.sdk;
 
 import pl.sdk.spells.AbstractSpell;
+import pl.sdk.spells.SpellStatistic;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -18,6 +19,10 @@ public class SpellSplashCalculator {
             }
 
             ret = ret.stream().filter(p -> aBoard.get(p) != null).collect(Collectors.toSet());
+            Z
+            if (aSpell.getTargetType() == SpellStatistic.TargetType.ENEMY || aSpell.getTargetType() == SpellStatistic.TargetType.ALL_ENEMIES{
+                ret = ret.stream().filter(p -> aBoard);
+            }
         }
 
         return ret;
