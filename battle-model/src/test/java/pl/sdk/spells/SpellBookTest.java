@@ -38,4 +38,11 @@ class SpellBookTest {
         SpellBook spellBook = new SpellBook(2);
         assertFalse(spellBook.canCastSpell(SpellFactoryForTests.createMagicArrow()));
     }
+
+    @Test
+    void shouldSubstractManaCorrectly(){
+        SpellBook spellBook = new SpellBook(10);
+        spellBook.cast(SpellFactoryForTests.createMagicArrow());
+        assertEquals(5, spellBook.getMana());
+    }
 }
