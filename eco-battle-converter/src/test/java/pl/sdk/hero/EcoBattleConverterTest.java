@@ -17,7 +17,7 @@ class EcoBattleConverterTest {
 
     @Test
     void shouldConvertCreaturesCorrectly(){
-        EconomyHero ecoHero = new EconomyHero(EconomyHero.Fraction.NECROPOLIS, 1000);
+        Player ecoHero = new Player(Fraction.NECROPOLIS, 1000);
         EconomyNecropolisFactory factory = new EconomyNecropolisFactory();
         ecoHero.addCreature(factory.create(false,1,1));
         ecoHero.addCreature(factory.create(false,2,2));
@@ -55,7 +55,7 @@ class EcoBattleConverterTest {
 
     @Test
     void shouldConvertImplosionSpellsCorrectly(){
-        EconomyHero ecoHero = new EconomyHero(EconomyHero.Fraction.NECROPOLIS, 1000, new HeroStats(1,1,1,1));
+        Player ecoHero = new Player( Fraction.NECROPOLIS, 1000, new EconomyHero( new HeroStats( 1, 1, 1, 1 ) ) );
         ecoHero.addSpell(new EconomySpell(SpellStatistic.IMPLOSION));
 
         DamageSpell spell = (DamageSpell) EcoBattleConverter.convert(ecoHero).getSpells().get(0);

@@ -49,4 +49,16 @@ class GameEngineTest {
         assertTrue(engine.canCastSpell());
     }
 
+    @Test
+    void shouldCorrectRecognizeIfHeroHasCreature()
+    {
+        //given
+        NecropolisFactory factory = new NecropolisFactory();
+        Creature creature = factory.create( false, 1, 1 );
+        GameEngine engine = new GameEngine(new Hero(List.of( )), new Hero(List.of( creature )));
+
+        //when && then
+        assertFalse( engine.isHeroOneCreature( creature ) );
+        assertTrue( engine.isHeroTwoCreature( creature ) );
+    }
 }

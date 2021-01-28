@@ -17,6 +17,8 @@ public class GameEngine {
     public static final String CREATURE_MOVED = "CREATURE_MOVED";
     public static final String CREATURE_ATTACKED = "CREATURE_ATTACKED";
     public static final String END_OF_TURN = "END_OF_TURN";
+    public static final String AFTER_MOVE = "AFTER_MOVE";
+    public static final String AFTER_ATTACK = "AFTER_ATTACK";
     private final Board board;
     private final TurnQueue queue;
     private final PropertyChangeSupport observerSupport;
@@ -70,6 +72,7 @@ public class GameEngine {
         board.move(queue.getActiveCreature(), aTargetPoint);
         blockMoving = true;
         notifyObservers(new PropertyChangeEvent(this, CREATURE_MOVED, oldPosition, aTargetPoint));
+        observerSupport.firePropertyChange( AFTER_MOVE, null, null );
     }
 
     public void pass() {
@@ -102,6 +105,8 @@ public class GameEngine {
         blockAttacking = true;
         blockMoving = true;
         notifyObservers(new PropertyChangeEvent(this, CREATURE_ATTACKED, null, null));
+        observerSupport.firePropertyChange( AFTER_ATTACK, null, null );
+        observerSupport.firePropertyChange( AFTER_MOVE, null, null );
     }
 
     private void putCreaturesToBoard(List<Creature> aCreatures1, List<Creature> aCreatures2) {
@@ -137,6 +142,16 @@ public class GameEngine {
         }
 
         return !theSamePlayerUnit && board.get(getActiveCreature()).distance(new Point(aX, aY)) <= getActiveCreature().getAttackRange();
+    }
+
+    public boolean isHeroTwoCreature( Creature aCreature )
+    {
+        return creatures2.contains( aCreature );
+    }
+
+    public boolean isHeroOneCreature( Creature aCreature )
+    {
+        return creatures1.contains( aCreature );
     }
 
     public boolean canCastSpell() {

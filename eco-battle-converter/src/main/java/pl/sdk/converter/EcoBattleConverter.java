@@ -8,10 +8,10 @@ import pl.sdk.converter.spells.SpellFactory;
 import pl.sdk.creatures.Creature;
 import pl.sdk.creatures.NecropolisFactory;
 import pl.sdk.gui.BattleMapController;
-import pl.sdk.hero.EconomyHero;
 import pl.sdk.spells.AbstractSpell;
 import pl.sdk.spells.SpellBook;
 
+import pl.sdk.hero.Player;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +21,7 @@ import static pl.sdk.converter.SpellMasteries.SpellMasterLevel.BASIC;
 
 public class EcoBattleConverter {
 
-    public static void startBattle(EconomyHero aPlayer1, EconomyHero aPlayer2) {
+    public static void startBattle( Player aPlayer1, Player aPlayer2 ) {
         Scene scene = null;
         try {
             FXMLLoader loader = new FXMLLoader();
@@ -38,7 +38,7 @@ public class EcoBattleConverter {
         }
     }
 
-    public static Hero convert(EconomyHero aPlayer1) {
+    public static Hero convert(Player aPlayer1) {
         List<Creature> creatures = new ArrayList<>();
         NecropolisFactory factory = new NecropolisFactory();
         aPlayer1.getCreatures().forEach(ecoCreature ->

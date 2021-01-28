@@ -2,36 +2,37 @@ package pl.sdk.hero;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import pl.sdk.creatures.EconomyNecropolisFactory;
+import pl.sdk.creatures.EconomyTestFractionFactory;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static pl.sdk.hero.Fraction.NECROPOLIS;
 
 class EconomyHeroTest {
 
 
-    private EconomyHero hero;
+    private Player player;
 
     @BeforeEach
     void init(){
-        hero = new EconomyHero(EconomyHero.Fraction.NECROPOLIS, 3000);
+        player = new Player(NECROPOLIS, 3000);
     }
 
     @Test
     void shouldThrowExceptionWhileHeroHas7CreatureAndYoTryToAddNextOne(){
-        EconomyNecropolisFactory factory = new EconomyNecropolisFactory();
-        hero.addCreature(factory.create(true,1,1));
-        hero.addCreature(factory.create(true,1,1));
-        hero.addCreature(factory.create(true,1,1));
-        hero.addCreature(factory.create(true,1,1));
-        hero.addCreature(factory.create(true,1,1));
-        hero.addCreature(factory.create(true,1,1));
-        hero.addCreature(factory.create(true,1,1));
+        EconomyTestFractionFactory factory = new EconomyTestFractionFactory();
+        player.addCreature(factory.create(true,1,1 ) );
+        player.addCreature(factory.create(true,1,1 ) );
+        player.addCreature(factory.create(true,1,1 ) );
+        player.addCreature(factory.create(true,1,1 ) );
+        player.addCreature(factory.create(true,1,1 ) );
+        player.addCreature(factory.create(true,1,1 ) );
+        player.addCreature(factory.create(true,1,1 ) );
 
-        assertThrows(IllegalStateException.class, () -> hero.addCreature(factory.create(true,1,1)));
+        assertThrows(IllegalStateException.class, () -> player.addCreature(factory.create(true,1,1 ) ) );
     }
 
     @Test
     void shouldThrowExceptionWhileYouTrySubstractMoreGoldThanHeroHas(){
-        assertThrows(IllegalStateException.class, () -> hero.substractGold(3001));
+        assertThrows(IllegalStateException.class, () -> player.substractGold(3001 ) );
     }
 }

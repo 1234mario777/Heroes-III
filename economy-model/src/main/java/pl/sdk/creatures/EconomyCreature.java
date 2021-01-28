@@ -1,5 +1,7 @@
 package pl.sdk.creatures;
 
+import com.google.common.collect.Range;
+
 public class EconomyCreature {
 
     private final CreatureStatistic stats;
@@ -30,5 +32,34 @@ public class EconomyCreature {
 
     public int getTier() {
         return stats.getTier();
+    }
+
+    public int getAttack() {
+        return stats.getAttack();
+    }
+
+    public int getArmor() {
+        return stats.getArmor();
+    }
+
+    public int getMaxHp() {
+        return stats.getMaxHp();
+    }
+
+    public int getMoveRange() {
+        return stats.getMoveRange();
+    }
+
+    public Range<Integer> getDamage(){
+        return stats.getDamage();
+    }
+
+    public String getDescription() {
+        return stats.getDescription();
+    }
+
+    public int getGrowth()
+    {
+        return stats.getGrowth();
     }
 }
