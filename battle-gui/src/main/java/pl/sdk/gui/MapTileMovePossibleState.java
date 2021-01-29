@@ -7,11 +7,6 @@ public class MapTileMovePossibleState extends MapTileState
 {
 	private final String STATE_NAME = "Move Possible";
 
-	MapTileMovePossibleState( MapTile aMapTile )
-	{
-		super( aMapTile );
-	}
-
 	@Override
 	void updateBackground( Rectangle aRec )
 	{

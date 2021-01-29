@@ -5,10 +5,12 @@ import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import pl.sdk.*;
+import pl.sdk.Point;
 import pl.sdk.creatures.Creature;
 import pl.sdk.creatures.NecropolisFactory;
 import pl.sdk.spells.AbstractSpell;
 
+import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
@@ -64,61 +66,64 @@ public class BattleMapController implements PropertyChangeListener {
             spellChooser.startDialog(this::prepareToCastSpell);
         });
 
-        refreshGui(false);
+        refreshGui(null);
     }
 
-    private void refreshGui(boolean aIsSpellCasting) {
+    private void refreshGui(AbstractSpell spellToCast) {
         spellBookButton.setDisable(!gameEngine.canCastSpell());
 
         for (int x = 0; x < 20; x++) {
             for (int y = 0; y < 15; y++) {
-                if (!aIsSpellCasting){
-                    prepareTile(x, y);
+                MapTile rec = new MapTile();
+                gridMap.add(rec, x, y);
+                if (spellToCast == null){
+                    prepareTile(x, y, rec);
                 }
                 else{
-                    prepareTileWithSpells(x,y);
+                    prepareTileWithSpells(x,y, rec, spellToCast);
                 }
             }
         }
     }
 
-    private void prepareTileWithSpells(int aX, int aY) {
+    private void prepareTileWithSpells(int aX, int aY, MapTile aRec, AbstractSpell aSpellToCast) {
+        if (gameEngine.canCastSpell(aSpellToCast, new Point(aX,aY))){
+            aRec.changeState(new MapTileCastSpellPossibleState());
+        };
     }
 
-    private void prepareTile(int aX, int aY) {
-        MapTile rec = new MapTile();
-        gridMap.add(rec, aX, aY);
-        gameEngine.addObserver( AFTER_MOVE, rec );
-        gameEngine.addObserver( AFTER_ATTACK, rec );
+    private void prepareTile(int aX, int aY, MapTile aRec) {
+        gameEngine.addObserver( AFTER_MOVE, aRec );
+        gameEngine.addObserver( AFTER_ATTACK, aRec );
         Creature c = gameEngine.get(aX, aY);
         if (c != null) {
             boolean shouldFlip = gameEngine.isHeroTwoCreature(c);
-            rec.addCreature(c.getName(), c.getAmount(), shouldFlip);
+            aRec.addCreature(c.getName(), c.getAmount(), shouldFlip);
 
             if (c == gameEngine.getActiveCreature()) {
-                rec.changeState( new MapTileActiveCreatureState( rec ) );
+                aRec.changeState( new MapTileActiveCreatureState() );
             } else if (gameEngine.canAttack(aX, aY)) {
                 final int x1 = aX;
                 final int y1 = aY;
-                rec.changeState( new MapTileAttackPossibleState( rec ) );
-                rec.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> gameEngine.attack(x1, y1));
+                aRec.changeState( new MapTileAttackPossibleState() );
+                aRec.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> gameEngine.attack(x1, y1));
             }
         } else if (gameEngine.canMove(aX, aY)) {
             final int x1 = aX;
             final int y1 = aY;
-            rec.changeState( new MapTileMovePossibleState( rec ) );
-            rec.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> gameEngine.move(new Point(x1, y1)));
+            aRec.changeState( new MapTileMovePossibleState() );
+            aRec.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> gameEngine.move(new Point(x1, y1)));
         }
     }
 
     void prepareToCastSpell(AbstractSpell aChosenSpell) {
         //time to change refresh method ;).
-        refreshGui(true);
+        refreshGui(aChosenSpell);
     }
 
     @Override
     public void propertyChange(PropertyChangeEvent aPropertyChangeEvent) {
-        refreshGui(false);
+        refreshGui(null);
     }
 
 
