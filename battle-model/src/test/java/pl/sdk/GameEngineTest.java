@@ -3,8 +3,6 @@ package pl.sdk;
 import org.junit.jupiter.api.Test;
 import pl.sdk.creatures.Creature;
 import pl.sdk.creatures.NecropolisFactory;
-import pl.sdk.spells.SpellBook;
-import pl.sdk.spells.SpellFactoryForTests;
 
 import java.util.List;
 

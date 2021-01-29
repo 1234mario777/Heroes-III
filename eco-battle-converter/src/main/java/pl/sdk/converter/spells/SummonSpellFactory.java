@@ -13,11 +13,11 @@ class SummonSpellFactory extends SpellFactory {
             case SUMMON_AIR_ELEMENTAL:
                 switch (aMasteries.getAir()) {
                     case BASIC:
-                        return new SummonSpell(25, aHeroPower, 2 * aHeroPower, "Air Elemental", aEs.getElement());
+                        return new SummonSpell(25, aHeroPower, 2 * aHeroPower, "Air Elemental", aEs.getElement(), aEs.getName());
                     case ADVANCED:
-                        return new SummonSpell(25, aHeroPower, 3 * aHeroPower, "Air Elemental", aEs.getElement());
+                        return new SummonSpell(25, aHeroPower, 3 * aHeroPower, "Air Elemental", aEs.getElement(), aEs.getName());
                     case MASTER:
-                        return new SummonSpell(25, aHeroPower, 4 * aHeroPower, "Air Elemental", aEs.getElement());
+                        return new SummonSpell(25, aHeroPower, 4 * aHeroPower, "Air Elemental", aEs.getElement(), aEs.getName());
                     default:
                         throw new UnsupportedOperationException("Cannot recognize mastery level");
                 }

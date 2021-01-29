@@ -128,6 +128,8 @@ public class GameEngine {
         return queue.getActiveCreature();
     }
 
+
+
     public boolean canMove(int aX, int aY) {
         return board.canMove(getActiveCreature(), aX, aY);
     }
@@ -177,5 +179,9 @@ public class GameEngine {
 
     boolean isEnemyCreature(Point aP) {
         return board.get(aP) != null && !queue.getActiveHero().getCreatures().contains(board.get(aP));
+    }
+
+    public Hero getActiveHero() {
+        return queue.getActiveHero();
     }
 }

@@ -11,11 +11,11 @@ class DebuffSpellFactory extends SpellFactory{
             case SLOW:
                 switch (aMasteries.getEarth()){
                     case BASIC:
-                        return new DebuffSpell(aEs.getManaCost(), aHeroPower, aEs.getElement(), SpellStatistic.TargetType.ENEMY);
+                        return new DebuffSpell(aEs.getManaCost(), aHeroPower, aEs.getElement(), SpellStatistic.TargetType.ENEMY, aEs.getName());
                     case ADVANCED:
-                        return new DebuffSpell(aEs.getManaCost(), aHeroPower, aEs.getElement(), SpellStatistic.TargetType.ENEMY);
+                        return new DebuffSpell(aEs.getManaCost(), aHeroPower, aEs.getElement(), SpellStatistic.TargetType.ENEMY, aEs.getName());
                     case MASTER:
-                        return new DebuffSpell(aEs.getManaCost(), aHeroPower, aEs.getElement(), SpellStatistic.TargetType.ALL_ENEMIES);
+                        return new DebuffSpell(aEs.getManaCost(), aHeroPower, aEs.getElement(), SpellStatistic.TargetType.ALL_ENEMIES, aEs.getName());
                     default:
                         throw new UnsupportedOperationException("Cannot recognize mastery level");
                 }

@@ -60,7 +60,8 @@ public class BattleMapController implements PropertyChangeListener {
         });
 
         spellBookButton.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) ->{
-            throw new UnsupportedOperationException("spellbook not implemented yet");
+            SpellChooserDialog spellChooser = new SpellChooserDialog(gameEngine.getActiveHero().getSpells(), gameEngine.getActiveHero().getMana());
+            spellChooser.startDialog();
         });
 
         refreshGui();

@@ -43,7 +43,7 @@ public class SpellBook implements PropertyChangeListener {
         endOfTurn();
     }
 
-    int getMana() {
+    public int getMana() {
         return mana;
     }
 }
