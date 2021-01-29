@@ -7,11 +7,6 @@ public class MapTileAfterAttackState extends MapTileState
 {
 	private final String STATE_NAME = "After Attack";
 
-	MapTileAfterAttackState( MapTile aMapTile )
-	{
-		super( aMapTile );
-	}
-
 	@Override
 	void updateBackground( Rectangle aRec )
 	{

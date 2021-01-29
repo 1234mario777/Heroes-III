@@ -11,22 +11,22 @@ class SpecialSpellFactory extends SpellFactory {
             case DISPEL:
                 switch (aMasteries.getWater()) {
                     case BASIC:
-                        return new DispelSpell(SpellStatistic.TargetType.ALLY);
+                        return new DispelSpell(SpellStatistic.TargetType.ALLY, aEs.getName());
                     case ADVANCED:
-                        return new DispelSpell(SpellStatistic.TargetType.CREATURE);
+                        return new DispelSpell(SpellStatistic.TargetType.CREATURE, aEs.getName());
                     case MASTER:
-                        return new DispelSpell(SpellStatistic.TargetType.ALL_CREATURES);
+                        return new DispelSpell(SpellStatistic.TargetType.ALL_CREATURES, aEs.getName());
                     default:
                         throw new UnsupportedOperationException("Cannot recognize mastery level");
                 }
             case TELEPORT:
                 switch (aMasteries.getWater()) {
                     case BASIC:
-                        return new TeleportSpell();
+                        return new TeleportSpell(aEs.getName());
                     case ADVANCED:
-                        return new TeleportSpell();
+                        return new TeleportSpell(aEs.getName());
                     case MASTER:
-                        return new TeleportSpell();
+                        return new TeleportSpell(aEs.getName());
                     default:
                         throw new UnsupportedOperationException("Cannot recognize mastery level");
                 }

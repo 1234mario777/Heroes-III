@@ -7,8 +7,8 @@ public class SummonSpell extends AbstractSpell{
     private final String creatureName;
 
 
-    public SummonSpell(int aManaCost, int aDuration, int aCreatureAmount, String aCreatureName, SpellStatistic.SpellElement aElement) {
-        super(aManaCost, SpellStatistic.TargetType.MAP, aElement);
+    public SummonSpell(int aManaCost, int aDuration, int aCreatureAmount, String aCreatureName, SpellStatistic.SpellElement aElement, String aName) {
+        super(aManaCost, SpellStatistic.TargetType.MAP, aElement, aName);
         duration = aDuration;
         creatureAmount = aCreatureAmount;
         creatureName = aCreatureName;

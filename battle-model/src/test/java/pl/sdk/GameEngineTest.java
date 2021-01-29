@@ -3,8 +3,6 @@ package pl.sdk;
 import org.junit.jupiter.api.Test;
 import pl.sdk.creatures.Creature;
 import pl.sdk.creatures.NecropolisFactory;
-import pl.sdk.spells.SpellBook;
-import pl.sdk.spells.SpellFactoryForTests;
 
 import java.util.List;
 
@@ -33,13 +31,13 @@ class GameEngineTest {
 
         //hero1 is active
         assertTrue(engine.canCastSpell());
-        engine.cast(SpellFactoryForTests.createMagicArrow());
+        engine.castSpell(SpellFactoryForTests.createMagicArrow(), new Point(0,1));
         assertFalse(engine.canCastSpell());
         engine.pass();
 
         //hero2 is active
         assertTrue(engine.canCastSpell());
-        engine.cast(SpellFactoryForTests.createMagicArrow());
+        engine.castSpell(SpellFactoryForTests.createMagicArrow(), new Point(19,1));
         assertFalse(engine.canCastSpell());
         engine.pass();
         assertFalse(engine.canCastSpell());

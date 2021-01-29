@@ -2,8 +2,8 @@ package pl.sdk.spells;
 
 public class TeleportSpell extends AbstractSpell {
 
-    public TeleportSpell() {
-        super(15, SpellStatistic.TargetType.ALLY, SpellStatistic.SpellElement.WATER);
+    public TeleportSpell(String aName) {
+        super(15, SpellStatistic.TargetType.ALLY, SpellStatistic.SpellElement.WATER, aName);
     }
 
     @Override

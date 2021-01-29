@@ -3,6 +3,7 @@ package pl.sdk;
 import pl.sdk.creatures.Creature;
 import pl.sdk.spells.AbstractSpell;
 import pl.sdk.spells.SpellBook;
+import pl.sdk.spells.SpellStatistic;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +14,9 @@ public class Hero {
     private final SpellBook spellBook;
 
     public Hero(List<Creature> aCreatures) {
-        this(aCreatures, new SpellBook(10, new ArrayList<>()));
+        this(aCreatures, new SpellBook(15, List.of(SpellFactoryForTests.createMagicArrow(),
+                SpellFactoryForTests.createMagicArrowWithSplashAndTargetType(2, SpellStatistic.TargetType.ALLY),
+                SpellFactoryForTests.createMagicArrowWithSplash(2))));
     }
 
     public Hero(List<Creature> aCreatures, SpellBook aSpellBook) {
@@ -43,5 +46,9 @@ public class Hero {
 
     void toSubscribeEndOfTurn(TurnQueue aQueue) {
         aQueue.addObserver(spellBook);
+    }
+
+    public int getMana() {
+        return spellBook.getMana();
     }
 }

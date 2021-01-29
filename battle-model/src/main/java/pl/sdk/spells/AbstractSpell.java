@@ -1,16 +1,20 @@
 package pl.sdk.spells;
 
 
+import pl.sdk.creatures.Creature;
+
 public abstract class AbstractSpell {
 
     protected final int manaCost;
+    protected final String name;
     protected final SpellStatistic.TargetType targetType;
     protected final SpellStatistic.SpellElement element;
 
-    public AbstractSpell(int aManaCost, SpellStatistic.TargetType aTargetType, SpellStatistic.SpellElement aElement) {
+    public AbstractSpell(int aManaCost, SpellStatistic.TargetType aTargetType, SpellStatistic.SpellElement aElement, String aName) {
         manaCost = aManaCost;
         targetType = aTargetType;
         element = aElement;
+        name = aName;
     }
 
     public int getManaCost() {
@@ -22,4 +26,12 @@ public abstract class AbstractSpell {
     }
 
     public abstract int getSplashRange();
+
+    public String getName(){
+        return name;
+    }
+
+    public void cast(Creature aCreature){
+        aCreature.applyDamage(1000);
+    }
 }
