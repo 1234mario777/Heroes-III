@@ -8,11 +8,14 @@ import javafx.scene.paint.Color;
 import pl.sdk.*;
 import pl.sdk.creatures.Creature;
 import pl.sdk.creatures.NecropolisFactory;
+import pl.sdk.spells.AbstractSpell;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
+import java.util.function.Function;
 
 import static pl.sdk.GameEngine.AFTER_ATTACK;
 import static pl.sdk.GameEngine.AFTER_MOVE;
@@ -61,7 +64,7 @@ public class BattleMapController implements PropertyChangeListener {
 
         spellBookButton.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) ->{
             SpellChooserDialog spellChooser = new SpellChooserDialog(gameEngine.getActiveHero().getSpells(), gameEngine.getActiveHero().getMana());
-            spellChooser.startDialog();
+            spellChooser.startDialog(this::prepareToCastSpell);
         });
 
         refreshGui();
@@ -103,8 +106,15 @@ public class BattleMapController implements PropertyChangeListener {
         }
     }
 
+    void prepareToCastSpell(AbstractSpell aChosenSpell) {
+        //time to change refresh method ;).
+        refreshGui();
+    }
+
     @Override
     public void propertyChange(PropertyChangeEvent aPropertyChangeEvent) {
         refreshGui();
     }
+
+
 }

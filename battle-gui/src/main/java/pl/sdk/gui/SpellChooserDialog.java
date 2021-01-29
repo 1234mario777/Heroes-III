@@ -11,6 +11,7 @@ import javafx.stage.Stage;
 import pl.sdk.spells.AbstractSpell;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 public class SpellChooserDialog {
 
@@ -18,13 +19,14 @@ public class SpellChooserDialog {
     private final List<AbstractSpell> spells;
     private final int mana;
     private Stage dialog;
+    private ToggleGroup spellChooser;
 
     public SpellChooserDialog(List<AbstractSpell> aSpells, int aMana) {
         spells = aSpells;
         mana = aMana;
     }
 
-    void startDialog() {
+    void startDialog(Consumer<AbstractSpell>  aControllerFunction) {
         HBox centerPane = new HBox();
         HBox bottomPane = new HBox();
         VBox topPane = new VBox();
@@ -32,16 +34,17 @@ public class SpellChooserDialog {
 
         prepareTop(topPane);
         prepareCenter(centerPane);
-        prepareConfirmAndCancelButton(bottomPane);
+        prepareConfirmAndCancelButton(bottomPane, aControllerFunction);
 
         dialog.showAndWait();
     }
 
     private void prepareCenter(HBox aCenterPane) {
-        final ToggleGroup group = new ToggleGroup();
+        spellChooser = new ToggleGroup();
         spells.forEach(s -> {
             RadioButton radio = new RadioButton(s.getName());
-            radio.setToggleGroup(group);
+            radio.setToggleGroup(spellChooser);
+            radio.setUserData(s);
             aCenterPane.getChildren().add(radio);
         });
     }
@@ -64,16 +67,18 @@ public class SpellChooserDialog {
         pane.setBottom(aBottom);
     }
 
-    private void prepareConfirmAndCancelButton(HBox aBottomPane) {
+    private void prepareConfirmAndCancelButton(HBox aBottomPane, Consumer<AbstractSpell> aPrepareControllerFunction) {
         Button okButton = new Button("OK");
         aBottomPane.setAlignment(Pos.CENTER);
-        okButton.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> dialog.close());
+        okButton.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
+                    dialog.close();
+                    AbstractSpell chosenSpell = (AbstractSpell) spellChooser.getSelectedToggle().getUserData();
+                    aPrepareControllerFunction.accept(chosenSpell);
+                }
+        );
         okButton.setPrefWidth(200);
         Button cancelButton = new Button("CLOSE");
-        cancelButton.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) ->
-        {
-            dialog.close();
-        });
+        cancelButton.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> dialog.close());
         cancelButton.setPrefWidth(200);
         HBox.setHgrow(okButton, Priority.ALWAYS);
         HBox.setHgrow(cancelButton, Priority.ALWAYS);
