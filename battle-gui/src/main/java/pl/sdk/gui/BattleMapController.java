@@ -94,6 +94,10 @@ public class BattleMapController implements PropertyChangeListener {
     private void prepareTileWithSpells(int aX, int aY, MapTile aRec, AbstractSpell aSpellToCast) {
         if (gameEngine.canCastSpell(aSpellToCast, new Point(aX, aY))) {
             aRec.changeState(new MapTileCastSpellPossibleState());
+            aRec.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
+                gameEngine.castSpell(aSpellToCast, new Point(aX, aY));
+                refreshGui(null);
+            });
         }
     }
 

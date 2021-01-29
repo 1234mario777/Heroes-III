@@ -169,8 +169,9 @@ public class GameEngine {
         return calc.canCast(aSpell, aPoint, this, board);
     }
 
-    void cast(AbstractSpell aSpell) {
+    public void castSpell(AbstractSpell aSpell, Point aPoint) {
         queue.getActiveHero().castSpell(aSpell);
+        aSpell.cast(board.get(aPoint));
     }
 
     boolean isAllyCreature(Point aP) {

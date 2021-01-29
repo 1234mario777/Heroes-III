@@ -1,6 +1,8 @@
 package pl.sdk.spells;
 
 
+import pl.sdk.creatures.Creature;
+
 public abstract class AbstractSpell {
 
     protected final int manaCost;
@@ -27,5 +29,9 @@ public abstract class AbstractSpell {
 
     public String getName(){
         return name;
+    }
+
+    public void cast(Creature aCreature){
+        aCreature.applyDamage(1000);
     }
 }
