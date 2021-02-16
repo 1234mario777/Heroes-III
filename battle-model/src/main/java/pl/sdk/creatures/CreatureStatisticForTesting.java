@@ -2,7 +2,7 @@ package pl.sdk.creatures;
 
 import com.google.common.collect.Range;
 
-    class CreatureStatisticForTesting implements CreatureStatisticIf{
+    public class CreatureStatisticForTesting implements CreatureStatisticIf{
 
         private final String name;
         private final int attack;
@@ -11,7 +11,7 @@ import com.google.common.collect.Range;
         private final int moveRange;
         private final Range<Integer> damage;
 
-        CreatureStatisticForTesting(String aName, int aAttack, int aArmor, int aMaxHp, int aMoveRange, Range<Integer> aDamage) {
+        public CreatureStatisticForTesting(String aName, int aAttack, int aArmor, int aMaxHp, int aMoveRange, Range<Integer> aDamage) {
             name = aName;
             attack = aAttack;
             armor = aArmor;

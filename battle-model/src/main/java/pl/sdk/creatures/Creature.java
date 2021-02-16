@@ -29,7 +29,7 @@ public class Creature implements PropertyChangeListener {
     public void attack(Creature aDefender) {
         if (isAlive()){
             int damageToDeal = calculateDamage(this, aDefender);
-            aDefender.applyDamage(damageToDeal);
+            aDefender.applyPureDamageDamage(damageToDeal);
             counterAttack(aDefender);
         }
     }
@@ -41,12 +41,12 @@ public class Creature implements PropertyChangeListener {
     void counterAttack(Creature aDefender) {
         if (!aDefender.counterAttackedInThisTurn){
             int damageToDealInCounterAttack = calculateDamage(aDefender, this);
-            applyDamage(damageToDealInCounterAttack);
+            applyPureDamageDamage(damageToDealInCounterAttack);
             aDefender.counterAttackedInThisTurn = true;
         }
     }
 
-    public void applyDamage(int aDamageToApply) {
+    private void applyPureDamageDamage(int aDamageToApply) {
         int fullCurrentHp = (stats.getMaxHp() * (amount - 1)) + currentHp - aDamageToApply;
         if (fullCurrentHp <= 0) {
             amount = 0;
@@ -145,16 +145,20 @@ public class Creature implements PropertyChangeListener {
         return ret;
     }
 
-    static class Builder {
+    public void applyMagicDamage(int aDamage) {
+        applyPureDamageDamage(aDamage);
+    }
+
+    public static class Builder {
         private CreatureStatisticIf stats;
         private CalculateDamageStrategy damageCalculator;
         private Integer amount;
 
-        Builder statistic (CreatureStatisticIf aStats){
+        public Builder statistic(CreatureStatisticIf aStats){
             this.stats = aStats;
             return this;
         };
-        Builder amount(int amount){
+        public Builder amount(int amount){
             this.amount=amount;
             return this;
         }
@@ -163,7 +167,7 @@ public class Creature implements PropertyChangeListener {
             return this;
         }
 
-        Creature build(){
+        public Creature build(){
             Set<String> emptyFields = new HashSet<>();
             if (stats == null){
                 emptyFields.add("stats");

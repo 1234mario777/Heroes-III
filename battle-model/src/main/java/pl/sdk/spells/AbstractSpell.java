@@ -31,7 +31,5 @@ public abstract class AbstractSpell {
         return name;
     }
 
-    public void cast(Creature aCreature){
-        aCreature.applyDamage(1000);
-    }
+    public abstract void cast(Creature aCreature);
 }

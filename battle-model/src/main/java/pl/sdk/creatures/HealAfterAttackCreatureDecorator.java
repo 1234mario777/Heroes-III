@@ -18,14 +18,14 @@ class HealAfterAttackCreatureDecorator extends Creature{
     public void attack(Creature aDefender) {
         if (decorated.isAlive()){
             int damageToDeal = decorated.calculateDamage(this, aDefender);
-            aDefender.applyDamage(damageToDeal);
+            aDefender.applyPureDamageDamage(damageToDeal);
             healAfterAttack(damageToDeal);
             decorated.counterAttack(aDefender);
         }
     }
 
     private void healAfterAttack(int aDamageToDeal) {
-        applyDamage((int)(-aDamageToDeal * selfHealingPercentage));
+        applyPureDamageDamage((int)(-aDamageToDeal * selfHealingPercentage));
     }
 
     @Override
@@ -54,8 +54,8 @@ class HealAfterAttackCreatureDecorator extends Creature{
     }
 
     @Override
-    public void applyDamage(int aDamageToApply) {
-        decorated.applyDamage(aDamageToApply);
+    public void applyPureDamageDamage(int aDamageToApply) {
+        decorated.applyPureDamageDamage(aDamageToApply);
     }
 
     @Override

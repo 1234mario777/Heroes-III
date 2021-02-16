@@ -1,5 +1,7 @@
 package pl.sdk.spells;
 
+import pl.sdk.creatures.Creature;
+
 public class DamageSpell extends AbstractSpell{
 
     private final int damage;
@@ -14,6 +16,11 @@ public class DamageSpell extends AbstractSpell{
     @Override
     public int getSplashRange() {
         return splashRange;
+    }
+
+    @Override
+    public void cast(Creature aCreature) {
+        aCreature.applyMagicDamage(damage);
     }
 
     public int getDamage() {

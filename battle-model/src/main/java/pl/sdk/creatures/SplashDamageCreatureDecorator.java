@@ -30,8 +30,8 @@ public class SplashDamageCreatureDecorator extends Creature {
     }
 
     @Override
-    public void applyDamage(int aDamageToApply) {
-        decorated.applyDamage(aDamageToApply);
+    public void applyPureDamageDamage(int aDamageToApply) {
+        decorated.applyPureDamageDamage(aDamageToApply);
     }
 
     @Override
