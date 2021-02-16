@@ -2,7 +2,9 @@ package pl.sdk.converter.spells;
 
 import com.google.common.collect.Range;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import pl.sdk.Fraction;
 import pl.sdk.Hero;
 import pl.sdk.converter.SpellMasteries;
 import pl.sdk.creatures.*;
@@ -17,24 +19,25 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class DamageSpellTest {
 
     private EconomyTestFractionFactory creatureFactory;
-    private EconomyCreature creatureForTesting;
+    private Creature creatureForTesting;
 
-    @BeforeAll
+    @BeforeEach
     void init(){
         creatureFactory = new EconomyTestFractionFactory();
-        EconomyCreature ecoCreature = prepareCreatureWith1kHP();
-        Hero hero = new Hero( List.of(ecoCreature) );
-        creatureForTesting
+        creatureForTesting = prepareCreatureWith1kHP();
+
+        Hero hero = new Hero( List.of(creatureForTesting) );
     }
 
     @Test
-    void shouldConvertMagicArrowSpellsCorrectly(){
+    void spellShouldDeal10Damage(){
         EconomySpell toCovert = new EconomySpell(SpellStatistic.MAGIC_ARROW);
-
         DamageSpell spell = (DamageSpell) new DamageSpellFactory().createInner(toCovert, 1, new SpellMasteries());
 
-        creatureForTesting.cast(spell);
+        spell.cast(creatureForTesting);
 
+        assertEquals(5, creatureForTesting.getAmount());
+        assertEquals(190, creatureForTesting.getCurrentHp());
     }
 
 
@@ -43,7 +46,9 @@ public class DamageSpellTest {
 
 
 // --------------------------------------------------------------
-    private EconomyCreature prepareCreatureWith1kHP() {
-        return creatureFactory.create(true,7,5);
+    private Creature prepareCreatureWith1kHP() {
+        // 1 stack == 200HP
+        return AbstractFractionFactory.getInstance(Fraction.TEST_FRACTION)
+                .create(true,7,5);
     }
 }

@@ -21,7 +21,7 @@ class BlockCounterAttackCreatureDecorator extends Creature{
     public void attack(Creature aDefender) {
         if (decorated.isAlive()){
             int damageToDeal = decorated.calculateDamage(this,aDefender);
-            aDefender.applyPureDamageDamage(damageToDeal);
+            aDefender.applyDamage(damageToDeal);
         }
     }
 
@@ -31,8 +31,8 @@ class BlockCounterAttackCreatureDecorator extends Creature{
     }
 
     @Override
-    public void applyPureDamageDamage(int aDamageToApply) {
-        decorated.applyPureDamageDamage(aDamageToApply);
+    public void applyDamage(int aDamageToApply) {
+        decorated.applyDamage(aDamageToApply);
     }
 
     @Override

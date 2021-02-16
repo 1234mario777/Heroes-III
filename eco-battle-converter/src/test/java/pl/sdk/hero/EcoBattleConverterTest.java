@@ -2,6 +2,7 @@ package pl.sdk.hero;
 
 
 import org.junit.jupiter.api.Test;
+import pl.sdk.Fraction;
 import pl.sdk.converter.EcoBattleConverter;
 import pl.sdk.creatures.Creature;
 import pl.sdk.creatures.EconomyNecropolisFactory;

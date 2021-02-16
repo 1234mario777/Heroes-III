@@ -50,8 +50,8 @@ class ShootingCreatureDecorator extends Creature {
     }
 
     @Override
-    public void applyPureDamageDamage(int aDamageToApply) {
-        decorated.applyPureDamageDamage(aDamageToApply);
+    public void applyDamage(int aDamageToApply) {
+        decorated.applyDamage(aDamageToApply);
     }
 
     @Override

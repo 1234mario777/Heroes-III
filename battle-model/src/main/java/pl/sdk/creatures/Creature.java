@@ -29,7 +29,7 @@ public class Creature implements PropertyChangeListener {
     public void attack(Creature aDefender) {
         if (isAlive()){
             int damageToDeal = calculateDamage(this, aDefender);
-            aDefender.applyPureDamageDamage(damageToDeal);
+            aDefender.applyDamage(damageToDeal);
             counterAttack(aDefender);
         }
     }
@@ -41,12 +41,12 @@ public class Creature implements PropertyChangeListener {
     void counterAttack(Creature aDefender) {
         if (!aDefender.counterAttackedInThisTurn){
             int damageToDealInCounterAttack = calculateDamage(aDefender, this);
-            applyPureDamageDamage(damageToDealInCounterAttack);
+            applyDamage(damageToDealInCounterAttack);
             aDefender.counterAttackedInThisTurn = true;
         }
     }
 
-    private void applyPureDamageDamage(int aDamageToApply) {
+    public void applyDamage(int aDamageToApply) {
         int fullCurrentHp = (stats.getMaxHp() * (amount - 1)) + currentHp - aDamageToApply;
         if (fullCurrentHp <= 0) {
             amount = 0;
@@ -146,7 +146,7 @@ public class Creature implements PropertyChangeListener {
     }
 
     public void applyMagicDamage(int aDamage) {
-        applyPureDamageDamage(aDamage);
+        applyDamage(aDamage);
     }
 
     public static class Builder {

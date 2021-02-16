@@ -36,14 +36,14 @@ public class SplashDamageCreatureTest {
         GameEngine gameEngine = new GameEngine(new Hero(List.of(splashCreature)), new Hero(Collections.emptyList()), board);
         gameEngine.attack(10, 10);
 
-        verify(defender).applyPureDamageDamage(anyInt());
-        verify(notSplashMock1, never()).applyPureDamageDamage(anyInt());
-        verify(notSplashMock2, never()).applyPureDamageDamage(anyInt());
-        verify(notSplashMock3, never()).applyPureDamageDamage(anyInt());
-        verify(splashMock1).applyPureDamageDamage(anyInt());
-        verify(splashMock2).applyPureDamageDamage(anyInt());
-        verify(splashMock3).applyPureDamageDamage(anyInt());
-        verify(splashMock4).applyPureDamageDamage(anyInt());
+        verify(defender).applyDamage(anyInt());
+        verify(notSplashMock1, never()).applyDamage(anyInt());
+        verify(notSplashMock2, never()).applyDamage(anyInt());
+        verify(notSplashMock3, never()).applyDamage(anyInt());
+        verify(splashMock1).applyDamage(anyInt());
+        verify(splashMock2).applyDamage(anyInt());
+        verify(splashMock3).applyDamage(anyInt());
+        verify(splashMock4).applyDamage(anyInt());
     }
 
     ;
@@ -73,14 +73,14 @@ public class SplashDamageCreatureTest {
         GameEngine gameEngine = new GameEngine(new Hero(List.of(notSplashCreature)), new Hero(Collections.emptyList()), board);
         gameEngine.attack(1, 1);
 
-        verify(defender).applyPureDamageDamage(anyInt());
-        verify(notSplashMock1, never()).applyPureDamageDamage(anyInt());
-        verify(notSplashMock2, never()).applyPureDamageDamage(anyInt());
-        verify(notSplashMock3, never()).applyPureDamageDamage(anyInt());
-        verify(splashMock1, never()).applyPureDamageDamage(anyInt());
-        verify(splashMock2, never()).applyPureDamageDamage(anyInt());
-        verify(splashMock3, never()).applyPureDamageDamage(anyInt());
-        verify(splashMock4, never()).applyPureDamageDamage(anyInt());
+        verify(defender).applyDamage(anyInt());
+        verify(notSplashMock1, never()).applyDamage(anyInt());
+        verify(notSplashMock2, never()).applyDamage(anyInt());
+        verify(notSplashMock3, never()).applyDamage(anyInt());
+        verify(splashMock1, never()).applyDamage(anyInt());
+        verify(splashMock2, never()).applyDamage(anyInt());
+        verify(splashMock3, never()).applyDamage(anyInt());
+        verify(splashMock4, never()).applyDamage(anyInt());
     }
 
     ;

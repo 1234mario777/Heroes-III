@@ -31,5 +31,7 @@ public abstract class AbstractSpell {
         return name;
     }
 
-    public abstract void cast(Creature aCreature);
+    public void cast(Creature aCreature){
+
+    };
 }

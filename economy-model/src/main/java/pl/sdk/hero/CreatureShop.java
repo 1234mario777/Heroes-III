@@ -1,8 +1,8 @@
 package pl.sdk.hero;
 
+import pl.sdk.Fraction;
 import pl.sdk.creatures.AbstractEconomyFractionFactory;
 import pl.sdk.creatures.EconomyCreature;
-import pl.sdk.creatures.EconomyNecropolisFactory;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
