@@ -171,7 +171,22 @@ public class GameEngine {
 
     public void castSpell(AbstractSpell aSpell, Point aPoint) {
         queue.getActiveHero().castSpell(aSpell);
-        aSpell.cast(board.get(aPoint));
+        int range = aSpell.getSplashRange();
+        for (int i = -range ; i < range+1; i++) {
+            for (int j = -range; j < range+1; j++) {
+                int x = aPoint.getX() + i;
+                int y = aPoint.getY() + j;
+                if (x < 0 || x > BOARD_WIDTH || y < 0 || y > BOARD_HEIGHT){
+                    continue;
+                }
+
+                if ( board.get(x,y) != null){
+                    aSpell.cast(board.get(x,y));
+                    aSpell.getSplashRange();
+                }
+            }
+        }
+
     }
 
     boolean isAllyCreature(Point aP) {
