@@ -1,14 +1,14 @@
 package pl.sdk.creatures;
 
-public class DefaultMagicDamageApplier {
+public class DefaultMagicDamageReducer {
 
     private final int percentageSpellResistance;
 
-    DefaultMagicDamageApplier() {
+    DefaultMagicDamageReducer() {
         percentageSpellResistance = 0;
     }
 
-    DefaultMagicDamageApplier(int aPercentageSpellResistance) {
+    DefaultMagicDamageReducer(int aPercentageSpellResistance) {
         percentageSpellResistance = aPercentageSpellResistance;
     }
 

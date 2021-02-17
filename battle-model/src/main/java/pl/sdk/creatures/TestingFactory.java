@@ -89,7 +89,7 @@ public class TestingFactory extends AbstractFractionFactory {
                             .maxHp(100)
                             .moveRange(0)
                             .damage(Range.closed(0,0))
-                            .magicDamageApplier(new DefaultMagicDamageApplier(50))
+                            .magicDamageApplier(new DefaultMagicDamageReducer(50))
                             .build();
 
 

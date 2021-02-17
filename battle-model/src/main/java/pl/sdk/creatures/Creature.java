@@ -15,11 +15,12 @@ public class Creature implements PropertyChangeListener {
     private boolean counterAttackedInThisTurn;
     private CalculateDamageStrategy calculateDamageStrategy;
     private int amount;
-    private DefaultMagicDamageApplier magicDamageApplier;
+    private DefaultMagicDamageReducer magicDamageReducer;
 
     // Constructor for mockito. Don't use it! You have builder here.
     Creature(){
         stats = CreatureStatistic.TEST;
+        magicDamageReducer = new DefaultMagicDamageReducer();
     }
 
     Creature(CreatureStatisticIf aStats){
@@ -70,6 +71,10 @@ public class Creature implements PropertyChangeListener {
                 }
             }
         }
+    }
+
+    public DefaultMagicDamageReducer getMagicDamageReducer(){
+        return magicDamageReducer;
     }
 
     public boolean isAlive() {
@@ -147,12 +152,13 @@ public class Creature implements PropertyChangeListener {
     }
 
     public void applyMagicDamage(int aDamage) {
-        applyDamage(magicDamageApplier.reduceDamage(aDamage));
+        applyDamage(getMagicDamageReducer().reduceDamage(aDamage));
     }
 
     public static class Builder {
         private CreatureStatisticIf stats;
         private CalculateDamageStrategy damageCalculator;
+        private DefaultMagicDamageReducer magicDamageReducer;
         private Integer amount;
 
         public Builder statistic(CreatureStatisticIf aStats){
@@ -165,6 +171,10 @@ public class Creature implements PropertyChangeListener {
         }
         Builder damageCalculator (CalculateDamageStrategy aCalculateDamageStrategy){
             this.damageCalculator = aCalculateDamageStrategy;
+            return this;
+        }
+        Builder defaultMagicDamageReducer (DefaultMagicDamageReducer aMagicDamageReducer){
+            this.magicDamageReducer = aMagicDamageReducer;
             return this;
         }
 
@@ -190,6 +200,12 @@ public class Creature implements PropertyChangeListener {
             else{
                 ret.calculateDamageStrategy = new DefaultCalculateStrategy();
             }
+            if (magicDamageReducer != null){
+                ret.magicDamageReducer = magicDamageReducer;
+            }
+            else{
+                ret.magicDamageReducer = new DefaultMagicDamageReducer();
+            }
             return ret;
         }
 
@@ -198,8 +214,6 @@ public class Creature implements PropertyChangeListener {
         }
     }
 
-
-    //TODO do zaorania
     static class BuilderForTesting {
         private String name;
         private Integer attack;
@@ -209,7 +223,7 @@ public class Creature implements PropertyChangeListener {
         private Range<Integer> damage;
         private CalculateDamageStrategy damageCalculator;
         private Integer amount;
-        private DefaultMagicDamageApplier magicDamageApplier;
+        private DefaultMagicDamageReducer magicDamageApplier;
 
         BuilderForTesting name (String name){
             this.name = name;
@@ -243,7 +257,7 @@ public class Creature implements PropertyChangeListener {
             this.damageCalculator = aCalculateDamageStrategy;
             return this;
         }
-        BuilderForTesting magicDamageApplier (DefaultMagicDamageApplier aMagicDamageApplier){
+        BuilderForTesting magicDamageApplier (DefaultMagicDamageReducer aMagicDamageApplier){
             this.magicDamageApplier = aMagicDamageApplier;
             return this;
         }
@@ -287,10 +301,10 @@ public class Creature implements PropertyChangeListener {
                 ret.calculateDamageStrategy = new DefaultCalculateStrategy();
             }
             if(magicDamageApplier != null){
-                ret.magicDamageApplier = magicDamageApplier;
+                ret.magicDamageReducer = magicDamageApplier;
             }
             else{
-                ret.magicDamageApplier = new DefaultMagicDamageApplier();
+                ret.magicDamageReducer = new DefaultMagicDamageReducer();
             }
             return ret;
         }
