@@ -160,10 +160,6 @@ public class GameEngine {
         return queue.getActiveHero().canCastSpell();
     }
 
-    public boolean canCastSpell(AbstractSpell aSpell){
-        return queue.getActiveHero().canCastSpell(aSpell);
-    }
-
     public boolean canCastSpell(AbstractSpell aSpell, Point aPoint){
         SpellCastingRulesManager calc = new SpellCastingRulesManager();
         return calc.canCast(aSpell, aPoint, this, board);

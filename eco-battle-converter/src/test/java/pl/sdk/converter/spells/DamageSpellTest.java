@@ -20,6 +20,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
+import static pl.sdk.creatures.TestingFactory.FOR_MAGIC_RESISTANCE;
 
 public class DamageSpellTest {
 
@@ -34,6 +35,19 @@ public class DamageSpellTest {
     void spellShouldDeal20Damage(){
         EconomySpell toCovert = new EconomySpell(SpellStatistic.MAGIC_ARROW);
         DamageSpell spell = (DamageSpell) new DamageSpellFactory().createInner(toCovert, 1, new SpellMasteries());
+
+        spell.cast(creatureForTesting);
+
+        assertEquals(5, creatureForTesting.getAmount());
+        assertEquals(180, creatureForTesting.getCurrentHp());
+    }
+
+    @Test
+    void spellShouldDeal10DamageBecauseHas50PercentResistance(){
+        EconomySpell toCovert = new EconomySpell(SpellStatistic.MAGIC_ARROW);
+        DamageSpell spell = (DamageSpell) new DamageSpellFactory().createInner(toCovert, 1, new SpellMasteries());
+        creatureForTesting = AbstractFractionFactory.getInstance(Fraction.TEST_FRACTION)
+                .create(true,FOR_MAGIC_RESISTANCE,5);
 
         spell.cast(creatureForTesting);
 

@@ -15,6 +15,7 @@ public class Creature implements PropertyChangeListener {
     private boolean counterAttackedInThisTurn;
     private CalculateDamageStrategy calculateDamageStrategy;
     private int amount;
+    private DefaultMagicDamageApplier magicDamageApplier;
 
     // Constructor for mockito. Don't use it! You have builder here.
     Creature(){
@@ -146,7 +147,8 @@ public class Creature implements PropertyChangeListener {
     }
 
     public void applyMagicDamage(int aDamage) {
-        applyDamage(aDamage);
+        magicDamageApplier = new DefaultMagicDamageApplier(0);
+        applyDamage(magicDamageApplier.reduceDamage(aDamage));
     }
 
     public static class Builder {
@@ -197,6 +199,8 @@ public class Creature implements PropertyChangeListener {
         }
     }
 
+
+    //TODO do zaorania
     static class BuilderForTesting {
         private String name;
         private Integer attack;
@@ -206,6 +210,7 @@ public class Creature implements PropertyChangeListener {
         private Range<Integer> damage;
         private CalculateDamageStrategy damageCalculator;
         private Integer amount;
+        private DefaultMagicDamageApplier magicDamageApplier;
 
         BuilderForTesting name (String name){
             this.name = name;
@@ -237,6 +242,10 @@ public class Creature implements PropertyChangeListener {
         }
         BuilderForTesting damageCalculator (CalculateDamageStrategy aCalculateDamageStrategy){
             this.damageCalculator = aCalculateDamageStrategy;
+            return this;
+        }
+        BuilderForTesting magicDamageApplier (DefaultMagicDamageApplier aMagicDamageApplier){
+            this.magicDamageApplier = aMagicDamageApplier;
             return this;
         }
 
@@ -277,6 +286,12 @@ public class Creature implements PropertyChangeListener {
             }
             else{
                 ret.calculateDamageStrategy = new DefaultCalculateStrategy();
+            }
+            if(magicDamageApplier != null){
+                ret.magicDamageApplier = magicDamageApplier;
+            }
+            else{
+                ret.magicDamageApplier = new DefaultMagicDamageApplier();
             }
             return ret;
         }

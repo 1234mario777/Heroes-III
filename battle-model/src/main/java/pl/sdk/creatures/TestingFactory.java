@@ -1,6 +1,13 @@
 package pl.sdk.creatures;
 
+import com.google.common.collect.Range;
+
+
 public class TestingFactory extends AbstractFractionFactory {
+
+    public static final int FOR_MAGIC_RESISTANCE = 6;
+    public static final int FOR_DAMAGE_MAGIC_SPELL = 7;
+
     @Override
     public Creature create(boolean aIsUpgraded, int aTier, int aAmount) {
         if (!aIsUpgraded) {
@@ -73,12 +80,21 @@ public class TestingFactory extends AbstractFractionFactory {
 //                            .build();
 //                    boolean[][] splashDamageTable = getSplashForLich();
 //                    return new SplashDamageCreatureDecorator(new BlockCounterAttackCreatureDecorator(new ShootingCreatureDecorator(c)), splashDamageTable);
-//                case 6:
-//                    return new Creature.Builder()
-//                            .statistic(CreatureStatistic.DREAD_KNIGHT)
-//                            .amount(aAmount)
-//                            .build();
-                case 7:
+                case FOR_MAGIC_RESISTANCE:
+                    return new Creature.BuilderForTesting()
+                            .attack(0)
+                            .armor(0)
+                            .name("")
+                            .amount(aAmount)
+                            .maxHp(100)
+                            .moveRange(0)
+                            .damage(Range.closed(0,0))
+                            .magicDamageApplier(new DefaultMagicDamageApplier(50))
+                            .build();
+
+
+
+                case FOR_DAMAGE_MAGIC_SPELL:
                     return new Creature.Builder()
                             .statistic(CreatureStatistic.TEST_TIER_7_UPGRADED)
                             .amount(aAmount)
