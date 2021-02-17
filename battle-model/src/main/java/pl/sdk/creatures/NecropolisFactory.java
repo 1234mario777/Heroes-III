@@ -1,7 +1,7 @@
 package pl.sdk.creatures;
 
 
-public class NecropolisFactory {
+public class NecropolisFactory extends AbstractFractionFactory {
 
     private static final String EXCEPTION_MESSAGE = "We support tiers from 1 to 7";
 

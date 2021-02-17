@@ -7,7 +7,7 @@ import pl.sdk.creatures.EconomyTestFractionFactory;
 
 
 import static org.junit.jupiter.api.Assertions.*;
-import static pl.sdk.hero.Fraction.NECROPOLIS;
+import static pl.sdk.Fraction.NECROPOLIS;
 
 class CreatureShopCalculatorTest
 {

@@ -1,9 +1,9 @@
 package pl.sdk.hero;
 
+import pl.sdk.Fraction;
 import pl.sdk.creatures.EconomyCreature;
 import pl.sdk.spells.EconomySpell;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class Player
@@ -12,7 +12,7 @@ public class Player
 	CreatureShop creatureShop;
 	private int gold;
 
-	public Player( Fraction aFraction, int aGold )
+	public Player(Fraction aFraction, int aGold )
 	{
 		hero = new EconomyHero();
 		creatureShop = new CreatureShop( aFraction );

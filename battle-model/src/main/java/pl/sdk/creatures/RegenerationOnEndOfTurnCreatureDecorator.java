@@ -28,11 +28,6 @@ class RegenerationOnEndOfTurnCreatureDecorator extends Creature{
     }
 
     @Override
-    public void applyDamage(int aDamageToApply) {
-        decorated.applyDamage(aDamageToApply);
-    }
-
-    @Override
     public boolean[][] getSplashRange() {
         return decorated.getSplashRange();
     }

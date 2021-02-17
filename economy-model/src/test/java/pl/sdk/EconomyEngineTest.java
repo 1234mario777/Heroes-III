@@ -3,7 +3,6 @@ package pl.sdk;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import pl.sdk.creatures.EconomyTestFractionFactory;
-import pl.sdk.hero.Fraction;
 import pl.sdk.hero.Player;
 
 import static org.junit.jupiter.api.Assertions.*;
