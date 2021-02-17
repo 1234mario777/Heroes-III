@@ -147,7 +147,6 @@ public class Creature implements PropertyChangeListener {
     }
 
     public void applyMagicDamage(int aDamage) {
-        magicDamageApplier = new DefaultMagicDamageApplier(0);
         applyDamage(magicDamageApplier.reduceDamage(aDamage));
     }
 

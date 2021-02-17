@@ -13,6 +13,6 @@ public class DefaultMagicDamageApplier {
     }
 
     int reduceDamage(int aDamage) {
-        return aDamage * ((100-percentageSpellResistance) / 100);
+        return (int) (aDamage * ((100-percentageSpellResistance) / 100.0));
     }
 }

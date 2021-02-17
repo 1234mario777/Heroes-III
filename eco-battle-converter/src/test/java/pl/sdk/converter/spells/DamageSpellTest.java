@@ -52,7 +52,7 @@ public class DamageSpellTest {
         spell.cast(creatureForTesting);
 
         assertEquals(5, creatureForTesting.getAmount());
-        assertEquals(180, creatureForTesting.getCurrentHp());
+        assertEquals(90, creatureForTesting.getCurrentHp());
     }
 
     @Test
