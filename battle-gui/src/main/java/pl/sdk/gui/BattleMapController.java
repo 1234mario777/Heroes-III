@@ -8,9 +8,8 @@ import pl.sdk.*;
 import pl.sdk.Point;
 import pl.sdk.creatures.Creature;
 import pl.sdk.creatures.NecropolisFactory;
-import pl.sdk.spells.AbstractSpell;
+import pl.sdk.spells.*;
 
-import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
@@ -44,7 +43,12 @@ public class BattleMapController implements PropertyChangeListener {
             upgradedCreatures.add(factory.create(true, i, 10));
         }
 
-        gameEngine = new GameEngine(new Hero(notUpgradedCreatures), new Hero(upgradedCreatures));
+        SpellBook spellBook = new SpellBook(15, List.of(SpellFactoryForTests.createMagicArrow(),
+                SpellFactoryForTests.createMagicArrowWithSplashAndTargetType(2, SpellStatistic.TargetType.ALLY),
+                SpellFactoryForTests.createMagicArrowWithSplash(2),
+                new BuffSpell(1, 2, SpellStatistic.SpellElement.AIR, SpellStatistic.TargetType.ALL_ALLIES, "HASTE", new BuffStatistic(5))));
+
+        gameEngine = new GameEngine(new Hero(notUpgradedCreatures, spellBook), new Hero(upgradedCreatures));
     }
 
     public BattleMapController(Hero aHero1, Hero aHero2) {
@@ -70,7 +74,12 @@ public class BattleMapController implements PropertyChangeListener {
     }
 
     private void refreshGui(AbstractSpell spellToCast) {
+        gridMap.getChildren().clear();
         spellBookButton.setDisable(!gameEngine.canCastSpell());
+
+        if (spellToCast !=null && spellToCast.getTargetType().equals(SpellStatistic.TargetType.ALL_ALLIES)){
+            gameEngine.castSpell(spellToCast);
+        }
 
         for (int x = 0; x < 20; x++) {
             for (int y = 0; y < 15; y++) {
@@ -82,7 +91,7 @@ public class BattleMapController implements PropertyChangeListener {
                     rec.addCreature(c.getName(), c.getAmount(), shouldFlip);
                 }
 
-                if (spellToCast == null) {
+                if (spellToCast == null || spellToCast.getTargetType().equals(SpellStatistic.TargetType.ALL_ALLIES)) {
                     prepareTile(x, y, rec);
                 } else {
                     prepareTileWithSpells(x, y, rec, spellToCast);
