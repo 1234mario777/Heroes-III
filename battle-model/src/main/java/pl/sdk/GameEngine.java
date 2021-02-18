@@ -2,11 +2,14 @@ package pl.sdk;
 
 import pl.sdk.creatures.Creature;
 import pl.sdk.spells.AbstractSpell;
+import pl.sdk.spells.SpellStatistic;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class GameEngine {
 
@@ -165,8 +168,39 @@ public class GameEngine {
         return calc.canCast(aSpell, aPoint, this, board);
     }
 
+    public void castSpell(AbstractSpell aSpell) {
+        queue.getActiveHero().castSpell(aSpell);
+        switch (aSpell.getTargetType()){
+            case ALL_ALLIES:
+                getActiveHero().getCreatures()
+                        .stream()
+                        .map(c -> board.get(c))
+                        .forEach(p -> innerCastSpell(aSpell,p));
+            break;
+            case ALL_ENEMIES:
+                throw new UnsupportedOperationException("not implement yet!" + aSpell.getTargetType());
+            case ALL_CREATURES:
+                List<Creature> allCreatures = new ArrayList<>();
+                allCreatures.addAll(creatures1);
+                allCreatures.addAll(creatures2);
+
+                allCreatures.stream()
+                        .map(c -> board.get(c))
+                        .forEach(p -> innerCastSpell(aSpell,p));
+            break;
+            case ALL:
+                throw new UnsupportedOperationException("not implement yet!" + aSpell.getTargetType());
+            default:
+                throw new IllegalArgumentException("You should use method with concrete point while spell target type is " + aSpell.getTargetType());
+        }
+    }
+
     public void castSpell(AbstractSpell aSpell, Point aPoint) {
         queue.getActiveHero().castSpell(aSpell);
+        innerCastSpell(aSpell, aPoint);
+    }
+
+    private void innerCastSpell(AbstractSpell aSpell, Point aPoint){
         int range = aSpell.getSplashRange();
         for (int i = -range ; i < range+1; i++) {
             for (int j = -range; j < range+1; j++) {
@@ -195,4 +229,5 @@ public class GameEngine {
     public Hero getActiveHero() {
         return queue.getActiveHero();
     }
+
 }

@@ -70,7 +70,7 @@ class BuffSpellTest {
                 .create(new EconomySpell(SpellStatistic.HASTE), 1, new SpellMasteries(MASTER, BASIC, BASIC, BASIC));
 
         assertEquals(14, c1.getMoveRange());
-        engine.castSpell(haste, new Point(0,1));
+        engine.castSpell(haste);
         assertEquals(19, c1.getMoveRange());
         assertEquals(19, c2.getMoveRange());
     }
