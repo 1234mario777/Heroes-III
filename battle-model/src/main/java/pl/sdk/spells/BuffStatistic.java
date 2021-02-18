@@ -4,7 +4,7 @@ public class BuffStatistic {
 
     private int moveRange;
 
-    BuffStatistic(int aMoveRange) {
+    public BuffStatistic(int aMoveRange) {
         moveRange = aMoveRange;
     }
 

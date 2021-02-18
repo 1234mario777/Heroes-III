@@ -182,7 +182,6 @@ public class GameEngine {
                 }
             }
         }
-
     }
 
     boolean isAllyCreature(Point aP) {

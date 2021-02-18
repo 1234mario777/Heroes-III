@@ -11,11 +11,11 @@ class BuffSpellFactory extends SpellFactory{
             case HASTE:
                 switch (aMasteries.getAir()){
                     case BASIC:
-                        return new BuffSpell(aEs.getManaCost(), aHeroPower, aEs.getElement(), SpellStatistic.TargetType.ALLY, aEs.getName());
+                        return new BuffSpell(aEs.getManaCost(), aHeroPower, aEs.getElement(), SpellStatistic.TargetType.ALLY, aEs.getName(), new BuffStatistic(3));
                     case ADVANCED:
-                        return new BuffSpell(aEs.getManaCost(), aHeroPower, aEs.getElement(), SpellStatistic.TargetType.ALLY, aEs.getName());
+                        return new BuffSpell(aEs.getManaCost(), aHeroPower, aEs.getElement(), SpellStatistic.TargetType.ALLY, aEs.getName(),  new BuffStatistic(5));
                     case MASTER:
-                        return new BuffSpell(aEs.getManaCost(), aHeroPower, aEs.getElement(), SpellStatistic.TargetType.ALL_ALLIES, aEs.getName());
+                        return new BuffSpell(aEs.getManaCost(), aHeroPower, aEs.getElement(), SpellStatistic.TargetType.ALL_ALLIES, aEs.getName(),  new BuffStatistic(5));
                     default:
                         throw new UnsupportedOperationException("Cannot recognize mastery level");
                 }

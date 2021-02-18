@@ -14,10 +14,10 @@ public class BuffSpell extends AbstractSpell implements PropertyChangeListener {
     private Creature creature;
     private BuffStatistic buffStats;
 
-    public BuffSpell(int aManaCost, int aDuration, SpellStatistic.SpellElement aElement, SpellStatistic.TargetType aTargetType, String aName) {
+    public BuffSpell(int aManaCost, int aDuration, SpellStatistic.SpellElement aElement, SpellStatistic.TargetType aTargetType, String aName, BuffStatistic aSpellStats) {
         super(aManaCost, aTargetType, aElement, aName);
         duration = aDuration;
-        buffStats = new BuffStatistic(3);
+        buffStats = aSpellStats;
     }
 
     public int getDuration() {

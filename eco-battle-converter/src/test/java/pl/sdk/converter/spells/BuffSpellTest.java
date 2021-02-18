@@ -13,6 +13,8 @@ import pl.sdk.spells.*;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static pl.sdk.converter.SpellMasteries.SpellMasterLevel.BASIC;
+import static pl.sdk.converter.SpellMasteries.SpellMasterLevel.MASTER;
 
 class BuffSpellTest {
 
@@ -53,6 +55,24 @@ class BuffSpellTest {
         engine.pass();
 
         assertEquals(14, c1.getMoveRange());
+    }
+
+    @Test
+    void shouldIncreaseMoveRangeForAllOurCreatures() {
+        Creature c1 = AbstractFractionFactory.getInstance(Fraction.TEST_FRACTION)
+                .create(true, 7, 5);
+        Creature c2 = AbstractFractionFactory.getInstance(Fraction.TEST_FRACTION)
+                .create(true, 7, 5);
+        Creature cEnemy = AbstractFractionFactory.getInstance(Fraction.TEST_FRACTION)
+                .create(true, 7, 5);
+        GameEngine engine = new GameEngine(new Hero(List.of(c1, c2)), new Hero(List.of(cEnemy)));
+        AbstractSpell haste = SpellFactory
+                .create(new EconomySpell(SpellStatistic.HASTE), 1, new SpellMasteries(MASTER, BASIC, BASIC, BASIC));
+
+        assertEquals(14, c1.getMoveRange());
+        engine.castSpell(haste, new Point(0,1));
+        assertEquals(19, c1.getMoveRange());
+        assertEquals(19, c2.getMoveRange());
     }
 
 }
