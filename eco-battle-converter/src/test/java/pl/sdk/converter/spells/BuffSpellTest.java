@@ -18,15 +18,18 @@ class BuffSpellTest {
 
     @Test
     void shouldIncreaseMoveRange() {
+        Creature c1 = AbstractFractionFactory.getInstance(Fraction.TEST_FRACTION)
+                .create(true, 7, 5);
+        Creature c2 = AbstractFractionFactory.getInstance(Fraction.TEST_FRACTION)
+                .create(true, 7, 5);
+        GameEngine engine = new GameEngine(new Hero(List.of(c1)), new Hero(List.of(c2)));
         AbstractSpell haste = SpellFactory
                 .create(new EconomySpell(SpellStatistic.HASTE), 1, new SpellMasteries());
-        Creature creature = AbstractFractionFactory.getInstance(Fraction.TEST_FRACTION)
-                .create(true, 7, 5);
 
 
-        assertEquals(14, creature.getMoveRange());
-        haste.cast(creature);
-        assertEquals(17, creature.getMoveRange());
+        assertEquals(14, c1.getMoveRange());
+        engine.castSpell(haste, new Point(0, 1));
+        assertEquals(17, c1.getMoveRange());
     }
 
     @Test

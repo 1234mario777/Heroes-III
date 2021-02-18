@@ -1,5 +1,6 @@
 package pl.sdk.spells;
 
+import pl.sdk.GameEngine;
 import pl.sdk.creatures.Creature;
 
 public class DamageSpell extends AbstractSpell{
@@ -19,7 +20,7 @@ public class DamageSpell extends AbstractSpell{
     }
 
     @Override
-    public void cast(Creature aCreature) {
+    public void cast(Creature aCreature, GameEngine aGameEngine) {
         aCreature.applyMagicDamage(damage);
     }
 

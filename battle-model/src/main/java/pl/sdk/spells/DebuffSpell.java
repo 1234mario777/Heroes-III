@@ -1,5 +1,7 @@
 package pl.sdk.spells;
 
+import java.util.Objects;
+
 public class DebuffSpell extends AbstractSpell{
 
     private final int duration;

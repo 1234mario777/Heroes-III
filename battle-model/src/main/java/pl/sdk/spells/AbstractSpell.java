@@ -1,6 +1,7 @@
 package pl.sdk.spells;
 
 
+import pl.sdk.GameEngine;
 import pl.sdk.creatures.Creature;
 
 public abstract class AbstractSpell {
@@ -31,7 +32,16 @@ public abstract class AbstractSpell {
         return name;
     }
 
-    public void cast(Creature aCreature){
+    public void cast(Creature aCreature, GameEngine aGameEngine){
 
     };
+
+    @Override
+    public String toString() {
+        return "AbstractSpell{" +
+                "name='" + name + '\'' +
+                '}';
+    }
+
+
 }
