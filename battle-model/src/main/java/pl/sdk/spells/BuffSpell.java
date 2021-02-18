@@ -1,5 +1,8 @@
 package pl.sdk.spells;
 
+import pl.sdk.creatures.Creature;
+import pl.sdk.creatures.CreatureStatisticForTesting;
+
 public class BuffSpell extends AbstractSpell{
 
     private final int duration;
@@ -15,5 +18,11 @@ public class BuffSpell extends AbstractSpell{
     @Override
     public int getSplashRange() {
         return 0;
+    }
+
+    @Override
+    public void cast(Creature aCreature) {
+        BuffStatistic hasteStats = new BuffStatistic(3);
+        aCreature.buff(hasteStats);
     }
 }

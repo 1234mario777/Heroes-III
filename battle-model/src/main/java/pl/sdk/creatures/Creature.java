@@ -1,16 +1,16 @@
 package pl.sdk.creatures;
 
 import com.google.common.collect.Range;
+import pl.sdk.spells.BuffStatistic;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 public class Creature implements PropertyChangeListener {
 
     private final CreatureStatisticIf stats;
+    private List<BuffStatistic> buffsAndDebuffs;
     private int currentHp;
     private boolean counterAttackedInThisTurn;
     private CalculateDamageStrategy calculateDamageStrategy;
@@ -21,11 +21,13 @@ public class Creature implements PropertyChangeListener {
     Creature(){
         stats = CreatureStatistic.TEST;
         magicDamageReducer = new DefaultMagicDamageReducer();
+        buffsAndDebuffs = new ArrayList<>();
     }
 
     Creature(CreatureStatisticIf aStats){
         stats = aStats;
         currentHp = stats.getMaxHp();
+        buffsAndDebuffs = new ArrayList<>();
     }
 
     public void attack(Creature aDefender) {
@@ -94,6 +96,10 @@ public class Creature implements PropertyChangeListener {
     }
 
     public int getMoveRange() {
+        return stats.getMoveRange() + buffsAndDebuffs.stream().mapToInt(BuffStatistic::getMoveRange).sum();
+    }
+
+    public int getDefaultMoveRange() {
         return stats.getMoveRange();
     }
 
@@ -153,6 +159,10 @@ public class Creature implements PropertyChangeListener {
 
     public void applyMagicDamage(int aDamage) {
         applyDamage(getMagicDamageReducer().reduceDamage(aDamage));
+    }
+
+    public void buff(BuffStatistic aHasteStats) {
+        buffsAndDebuffs.add(aHasteStats);
     }
 
     public static class Builder {
