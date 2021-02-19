@@ -7,14 +7,14 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Objects;
 
-public class BuffSpell extends AbstractSpell implements PropertyChangeListener {
+public class BuffOrDebuffSpell extends AbstractSpell implements PropertyChangeListener {
 
     private final int duration;
     private int roundsToEnd;
     private Creature creature;
     private BuffStatistic buffStats;
 
-    public BuffSpell(int aManaCost, int aDuration, SpellStatistic.SpellElement aElement, SpellStatistic.TargetType aTargetType, String aName, BuffStatistic aSpellStats) {
+    public BuffOrDebuffSpell(int aManaCost, int aDuration, SpellStatistic.SpellElement aElement, SpellStatistic.TargetType aTargetType, String aName, BuffStatistic aSpellStats) {
         super(aManaCost, aTargetType, aElement, aName);
         duration = aDuration;
         buffStats = aSpellStats;
@@ -53,7 +53,7 @@ public class BuffSpell extends AbstractSpell implements PropertyChangeListener {
     public boolean equals(Object aO) {
         if (this == aO) return true;
         if (aO == null || getClass() != aO.getClass() || getName() == null) return false;
-        DebuffSpell that = (DebuffSpell) aO;
+        BuffOrDebuffSpell that = (BuffOrDebuffSpell) aO;
         return getName().equals(that.getName());
     }
 

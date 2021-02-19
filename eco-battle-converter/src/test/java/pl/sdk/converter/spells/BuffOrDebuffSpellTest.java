@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static pl.sdk.converter.SpellMasteries.SpellMasterLevel.BASIC;
 import static pl.sdk.converter.SpellMasteries.SpellMasterLevel.MASTER;
 
-class BuffSpellTest {
+class BuffOrDebuffSpellTest {
 
     @Test
     void shouldIncreaseMoveRange() {

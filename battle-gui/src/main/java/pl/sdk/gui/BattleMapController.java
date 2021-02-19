@@ -46,7 +46,7 @@ public class BattleMapController implements PropertyChangeListener {
         SpellBook spellBook = new SpellBook(15, List.of(SpellFactoryForTests.createMagicArrow(),
                 SpellFactoryForTests.createMagicArrowWithSplashAndTargetType(2, SpellStatistic.TargetType.ALLY),
                 SpellFactoryForTests.createMagicArrowWithSplash(2),
-                new BuffSpell(1, 2, SpellStatistic.SpellElement.AIR, SpellStatistic.TargetType.ALL_ALLIES, "HASTE", new BuffStatistic(5))));
+                new BuffOrDebuffSpell(1, 2, SpellStatistic.SpellElement.AIR, SpellStatistic.TargetType.ALL_ALLIES, "HASTE", new BuffStatistic(5))));
 
         gameEngine = new GameEngine(new Hero(notUpgradedCreatures, spellBook), new Hero(upgradedCreatures));
     }

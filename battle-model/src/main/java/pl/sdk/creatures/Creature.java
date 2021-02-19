@@ -1,7 +1,6 @@
 package pl.sdk.creatures;
 
 import com.google.common.collect.Range;
-import pl.sdk.spells.BuffSpell;
 import pl.sdk.spells.BuffStatistic;
 
 import java.beans.PropertyChangeEvent;
