@@ -49,10 +49,8 @@ class BuffOrDebuffSpellTest {
         assertEquals(17, c1.getMoveRange());
 
         //end two turn
-        engine.pass();
-        engine.pass();
-        engine.pass();
-        engine.pass();
+        endTurn(engine);
+        endTurn(engine);
 
         assertEquals(14, c1.getMoveRange());
     }
@@ -91,4 +89,33 @@ class BuffOrDebuffSpellTest {
         assertEquals(11, c1.getMoveRange());
     }
 
+    @Test
+    void shouldRefreshBuffAfterSecondCast() {
+        Creature c1 = AbstractFractionFactory.getInstance(Fraction.TEST_FRACTION)
+                .create(true, 7, 5);
+        Creature c2 = AbstractFractionFactory.getInstance(Fraction.TEST_FRACTION)
+                .create(true, 7, 5);
+        GameEngine engine = new GameEngine(new Hero(List.of(c1)), new Hero(List.of(c2)));
+        AbstractSpell spell = SpellFactory.create(new EconomySpell(SpellStatistic.HASTE), 1, new SpellMasteries());
+        AbstractSpell spell2 = SpellFactory.create(new EconomySpell(SpellStatistic.HASTE), 1, new SpellMasteries());
+
+
+        assertEquals(14, c1.getMoveRange());
+        engine.castSpell(spell, new Point(0, 1));
+        assertEquals(17, c1.getMoveRange());
+
+        endTurn(engine);
+        engine.castSpell(spell2, new Point(0, 1));
+        assertEquals(17, c1.getMoveRange());
+        endTurn(engine);
+        assertEquals(17, c1.getMoveRange());
+
+        endTurn(engine);
+        assertEquals(14, c1.getMoveRange());
+    }
+
+    private void endTurn(GameEngine aEngine) {
+        aEngine.pass();
+        aEngine.pass();
+    }
 }

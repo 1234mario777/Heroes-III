@@ -1,17 +1,12 @@
 package pl.sdk.spells;
 
-import pl.sdk.GameEngine;
 import pl.sdk.creatures.Creature;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.Objects;
 
-public class BuffOrDebuffSpell extends AbstractSpell implements PropertyChangeListener {
+public class BuffOrDebuffSpell extends AbstractSpell{
 
     private final int duration;
-    private int roundsToEnd;
-    private Creature creature;
     private BuffStatistic buffStats;
 
     public BuffOrDebuffSpell(int aManaCost, int aDuration, SpellStatistic.SpellElement aElement, SpellStatistic.TargetType aTargetType, String aName, BuffStatistic aSpellStats) {
@@ -24,30 +19,20 @@ public class BuffOrDebuffSpell extends AbstractSpell implements PropertyChangeLi
         return duration;
     }
 
+    public BuffStatistic getBuffStats() {
+        return buffStats;
+    }
+
     @Override
     public int getSplashRange() {
         return 0;
     }
 
     @Override
-    public void cast(Creature aCreature, GameEngine aGameEngine) {
-        creature = aCreature;
-        roundsToEnd = duration;
-        aCreature.buff(buffStats);
-        aGameEngine.addObserver(GameEngine.END_OF_TURN, this);
-
+    public void cast(Creature aCreature) {
+        aCreature.buff(this);
     }
 
-    @Override
-    public void propertyChange(PropertyChangeEvent aPropertyChangeEvent) {
-
-        if ( roundsToEnd == 0 ){
-            creature.removeBuff(this.buffStats);
-        }
-        else {
-            roundsToEnd--;
-        }
-    }
 
     @Override
     public boolean equals(Object aO) {

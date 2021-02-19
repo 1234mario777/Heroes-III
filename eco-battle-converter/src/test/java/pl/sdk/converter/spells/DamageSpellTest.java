@@ -36,7 +36,7 @@ public class DamageSpellTest {
         EconomySpell toCovert = new EconomySpell(SpellStatistic.MAGIC_ARROW);
         DamageSpell spell = (DamageSpell) new DamageSpellFactory().createInner(toCovert, 1, new SpellMasteries());
 
-        spell.cast(creatureForTesting, null);
+        spell.cast(creatureForTesting);
 
         assertEquals(5, creatureForTesting.getAmount());
         assertEquals(180, creatureForTesting.getCurrentHp());
@@ -49,7 +49,7 @@ public class DamageSpellTest {
         creatureForTesting = AbstractFractionFactory.getInstance(Fraction.TEST_FRACTION)
                 .create(true,FOR_MAGIC_RESISTANCE,5);
 
-        spell.cast(creatureForTesting, null);
+        spell.cast(creatureForTesting);
 
         assertEquals(5, creatureForTesting.getAmount());
         assertEquals(90, creatureForTesting.getCurrentHp());

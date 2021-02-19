@@ -40,8 +40,8 @@ public class Hero {
         return spellBook.canCastSpell(aSpell);
     }
 
-    void castSpell(AbstractSpell aMagicArrow) {
-        spellBook.cast(aMagicArrow);
+    void castSpell(AbstractSpell aSpell) {
+        spellBook.cast(aSpell);
     }
 
     void toSubscribeEndOfTurn(TurnQueue aQueue) {

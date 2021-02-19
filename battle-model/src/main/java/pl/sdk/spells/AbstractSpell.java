@@ -32,7 +32,7 @@ public abstract class AbstractSpell {
         return name;
     }
 
-    public void cast(Creature aCreature, GameEngine aGameEngine){
+    public void cast(Creature aCreature){
 
     };
 

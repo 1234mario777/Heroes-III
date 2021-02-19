@@ -211,7 +211,7 @@ public class GameEngine {
                 }
 
                 if ( board.get(x,y) != null){
-                    aSpell.cast(board.get(x,y), this);
+                    aSpell.cast(board.get(x,y));
                     aSpell.getSplashRange();
                 }
             }

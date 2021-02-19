@@ -1,17 +1,17 @@
 package pl.sdk.creatures;
 
 import com.google.common.collect.Range;
+import pl.sdk.spells.BuffOrDebuffSpell;
 import pl.sdk.spells.BuffStatistic;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class Creature implements PropertyChangeListener {
 
     private final CreatureStatisticIf stats;
-    private Set<BuffStatistic> buffsAndDebuffs;
+    private BuffContainer buffContainter;
     private int currentHp;
     private boolean counterAttackedInThisTurn;
     private CalculateDamageStrategy calculateDamageStrategy;
@@ -22,13 +22,13 @@ public class Creature implements PropertyChangeListener {
     Creature(){
         stats = CreatureStatistic.TEST;
         magicDamageReducer = new DefaultMagicDamageReducer();
-        buffsAndDebuffs = new HashSet<>();
+        buffContainter = new BuffContainer();
     }
 
     Creature(CreatureStatisticIf aStats){
         stats = aStats;
         currentHp = stats.getMaxHp();
-        buffsAndDebuffs = new HashSet<>();
+        buffContainter = new BuffContainer();
     }
 
     public void attack(Creature aDefender) {
@@ -49,6 +49,10 @@ public class Creature implements PropertyChangeListener {
             applyDamage(damageToDealInCounterAttack);
             aDefender.counterAttackedInThisTurn = true;
         }
+    }
+
+    public BuffContainer getBuffContainer(){
+        return buffContainter;
     }
 
     public void applyDamage(int aDamageToApply) {
@@ -98,11 +102,11 @@ public class Creature implements PropertyChangeListener {
 
     public int getMoveRange() {
         int ret = stats.getMoveRange();
-        int percentageBuff = buffsAndDebuffs.stream()
+        int percentageBuff = buffContainter.getAllBuffStats().stream()
                 .filter(b -> b.getMoveRangePercentage() != 0.0)
                 .mapToInt(b ->  (int)(Math.round( ret * (b.getMoveRangePercentage()))))
                 .sum();
-        int scalarBuff = buffsAndDebuffs.stream()
+        int scalarBuff = buffContainter.getAllBuffStats().stream()
                 .filter(b -> b.getMoveRange() != 0)
                 .mapToInt(BuffStatistic::getMoveRange).sum();
 
@@ -171,12 +175,8 @@ public class Creature implements PropertyChangeListener {
         applyDamage(getMagicDamageReducer().reduceDamage(aDamage));
     }
 
-    public void buff(BuffStatistic aBuffStatistic) {
-        buffsAndDebuffs.add(aBuffStatistic);
-    }
-
-    public void removeBuff(BuffStatistic aBuffStatistic) {
-        buffsAndDebuffs.remove(aBuffStatistic);
+    public void buff(BuffOrDebuffSpell aBuffOrDebuff) {
+        buffContainter.add(aBuffOrDebuff);
     }
 
     public static class Builder {

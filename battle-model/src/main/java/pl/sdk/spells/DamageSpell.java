@@ -20,7 +20,7 @@ public class DamageSpell extends AbstractSpell{
     }
 
     @Override
-    public void cast(Creature aCreature, GameEngine aGameEngine) {
+    public void cast(Creature aCreature) {
         aCreature.applyMagicDamage(damage);
     }
 
