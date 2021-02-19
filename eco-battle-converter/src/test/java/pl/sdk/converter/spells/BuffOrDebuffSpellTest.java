@@ -75,4 +75,20 @@ class BuffOrDebuffSpellTest {
         assertEquals(19, c2.getMoveRange());
     }
 
+    @Test
+    void shouldDecreaseMoveRange() {
+        Creature c1 = AbstractFractionFactory.getInstance(Fraction.TEST_FRACTION)
+                .create(true, 7, 5);
+        Creature c2 = AbstractFractionFactory.getInstance(Fraction.TEST_FRACTION)
+                .create(true, 7, 5);
+        GameEngine engine = new GameEngine(new Hero(List.of(c1)), new Hero(List.of(c2)));
+        AbstractSpell slow = SpellFactory
+                .create(new EconomySpell(SpellStatistic.SLOW), 1, new SpellMasteries());
+
+
+        assertEquals(14, c1.getMoveRange());
+        engine.castSpell(slow, new Point(0, 1));
+        assertEquals(11, c1.getMoveRange());
+    }
+
 }

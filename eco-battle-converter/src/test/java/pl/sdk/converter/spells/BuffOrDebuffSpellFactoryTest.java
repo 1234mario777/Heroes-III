@@ -14,7 +14,7 @@ class BuffOrDebuffSpellFactoryTest {
     void shouldConvertHasteSpellsCorrectly(){
         EconomySpell toCovert = new EconomySpell(SpellStatistic.HASTE);
 
-        BuffOrDebuffSpell spell = (BuffOrDebuffSpell) new BuffOeDebuffSpellFactory().createInner(toCovert, 1, new SpellMasteries());
+        BuffOrDebuffSpell spell = (BuffOrDebuffSpell) new BuffOrDebuffSpellFactory().createInner(toCovert, 1, new SpellMasteries());
 
         assertEquals(1, spell.getDuration());
         assertEquals(0, spell.getSplashRange());
@@ -25,7 +25,7 @@ class BuffOrDebuffSpellFactoryTest {
     void shouldConvertSlowSpellsCorrectly(){
         EconomySpell toCovert = new EconomySpell(SpellStatistic.SLOW);
 
-        BuffOrDebuffSpell spell = (BuffOrDebuffSpell) new DebuffSpellFactory().createInner(toCovert, 1, new SpellMasteries());
+        BuffOrDebuffSpell spell = (BuffOrDebuffSpell) new BuffOrDebuffSpellFactory().createInner(toCovert, 1, new SpellMasteries());
 
         assertEquals(1, spell.getDuration());
         assertEquals(0, spell.getSplashRange());

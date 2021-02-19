@@ -6,6 +6,7 @@ import pl.sdk.spells.BuffStatistic;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Creature implements PropertyChangeListener {
 
@@ -96,7 +97,16 @@ public class Creature implements PropertyChangeListener {
     }
 
     public int getMoveRange() {
-        return stats.getMoveRange() + buffsAndDebuffs.stream().mapToInt(BuffStatistic::getMoveRange).sum();
+        int ret = stats.getMoveRange();
+        int percentageBuff = buffsAndDebuffs.stream()
+                .filter(b -> b.getMoveRangePercentage() != 0.0)
+                .mapToInt(b ->  (int)(Math.round( ret * (b.getMoveRangePercentage()))))
+                .sum();
+        int scalarBuff = buffsAndDebuffs.stream()
+                .filter(b -> b.getMoveRange() != 0)
+                .mapToInt(BuffStatistic::getMoveRange).sum();
+
+        return ret + percentageBuff + scalarBuff;
     }
 
     public int getDefaultMoveRange() {
