@@ -89,7 +89,7 @@ class CreatureShopTest
 	void afterPurchaseCreaturePopulationShouldBeDecreasedByBoughtAmount()
 	{
 		//when
-		economyEngine.buy(creatureFactory.create(false, 1, 10));
+		economyEngine.buyCreature(creatureFactory.create(false, 1, 10 ) );
 		//then
 		assertEquals( 2, economyEngine.getCurrentPopulation(1) );
 	}
@@ -98,7 +98,7 @@ class CreatureShopTest
 	void heroOnePurchaseShouldNotAffectOnHeroTwoPopulation()
 	{
 		//when
-		economyEngine.buy(creatureFactory.create(false, 1, 10));
+		economyEngine.buyCreature(creatureFactory.create(false, 1, 10 ) );
 		//then
 		assertEquals( 2, economyEngine.getCurrentPopulation(1) );
 		economyEngine.pass();
@@ -108,7 +108,7 @@ class CreatureShopTest
 	@Test
 	void shouldThrowExceptionWhenTryToPurchaseMoreCreatureThanPopulationIs()
 	{
-		assertThrows(IllegalStateException.class, () ->economyEngine.buy(creatureFactory.create(false, 1, 13)));
+		assertThrows(IllegalStateException.class, () ->economyEngine.buyCreature(creatureFactory.create(false, 1, 13 ) ) );
 		assertEquals( 12, economyEngine.getCurrentPopulation( 1 ) );
 	}
 
@@ -116,9 +116,9 @@ class CreatureShopTest
 	void afterPurchaseAndRoundEndPopulationAmountShouldBeCorrect()
 	{
 		//when
-		economyEngine.buy(creatureFactory.create(false, 1, 12));
+		economyEngine.buyCreature(creatureFactory.create(false, 1, 12 ) );
 		economyEngine.pass();
-		economyEngine.buy( creatureFactory.create(false, 2, 3) );
+		economyEngine.buyCreature( creatureFactory.create(false, 2, 3 ) );
 		economyEngine.pass();
 		//then
 		assertEquals( 12, economyEngine.getCurrentPopulation(1) );

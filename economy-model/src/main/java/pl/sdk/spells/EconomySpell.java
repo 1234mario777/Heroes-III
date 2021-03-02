@@ -2,7 +2,9 @@ package pl.sdk.spells;
 
 public class EconomySpell {
 
+    public static final int SPELL_GROWTH = 1;
     private final SpellStatistic spellStats;
+
     private final int goldCost;
 
     public EconomySpell(SpellStatistic aSpellStats) {
@@ -40,5 +42,15 @@ public class EconomySpell {
 
     public SpellStatistic getSpellStatistic() {
         return spellStats;
+    }
+
+    public int getGoldCost()
+    {
+        return goldCost;
+    }
+
+    public int getGrowth()
+    {
+        return SPELL_GROWTH;
     }
 }

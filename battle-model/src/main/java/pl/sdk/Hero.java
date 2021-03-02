@@ -5,7 +5,6 @@ import pl.sdk.spells.AbstractSpell;
 import pl.sdk.spells.SpellBook;
 import pl.sdk.spells.SpellStatistic;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Hero {
@@ -48,7 +47,12 @@ public class Hero {
         aQueue.addObserver(spellBook);
     }
 
-    public int getMana() {
-        return spellBook.getMana();
+    public int getCurrentMana() {
+        return spellBook.getCurrentMana();
+    }
+
+    public int getMaxMana()
+    {
+        return spellBook.getMaxMana();
     }
 }

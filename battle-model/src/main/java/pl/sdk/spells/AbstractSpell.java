@@ -9,6 +9,7 @@ public abstract class AbstractSpell {
     protected final int manaCost;
     protected final String name;
     protected final SpellStatistic.TargetType targetType;
+
     protected final SpellStatistic.SpellElement element;
 
     public AbstractSpell(int aManaCost, SpellStatistic.TargetType aTargetType, SpellStatistic.SpellElement aElement, String aName) {
@@ -30,6 +31,11 @@ public abstract class AbstractSpell {
 
     public String getName(){
         return name;
+    }
+
+    public SpellStatistic.SpellElement getElement()
+    {
+        return element;
     }
 
     public void cast(Creature aCreature){

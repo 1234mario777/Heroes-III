@@ -40,11 +40,11 @@ class EconomyEngineTest {
 
     @Test
     void shouldBuyCreatureCreatureInCorrectHero(){
-        economyEngine.buy(creatureFactory.create(false,1,1));
+        economyEngine.buyCreature(creatureFactory.create(false,1,1 ) );
         assertEquals(940, player1.getGold());
         assertEquals(1000, player2.getGold());
         economyEngine.pass();
-        economyEngine.buy(creatureFactory.create(false,2,1));
+        economyEngine.buyCreature(creatureFactory.create(false,2,1 ) );
         assertEquals(900, player2.getGold());
         assertEquals(940, player1.getGold());
     }

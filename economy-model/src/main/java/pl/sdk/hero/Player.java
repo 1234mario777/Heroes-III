@@ -5,42 +5,51 @@ import pl.sdk.creatures.EconomyCreature;
 import pl.sdk.spells.EconomySpell;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Player
 {
 	EconomyHero hero;
 	CreatureShop creatureShop;
+	SpellShop spellShop;
+	List<AbstractShop> shops;
 	private int gold;
+	Fraction fraction;
 
 	public Player(Fraction aFraction, int aGold )
 	{
-		hero = new EconomyHero();
+		hero = new EconomyHero(new HeroStats(5,5,15,3));
 		creatureShop = new CreatureShop( aFraction );
+		spellShop = new SpellShop();
+		shops = List.of(creatureShop, spellShop );
 		gold = aGold;
+		fraction = aFraction;
 	}
 
 	public Player( Fraction aFraction, int aGold, EconomyHero aEconomyHero )
 	{
 		hero = aEconomyHero;
 		creatureShop = new CreatureShop( aFraction );
+		spellShop = new SpellShop();
+		shops = List.of(creatureShop, spellShop );
 		gold = aGold;
+		fraction = aFraction;
 	}
 
 	Player( EconomyHero aHero, CreatureShop aCreatureShop, int aGold )
 	{
 		hero = aHero;
 		creatureShop = aCreatureShop;
+		shops = List.of(creatureShop);
 		gold = aGold;
 	}
 
-	EconomyHero getHero()
+	Player( EconomyHero aHero, SpellShop aShop, int aGold )
 	{
-		return hero;
-	}
-
-	public CreatureShop getCreatureShop()
-	{
-		return creatureShop;
+		hero = aHero;
+		spellShop = aShop;
+		shops = List.of(spellShop);
+		gold = aGold;
 	}
 
 	void substractGold(int aAmount){
@@ -69,14 +78,24 @@ public class Player
 		return gold;
 	}
 
-	public void buy( Player aActivePlayer, EconomyCreature aEconomyCreature )
+	public void buyCreature( Player aActivePlayer, EconomyCreature aEconomyCreature )
 	{
 		creatureShop.buy( aActivePlayer, aEconomyCreature );
+	}
+
+	public void buySpell( Player aActivePlayer, EconomySpell aEconomySpell )
+	{
+		spellShop.buy( aActivePlayer, aEconomySpell );
 	}
 
 	public int calculateMaxAmount( EconomyCreature aCreature )
 	{
 		return creatureShop.calculateMaxAmount(this, aCreature );
+	}
+
+	public int calculateSpellMaxAmount( EconomySpell aSpell )
+	{
+		return spellShop.calculateMaxAmount(this, aSpell );
 	}
 
 	public int getCurrentPopulation( int aTier )
@@ -96,5 +115,22 @@ public class Player
 
 	public int getWisdom(){
 		return hero.getWisdom();
+	}
+
+	public Fraction getFraction()
+	{
+		return fraction;
+	}
+
+	public List<EconomySpell> getCurrentSpellPopulation()
+	{
+		return spellShop.getCurrentSpellPopulation();
+	}
+
+	public List<AbstractShop> getShops(){ return shops;}
+
+	public boolean hasSpell( String aName )
+	{
+		return getSpells().stream().map( EconomySpell::getName ).collect( Collectors.toList() ).contains( aName );
 	}
 }

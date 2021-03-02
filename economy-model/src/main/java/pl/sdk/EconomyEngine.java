@@ -2,12 +2,14 @@ package pl.sdk;
 
 import pl.sdk.creatures.EconomyCreature;
 import pl.sdk.hero.Player;
+import pl.sdk.spells.EconomySpell;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.util.List;
 
 public class EconomyEngine {
-    public static final String PLAYER_BOUGHT_CREATURE = "PLAYER_BOUGHT_CREATURE";
+    public static final String PLAYER_BOUGHT_ITEM = "PLAYER_BOUGHT_ITEM";
     public static final String ACTIVE_PLAYER_CHANGED = "ACTIVE_PLAYER_CHANGED";
     public static final String NEXT_ROUND = "NEXT_ROUND";
     public static final String END_OF_TURN = "END_OF_TURN";
@@ -26,18 +28,31 @@ public class EconomyEngine {
         turnNumber = 1;
 
         observerSupport = new PropertyChangeSupport(this);
-        addObserver(EconomyEngine.NEXT_ROUND,player1.getCreatureShop());
-        addObserver(EconomyEngine.NEXT_ROUND,player2.getCreatureShop());
+        player1.getShops()
+               .forEach( shop -> addObserver( EconomyEngine.NEXT_ROUND, shop ) );
+        player2.getShops()
+               .forEach( shop -> addObserver( EconomyEngine.NEXT_ROUND, shop ) );
     }
 
-    public void buy(EconomyCreature aEconomyCreature) {
-        activePlayer.buy(activePlayer,aEconomyCreature);
-        observerSupport.firePropertyChange( PLAYER_BOUGHT_CREATURE, null, null );
+    public void buyCreature(EconomyCreature aEconomyCreature ) {
+        activePlayer.buyCreature(activePlayer,aEconomyCreature );
+        observerSupport.firePropertyChange( PLAYER_BOUGHT_ITEM, null, null );
     }
 
-    public int calculateMaxAmount( EconomyCreature aCreature )
+    public void buySpell( EconomySpell aEconomySpell )
+    {
+        activePlayer.buySpell(activePlayer, aEconomySpell );
+        observerSupport.firePropertyChange( PLAYER_BOUGHT_ITEM, null, null );
+    }
+
+    public int calculateCreatureMaxAmount( EconomyCreature aCreature )
     {
         return activePlayer.calculateMaxAmount(aCreature);
+    }
+
+    public int calculateSpellMaxAmount( EconomySpell aSpell )
+    {
+        return activePlayer.calculateSpellMaxAmount(aSpell);
     }
 
     public Player getActivePlayer() {
@@ -116,4 +131,14 @@ public class EconomyEngine {
             return "Hero II";
         }
     }
+
+    public List<EconomySpell> getCurrentSpellPopulation()
+    {
+        return activePlayer.getCurrentSpellPopulation();
+    }
+
+	public boolean hasSpell( String aName )
+	{
+	    return activePlayer.hasSpell(aName);
+	}
 }

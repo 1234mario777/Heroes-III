@@ -2,15 +2,14 @@ package pl.sdk.hero;
 
 import java.util.Random;
 
-class CreatureShopCalculator extends AbstractShopCalculator
+public class SpellShopCalculator extends AbstractShopCalculator
 {
-
-	CreatureShopCalculator()
+	SpellShopCalculator()
 	{
 		super();
 	}
 
-	CreatureShopCalculator( Random aRand )
+	SpellShopCalculator( Random aRand )
 	{
 		super( aRand );
 	}
@@ -18,7 +17,6 @@ class CreatureShopCalculator extends AbstractShopCalculator
 	@Override
 	int calculateMaxAmount( int aHeroGold, int aAmount, int aGoldCost )
 	{
-		return Math.min( aHeroGold / aGoldCost, aAmount );
+		return Math.min( aHeroGold / aGoldCost, aAmount ) >= 1 ? 1 : 0;
 	}
-
 }

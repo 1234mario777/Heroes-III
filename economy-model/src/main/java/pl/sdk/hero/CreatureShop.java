@@ -11,10 +11,9 @@ import java.util.Random;
 
 import static pl.sdk.EconomyEngine.*;
 
-class CreatureShop implements PropertyChangeListener
+class CreatureShop extends AbstractShop
 {
 
-    private CreatureShopCalculator calculator;
     private final HashMap<Integer, Integer> creaturePopulation;
     private final AbstractEconomyFractionFactory creatureFactory;
 
@@ -84,25 +83,18 @@ class CreatureShop implements PropertyChangeListener
         return calculator.calculateMaxAmount(aHero.getGold(), creaturePopulation.get( aCreature.getTier() ), aCreature.getGoldCost());
     }
 
-    public void generateRandom(){calculator.generateRandomFactor();}
-
     public int getCurrentPopulation( int aTier )
     {
         return creaturePopulation.get( aTier );
     }
 
-
     @Override
-    public void propertyChange( PropertyChangeEvent aPropertyChangeEvent )
+    protected void handlePopulation()
     {
-        if ( aPropertyChangeEvent.getPropertyName().equals( NEXT_ROUND ) )
-        {
-            generateRandom();
-            addPopulation(creaturePopulation);
-        }
+        addPopulation(creaturePopulation);
     }
 
-    private void addPopulation( HashMap<Integer, Integer> aPopulationMap )
+        private void addPopulation( HashMap<Integer, Integer> aPopulationMap )
     {
         aPopulationMap.put( 1, aPopulationMap.get( 1 ) + calculatePopulation(1) );
         aPopulationMap.put( 2,  aPopulationMap.get( 2 ) + calculatePopulation(2) );

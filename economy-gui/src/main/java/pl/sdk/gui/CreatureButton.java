@@ -7,28 +7,26 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Border;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import pl.sdk.EconomyEngine;
+import pl.sdk.creatures.AbstractEconomyFractionFactory;
 import pl.sdk.creatures.EconomyCreature;
-import pl.sdk.creatures.EconomyNecropolisFactory;
 
 
 public class CreatureButton extends Button {
 
-    public CreatureButton(EcoController aEcoController, EconomyNecropolisFactory aFactory, boolean aUpgraded, int aTier) {
+    public CreatureButton(EcoController aEcoController, AbstractEconomyFractionFactory aFactory, boolean aUpgraded, int aTier ) {
         super();
         EconomyCreature creature = aFactory.create(aUpgraded,aTier,1 );
 
         addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
             if(e.getButton() == MouseButton.PRIMARY)
             {
-                BuyCreatureDialog buyCreatureDialog = new BuyCreatureDialog( creature.getName(), aEcoController.calculateMaxAmount(creature ), creature.getGoldCost(), aEcoController.getCurrentPopulation( creature.getTier() ));
+                BuyCreatureDialog buyCreatureDialog = new BuyCreatureDialog( creature.getName(), aEcoController.calculateCreatureMaxAmount(creature ), creature.getGoldCost(), aEcoController.getCurrentPopulation( creature.getTier() ));
                 buyCreatureDialog.startDialog();
                 int amount = buyCreatureDialog.getCreatureAmount();
                 if(amount != 0){
-                    aEcoController.buy(aFactory.create(aUpgraded,aTier,amount));
+                    aEcoController.buyCreature(aFactory.create(aUpgraded,aTier,amount ) );
                 }
                 aEcoController.refreshGui();
             }
@@ -67,6 +65,8 @@ public class CreatureButton extends Button {
         buttonContent.getChildren().add( topPane );
         buttonContent.getChildren().add( statisticBox );
         this.setGraphic( buttonContent );
+        if ( aEcoController.calculateCreatureMaxAmount(creature ) <= 0 )
+            setDisable( true );
         getStyleClass().add("creatureButton");
     }
 

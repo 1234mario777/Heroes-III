@@ -1,6 +1,16 @@
 package pl.sdk.spells;
 
 public enum SpellStatistic {
+    TEST_HASTE("Haste", "Increases the speed of the selected unit.", 1 , SpellElement.AIR, SpellType.BUFF, TargetType.ALLY,6),
+    TEST_SUMMON_AIR_ELEMENTAL("Summon Air Elemental", "Allows you to summon elementals. Once cast, no other elemental types may be summoned.", 5 , SpellElement.AIR, SpellType.SUMMON, TargetType.MAP,6),
+    TEST_DISPEL("Dispel", "Protects the selected unit from all low level spells.", 1 , SpellElement.WATER, SpellType.SPECIAL, TargetType.CREATURE,5),
+    TEST_TELEPORT("Teleport", "Teleports any friendly unit to any unoccupied spot on the battlefield.", 5 , SpellElement.WATER, SpellType.SPECIAL, TargetType.ALLY,15),
+    TEST_FIRE_BALL("Fire Ball", "Causes the selected target to burst into flames, inflicting fire damage to the target and any adjacent units.", 3 , SpellElement.FIRE, SpellType.DAMAGE, TargetType.SPLASH_MAP,15),
+    TEST_IMPLOSION("Implosion", "Inflicts massive damage to a single creature stack.", 5 , SpellElement.EARTH, SpellType.DAMAGE, TargetType.ENEMY,30),
+    TEST_SLOW("Slow", "Reduces the speed of the selected enemy unit.", 1 , SpellElement.EARTH, SpellType.DEBUFF, TargetType.ENEMY,6),
+    TEST_DEATH_RIPPLE("Death Ripple", "Sends a wave of death across the battlefield which damages all non-undead units.", 2 , SpellElement.EARTH, SpellType.DAMAGE, TargetType.SPECIAL,10),
+    TEST_MAGIC_ARROW("Magic Arrow", "Causes a bolt of magical energy to strike the selected unit.", 1 , SpellElement.ALL, SpellType.DAMAGE, TargetType.ENEMY,5),
+
     HASTE("Haste", "Increases the speed of the selected unit.", 1 , SpellElement.AIR, SpellType.BUFF, TargetType.ALLY,6),
     SUMMON_AIR_ELEMENTAL("Summon Air Elemental", "Allows you to summon elementals. Once cast, no other elemental types may be summoned.", 5 , SpellElement.AIR, SpellType.SUMMON, TargetType.MAP,6),
     DISPEL("Dispel", "Protects the selected unit from all low level spells.", 1 , SpellElement.WATER, SpellType.SPECIAL, TargetType.CREATURE,5),
@@ -42,7 +52,7 @@ public enum SpellStatistic {
     private final TargetType targetType;
     private final int manaCost;
 
-    String getName() {
+    public String getName() {
         return name;
     }
 

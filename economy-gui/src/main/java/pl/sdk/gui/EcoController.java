@@ -1,10 +1,9 @@
 package pl.sdk.gui;
 
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.Separator;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -12,12 +11,16 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import pl.sdk.EconomyEngine;
 import pl.sdk.converter.EcoBattleConverter;
+import pl.sdk.creatures.AbstractEconomyFractionFactory;
 import pl.sdk.creatures.EconomyCreature;
-import pl.sdk.creatures.EconomyNecropolisFactory;
 import pl.sdk.hero.Player;
+import pl.sdk.spells.AbstractEconomySpellFactory;
+import pl.sdk.spells.EconomySpell;
+import pl.sdk.spells.SpellFactoryType;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.List;
 
 import static pl.sdk.EconomyEngine.END_OF_TURN;
 
@@ -51,7 +54,7 @@ public class EcoController implements PropertyChangeListener {
     void initialize(){
         refreshGui();
         economyEngine.addObserver(EconomyEngine.ACTIVE_PLAYER_CHANGED,this);
-        economyEngine.addObserver(EconomyEngine.PLAYER_BOUGHT_CREATURE,this );
+        economyEngine.addObserver(EconomyEngine.PLAYER_BOUGHT_ITEM,this );
         economyEngine.addObserver(EconomyEngine.NEXT_ROUND,this);
         economyEngine.addObserver( END_OF_TURN,this );
 
@@ -69,29 +72,89 @@ public class EcoController implements PropertyChangeListener {
         shopsBox.getChildren().clear();
         heroStateHBox.getChildren().clear();
 
-        EconomyNecropolisFactory factory = new EconomyNecropolisFactory();
+        TabPane tabPane = createTabs();
+        shopsBox.getChildren().add(tabPane);
+        shopsBox.setAlignment( Pos.CENTER );
+
+        VBox stateBox = createStateBox();
+        heroStateHBox.getChildren().add(stateBox);
+    }
+
+    private TabPane createTabs()
+    {
+        HBox creatureShop = createCreatureShop();
+        VBox spellShop = createSpellShop();
+
+        TabPane tabPane = new TabPane(  );
+        Tab creatureTab = new Tab();
+        creatureTab.setContent( creatureShop );
+        ImageView creatureTabImage = new ImageView(new Image(getClass().getResourceAsStream("/icons/sword.png" )));
+        creatureTabImage.setFitHeight(48);
+        creatureTabImage.setFitWidth(48);
+        creatureTab.setGraphic( creatureTabImage );
+        Tab spellTab = new Tab(  );
+        spellTab.setContent( spellShop );
+        ImageView spellTabImage = new ImageView(new Image(getClass().getResourceAsStream("/icons/magic-book.png" )));
+        spellTabImage.setFitHeight(48);
+        spellTabImage.setFitWidth(48);
+        spellTab.setGraphic( spellTabImage );
+        spellTab.getStyleClass().add( "tab" );
+
+        tabPane.getTabs().add( creatureTab );
+        tabPane.getTabs().add( spellTab );
+
+        tabPane.getTabs().forEach( tab -> tab.setClosable( false ) );
+        return tabPane;
+    }
+
+    private VBox createSpellShop()
+    {
+        AbstractEconomySpellFactory factory = AbstractEconomySpellFactory.getInstance( SpellFactoryType.DEFAULT );
+        VBox spellShop = new VBox( );
+
+        List<EconomySpell> spellList = economyEngine.getCurrentSpellPopulation();
+        spellList.forEach( s -> spellShop.getChildren().add( new SpellButton(this, factory, s.getName()) ));
+        return spellShop;
+    }
+
+    private HBox createCreatureShop()
+    {
+        AbstractEconomyFractionFactory factory = AbstractEconomyFractionFactory.getInstance( economyEngine.getActivePlayer().getFraction() );
         HBox creatureShop = new HBox( );
         VBox creatureNotUpgraded = new VBox();
         VBox creatureUpgraded = new VBox();
         for (int i = 1; i < 8; i++) {
-            creatureNotUpgraded.getChildren().add(new CreatureButton(this, factory, false,i));
+            creatureNotUpgraded.getChildren().add(new CreatureButton(this, factory, false,i) );
             creatureUpgraded.getChildren().add(new CreatureButton(this, factory, true,i));
         }
         creatureShop.getChildren().add( creatureNotUpgraded );
         Separator separator = new Separator(  );
         creatureShop.getChildren().add( separator );
         creatureShop.getChildren().add( creatureUpgraded );
-        shopsBox.getChildren().add(creatureShop);
-        shopsBox.setAlignment( Pos.CENTER );
+        return creatureShop;
+    }
 
+    private VBox createStateBox()
+    {
+        VBox stateBox = new VBox( );
+        VBox spellBox = new VBox( );
         VBox creaturesBox = new VBox();
+        createCreatureStateBox( creaturesBox );
+        createSpellStateBox( spellBox );
+        stateBox.getChildren().add( creaturesBox );
+        stateBox.getChildren().add( spellBox );
+        return stateBox;
+    }
+
+    private void createCreatureStateBox( VBox aCreaturesBox )
+    {
         economyEngine.getActivePlayer().getCreatures().forEach(c ->
         {
             HBox tempHbox = new HBox();
 
             ImageView image = new ImageView(new Image(getClass().getResourceAsStream("/graphics/creatures/" + c.getName() + ".png" )));
-            image.setFitHeight(100);
-            image.setFitWidth(100);
+            image.setFitHeight(80);
+            image.setFitWidth(80);
             tempHbox.getChildren().add(image);
 
             Label creatureName = new Label(c.getName());
@@ -104,11 +167,33 @@ public class EcoController implements PropertyChangeListener {
             creatureAmount.getStyleClass().add( "hero-state" );
 
             tempHbox.setAlignment( Pos.CENTER_LEFT );
-            creaturesBox.getChildren().add(tempHbox);
+            aCreaturesBox.getChildren().add(tempHbox );
             Separator stateSeparator = new Separator(  );
-            creaturesBox.getChildren().add( stateSeparator );
+            aCreaturesBox.getChildren().add( stateSeparator );
         });
-        heroStateHBox.getChildren().add(creaturesBox);
+    }
+
+    private void createSpellStateBox( VBox aSpellBox )
+    {
+        economyEngine.getActivePlayer().getSpells().forEach(c ->
+        {
+            HBox tempHbox = new HBox();
+
+            ImageView image = new ImageView(new Image(getClass().getResourceAsStream("/graphics/icons/" + c.getElement().name() + ".png" )));
+            image.setFitHeight(55);
+            image.setFitWidth(55);
+            tempHbox.getChildren().add(image);
+
+            Label spellName = new Label(c.getName());
+            spellName.getStyleClass().add( "hero-state" );
+            tempHbox.getChildren().add(spellName);
+
+            tempHbox.setAlignment( Pos.CENTER_LEFT );
+            tempHbox.setPadding( new Insets( 15, 15 ,15,  15 ) );
+            aSpellBox.getChildren().add(tempHbox );
+            Separator stateSeparator = new Separator(  );
+            aSpellBox.getChildren().add( stateSeparator );
+        });
     }
 
     public int getGold()
@@ -116,13 +201,22 @@ public class EcoController implements PropertyChangeListener {
         return economyEngine.getActivePlayer().getGold();
     }
 
-    void buy(EconomyCreature aCreature) {
-        economyEngine.buy(aCreature);
+    void buyCreature(EconomyCreature aCreature ) {
+        economyEngine.buyCreature(aCreature );
     }
 
-    public int calculateMaxAmount( EconomyCreature aCreature )
+    void buySpell(EconomySpell aSpell ) {
+        economyEngine.buySpell(aSpell );
+    }
+
+    public int calculateCreatureMaxAmount( EconomyCreature aCreature )
     {
-        return economyEngine.calculateMaxAmount( aCreature );
+        return economyEngine.calculateCreatureMaxAmount( aCreature );
+    }
+
+    public int calculateSpellMaxAmount( EconomySpell aSpell )
+    {
+        return economyEngine.calculateSpellMaxAmount( aSpell );
     }
 
     @Override
@@ -142,4 +236,9 @@ public class EcoController implements PropertyChangeListener {
 	{
 	    return economyEngine.getCurrentPopulation( aTier );
 	}
+
+    boolean hasSpell( String aName )
+    {
+        return economyEngine.hasSpell(aName);
+    }
 }
