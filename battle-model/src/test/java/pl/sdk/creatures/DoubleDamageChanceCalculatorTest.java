@@ -46,7 +46,7 @@ public class DoubleDamageChanceCalculatorTest {
     @Test
     void shouldDealDoubleDamageIfRandomPositive(){
         when(rand.nextDouble()).thenReturn(0.19);
-        CalculateDamageStrategy calc = new CalculateDamageIncreaseWithRandomChanceStrategy(0.2,2.0,rand);
+        CalculateDamageStrategyIf calc = new CalculateDamageIncreaseWithRandomChanceStrategyIf(0.2,2.0,rand);
 
         int result = calc.calculateDamage(attacker, defender);
 
@@ -56,7 +56,7 @@ public class DoubleDamageChanceCalculatorTest {
     @Test
     void shouldDealNormalDamageIfRandomNegative(){
         when(rand.nextDouble()).thenReturn(0.21);
-        CalculateDamageStrategy calc = new CalculateDamageIncreaseWithRandomChanceStrategy(0.2,2.0,rand);
+        CalculateDamageStrategyIf calc = new CalculateDamageIncreaseWithRandomChanceStrategyIf(0.2,2.0,rand);
 
         int result = calc.calculateDamage(attacker, defender);
 

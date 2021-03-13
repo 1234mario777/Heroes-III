@@ -2,11 +2,11 @@ package pl.sdk.creatures;
 
 import java.util.Random;
 
-abstract class AbstractCalculateDamageStrategy implements CalculateDamageStrategy {
+abstract class AbstractCalculateDamageStrategyIf implements CalculateDamageStrategyIf {
 
     private final Random rand;
 
-    AbstractCalculateDamageStrategy(Random aRand) {
+    AbstractCalculateDamageStrategyIf(Random aRand) {
         rand = aRand;
     }
 

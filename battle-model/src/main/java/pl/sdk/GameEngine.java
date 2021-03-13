@@ -1,5 +1,6 @@
 package pl.sdk;
 
+import pl.sdk.creatures.AttackEngine;
 import pl.sdk.creatures.Creature;
 import pl.sdk.spells.AbstractSpell;
 import pl.sdk.spells.SpellStatistic;
@@ -24,6 +25,7 @@ public class GameEngine {
     public static final String AFTER_ATTACK = "AFTER_ATTACK";
     private final Board board;
     private final TurnQueue queue;
+    private final AttackEngine attackEngine;
     private final PropertyChangeSupport observerSupport;
     private final Hero hero1;
     private final Hero hero2;
@@ -37,6 +39,7 @@ public class GameEngine {
     }
 
     GameEngine(Hero aHero1, Hero aHero2, Board aBoard) {
+        attackEngine = new AttackEngine();
         board = aBoard;
         hero1 = aHero1;
         hero2 = aHero2;
@@ -98,7 +101,7 @@ public class GameEngine {
                 if (splashRange[x][y]) {
                     Creature attackedCreature = board.get(aX + x - 1, aY + y - 1);
                     if (attackedCreature != null){
-                        activeCreature.attack(board.get(aX + x - 1, aY + y - 1));
+                        attackEngine.attack(activeCreature, board.get(aX + x - 1, aY + y - 1));
                     }
                 }
             }

@@ -29,7 +29,7 @@ class DefaultDamageCalculatorWithSelfHealingTest {
                 .attack(THE_SAME_FOR_BOTH_CREATURES)
                 .armor(THE_SAME_FOR_BOTH_CREATURES)
                 .damage(Range.closed(10, 20))
-                .damageCalculator(new DefaultCalculateStrategy(rand))
+                .damageCalculator(new DefaultCalculateStrategyIf(rand))
                 .moveRange(NOT_IMPORTANT)
                 .amount(10)
                 .build();
