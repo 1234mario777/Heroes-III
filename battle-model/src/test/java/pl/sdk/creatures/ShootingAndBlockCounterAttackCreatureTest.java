@@ -4,6 +4,8 @@ import com.google.common.collect.Range;
 import org.junit.jupiter.api.Test;
 import pl.sdk.GameEngine;
 import pl.sdk.Hero;
+import pl.sdk.creatures.attacking.BlockCounterAttackCreatureDecorator;
+import pl.sdk.creatures.attacking.ShootingCreatureDecorator;
 
 import java.util.List;
 

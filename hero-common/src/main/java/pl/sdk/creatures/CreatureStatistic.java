@@ -2,7 +2,7 @@ package pl.sdk.creatures;
 
 import com.google.common.collect.Range;
 
-enum CreatureStatistic implements CreatureStatisticIf{
+public enum CreatureStatistic implements CreatureStatisticIf{
 
     // TEST CREATURES
     TEST("name",2,1,10,1,Range.closed(2,2),0,"for unit testing",false, 1),

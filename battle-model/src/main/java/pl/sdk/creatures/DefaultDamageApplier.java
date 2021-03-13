@@ -1,11 +1,13 @@
 package pl.sdk.creatures;
 
+import pl.sdk.creatures.Creature;
+
 public class DefaultDamageApplier {
 
     //TODO change to command pattern
     final Creature creature;
 
-    DefaultDamageApplier() {
+    public DefaultDamageApplier() {
         creature = null;
     }
 

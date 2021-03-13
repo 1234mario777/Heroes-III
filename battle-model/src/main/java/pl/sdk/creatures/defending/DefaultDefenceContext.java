@@ -1,6 +1,8 @@
-package pl.sdk.creatures;
+package pl.sdk.creatures.defending;
 
-public class DefaultDefenceContext implements DefenceContextIf{
+import pl.sdk.creatures.DefaultDamageApplier;
+
+public class DefaultDefenceContext implements DefenceContextIf {
 
     private DefaultDamageApplier damageApplier;
     private int armor;

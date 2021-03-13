@@ -1,10 +1,10 @@
-package pl.sdk.creatures;
+package pl.sdk.creatures.attacking;
 
-class BlockCounterAttackCreatureDecorator implements AttackIf {
+class BlockCounterAttackCreatureDecorator implements AttackContextIf {
 
-    private final AttackIf decorated;
+    private final AttackContextIf decorated;
 
-    public BlockCounterAttackCreatureDecorator(AttackIf aDecorated){
+    public BlockCounterAttackCreatureDecorator(AttackContextIf aDecorated){
         decorated = aDecorated;
     }
 

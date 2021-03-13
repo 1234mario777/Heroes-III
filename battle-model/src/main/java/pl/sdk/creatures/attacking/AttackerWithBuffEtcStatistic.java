@@ -1,4 +1,4 @@
-package pl.sdk.creatures;
+package pl.sdk.creatures.attacking;
 
 import com.google.common.collect.Range;
 import lombok.Builder;

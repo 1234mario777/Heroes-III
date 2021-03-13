@@ -1,6 +1,6 @@
 package pl.sdk;
 
-import pl.sdk.creatures.AttackEngine;
+import pl.sdk.creatures.attacking.AttackEngine;
 import pl.sdk.creatures.Creature;
 import pl.sdk.spells.AbstractSpell;
 

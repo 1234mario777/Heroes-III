@@ -1,4 +1,6 @@
-package pl.sdk.creatures;
+package pl.sdk.creatures.attacking;
+
+import pl.sdk.creatures.defending.DefenceContextIf;
 
 import java.util.Random;
 
@@ -14,7 +16,7 @@ abstract class AbstractCalculateDamageStrategyIf implements CalculateDamageStrat
         return rand;
     }
 
-    public int calculateDamage(AttackIf aAttacker, DefenceContextIf aDefender) {
+    public int calculateDamage(AttackContextIf aAttacker, DefenceContextIf aDefender) {
 
         int randValue = rand.nextInt(aAttacker.getAttackerStatistic().getDamage().upperEndpoint() - aAttacker.getAttackerStatistic().getDamage().lowerEndpoint() + 1) + aAttacker.getAttackerStatistic().getDamage().lowerEndpoint();
 
@@ -41,5 +43,5 @@ abstract class AbstractCalculateDamageStrategyIf implements CalculateDamageStrat
         return (int)wholeStackDamageToDealAfterChange;
     }
 
-    abstract double changeDamageAfter(double aWholeStackDamageToDeal, AttackIf aAttacker);
+    abstract double changeDamageAfter(double aWholeStackDamageToDeal, AttackContextIf aAttacker);
 }

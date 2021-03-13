@@ -1,11 +1,11 @@
-package pl.sdk.creatures;
+package pl.sdk.creatures.attacking;
 
 
-public class SplashDamageCreatureDecorator implements AttackIf {
+public class SplashDamageCreatureDecorator implements AttackContextIf {
 
-    AttackIf decorated;
+    AttackContextIf decorated;
 
-    SplashDamageCreatureDecorator(AttackIf aDecorated) {
+    SplashDamageCreatureDecorator(AttackContextIf aDecorated) {
         decorated = aDecorated;
     }
 

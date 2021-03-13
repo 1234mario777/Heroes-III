@@ -1,11 +1,11 @@
-package pl.sdk.creatures;
+package pl.sdk.creatures.attacking;
 
-class HealAfterAttackCreatureDecorator implements AttackIf {
+class HealAfterAttackCreatureDecorator implements AttackContextIf {
 
     private double selfHealingPercentage;
-    private AttackIf decorated;
+    private AttackContextIf decorated;
 
-    HealAfterAttackCreatureDecorator(AttackIf aDecorated, double aSelfHealingPercentage) {
+    HealAfterAttackCreatureDecorator(AttackContextIf aDecorated, double aSelfHealingPercentage) {
         decorated = aDecorated;
         selfHealingPercentage = aSelfHealingPercentage;
     }

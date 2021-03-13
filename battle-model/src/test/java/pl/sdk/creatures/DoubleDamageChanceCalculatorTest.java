@@ -3,6 +3,8 @@ package pl.sdk.creatures;
 import com.google.common.collect.Range;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import pl.sdk.creatures.attacking.CalculateDamageIncreaseWithRandomChanceStrategyIf;
+import pl.sdk.creatures.attacking.CalculateDamageStrategyIf;
 
 import java.util.Random;
 

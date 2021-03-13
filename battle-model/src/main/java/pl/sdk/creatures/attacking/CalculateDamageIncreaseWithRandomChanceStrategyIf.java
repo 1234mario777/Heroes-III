@@ -1,4 +1,4 @@
-package pl.sdk.creatures;
+package pl.sdk.creatures.attacking;
 
 import java.util.Random;
 
@@ -18,7 +18,7 @@ class CalculateDamageIncreaseWithRandomChanceStrategyIf extends AbstractCalculat
     }
 
     @Override
-    double changeDamageAfter(double aDamageToChange, AttackIf aAttacker) {
+    double changeDamageAfter(double aDamageToChange, AttackContextIf aAttacker) {
         if (getRand().nextDouble() <= chanceToIncrease){
             aDamageToChange = aDamageToChange * increaseFactor;
         }

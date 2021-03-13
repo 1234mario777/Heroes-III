@@ -2,6 +2,9 @@ package pl.sdk.creatures;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import pl.sdk.creatures.attacking.AttackContextIf;
+import pl.sdk.creatures.attacking.CounterAttackerIf;
+import pl.sdk.creatures.defending.DefenceContextIf;
 import pl.sdk.spells.BuffOrDebuffSpell;
 import pl.sdk.spells.BuffStatistic;
 
@@ -21,11 +24,11 @@ public class Creature implements PropertyChangeListener {
     private DefaultMagicDamageReducer magicDamageReducer;
 
     private DefenceContextIf defenceContext;
-    private CounterAttackerIf attackContext;
+    private AttackContextIf attackContext;
 
     // Constructor for mockito. Don't use it! You have builder here.
 
-    Creature(CreatureStatisticIf aPureStats, int aAmount, DefenceContextIf aDefenceContext, CounterAttackerIf aAttackContext){
+    public Creature(CreatureStatisticIf aPureStats, int aAmount, DefenceContextIf aDefenceContext, AttackContextIf aAttackContext){
         amount = aAmount;
         pureStats = aPureStats;
         currentHp = pureStats.getMaxHp();
@@ -49,7 +52,7 @@ public class Creature implements PropertyChangeListener {
         return defenceContext;
     }
 
-    public CounterAttackerIf getAttackContext() {
+    public AttackContextIf getAttackContext() {
         return attackContext;
     }
 
@@ -121,7 +124,7 @@ public class Creature implements PropertyChangeListener {
         amount = aAmount;
     }
 
-    int getMaxHp() {
+    public int getMaxHp() {
         return pureStats.getMaxHp();
     }
 

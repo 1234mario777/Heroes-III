@@ -1,6 +1,6 @@
-package pl.sdk.creatures;
+package pl.sdk.creatures.attacking;
 
-public class DefaultAttackContext implements CounterAttackerIf {
+public class DefaultAttackContext implements AttackContextIf {
     private CalculateDamageStrategyIf calculateDamageStrategy;
     private AttackerStatisticIf stats;
 
@@ -26,11 +26,6 @@ public class DefaultAttackContext implements CounterAttackerIf {
 
     @Override
     public boolean canYouCounterAttackMe() {
-        return true;
-    }
-
-    @Override
-    public boolean canCounterAttack() {
         return true;
     }
 }

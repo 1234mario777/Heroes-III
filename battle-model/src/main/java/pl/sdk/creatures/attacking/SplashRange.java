@@ -1,4 +1,4 @@
-package pl.sdk.creatures;
+package pl.sdk.creatures.attacking;
 
 import pl.sdk.Point;
 

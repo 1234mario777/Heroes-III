@@ -1,6 +1,6 @@
-package pl.sdk.creatures;
+package pl.sdk.creatures.attacking;
 
-public interface AttackIf {
+public interface AttackContextIf {
 
     SplashRange getSplashRange();
     CalculateDamageStrategyIf getDamageCalculator();
