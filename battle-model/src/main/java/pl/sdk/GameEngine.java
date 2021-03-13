@@ -3,14 +3,12 @@ package pl.sdk;
 import pl.sdk.creatures.AttackEngine;
 import pl.sdk.creatures.Creature;
 import pl.sdk.spells.AbstractSpell;
-import pl.sdk.spells.SpellStatistic;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class GameEngine {
 
@@ -95,13 +93,13 @@ public class GameEngine {
             return;
         }
         Creature activeCreature = queue.getActiveCreature();
-        boolean[][] splashRange = activeCreature.getSplashRange();
+        boolean[][] splashRange = activeCreature.getAttackContext().getSplashRange().getSplashRange();
         for (int x = 0; x < splashRange.length; x++) {
             for (int y = 0; y < splashRange.length; y++) {
                 if (splashRange[x][y]) {
                     Creature attackedCreature = board.get(aX + x - 1, aY + y - 1);
                     if (attackedCreature != null){
-                        attackEngine.attack(activeCreature, board.get(aX + x - 1, aY + y - 1));
+                        attackEngine.attack(activeCreature.getAttackContext(), board.get(aX + x - 1, aY + y - 1).getDefenceContext());
                     }
                 }
             }
@@ -149,7 +147,7 @@ public class GameEngine {
             theSamePlayerUnit = creatures2.contains(board.get(aX, aY));
         }
 
-        return !theSamePlayerUnit && board.get(getActiveCreature()).distance(new Point(aX, aY)) <= getActiveCreature().getAttackRange();
+        return !theSamePlayerUnit && board.get(getActiveCreature()).distance(new Point(aX, aY)) <= getActiveCreature().getAttackContext().getAttackerStatistic().getAttackRange();
     }
 
     public boolean isHeroTwoCreature( Creature aCreature )

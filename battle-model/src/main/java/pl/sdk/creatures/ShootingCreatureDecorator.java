@@ -1,10 +1,10 @@
 package pl.sdk.creatures;
 
-class ShootingCreatureDecorator implements AttackerIf {
+class ShootingCreatureDecorator implements AttackIf {
 
-    private final Creature decorated;
+    private final AttackIf decorated;
 
-    ShootingCreatureDecorator(Creature aDecorated) {
+    ShootingCreatureDecorator(AttackIf aDecorated) {
         decorated = aDecorated;
     }
 
@@ -14,17 +14,23 @@ class ShootingCreatureDecorator implements AttackerIf {
     }
 
     @Override
-    public boolean isAlive() {
-        return decorated.isAlive();
-    }
-
-    @Override
     public CalculateDamageStrategyIf getDamageCalculator() {
         return decorated.getDamageCalculator();
     }
 
     @Override
-    public double getAttackRange() {
-        return 15.0;
+    public AttackerStatisticIf getAttackerStatistic() {
+        return AttackerWithBuffEtcStatistic.builder()
+                .damage(decorated.getAttackerStatistic().getDamage())
+                .attackRange(15.0)
+                .attack(decorated.getAttackerStatistic().getAttack())
+                .amount(decorated.getAttackerStatistic().getAmount())
+                .build();
     }
+
+    @Override
+    public boolean canYouCounterAttackMe() {
+        return decorated.canYouCounterAttackMe();
+    }
+
 }

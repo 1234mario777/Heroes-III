@@ -1,6 +1,6 @@
 package pl.sdk.creatures;
 
-public interface AttackableIf {
+public interface DefenceContextIf {
 
     DefaultDamageApplier getDamageApplier();
     boolean canCounterAttack();

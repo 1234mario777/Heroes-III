@@ -6,16 +6,15 @@ import java.beans.PropertyChangeListener;
 
 class RegenerationOnEndOfTurnCreatureDecorator implements PropertyChangeListener {
 
-    private Creature decorated;
+    private PropertyChangeListener decorated;
 
-    RegenerationOnEndOfTurnCreatureDecorator(Creature aDecorated) {
+    RegenerationOnEndOfTurnCreatureDecorator(PropertyChangeListener aDecorated) {
         decorated = aDecorated;
     }
 
     @Override
     public void propertyChange(PropertyChangeEvent aPropertyChangeEvent) {
         decorated.propertyChange(aPropertyChangeEvent);
-        decorated.setCurrentHpToMaximum();
     }
 
 }

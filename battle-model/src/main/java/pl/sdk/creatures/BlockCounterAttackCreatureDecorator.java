@@ -1,27 +1,21 @@
 package pl.sdk.creatures;
 
-//TODO doesn;'t work new model
-class BlockCounterAttackCreatureDecorator implements AttackerIf {
+class BlockCounterAttackCreatureDecorator implements AttackIf {
 
-    private final Creature decorated;
+    private final AttackIf decorated;
 
-    public BlockCounterAttackCreatureDecorator(Creature aDecorated){
+    public BlockCounterAttackCreatureDecorator(AttackIf aDecorated){
         decorated = aDecorated;
     }
 
     @Override
-    public boolean attackerIsCounterAttackable() {
+    public boolean canYouCounterAttackMe() {
         return false;
     }
 
     @Override
     public SplashRange getSplashRange() {
         return decorated.getSplashRange();
-    }
-
-    @Override
-    public boolean isAlive() {
-        return decorated.isAlive();
     }
 
     @Override

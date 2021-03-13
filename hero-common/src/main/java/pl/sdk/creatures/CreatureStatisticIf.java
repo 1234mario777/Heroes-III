@@ -3,7 +3,6 @@ package pl.sdk.creatures;
 import com.google.common.collect.Range;
 
 public interface CreatureStatisticIf {
-
     String getTranslatedName();
     int getAttack();
     int getArmor();

@@ -14,7 +14,7 @@ abstract class AbstractCalculateDamageStrategyIf implements CalculateDamageStrat
         return rand;
     }
 
-    public int calculateDamage(AttackerIf aAttacker, AttackableIf aDefender) {
+    public int calculateDamage(AttackIf aAttacker, DefenceContextIf aDefender) {
 
         int randValue = rand.nextInt(aAttacker.getAttackerStatistic().getDamage().upperEndpoint() - aAttacker.getAttackerStatistic().getDamage().lowerEndpoint() + 1) + aAttacker.getAttackerStatistic().getDamage().lowerEndpoint();
 
@@ -41,5 +41,5 @@ abstract class AbstractCalculateDamageStrategyIf implements CalculateDamageStrat
         return (int)wholeStackDamageToDealAfterChange;
     }
 
-    abstract double changeDamageAfter(double aWholeStackDamageToDeal, AttackerIf aAttacker);
+    abstract double changeDamageAfter(double aWholeStackDamageToDeal, AttackIf aAttacker);
 }

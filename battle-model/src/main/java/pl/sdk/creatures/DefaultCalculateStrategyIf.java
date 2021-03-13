@@ -16,7 +16,7 @@ class DefaultCalculateStrategyIf extends AbstractCalculateDamageStrategyIf {
     }
 
     @Override
-    double changeDamageAfter(double aWholeStackDamageToDeal, AttackerIf aAttacker) {
+    double changeDamageAfter(double aWholeStackDamageToDeal, AttackIf aAttacker) {
         return aWholeStackDamageToDeal;
     }
 }

@@ -4,25 +4,23 @@ import com.google.common.base.Preconditions;
 
 public class AttackEngine {
 
-    public void attack(AttackerIf aAttacker, AttackableIf aDefender) {
-        if (aAttacker.isAlive()) {
-            int damageToDeal = aAttacker.getDamageCalculator().calculateDamage(aAttacker, aDefender);
-            aDefender.getDamageApplier().applyDamage(damageToDeal);
+    public void attack(AttackIf aAttacker, DefenceContextIf aDefender) {
+        int damageToDeal = aAttacker.getDamageCalculator().calculateDamage(aAttacker, aDefender);
+        aDefender.getDamageApplier().applyDamage(damageToDeal);
 
-            --
+//            --
 
-            if (aDefender.canCounterAttack() && aAttacker.attackerIsCounterAttackable()){
-                counterAttack(aDefender, aAttacker);
-            }
+        if (aDefender.canCounterAttack() && aAttacker.canYouCounterAttackMe()) {
+            counterAttack(aDefender, aAttacker);
         }
     }
 
-    private void counterAttack(AttackableIf aCounterAttacker, AttackerIf aDefender) {
+    private void counterAttack(DefenceContextIf aCounterAttacker, AttackIf aDefender) {
         Preconditions.checkArgument(aCounterAttacker instanceof CounterAttackerIf);
-        Preconditions.checkArgument(aDefender instanceof AttackableIf);
+        Preconditions.checkArgument(aDefender instanceof DefenceContextIf);
         CounterAttackerIf counterAttacker = ((CounterAttackerIf) aCounterAttacker);
-        AttackableIf defender = (AttackableIf)aDefender;
-        if (counterAttacker.canCounterAttack()){
+        DefenceContextIf defender = (DefenceContextIf) aDefender;
+        if (counterAttacker.canCounterAttack()) {
             attack(counterAttacker, defender);
         }
     }

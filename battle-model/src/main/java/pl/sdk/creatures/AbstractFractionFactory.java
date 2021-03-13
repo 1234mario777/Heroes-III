@@ -10,8 +10,8 @@ public abstract class AbstractFractionFactory {
         switch (aFraction) {
             case NECROPOLIS:
                 return new NecropolisFactory();
-            case TEST_FRACTION:
-                return new TestingFactory();
+//            case TEST_FRACTION:
+//                return new TestingFactory();
             default:
                 throw new IllegalArgumentException(INVALID_FRACTION_NAME);
         }
