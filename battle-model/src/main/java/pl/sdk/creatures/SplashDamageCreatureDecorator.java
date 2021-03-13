@@ -6,12 +6,12 @@ import java.beans.PropertyChangeEvent;
 
 public class SplashDamageCreatureDecorator extends Creature {
 
-    private final boolean[][] splashDamageTable;
     private final Creature decorated;
+    private final SplashRange splashRange;
 
     public SplashDamageCreatureDecorator(Creature aDecorated, boolean[][] aSplashDamageTable) {
         decorated = aDecorated;
-        splashDamageTable = aSplashDamageTable;
+        splashRange = new SplashRange(aSplashDamageTable);
     }
 
     @Override
@@ -106,6 +106,6 @@ public class SplashDamageCreatureDecorator extends Creature {
 
     @Override
     public boolean[][] getSplashRange() {
-        return splashDamageTable;
+        return splashRange.getSplashRange();
     }
 }
