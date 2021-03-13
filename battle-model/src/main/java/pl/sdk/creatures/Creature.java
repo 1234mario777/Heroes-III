@@ -61,6 +61,21 @@ public class Creature implements PropertyChangeListener, AttackableIf, CounterAt
         return null;
     }
 
+    @Override
+    public AttackerStatisticIf getAttackerStatistic() {
+        return AttackerWithBuffEtcStatistic.builder()
+                .amount(amount)
+                .attack(getAttack())
+                .attackRange(getAttackRange())
+                .damage(getDamage())
+                .build();
+    }
+
+    @Override
+    public boolean attackerIsCounterAttackable() {
+        return true;
+    }
+
     public int getCurrentHp() {
         return currentHp;
     }

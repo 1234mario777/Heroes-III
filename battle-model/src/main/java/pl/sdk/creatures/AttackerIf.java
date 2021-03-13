@@ -1,10 +1,10 @@
 package pl.sdk.creatures;
 
-public interface AttackerIf extends AttackerStatisticIf {
+public interface AttackerIf {
 
     SplashRange getSplashRange();
     boolean isAlive();
     CalculateDamageStrategyIf getDamageCalculator();
-
-
+    AttackerStatisticIf getAttackerStatistic();
+    boolean attackerIsCounterAttackable();
 }

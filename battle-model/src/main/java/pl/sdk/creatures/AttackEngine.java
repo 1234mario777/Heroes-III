@@ -8,7 +8,10 @@ public class AttackEngine {
         if (aAttacker.isAlive()) {
             int damageToDeal = aAttacker.getDamageCalculator().calculateDamage(aAttacker, aDefender);
             aDefender.getDamageApplier().applyDamage(damageToDeal);
-            if (aDefender.canCounterAttack()){
+
+            --
+
+            if (aDefender.canCounterAttack() && aAttacker.attackerIsCounterAttackable()){
                 counterAttack(aDefender, aAttacker);
             }
         }

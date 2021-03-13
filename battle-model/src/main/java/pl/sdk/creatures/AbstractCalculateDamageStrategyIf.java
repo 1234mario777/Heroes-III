@@ -16,17 +16,17 @@ abstract class AbstractCalculateDamageStrategyIf implements CalculateDamageStrat
 
     public int calculateDamage(AttackerIf aAttacker, AttackableIf aDefender) {
 
-        int randValue = rand.nextInt(aAttacker.getDamage().upperEndpoint() - aAttacker.getDamage().lowerEndpoint() + 1) + aAttacker.getDamage().lowerEndpoint();
+        int randValue = rand.nextInt(aAttacker.getAttackerStatistic().getDamage().upperEndpoint() - aAttacker.getAttackerStatistic().getDamage().lowerEndpoint() + 1) + aAttacker.getAttackerStatistic().getDamage().lowerEndpoint();
 
         double oneCreatureDamageToDeal;
-        if (aAttacker.getAttack() >= aDefender.getArmor()){
-            int attackPoints = aAttacker.getAttack() - aDefender.getArmor();
+        if (aAttacker.getAttackerStatistic().getAttack() >= aDefender.getArmor()){
+            int attackPoints = aAttacker.getAttackerStatistic().getAttack() - aDefender.getArmor();
             if (attackPoints > 60){
                 attackPoints = 60;
             }
             oneCreatureDamageToDeal = randValue * (1 + (attackPoints)*0.05);
         }else{
-            int defencePoints = aDefender.getArmor() - aAttacker.getAttack();
+            int defencePoints = aDefender.getArmor() - aAttacker.getAttackerStatistic().getAttack();
             if (defencePoints > 12){
                 defencePoints = 12;
             }
@@ -36,7 +36,7 @@ abstract class AbstractCalculateDamageStrategyIf implements CalculateDamageStrat
         if (oneCreatureDamageToDeal < 0){
             oneCreatureDamageToDeal = 0;
         }
-        double wholeStackDamageToDeal = aAttacker.getAmount() * oneCreatureDamageToDeal;
+        double wholeStackDamageToDeal = aAttacker.getAttackerStatistic().getAmount() * oneCreatureDamageToDeal;
         double wholeStackDamageToDealAfterChange = changeDamageAfter(wholeStackDamageToDeal, aAttacker);
         return (int)wholeStackDamageToDealAfterChange;
     }
