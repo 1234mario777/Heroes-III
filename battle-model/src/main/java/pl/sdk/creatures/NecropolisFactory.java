@@ -12,7 +12,7 @@ public class NecropolisFactory extends AbstractFractionFactory {
 //    }
 
     public Creature create(boolean aIsUpgraded, int aTier, int aAmount) {
-//        if (!aIsUpgraded) {
+        if (!aIsUpgraded) {
             switch (aTier) {
                 case 1:
                     return new Creature
@@ -21,84 +21,97 @@ public class NecropolisFactory extends AbstractFractionFactory {
                                     new DefaultDefenceContext(new DefaultDamageApplier(), CreatureStatistic.SKELETON.getArmor()),
                                             new DefaultAttackContext(new DefaultCalculateStrategyIf(), mapStatsToAttackContextStats(aAmount, CreatureStatistic.SKELETON)));
 
-//                case 2:
-//                    return new Creature.Builder()
-//                            .statistic(CreatureStatistic.WALKING_DEAD)
-//                            .amount(aAmount)
-//                            .build();
-//                case 3:
-//                    return new Creature.Builder()
-//                            .statistic(CreatureStatistic.WIGHT)
-//                            .amount(aAmount)
-//                            .build();
-//                case 4:
-//                    return new Creature.Builder()
-//                            .statistic(CreatureStatistic.VAMPIRE)
-//                            .amount(aAmount)
-//                            .build();
-//                case 5:
-//                    Creature lich = new Creature.Builder()
-//                            .statistic(CreatureStatistic.LICH)
-//                            .amount(aAmount)
-//                            .build();
-//                    return new BlockCounterAttackCreatureDecorator(new ShootingCreatureDecorator(new SplashDamageCreatureDecorator(lich, getSplashForLich())));
-//                case 6:
-//                    return new Creature.Builder()
-//                            .statistic(CreatureStatistic.BLACK_KNIGHT)
-//                            .amount(aAmount)
-//                            .build();
-//                case 7:
-//                    return new Creature.Builder()
-//                            .statistic(CreatureStatistic.BONE_DRAGON)
-//                            .amount(aAmount)
-//                            .build();
-//                default:
-//                    throw new IllegalArgumentException(EXCEPTION_MESSAGE);
-//            }
-//        } else {
-//            switch (aTier) {
-//                case 1:
-//                    return new Creature.Builder()
-//                            .statistic(CreatureStatistic.SKELETON_WARRIOR)
-//                            .amount(aAmount)
-//                            .build();
-//                case 2:
-//                    return new Creature.Builder()
-//                            .statistic(CreatureStatistic.ZOMBIE)
-//                            .amount(aAmount)
-//                            .build();
-//                case 3:
-//                    return new RegenerationOnEndOfTurnCreatureDecorator(new Creature.Builder()
-//                            .statistic(CreatureStatistic.WRAITH)
-//                            .amount(aAmount)
-//                            .build());
-//                case 4:
-//                    return new Creature.Builder()
-//                            .statistic(CreatureStatistic.VAMPIRE_LORD)
-//                            .amount(aAmount)
-//                            .build();
-//                case 5:
-//                    Creature c = new Creature.Builder()
-//                            .statistic(CreatureStatistic.POWER_LICH)
-//                            .amount(aAmount)
-//                            .build();
-//                    boolean[][] splashDamageTable = getSplashForLich();
-//                    return new SplashDamageCreatureDecorator(new BlockCounterAttackCreatureDecorator(new ShootingCreatureDecorator(c)), splashDamageTable);
-//                case 6:
-//                    return new Creature.Builder()
-//                            .statistic(CreatureStatistic.DREAD_KNIGHT)
-//                            .amount(aAmount)
-//                            .build();
-//                case 7:
-//                    return new Creature.Builder()
-//                            .statistic(CreatureStatistic.GHOST_DRAGON)
-//                            .amount(aAmount)
-//                            .build();
+                case 2:
+                    return new Creature
+                            (CreatureStatistic.WALKING_DEAD,
+                                    aAmount,
+                                    new DefaultDefenceContext(new DefaultDamageApplier(), CreatureStatistic.WALKING_DEAD.getArmor()),
+                                    new DefaultAttackContext(new DefaultCalculateStrategyIf(), mapStatsToAttackContextStats(aAmount, CreatureStatistic.WALKING_DEAD)));
+
+                case 3:
+                    return new Creature
+                            (CreatureStatistic.WIGHT,
+                                    aAmount,
+                                    new DefaultDefenceContext(new DefaultDamageApplier(), CreatureStatistic.WIGHT.getArmor()),
+                                    new DefaultAttackContext(new DefaultCalculateStrategyIf(), mapStatsToAttackContextStats(aAmount, CreatureStatistic.WIGHT)));
+                case 4:
+                    return new Creature
+                            (CreatureStatistic.VAMPIRE,
+                                    aAmount,
+                                    new DefaultDefenceContext(new DefaultDamageApplier(), CreatureStatistic.VAMPIRE.getArmor()),
+                                    new DefaultAttackContext(new DefaultCalculateStrategyIf(), mapStatsToAttackContextStats(aAmount, CreatureStatistic.VAMPIRE)));
+                case 5:
+                    return new Creature
+                            (CreatureStatistic.LICH,
+                                    aAmount,
+                                    new DefaultDefenceContext(new DefaultDamageApplier(), CreatureStatistic.LICH.getArmor()),
+                                    new DefaultAttackContext(new DefaultCalculateStrategyIf(), mapStatsToAttackContextStats(aAmount, CreatureStatistic.LICH)));
+                case 6:
+                    return new Creature
+                            (CreatureStatistic.DREAD_KNIGHT,
+                                    aAmount,
+                                    new DefaultDefenceContext(new DefaultDamageApplier(), CreatureStatistic.DREAD_KNIGHT.getArmor()),
+                                    new DefaultAttackContext(new DefaultCalculateStrategyIf(), mapStatsToAttackContextStats(aAmount, CreatureStatistic.DREAD_KNIGHT)));
+                case 7:
+                    return new Creature
+                            (CreatureStatistic.BONE_DRAGON,
+                                    aAmount,
+                                    new DefaultDefenceContext(new DefaultDamageApplier(), CreatureStatistic.BONE_DRAGON.getArmor()),
+                                    new DefaultAttackContext(new DefaultCalculateStrategyIf(), mapStatsToAttackContextStats(aAmount, CreatureStatistic.BONE_DRAGON)));
+                default:
+                    throw new IllegalArgumentException(EXCEPTION_MESSAGE);
+            }
+        } else {
+            switch (aTier) {
+                case 1:
+                    return new Creature
+                            (CreatureStatistic.SKELETON_WARRIOR,
+                                    aAmount,
+                                    new DefaultDefenceContext(new DefaultDamageApplier(), CreatureStatistic.SKELETON_WARRIOR.getArmor()),
+                                    new DefaultAttackContext(new DefaultCalculateStrategyIf(), mapStatsToAttackContextStats(aAmount, CreatureStatistic.SKELETON_WARRIOR)));
+
+                case 2:
+                    return new Creature
+                            (CreatureStatistic.ZOMBIE,
+                                    aAmount,
+                                    new DefaultDefenceContext(new DefaultDamageApplier(), CreatureStatistic.ZOMBIE.getArmor()),
+                                    new DefaultAttackContext(new DefaultCalculateStrategyIf(), mapStatsToAttackContextStats(aAmount, CreatureStatistic.ZOMBIE)));
+
+                case 3:
+                    return new Creature
+                            (CreatureStatistic.WRAITH,
+                                    aAmount,
+                                    new DefaultDefenceContext(new DefaultDamageApplier(), CreatureStatistic.WRAITH.getArmor()),
+                                    new DefaultAttackContext(new DefaultCalculateStrategyIf(), mapStatsToAttackContextStats(aAmount, CreatureStatistic.WRAITH)));
+                case 4:
+                    return new Creature
+                            (CreatureStatistic.VAMPIRE_LORD,
+                                    aAmount,
+                                    new DefaultDefenceContext(new DefaultDamageApplier(), CreatureStatistic.VAMPIRE_LORD.getArmor()),
+                                    new DefaultAttackContext(new DefaultCalculateStrategyIf(), mapStatsToAttackContextStats(aAmount, CreatureStatistic.VAMPIRE_LORD)));
+                case 5:
+                    return new Creature
+                            (CreatureStatistic.POWER_LICH,
+                                    aAmount,
+                                    new DefaultDefenceContext(new DefaultDamageApplier(), CreatureStatistic.POWER_LICH.getArmor()),
+                                    new DefaultAttackContext(new DefaultCalculateStrategyIf(), mapStatsToAttackContextStats(aAmount, CreatureStatistic.POWER_LICH)));
+                case 6:
+                    return new Creature
+                            (CreatureStatistic.BLACK_KNIGHT,
+                                    aAmount,
+                                    new DefaultDefenceContext(new DefaultDamageApplier(), CreatureStatistic.BLACK_KNIGHT.getArmor()),
+                                    new DefaultAttackContext(new DefaultCalculateStrategyIf(), mapStatsToAttackContextStats(aAmount, CreatureStatistic.BLACK_KNIGHT)));
+                case 7:
+                    return new Creature
+                            (CreatureStatistic.GHOST_DRAGON,
+                                    aAmount,
+                                    new DefaultDefenceContext(new DefaultDamageApplier(), CreatureStatistic.GHOST_DRAGON.getArmor()),
+                                    new DefaultAttackContext(new DefaultCalculateStrategyIf(), mapStatsToAttackContextStats(aAmount, CreatureStatistic.GHOST_DRAGON)));
                 default:
                     throw new IllegalArgumentException(EXCEPTION_MESSAGE);
             }
         }
-//    }
+    }
 
     private AttackerStatisticIf mapStatsToAttackContextStats(int aAmount, CreatureStatistic aStatistic) {
         return AttackerWithBuffEtcStatistic.builder()

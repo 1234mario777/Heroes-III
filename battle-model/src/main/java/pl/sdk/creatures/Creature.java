@@ -1,11 +1,15 @@
 package pl.sdk.creatures;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import pl.sdk.spells.BuffOrDebuffSpell;
 import pl.sdk.spells.BuffStatistic;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+@Builder
+@AllArgsConstructor
 public class Creature implements PropertyChangeListener {
 
     //TODO remove purestats?
@@ -21,7 +25,7 @@ public class Creature implements PropertyChangeListener {
 
     // Constructor for mockito. Don't use it! You have builder here.
 
-    Creature(CreatureStatisticIf aPureStats, int aAmount, DefaultDefenceContext aDefenceContext, DefaultAttackContext aAttackContext){
+    Creature(CreatureStatisticIf aPureStats, int aAmount, DefenceContextIf aDefenceContext, CounterAttackerIf aAttackContext){
         amount = aAmount;
         pureStats = aPureStats;
         currentHp = pureStats.getMaxHp();
