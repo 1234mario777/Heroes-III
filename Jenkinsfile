@@ -1,0 +1,92 @@
+pipeline {
+    agent any
+    tools {
+        maven "M3"
+        jdk 'java-11-openjdk-amd64'
+    }
+    stages {
+		stage('Get commit details') {
+			steps {
+				script {
+					env.GIT_AUTHOR = sh (script: 'git log -1 --pretty=%cn ${GIT_COMMIT}', returnStdout: true).trim()
+					env.GIT_AUTHOR_EMAIL = sh (script: 'git log -1 --pretty=%ae ${GIT_COMMIT}', returnStdout: true).trim()
+				}
+				sh 'printenv'
+			}
+		}
+        stage('Build') {
+            steps {							
+                sh "mvn clean install" 
+            }
+        }       
+    }
+	post {
+		failure {
+			echo 'Build failure'
+			script {
+				if (env.GIT_BRANCH == "development") {
+					echo 'development branch'
+					sendEmailToAll()
+					setDiscordUserToTag("true")
+					sendDiscordMessage("${env.GIT_AUTHOR} ${env.DISCORD_FAILURE_DEVELOPMENT_MSG}", "${env.DISCORD_TAG_USER}")
+				} else {
+					echo 'not development branch'
+					sendEmailToCommiter()
+					setDiscordUserToTag("false")
+					sendDiscordMessage("${env.GIT_AUTHOR} ${env.DISCORD_FAILURE_MSG}", "${env.DISCORD_TAG_USER}")
+				}
+			}			
+		}
+		success {
+			echo 'Build success'
+			sendEmailToCommiter()
+			setDiscordUserToTag("false")
+			sendDiscordMessage("${env.GIT_AUTHOR} ${env.DISCORD_SUCCESS_MSG}", "${env.DISCORD_TAG_USER}")
+		}
+	}
+}
+
+def sendEmailToCommiter() {
+    emailext (body: '${DEFAULT_CONTENT}',
+              to: "${env.GIT_AUTHOR_EMAIL}",
+              subject: '${DEFAULT_SUBJECT}'
+                        )
+}
+
+def sendEmailToAll() {
+    emailext (body: '${DEFAULT_CONTENT}',
+              to: '${DEFAULT_RECIPIENTS}',
+              subject: '${DEFAULT_SUBJECT}'
+                        )
+}
+
+def sendDiscordMessage(description, userToTag){
+    discordSend description: description,
+                notes: userToTag,
+                title: "Build: ${currentBuild.currentResult} on ${env.JOB_NAME}",
+                result: currentBuild.currentResult,
+                link: env.BUILD_URL,
+                webhookURL: "${env.DISCORD_WEBHOOK}"
+}
+
+def setDiscordUserToTag(tagAllUsers){
+    script {
+                if(tagAllUsers == "true"){
+                    env.DISCORD_TAG_USER = env.DISCORD_TAG_ALL_USERS
+                } else {
+                    if (env.GIT_AUTHOR == "waldek") {
+                        env.DISCORD_TAG_USER = "<@783652626566873098>"
+                    } else if (env.GIT_AUTHOR == "adam"){
+                        env.DISCORD_TAG_USER = "<@767772830720458783>"
+                    } else if (env.GIT_AUTHOR == "kuba"){
+                        env.DISCORD_TAG_USER = "<@395305773636255745>"
+                    } else if (env.GIT_AUTHOR == "marcin"){
+                        env.DISCORD_TAG_USER = "<@330816028684713984>"
+                    } else if (env.GIT_AUTHOR == "pawel"){
+                        env.DISCORD_TAG_USER = "<@569212689599954969>"
+                    } else if (env.GIT_AUTHOR == "przemek"){
+                        env.DISCORD_TAG_USER = "<@642593713801134100> <@733012248368250983>"
+                    }
+                }
+            }
+}
