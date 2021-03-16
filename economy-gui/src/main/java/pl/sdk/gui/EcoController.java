@@ -10,6 +10,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import pl.sdk.EconomyEngine;
+import pl.sdk.Fraction;
 import pl.sdk.converter.EcoBattleConverter;
 import pl.sdk.creatures.AbstractEconomyFractionFactory;
 import pl.sdk.creatures.EconomyCreature;
@@ -23,6 +24,7 @@ import java.beans.PropertyChangeListener;
 import java.util.List;
 
 import static pl.sdk.EconomyEngine.END_OF_TURN;
+import static pl.sdk.gui.ChooseFractionDialog.chooseFractionDialog;
 
 public class EcoController implements PropertyChangeListener {
     @FXML
@@ -46,8 +48,9 @@ public class EcoController implements PropertyChangeListener {
 
     private final EconomyEngine economyEngine;
 
-    public EcoController( Player aPlayer1, Player aPlayer2 ) {
-        economyEngine = new EconomyEngine(aPlayer1, aPlayer2);
+    public EcoController()
+    {
+        economyEngine = new EconomyEngine( new Player( chooseFractionDialog(), 1000 ), new Player( chooseFractionDialog(), 1000 ) );
     }
 
     @FXML

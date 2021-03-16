@@ -33,7 +33,7 @@ public class CreatureButton extends Button {
         });
 
         HBox topPane = new HBox( );
-        ImageView image = new ImageView(new Image(getClass().getResourceAsStream("/graphics/creatures/" + creature.getName() + ".png" )));
+        ImageView image = new ImageView(new Image(getClass().getResourceAsStream("/creatures/" + creature.getName() + ".png" )));
         image.setFitHeight(50);
         image.setFitWidth(55);
         topPane.getChildren().add(image);
