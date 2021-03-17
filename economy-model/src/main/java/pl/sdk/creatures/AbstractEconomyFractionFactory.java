@@ -14,6 +14,8 @@ public abstract class AbstractEconomyFractionFactory
 				return new EconomyNecropolisFactory();
 			case TEST_FRACTION	:
 				return new EconomyTestFractionFactory();
+			case INFERNO:
+				return new EconomyInfernoFactory();
 			default:
 				throw new IllegalArgumentException( INVALID_FRACTION_NAME );
 		}

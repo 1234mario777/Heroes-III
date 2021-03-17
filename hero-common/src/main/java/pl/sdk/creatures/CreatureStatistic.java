@@ -35,7 +35,24 @@ enum CreatureStatistic implements CreatureStatisticIf{
     VAMPIRE_LORD("Vampire Lord",10,10,40,9,Range.closed(5,8),4,"My favorite necropolis unit. Use them as main striking unit and you might end up with no losses!\nSpecial: no enemy retaliation ; resurrects members of their own stack by restoring health equal to the amount of damage they do to living enemies.\n",true, 4),
     POWER_LICH("Power Lich",13,10,40,7,Range.closed(11,15),5,"Now they last longer and are able to do more damage! A must for good necropolis army.\nSpecial: death cloud range attack - damages living creatures on adjacent hexes to target.\n",true, 3),
     DREAD_KNIGHT("Dread Knight",18,18,120,9,Range.closed(15,30),6,"I think it's the best lvl6 unit in the game! Double damage ability puts Dread Knights above Naga Queens.\nSpecial: 20% chance to curse enemy ; 20% chance to do double damage.\n",true, 2),
-    GHOST_DRAGON("Ghost Dragon",19,17,200,14,Range.closed(25,50),7,"When situation seems hopeless, take a chance on the best enemy stack! If you'll get lucky, half their hit points will be gone instantly!! Ageing ability makes ghost dragons as dangerous as other lvl7 creatures.\nSpecial: -1 to enemy morale ; 20% chance to age enemy (halve hit points of all stack members).\n",true, 1);
+    GHOST_DRAGON("Ghost Dragon",19,17,200,14,Range.closed(25,50),7,"When situation seems hopeless, take a chance on the best enemy stack! If you'll get lucky, half their hit points will be gone instantly!! Ageing ability makes ghost dragons as dangerous as other lvl7 creatures.\nSpecial: -1 to enemy morale ; 20% chance to age enemy (halve hit points of all stack members).\n",true, 1),
+
+    // INFERNO FRACTION
+    IMP("Imp",2,3,4,5,Range.closed(1,2),1,"Weakest level 1 unit in Heroes 3 which is also quite expensive. Useless all around :)",false, 15),
+    GOG("Gog",6,4,13,4,Range.closed(2,4),2,"Very good shooter, nice damage range and hit points are a meaningful number to them. Speed is too slow before upgraded though.",false, 8 ),
+    HELL_HOUND("Hell hound",10,6,25,7,Range.closed(2,7),3,"Good offensive unit, low on defence. Strongly affected by bless and curse spells.",false, 5),
+    DEMON("Demon",10,10,35,5,Range.closed(7,9),4,"Average unit for level 4, but the price is very reasonable.",false, 4),
+    PIT_FIEND("Pit Fiend",13,13,45,6,Range.closed(13,17),5,"Not a very good level 5 creature, but costly. Demons and pit fiends kinda balance each outher out. Note how often number 13 is used :)",false, 3),
+    EFREETI("Efreeti",16,12,90,9,Range.closed(16,24),6,"Reasonable creature, can be purchased early due to inferno's specific building plan. Good troop for armageddon spellcaster.", false, 2),
+    DEVIL("Devil",19,21,160,11,Range.closed(30,40),7,"Makes a tough opponent because of speed and no enemy retaliation. Devil can beat an angel in one on one combat.",false, 1),
+    FAMILIAR("Familiar",4,4,4,7,Range.closed(1,2),1,"Upgrade is well worth doing: attack and defence become closer to medium for level 1, good speed and the mana chanelling abbility which makes it somewhat worthy having familiars present at the long battles.",true, 15),
+    MAGOG("Magog",7,4,13,6,Range.closed(2,4),2,"Magog cannot beat marksman's two shots, but if enemies are standing close together, the advantage can be even grater.\nNote that fireproof units do not suffer magog's adjacent damage.\n",true, 8),
+    CERBERUS("Cerberus",10,8,25,8,Range.closed(2,7),3,"Great upgrade. This is the only case in the game where stats get downgraded, damage in this case because this damage can be done to 3 enemies at once.\nBetter defence and with no retaliation it's a good idea to charge and attack the crowd.\n",true, 5),
+    HORNED_DEMON("Horned Demon",10,10,40,6,Range.closed(7,9),4,"One of the smallest upgrades in the game: 5 hit points and 1 speed for 20 gold... reasonable,\n but horned demons are now below-average among level 4 upgrades, but their price still remains low.\n",true, 4),
+    PIT_LORD("Pit Lord",13,13,45,7,Range.closed(13,17),5,"1 speed and demon resurrection abbility for 200 gold! Sounds darn expensive.\nThink this way: if you have lost 90 imps on a battle, 10 pit lords can resurrect them into about 10 demons... or if you lost 14 hell hounds, 10 pit lords can also turn them into about 10 demons.\n",true, 3),
+    EFREET_SULTAN("Efreet Sultan",16,14,90,13,Range.closed(16,24),6,"Excellent upgrade. Their speed is only matched by some level 7 upgrades and... dragon flies.\nEnemy will think well before attacking efreet sultans: portion of the damage returns back to the attacker plus the retaliation.\n",true, 2),
+    ARCH_DEVIL("Arch Devil",26,28,200,17,Range.closed(30,40),7,"Arch devil is no match for an arch angel. Otherways, a really powerful creature for non-retaliated attacks with outwaiting the opponent.\n",true, 1);
+
 
     private final String name;
     private final int attack;
