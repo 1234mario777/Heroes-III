@@ -6,14 +6,6 @@ import pl.sdk.creatures.defending.DefenceContextFactory;
 
 class NecropolisFactory extends AbstractFractionFactory {
 
-    private static final String EXCEPTION_MESSAGE = "We support tiers from 1 to 7";
-
-//    public static Creature createDefaultForTests() {
-//        return Creature.Builder()
-//                .statistic(CreatureStatistic.TEST)
-//                .build();
-//    }
-
     public Creature create(boolean aIsUpgraded, int aTier, int aAmount) {
         if (!aIsUpgraded) {
             switch (aTier) {

@@ -2,8 +2,8 @@ package pl.sdk;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import pl.sdk.creatures.AbstractFractionFactory;
 import pl.sdk.creatures.Creature;
-import pl.sdk.creatures.NecropolisFactory;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -15,7 +15,7 @@ class BoardTest {
     @BeforeEach
     void init() {
         board = new Board();
-        creature = NecropolisFactory.createDefaultForTests();
+        creature = AbstractFractionFactory.createSkeleton();
     }
 
     @Test
@@ -37,7 +37,7 @@ class BoardTest {
     @Test
     void shouldThrowIllegalArgumentExceptionWenYouTryAddCreatureToNotEmptyField() {
         board.add(new Point(0, 0), creature);
-        Creature creature2 = NecropolisFactory.createDefaultForTests();
+        Creature creature2 = AbstractFractionFactory.createSkeleton();
 
         assertThrows(IllegalArgumentException.class, () -> board.add(new Point(0, 0), creature2));
 

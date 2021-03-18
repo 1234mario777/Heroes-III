@@ -5,13 +5,18 @@ import pl.sdk.Fraction;
 public abstract class AbstractFractionFactory {
 
     private static final String INVALID_FRACTION_NAME = "Invalid fraction name";
+    protected static final String EXCEPTION_MESSAGE = "We support tiers from 1 to 7";
+
+    public static Creature createSkeleton(){
+        return new NecropolisFactory().create(false,1,1);
+    }
 
     public static AbstractFractionFactory getInstance(Fraction aFraction) {
         switch (aFraction) {
             case NECROPOLIS:
                 return new NecropolisFactory();
-//            case TEST_FRACTION:
-//                return new TestingFactory();
+            case TEST_FRACTION:
+                return new TestingFactory();
             default:
                 throw new IllegalArgumentException(INVALID_FRACTION_NAME);
         }

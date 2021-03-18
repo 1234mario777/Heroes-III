@@ -34,6 +34,7 @@ public class GameEngine {
 
     public GameEngine(Hero aHero1, Hero aHero2) {
         this(aHero1, aHero2, new Board());
+        putCreaturesToBoard(creatures1, creatures2);
     }
 
     GameEngine(Hero aHero1, Hero aHero2, Board aBoard) {
@@ -46,8 +47,6 @@ public class GameEngine {
         hero2.toSubscribeEndOfTurn(queue);
         creatures1 = aHero1.getCreatures();
         creatures2 = aHero2.getCreatures();
-        putCreaturesToBoard(creatures1, creatures2);
-
 
         observerSupport = new PropertyChangeSupport(this);
     }

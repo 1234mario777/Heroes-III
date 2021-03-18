@@ -132,4 +132,8 @@ public class Creature implements PropertyChangeListener {
     public void propertyChange(PropertyChangeEvent aPropertyChangeEvent) {
         throw new UnsupportedOperationException();
     }
+
+    public boolean canCounterAttack() {
+        return defenceContext.canCounterAttack();
+    }
 }
