@@ -4,6 +4,7 @@ import com.google.common.collect.Range;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import pl.sdk.creatures.attacking.*;
+import pl.sdk.creatures.defending.DefaultDamageApplier;
 import pl.sdk.creatures.defending.DefenceContextFactory;
 import pl.sdk.creatures.defending.DefenceContextIf;
 import pl.sdk.spells.BuffOrDebuffSpell;
@@ -104,7 +105,7 @@ public class Creature implements PropertyChangeListener {
     }
 
     public void applyMagicDamage(int aDamage) {
-        defenceContext.getDamageApplier().applyDamage(magicDamageReducer.reduceDamage(aDamage));
+        defenceContext.applyDamage(magicDamageReducer.reduceDamage(aDamage));
     }
 
     public void buff(BuffOrDebuffSpell aBuffOrDebuff) {
@@ -122,10 +123,6 @@ public class Creature implements PropertyChangeListener {
 
     public boolean canCounterAttack() {
         return defenceContext.canCounterAttack();
-    }
-
-    DefaultDamageApplier getDamageApplier() {
-        return defenceContext.getDamageApplier();
     }
 
     static class BuilderForTesting {

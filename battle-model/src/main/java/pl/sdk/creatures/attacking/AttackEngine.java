@@ -7,7 +7,7 @@ public class AttackEngine {
 
     public void attack(AttackContextIf aAttacker, DefenceContextIf aDefender) {
         int damageToDeal = aAttacker.getDamageCalculator().calculateDamage(aAttacker, aDefender);
-        aDefender.getDamageApplier().applyDamage(damageToDeal);
+        aDefender.applyDamage(damageToDeal);
 
         if (aDefender.canCounterAttack() && aAttacker.canYouCounterAttackMe()) {
             counterAttack(aDefender, aAttacker);

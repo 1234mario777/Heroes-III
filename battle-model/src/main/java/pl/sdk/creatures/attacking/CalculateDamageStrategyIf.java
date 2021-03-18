@@ -10,7 +10,7 @@ public interface CalculateDamageStrategyIf {
 
     static CalculateDamageStrategyIf create(TYPE aType){
         switch (aType){
-            case defaultStrategy:
+            case DEFAULT:
                 new DefaultCalculateStrategy();
             default:
                 throw new IllegalArgumentException("");

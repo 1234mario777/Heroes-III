@@ -1,7 +1,5 @@
 package pl.sdk.creatures.defending;
 
-import pl.sdk.creatures.DefaultDamageApplier;
-
 public class DefaultDefenceContext implements DefenceContextIf {
 
     private DefaultDamageApplier damageApplier;
@@ -18,11 +16,6 @@ public class DefaultDefenceContext implements DefenceContextIf {
         currentHp = maxHp;
         maxAmount = aMaxAmount;
         amount = maxAmount;
-    }
-
-    @Override
-    public DefaultDamageApplier getDamageApplier() {
-        return damageApplier;
     }
 
     @Override
@@ -48,5 +41,12 @@ public class DefaultDefenceContext implements DefenceContextIf {
     @Override
     public int getCurrentAmount() {
         return amount;
+    }
+
+    @Override
+    public void applyDamage(int aDamageToDeal) {
+        CreatureLifeStats creatureLifeStats = damageApplier.countDamageToApply(this, aDamageToDeal);
+        amount = creatureLifeStats.getAmount();
+        currentHp = creatureLifeStats.getHp();
     }
 }
