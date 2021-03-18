@@ -1,9 +1,10 @@
 package pl.sdk.creatures;
 
+import com.google.common.collect.Range;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import pl.sdk.creatures.attacking.AttackContextIf;
-import pl.sdk.creatures.attacking.CounterAttackerIf;
+import pl.sdk.creatures.attacking.*;
+import pl.sdk.creatures.defending.DefenceContextFactory;
 import pl.sdk.creatures.defending.DefenceContextIf;
 import pl.sdk.spells.BuffOrDebuffSpell;
 import pl.sdk.spells.BuffStatistic;
@@ -17,8 +18,6 @@ public class Creature implements PropertyChangeListener {
 
     //TODO remove purestats?
     private CreatureStatisticIf pureStats;
-    private int currentHp;
-    private int amount;
 
     private BuffContainer buffContainter;
     private DefaultMagicDamageReducer magicDamageReducer;
@@ -28,11 +27,7 @@ public class Creature implements PropertyChangeListener {
 
     // Constructor for mockito. Don't use it! You have builder here.
 
-    public Creature(CreatureStatisticIf aPureStats, int aAmount, DefenceContextIf aDefenceContext, AttackContextIf aAttackContext){
-        amount = aAmount;
-        pureStats = aPureStats;
-        currentHp = pureStats.getMaxHp();
-
+    public Creature(CreatureStatisticIf aPureStats, int aAmount, DefenceContextIf aDefenceContext, AttackContextIf aAttackContext) {
         defenceContext = aDefenceContext;
         attackContext = aAttackContext;
 
@@ -44,7 +39,7 @@ public class Creature implements PropertyChangeListener {
         return pureStats;
     }
 
-    public BuffContainer getBuffContainer(){
+    public BuffContainer getBuffContainer() {
         return buffContainter;
     }
 
@@ -57,10 +52,10 @@ public class Creature implements PropertyChangeListener {
     }
 
     public int getCurrentHp() {
-        return currentHp;
+        return defenceContext.getCurrentHp();
     }
 
-    public String getName(){
+    public String getName() {
         return pureStats.getTranslatedName();
     }
 
@@ -74,19 +69,19 @@ public class Creature implements PropertyChangeListener {
 
     private int getScalarBuff() {
         return buffContainter.getAllBuffStats().stream()
-                    .filter(b -> b.getMoveRange() != 0)
-                    .mapToInt(BuffStatistic::getMoveRange).sum();
+                .filter(b -> b.getMoveRange() != 0)
+                .mapToInt(BuffStatistic::getMoveRange).sum();
     }
 
     private int getPercentageBuff(int aRet) {
         return buffContainter.getAllBuffStats().stream()
-                    .filter(b -> b.getMoveRangePercentage() != 0.0)
-                    .mapToInt(b ->  (int)(Math.round( aRet * (b.getMoveRangePercentage()))))
-                    .sum();
+                .filter(b -> b.getMoveRangePercentage() != 0.0)
+                .mapToInt(b -> (int) (Math.round(aRet * (b.getMoveRangePercentage()))))
+                .sum();
     }
 
-    public int getAmount(){
-        return amount;
+    public int getAmount() {
+        return defenceContext.getCurrentAmount();
     }
 
     public String currentHealth() {
@@ -116,14 +111,6 @@ public class Creature implements PropertyChangeListener {
         buffContainter.add(aBuffOrDebuff);
     }
 
-    void setCurrentHp(int aCurrentHp) {
-        currentHp = aCurrentHp;
-    }
-
-    void setAmount(int aAmount) {
-        amount = aAmount;
-    }
-
     public int getMaxHp() {
         return pureStats.getMaxHp();
     }
@@ -139,5 +126,64 @@ public class Creature implements PropertyChangeListener {
 
     DefaultDamageApplier getDamageApplier() {
         return defenceContext.getDamageApplier();
+    }
+
+    static class BuilderForTesting {
+        private Integer attack;
+        private Integer armor;
+        private Integer maxHp;
+        private Integer moveRange;
+        private Range<Integer> damage;
+        private Integer amount;
+
+        BuilderForTesting attack(int attack) {
+            this.attack = attack;
+            return this;
+        }
+
+        BuilderForTesting armor(int armor) {
+            this.armor = armor;
+            return this;
+        }
+
+        BuilderForTesting maxHp(int maxHp) {
+            this.maxHp = maxHp;
+            return this;
+        }
+
+        BuilderForTesting moveRange(int moveRange) {
+            this.moveRange = moveRange;
+            return this;
+        }
+
+        BuilderForTesting damage(Range<Integer> damage) {
+            this.damage = damage;
+            return this;
+        }
+
+        BuilderForTesting amount(int amount) {
+            this.amount = amount;
+            return this;
+        }
+
+        Creature build() {
+
+            DefenceContextIf tempDefenceContext = DefenceContextFactory.create(this.armor);
+            AttackContextIf tempAttackContext = AttackContextFactory.create(
+                    AttackerWithBuffEtcStatistic.builder()
+                            .amount(this.amount)
+                            .attack(this.attack)
+                            .attackRange(1)
+                            .damage(this.damage)
+                            .build(),
+                    CalculateDamageStrategyIf.create(CalculateDamageStrategyIf.TYPE.DEFAULT)
+            );
+
+            Creature ret = new Creature(null, this.amount, tempDefenceContext, tempAttackContext);
+
+            ret.magicDamageReducer = new DefaultMagicDamageReducer();
+
+            return ret;
+        }
     }
 }

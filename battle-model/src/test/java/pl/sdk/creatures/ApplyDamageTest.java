@@ -15,7 +15,6 @@ public class ApplyDamageTest {
     @BeforeEach
     void init(){
         defender = new Creature.BuilderForTesting()
-                .name("Name")
                 .attack(NOT_IMPORTANT)
                 .armor(NOT_IMPORTANT)
                 .maxHp(100)

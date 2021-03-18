@@ -1,6 +1,5 @@
 package pl.sdk.creatures;
 
-import pl.sdk.creatures.Creature;
 
 public class DefaultDamageApplier {
 
@@ -11,7 +10,7 @@ public class DefaultDamageApplier {
         creature = null;
     }
 
-    public void applyDamage(int aDamageToApply) {
+    void applyDamage(int aDamageToApply) {
         int amount = creature.getAmount();
         int currentHp = creature.getCurrentHp();
         int maxHp = creature.getMaxHp();

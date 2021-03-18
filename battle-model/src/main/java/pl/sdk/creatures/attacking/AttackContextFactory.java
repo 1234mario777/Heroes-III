@@ -4,8 +4,12 @@ import pl.sdk.creatures.CreatureStatistic;
 
 public class AttackContextFactory {
 
-    public static AttackContextIf create (CreatureStatistic aStats, int aAmount){
-        switch(aStats){
+    public static AttackContextIf create(AttackerWithBuffEtcStatistic aStats, CalculateDamageStrategyIf aCalculateDamageStrategyIf) {
+        return new DefaultAttackContext(aCalculateDamageStrategyIf, aStats);
+    }
+
+    public static AttackContextIf create(CreatureStatistic aStats, int aAmount) {
+        switch (aStats) {
             default:
                 return new DefaultAttackContext(new DefaultCalculateStrategy(), mapStatsToAttackContextStats(aAmount, aStats));
         }

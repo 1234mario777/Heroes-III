@@ -8,4 +8,7 @@ public interface DefenceContextIf extends CounterAttackerIf {
     DefaultDamageApplier getDamageApplier();
     boolean canCounterAttack();
     int getArmor();
+    int getCurrentHp();
+    int getMaxHp();
+    int getCurrentAmount();
 }
