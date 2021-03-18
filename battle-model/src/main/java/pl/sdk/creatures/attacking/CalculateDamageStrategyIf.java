@@ -1,7 +1,5 @@
 package pl.sdk.creatures.attacking;
 
-import pl.sdk.creatures.defending.DefenceContextIf;
-
 public interface CalculateDamageStrategyIf {
 
     enum TYPE{
@@ -17,5 +15,5 @@ public interface CalculateDamageStrategyIf {
         }
     }
 
-    int calculateDamage(AttackContextIf attacker, DefenceContextIf aDefender);
+    int calculateDamage(AttackerStatisticIf aAttackerStats, int aDefenderArmor);
 }

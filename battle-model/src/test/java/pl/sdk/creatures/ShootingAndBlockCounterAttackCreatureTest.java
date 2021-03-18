@@ -18,7 +18,7 @@ public class ShootingAndBlockCounterAttackCreatureTest {
 
     @Test
     void creatureCanAttackEvenDistanceToOpponentIsMoreThanOne(){
-        Creature shootingCreature = new Creature.BuilderForTesting()
+        Creature shootingCreature = new Creature.Builder()
                 .name("Shooter")
                 .maxHp(NOT_IMPORTANT)
                 .attack(NOT_IMPORTANT)
@@ -28,7 +28,7 @@ public class ShootingAndBlockCounterAttackCreatureTest {
                 .amount(NOT_IMPORTANT)
                 .build();
         shootingCreature = new ShootingCreatureDecorator(shootingCreature);
-        Creature normalCreature = new Creature.BuilderForTesting()
+        Creature normalCreature = new Creature.Builder()
                 .name("Normal unit")
                 .maxHp(NOT_IMPORTANT)
                 .attack(NOT_IMPORTANT)
@@ -47,7 +47,7 @@ public class ShootingAndBlockCounterAttackCreatureTest {
 
     @Test
     void defenderShouldNotCounterAttackForBlockCounterAttackCreature(){
-        Creature blockCounterAttackCreature = new Creature.BuilderForTesting()
+        Creature blockCounterAttackCreature = new Creature.Builder()
                 .name("Shooter")
                 .maxHp(100)
                 .attack(10)
@@ -56,7 +56,7 @@ public class ShootingAndBlockCounterAttackCreatureTest {
                 .moveRange(NOT_IMPORTANT)
                 .amount(1)
                 .build();
-        Creature normalCreature = new Creature.BuilderForTesting()
+        Creature normalCreature = new Creature.Builder()
                 .name("Normal unit")
                 .maxHp(100)
                 .attack(10)

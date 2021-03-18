@@ -1,111 +1,109 @@
 package pl.sdk.creatures;
 
 
-import pl.sdk.creatures.attacking.*;
-import pl.sdk.creatures.defending.DefenceContextFactory;
+public class NecropolisFactory extends AbstractFractionFactory {
 
-class NecropolisFactory extends AbstractFractionFactory {
+    private static final String EXCEPTION_MESSAGE = "We support tiers from 1 to 7";
+
+    public static Creature createDefaultForTests() {
+        return new Creature.Builder()
+                .statistic(CreatureStatistic.TEST)
+                .build();
+    }
 
     public Creature create(boolean aIsUpgraded, int aTier, int aAmount) {
         if (!aIsUpgraded) {
             switch (aTier) {
                 case 1:
-                    return new Creature
-                            (CreatureStatistic.SKELETON,
-                                    aAmount,
-                                    DefenceContextFactory.create(CreatureStatistic.SKELETON),
-                                    AttackContextFactory.create(CreatureStatistic.SKELETON, aAmount));
-
+                    return new Creature.Builder()
+                            .statistic(CreatureStatistic.SKELETON)
+                            .amount(aAmount)
+                            .build();
                 case 2:
-                    return new Creature
-                            (CreatureStatistic.WALKING_DEAD,
-                                    aAmount,
-                                    DefenceContextFactory.create(CreatureStatistic.WALKING_DEAD),
-                                    AttackContextFactory.create(CreatureStatistic.WALKING_DEAD, aAmount));
-
+                    return new Creature.Builder()
+                            .statistic(CreatureStatistic.WALKING_DEAD)
+                            .amount(aAmount)
+                            .build();
                 case 3:
-                    return new Creature
-                            (CreatureStatistic.WIGHT,
-                                    aAmount,
-                                    DefenceContextFactory.create(CreatureStatistic.WIGHT),
-                                    AttackContextFactory.create(CreatureStatistic.WIGHT, aAmount));
+                    return new Creature.Builder()
+                            .statistic(CreatureStatistic.WIGHT)
+                            .amount(aAmount)
+                            .build();
                 case 4:
-                    return new Creature
-                            (CreatureStatistic.VAMPIRE,
-                                    aAmount,
-                                    DefenceContextFactory.create(CreatureStatistic.VAMPIRE),
-                                    AttackContextFactory.create(CreatureStatistic.VAMPIRE, aAmount));
+                    return new Creature.Builder()
+                            .statistic(CreatureStatistic.VAMPIRE)
+                            .amount(aAmount)
+                            .build();
                 case 5:
-                    return new Creature
-                            (CreatureStatistic.LICH,
-                                    aAmount,
-                                    DefenceContextFactory.create(CreatureStatistic.LICH),
-                                    AttackContextFactory.create(CreatureStatistic.LICH, aAmount));
+                    Creature lich = new Creature.Builder()
+                            .statistic(CreatureStatistic.LICH)
+                            .amount(aAmount)
+                            .build();
+                    return lich;
+//                    return new BlockCounterAttackCreatureDecorator(new ShootingCreatureDecorator(new SplashDamageCreatureDecorator(lich, getSplashForLich())));
                 case 6:
-                    return new Creature
-                            (CreatureStatistic.DREAD_KNIGHT,
-                                    aAmount,
-                                    DefenceContextFactory.create(CreatureStatistic.DREAD_KNIGHT),
-                                    AttackContextFactory.create(CreatureStatistic.DREAD_KNIGHT, aAmount));
+                    return new Creature.Builder()
+                            .statistic(CreatureStatistic.BLACK_KNIGHT)
+                            .amount(aAmount)
+                            .build();
                 case 7:
-                    return new Creature
-                            (CreatureStatistic.BONE_DRAGON,
-                                    aAmount,
-                                    DefenceContextFactory.create(CreatureStatistic.BONE_DRAGON),
-                                    AttackContextFactory.create(CreatureStatistic.BONE_DRAGON, aAmount));
+                    return new Creature.Builder()
+                            .statistic(CreatureStatistic.BONE_DRAGON)
+                            .amount(aAmount)
+                            .build();
                 default:
                     throw new IllegalArgumentException(EXCEPTION_MESSAGE);
             }
         } else {
             switch (aTier) {
                 case 1:
-                    return new Creature
-                            (CreatureStatistic.SKELETON_WARRIOR,
-                                    aAmount,
-                                    DefenceContextFactory.create(CreatureStatistic.SKELETON_WARRIOR),
-                                    AttackContextFactory.create(CreatureStatistic.SKELETON_WARRIOR, aAmount));
+                    return new Creature.Builder()
+                            .statistic(CreatureStatistic.SKELETON_WARRIOR)
+                            .amount(aAmount)
+                            .build();
                 case 2:
-                    return new Creature
-                            (CreatureStatistic.ZOMBIE,
-                                    aAmount,
-                                    DefenceContextFactory.create(CreatureStatistic.ZOMBIE),
-                                    AttackContextFactory.create(CreatureStatistic.ZOMBIE, aAmount));
+                    return new Creature.Builder()
+                            .statistic(CreatureStatistic.ZOMBIE)
+                            .amount(aAmount)
+                            .build();
                 case 3:
-                    return new Creature
-                            (CreatureStatistic.WRAITH,
-                                    aAmount,
-                                    DefenceContextFactory.create(CreatureStatistic.WRAITH),
-                                    AttackContextFactory.create(CreatureStatistic.WRAITH, aAmount));
+                    return new Creature.Builder()
+                            .statistic(CreatureStatistic.WRAITH)
+                            .amount(aAmount)
+                            .build();
+//                    return new RegenerationOnEndOfTurnCreatureDecorator(new Creature.Builder()
+//                            .statistic(CreatureStatistic.WRAITH)
+//                            .amount(aAmount)
+//                            .build());
+
                 case 4:
-                    return new Creature
-                            (CreatureStatistic.VAMPIRE_LORD,
-                                    aAmount,
-                                    DefenceContextFactory.create(CreatureStatistic.VAMPIRE_LORD),
-                                    AttackContextFactory.create(CreatureStatistic.VAMPIRE_LORD, aAmount));
+                    return new Creature.Builder()
+                            .statistic(CreatureStatistic.VAMPIRE_LORD)
+                            .amount(aAmount)
+                            .build();
                 case 5:
-                    return new Creature
-                            (CreatureStatistic.POWER_LICH,
-                                    aAmount,
-                                    DefenceContextFactory.create(CreatureStatistic.POWER_LICH),
-                                    AttackContextFactory.create(CreatureStatistic.POWER_LICH, aAmount));
+                    Creature c = new Creature.Builder()
+                            .statistic(CreatureStatistic.POWER_LICH)
+                            .amount(aAmount)
+                            .build();
+                    return c;
+//                    boolean[][] splashDamageTable = getSplashForLich();
+//                    return new SplashDamageCreatureDecorator(new BlockCounterAttackCreatureDecorator(new ShootingCreatureDecorator(c)), splashDamageTable);
                 case 6:
-                    return new Creature
-                            (CreatureStatistic.BLACK_KNIGHT,
-                                    aAmount,
-                                    DefenceContextFactory.create(CreatureStatistic.BLACK_KNIGHT),
-                                    AttackContextFactory.create(CreatureStatistic.BLACK_KNIGHT, aAmount));
+                    return new Creature.Builder()
+                            .statistic(CreatureStatistic.DREAD_KNIGHT)
+                            .amount(aAmount)
+                            .build();
                 case 7:
-                    return new Creature
-                            (CreatureStatistic.GHOST_DRAGON,
-                                    aAmount,
-                                    DefenceContextFactory.create(CreatureStatistic.GHOST_DRAGON),
-                                    AttackContextFactory.create(CreatureStatistic.GHOST_DRAGON, aAmount));
+                    return new Creature.Builder()
+                            .statistic(CreatureStatistic.GHOST_DRAGON)
+                            .amount(aAmount)
+                            .build();
                 default:
                     throw new IllegalArgumentException(EXCEPTION_MESSAGE);
             }
         }
     }
-
 
     private boolean[][] getSplashForLich() {
         boolean[][] splashDamageTable = new boolean[3][3];

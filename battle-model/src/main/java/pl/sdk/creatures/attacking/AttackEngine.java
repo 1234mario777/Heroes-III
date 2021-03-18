@@ -6,7 +6,7 @@ import pl.sdk.creatures.defending.DefenceContextIf;
 public class AttackEngine {
 
     public void attack(AttackContextIf aAttacker, DefenceContextIf aDefender) {
-        int damageToDeal = aAttacker.getDamageCalculator().calculateDamage(aAttacker, aDefender);
+        int damageToDeal = aAttacker.getDamageCalculator().calculateDamage(aAttacker.getAttackerStatistic(), aDefender.getArmor());
         aDefender.applyDamage(damageToDeal);
 
         if (aDefender.canCounterAttack() && aAttacker.canYouCounterAttackMe()) {

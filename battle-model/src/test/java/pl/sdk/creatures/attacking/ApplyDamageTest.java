@@ -1,8 +1,10 @@
-package pl.sdk.creatures;
+package pl.sdk.creatures.attacking;
 
 import com.google.common.collect.Range;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import pl.sdk.creatures.Creature;
+import pl.sdk.creatures.attacking.AttackEngine;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -14,7 +16,7 @@ public class ApplyDamageTest {
 
     @BeforeEach
     void init(){
-        defender = new Creature.BuilderForTesting()
+        defender = new Creature.Builder()
                 .attack(NOT_IMPORTANT)
                 .armor(NOT_IMPORTANT)
                 .maxHp(100)
@@ -25,7 +27,7 @@ public class ApplyDamageTest {
     }
     @Test
     void shouldLostOneCreatureFromStackAndHasFullHp(){
-        Creature attacker = new Creature.BuilderForTesting()
+        Creature attacker = new Creature.Builder()
                 .name("Name")
                 .attack(NOT_IMPORTANT)
                 .armor(NOT_IMPORTANT)
@@ -34,7 +36,8 @@ public class ApplyDamageTest {
                 .damage(Range.closed(100, 100))
                 .build();
 
-        attacker.attack(defender);
+        AttackEngine attackEngine = new AttackEngine();
+        attackEngine.attack(attacker.getAttackContext(),defender.getDefenceContext());
 
         assertEquals(9, defender.getAmount());
         assertEquals(100, defender.getCurrentHp());
@@ -42,7 +45,7 @@ public class ApplyDamageTest {
 
     @Test
     void shouldLostTwoCreatureFromStackAndHasFullHp(){
-        Creature attacker = new Creature.BuilderForTesting()
+        Creature attacker = new Creature.Builder()
                 .name("Name")
                 .attack(NOT_IMPORTANT)
                 .armor(NOT_IMPORTANT)
@@ -51,7 +54,8 @@ public class ApplyDamageTest {
                 .damage(Range.closed(200, 200))
                 .build();
 
-        attacker.attack(defender);
+        AttackEngine attackEngine = new AttackEngine();
+        attackEngine.attack(attacker.getAttackContext(),defender.getDefenceContext());
 
         assertEquals(8, defender.getAmount());
         assertEquals(100, defender.getCurrentHp());
@@ -59,7 +63,7 @@ public class ApplyDamageTest {
 
     @Test
     void shouldLostOneCreatureFromStackAndHas1Hp(){
-        Creature attacker = new Creature.BuilderForTesting()
+        Creature attacker = new Creature.Builder()
                 .name("Name")
                 .attack(NOT_IMPORTANT)
                 .armor(NOT_IMPORTANT)
@@ -68,7 +72,8 @@ public class ApplyDamageTest {
                 .damage(Range.closed(199, 199))
                 .build();
 
-        attacker.attack(defender);
+        AttackEngine attackEngine = new AttackEngine();
+        attackEngine.attack(attacker.getAttackContext(),defender.getDefenceContext());
 
         assertEquals(9, defender.getAmount());
         assertEquals(1, defender.getCurrentHp());
@@ -76,7 +81,7 @@ public class ApplyDamageTest {
 
     @Test
     void shouldLost99HpButWithoutCreatureFromStack(){
-        Creature attacker = new Creature.BuilderForTesting()
+        Creature attacker = new Creature.Builder()
                 .name("Name")
                 .attack(NOT_IMPORTANT)
                 .armor(NOT_IMPORTANT)
@@ -85,7 +90,8 @@ public class ApplyDamageTest {
                 .damage(Range.closed(99, 99))
                 .build();
 
-        attacker.attack(defender);
+        AttackEngine attackEngine = new AttackEngine();
+        attackEngine.attack(attacker.getAttackContext(),defender.getDefenceContext());
 
         assertEquals(10, defender.getAmount());
         assertEquals(1, defender.getCurrentHp());
@@ -93,7 +99,7 @@ public class ApplyDamageTest {
 
     @Test
     void shouldLost198HpBecauseAttackTwiceShouldBe9StackAnd2Hp(){
-        Creature attacker = new Creature.BuilderForTesting()
+        Creature attacker = new Creature.Builder()
                 .name("Name")
                 .attack(NOT_IMPORTANT)
                 .armor(NOT_IMPORTANT)
@@ -102,8 +108,9 @@ public class ApplyDamageTest {
                 .damage(Range.closed(99, 99))
                 .build();
 
-        attacker.attack(defender);
-        attacker.attack(defender);
+        AttackEngine attackEngine = new AttackEngine();
+        attackEngine.attack(attacker.getAttackContext(),defender.getDefenceContext());
+        attackEngine.attack(attacker.getAttackContext(),defender.getDefenceContext());
 
         assertEquals(9, defender.getAmount());
         assertEquals(2, defender.getCurrentHp());

@@ -11,7 +11,7 @@ class CreatureCounterAttackTest {
 
     @Test
     void creatureShouldCounterAttack(){
-        Creature attacker = new Creature.BuilderForTesting()
+        Creature attacker = new Creature.Builder()
                 .name("Attacker")
                 .attack(NOT_IMPORTANT)
                 .armor(NOT_IMPORTANT)
@@ -19,7 +19,7 @@ class CreatureCounterAttackTest {
                 .moveRange(NOT_IMPORTANT)
                 .damage(Range.closed(NOT_IMPORTANT,NOT_IMPORTANT))
                 .build();
-        Creature defender = new Creature.BuilderForTesting()
+        Creature defender = new Creature.Builder()
                 .name("Defender")
                 .attack(NOT_IMPORTANT)
                 .armor(10)
@@ -35,7 +35,7 @@ class CreatureCounterAttackTest {
 
     @Test
     void creatureShouldCounterAttackOnlyOnceAtTurn(){
-        Creature attacker = new Creature.BuilderForTesting()
+        Creature attacker = new Creature.Builder()
                 .name("Attacker")
                 .attack(NOT_IMPORTANT)
                 .armor(NOT_IMPORTANT)
@@ -43,7 +43,7 @@ class CreatureCounterAttackTest {
                 .moveRange(NOT_IMPORTANT)
                 .damage(Range.closed(NOT_IMPORTANT,NOT_IMPORTANT))
                 .build();
-        Creature attacker2 = new Creature.BuilderForTesting()
+        Creature attacker2 = new Creature.Builder()
                 .name("Attacker")
                 .attack(NOT_IMPORTANT)
                 .armor(NOT_IMPORTANT)
@@ -51,7 +51,7 @@ class CreatureCounterAttackTest {
                 .moveRange(NOT_IMPORTANT)
                 .damage(Range.closed(NOT_IMPORTANT,NOT_IMPORTANT))
                 .build();
-        Creature defender = new Creature.BuilderForTesting()
+        Creature defender = new Creature.Builder()
                 .name("Defender")
                 .attack(NOT_IMPORTANT)
                 .armor(10)
