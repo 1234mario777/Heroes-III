@@ -30,7 +30,7 @@ class ShootingCreatureDecorator implements AttackContextIf {
 
     @Override
     public boolean canYouCounterAttackMe() {
-        return decorated.canYouCounterAttackMe();
+        return false;
     }
 
 }

@@ -68,10 +68,10 @@ public class DamageSpellTest {
 
         engine.castSpell(spell,new Point(0,3));
 
-        verify(c2).applyDamage(anyInt());
-        verify(c1).applyDamage(anyInt());
-        verify(c3).applyDamage(anyInt());
-        verify(c4, never()).applyDamage(anyInt());
+        verify(c2).applyMagicDamage(anyInt());
+        verify(c1).applyMagicDamage(anyInt());
+        verify(c3).applyMagicDamage(anyInt());
+        verify(c4, never()).applyMagicDamage(anyInt());
     }
 
     @Test
@@ -86,10 +86,10 @@ public class DamageSpellTest {
 
         engine.castSpell(spell,new Point(2,2));
 
-        verify(c1).applyDamage(anyInt());
-        verify(c2).applyDamage(anyInt());
-        verify(c3).applyDamage(anyInt());
-        verify(c4, never()).applyDamage(anyInt());
+        verify(c1).applyMagicDamage(anyInt());
+        verify(c2).applyMagicDamage(anyInt());
+        verify(c3).applyMagicDamage(anyInt());
+        verify(c4, never()).applyMagicDamage(anyInt());
     }
 
 

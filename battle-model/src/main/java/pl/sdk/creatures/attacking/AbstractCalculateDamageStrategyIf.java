@@ -16,11 +16,11 @@ abstract class AbstractCalculateDamageStrategyIf implements CalculateDamageStrat
 
     public int calculateDamage(AttackerStatisticIf aAttackerStats, int aDefenderArmor) {
 
-        int randValue = rand.nextInt(aAttackerStats.getDamage().upperEndpoint() - aAttackerStats.getDamage().lowerEndpoint() + 1) + aAttackerStats.getAttackerStatistic().getDamage().lowerEndpoint();
+        int randValue = rand.nextInt(aAttackerStats.getDamage().upperEndpoint() - aAttackerStats.getDamage().lowerEndpoint() + 1) + aAttackerStats.getDamage().lowerEndpoint();
 
         double oneCreatureDamageToDeal;
         if (aAttackerStats.getAttack() >= aDefenderArmor){
-            int attackPoints = aAttackerStats.getAttack() - aDefenderArmor);
+            int attackPoints = aAttackerStats.getAttack() - aDefenderArmor;
             if (attackPoints > 60){
                 attackPoints = 60;
             }

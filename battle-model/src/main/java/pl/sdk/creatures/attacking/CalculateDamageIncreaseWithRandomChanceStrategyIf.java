@@ -8,7 +8,7 @@ class CalculateDamageIncreaseWithRandomChanceStrategyIf extends AbstractCalculat
     private final double increaseFactor;
 
     CalculateDamageIncreaseWithRandomChanceStrategyIf(double aChance, double aIncreaseFactor) {
-        this(aChance,aIncreaseFactor,new Random());
+        this(aChance, aIncreaseFactor, new Random());
     }
 
     CalculateDamageIncreaseWithRandomChanceStrategyIf(double aChance, double aIncreaseFactor, Random aRand) {
@@ -18,8 +18,8 @@ class CalculateDamageIncreaseWithRandomChanceStrategyIf extends AbstractCalculat
     }
 
     @Override
-    double changeDamageAfter(double aDamageToChange, AttackContextIf aAttacker) {
-        if (getRand().nextDouble() <= chanceToIncrease){
+    double changeDamageAfter(double aDamageToChange, AttackerStatisticIf aAttackerStats) {
+        if (getRand().nextDouble() <= chanceToIncrease) {
             aDamageToChange = aDamageToChange * increaseFactor;
         }
         return aDamageToChange;

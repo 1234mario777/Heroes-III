@@ -2,6 +2,7 @@ package pl.sdk.creatures;
 
 import com.google.common.collect.Range;
 import org.junit.jupiter.api.Test;
+import pl.sdk.creatures.attacking.AttackEngine;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -28,7 +29,8 @@ class CreatureCounterAttackTest {
                 .damage(Range.closed(10,10))
                 .build();
 
-        attacker.attack(defender);
+        AttackEngine attackEngine = new AttackEngine();
+        attackEngine.attack(attacker.getAttackContext(),defender.getDefenceContext());
 
         assertEquals(90,attacker.getCurrentHp());
     }
@@ -60,8 +62,9 @@ class CreatureCounterAttackTest {
                 .damage(Range.closed(10,10))
                 .build();
 
-        attacker.attack(defender);
-        attacker2.attack(defender);
+        AttackEngine attackEngine = new AttackEngine();
+        attackEngine.attack(attacker.getAttackContext(),defender.getDefenceContext());
+        attackEngine.attack(attacker2.getAttackContext(),defender.getDefenceContext());
 
         assertEquals(90,attacker.getCurrentHp());
         assertEquals(100,attacker2.getCurrentHp());

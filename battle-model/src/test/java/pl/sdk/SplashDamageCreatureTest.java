@@ -41,14 +41,14 @@ public class SplashDamageCreatureTest {
         GameEngine gameEngine = new GameEngine(new Hero(List.of(splashCreature)), new Hero(Collections.emptyList()), board);
         gameEngine.attack(10, 10);
 
-        verify(defender.getDefenceContext().getDamageApplier()).applyDamage(anyInt());
-        verify(notSplashMock1, never()).applyDamage(anyInt());
-        verify(notSplashMock2, never()).applyDamage(anyInt());
-        verify(notSplashMock3, never()).applyDamage(anyInt());
-        verify(splashMock1).applyDamage(anyInt());
-        verify(splashMock2).applyDamage(anyInt());
-        verify(splashMock3).applyDamage(anyInt());
-        verify(splashMock4).applyDamage(anyInt());
+        verify(defender.getDefenceContext()).applyDamage(anyInt());
+        verify(notSplashMock1.getDefenceContext(), never()).applyDamage(anyInt());
+        verify(notSplashMock2.getDefenceContext(), never()).applyDamage(anyInt());
+        verify(notSplashMock3.getDefenceContext(), never()).applyDamage(anyInt());
+        verify(splashMock1.getDefenceContext()).applyDamage(anyInt());
+        verify(splashMock2.getDefenceContext()).applyDamage(anyInt());
+        verify(splashMock3.getDefenceContext()).applyDamage(anyInt());
+        verify(splashMock4.getDefenceContext()).applyDamage(anyInt());
     }
 
     ;
@@ -78,17 +78,13 @@ public class SplashDamageCreatureTest {
         GameEngine gameEngine = new GameEngine(new Hero(List.of(notSplashCreature)), new Hero(Collections.emptyList()), board);
         gameEngine.attack(1, 1);
 
-        verify(defender).applyDamage(anyInt());
-        verify(notSplashMock1, never()).applyDamage(anyInt());
-        verify(notSplashMock2, never()).applyDamage(anyInt());
-        verify(notSplashMock3, never()).applyDamage(anyInt());
-        verify(splashMock1, never()).applyDamage(anyInt());
-        verify(splashMock2, never()).applyDamage(anyInt());
-        verify(splashMock3, never()).applyDamage(anyInt());
-        verify(splashMock4, never()).applyDamage(anyInt());
+        verify(defender.getDefenceContext()).applyDamage(anyInt());
+        verify(notSplashMock1.getDefenceContext(), never()).applyDamage(anyInt());
+        verify(notSplashMock2.getDefenceContext(), never()).applyDamage(anyInt());
+        verify(notSplashMock3.getDefenceContext(), never()).applyDamage(anyInt());
+        verify(splashMock1.getDefenceContext(), never()).applyDamage(anyInt());
+        verify(splashMock2.getDefenceContext(), never()).applyDamage(anyInt());
+        verify(splashMock3.getDefenceContext(), never()).applyDamage(anyInt());
+        verify(splashMock4.getDefenceContext(), never()).applyDamage(anyInt());
     }
-
-    ;
-
-
 }
