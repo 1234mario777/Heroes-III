@@ -1,26 +1,19 @@
 package pl.sdk.creatures.attacking;
 
-import com.google.common.base.Preconditions;
+import pl.sdk.creatures.Creature;
 import pl.sdk.creatures.defending.DefenceContextIf;
 
 public class AttackEngine {
 
-    public void attack(AttackContextIf aAttacker, DefenceContextIf aDefender) {
-        int damageToDeal = aAttacker.getDamageCalculator().calculateDamage(aAttacker.getAttackerStatistic(), aDefender.getArmor());
-        aDefender.applyDamage(damageToDeal);
-
-        if (aDefender.canCounterAttack() && aAttacker.canYouCounterAttackMe()) {
-            counterAttack(aDefender, aAttacker);
+    public void attack(Creature aAttacker, Creature aDefender){
+        attack(aAttacker.getAttackContext(), aDefender.getDefenceContext());
+        if (aDefender.canCounterAttack() && aAttacker.getAttackContext().canYouCounterAttackMe()) {
+            attack(aDefender.getAttackContext(), aAttacker.getDefenceContext());
         }
     }
 
-    private void counterAttack(DefenceContextIf aCounterAttacker, AttackContextIf aDefender) {
-        Preconditions.checkArgument(aCounterAttacker instanceof AttackContextIf);
-        Preconditions.checkArgument(aDefender instanceof DefenceContextIf);
-
-        DefenceContextIf defender = (DefenceContextIf) aDefender;
-        if (aCounterAttacker.canCounterAttack()) {
-            attack(((AttackContextIf) aCounterAttacker), defender);
-        }
+    void attack(AttackContextIf aAttacker, DefenceContextIf aDefender) {
+        int damageToDeal = aAttacker.getDamageCalculator().calculateDamage(aAttacker.getAttackerStatistic(), aDefender.getArmor());
+        aDefender.applyDamage(damageToDeal);
     }
 }

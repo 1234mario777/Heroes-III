@@ -27,8 +27,8 @@ class TurnQueue {
         twoSidesCreatures.addAll(hero2.getCreatures());
         twoSidesCreatures.sort((c1, c2) -> c2.getMoveRange() - c1.getMoveRange());
         twoSidesCreatures.forEach(c -> {
-                addObserver(c);
-                addObserver(c.getBuffContainer());
+            addObserver(c);
+            addObserver(c.getBuffContainer());
         });
         creatures = twoSidesCreatures;
         initQueue();

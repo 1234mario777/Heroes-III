@@ -98,7 +98,7 @@ public class GameEngine {
                 if (splashRange[x][y]) {
                     Creature attackedCreature = board.get(aX + x - 1, aY + y - 1);
                     if (attackedCreature != null){
-                        attackEngine.attack(activeCreature.getAttackContext(), board.get(aX + x - 1, aY + y - 1).getDefenceContext());
+                        attackEngine.attack(activeCreature, attackedCreature);
                     }
                 }
             }

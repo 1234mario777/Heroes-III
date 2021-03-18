@@ -30,7 +30,7 @@ class CreatureCounterAttackTest {
                 .build();
 
         AttackEngine attackEngine = new AttackEngine();
-        attackEngine.attack(attacker.getAttackContext(),defender.getDefenceContext());
+        attackEngine.attack(attacker,defender);
 
         assertEquals(90,attacker.getCurrentHp());
     }
@@ -63,8 +63,8 @@ class CreatureCounterAttackTest {
                 .build();
 
         AttackEngine attackEngine = new AttackEngine();
-        attackEngine.attack(attacker.getAttackContext(),defender.getDefenceContext());
-        attackEngine.attack(attacker2.getAttackContext(),defender.getDefenceContext());
+        attackEngine.attack(attacker,defender);
+        attackEngine.attack(attacker2,defender);
 
         assertEquals(90,attacker.getCurrentHp());
         assertEquals(100,attacker2.getCurrentHp());

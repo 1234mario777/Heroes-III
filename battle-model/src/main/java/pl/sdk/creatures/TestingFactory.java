@@ -73,12 +73,13 @@ public class TestingFactory extends AbstractFractionFactory {
 //                            .statistic(CreatureStatistic.VAMPIRE_LORD)
 //                            .amount(aAmount)
 //                            .build();
-//                case 5:
-//                    Creature c = new Creature.Builder()
-//                            .statistic(CreatureStatistic.POWER_LICH)
-//                            .amount(aAmount)
-//                            .build();
-//                    boolean[][] splashDamageTable = getSplashForLich();
+                case 5:
+                    Creature c = new Creature.Builder()
+                            .statistic(CreatureStatistic.POWER_LICH)
+                            .amount(aAmount)
+                            .build();
+                    boolean[][] splashDamageTable = getSplashForLich();
+                    return c;
 //                    return new SplashDamageCreatureDecorator(new BlockCounterAttackCreatureDecorator(new ShootingCreatureDecorator(c)), splashDamageTable);
                 case FOR_MAGIC_RESISTANCE:
                     return new Creature.Builder()

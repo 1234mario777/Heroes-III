@@ -1,10 +1,6 @@
 package pl.sdk;
 
 import org.junit.jupiter.api.Test;
-import pl.sdk.Board;
-import pl.sdk.GameEngine;
-import pl.sdk.Hero;
-import pl.sdk.Point;
 import pl.sdk.creatures.AbstractFractionFactory;
 import pl.sdk.creatures.Creature;
 import pl.sdk.creatures.NecropolisFactory;
@@ -56,7 +52,7 @@ public class SplashDamageCreatureTest {
     @Test
     void checkUnitWithoutSplashDamage() {
         Creature notSplashCreature = new NecropolisFactory().create(true, 2, 1);
-        Creature defender = spy(Creature.class);
+        Creature defender = spy(Creature.class); //need to mock defenceContext in all defenders
         Creature splashMock1 = spy(Creature.class);
         Creature splashMock2 = spy(Creature.class);
         Creature splashMock3 = spy(Creature.class);
