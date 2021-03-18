@@ -18,13 +18,15 @@ public class EndOfTurnTests {
     void shouldResetCounterAttackFlagAfterEndOfTurn(){
         Creature attacker = AbstractFractionFactory.getInstance(Fraction.TEST_FRACTION).create(false,3,1);
         Creature defender = AbstractFractionFactory.createSkeleton();
-        new Board();
+        Board board = new Board();
+        board.add(1,1,attacker);
+        board.add(1,2,defender);
 
-        GameEngine engine = new GameEngine(new Hero(List.of(attacker)), new Hero(List.of(defender)));
+        GameEngine engine = new GameEngine(new Hero(List.of(attacker)), new Hero(List.of(defender)),board);
 
         assertEquals(true, defender.canCounterAttack());
 
-        attacker.attack(defender);
+        engine.attack(1,2);
         assertEquals(false, defender.canCounterAttack());
 
         engine.pass();

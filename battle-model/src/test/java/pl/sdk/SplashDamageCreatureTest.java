@@ -1,6 +1,11 @@
 package pl.sdk;
 
 import org.junit.jupiter.api.Test;
+import pl.sdk.Board;
+import pl.sdk.GameEngine;
+import pl.sdk.Hero;
+import pl.sdk.Point;
+import pl.sdk.creatures.AbstractFractionFactory;
 import pl.sdk.creatures.Creature;
 import pl.sdk.creatures.NecropolisFactory;
 
@@ -13,7 +18,7 @@ public class SplashDamageCreatureTest {
 
     @Test
     void checkSplashDamage() {
-        Creature splashCreature = new NecropolisFactory().create(true, 5, 1);
+        Creature splashCreature = AbstractFractionFactory.getInstance(Fraction.TEST_FRACTION).create(true, 5, 1);
         Creature defender = spy(Creature.class);
         Creature splashMock1 = spy(Creature.class);
         Creature splashMock2 = spy(Creature.class);
@@ -36,7 +41,7 @@ public class SplashDamageCreatureTest {
         GameEngine gameEngine = new GameEngine(new Hero(List.of(splashCreature)), new Hero(Collections.emptyList()), board);
         gameEngine.attack(10, 10);
 
-        verify(defender).applyDamage(anyInt());
+        verify(defender.getDefenceContext().getDamageApplier()).applyDamage(anyInt());
         verify(notSplashMock1, never()).applyDamage(anyInt());
         verify(notSplashMock2, never()).applyDamage(anyInt());
         verify(notSplashMock3, never()).applyDamage(anyInt());

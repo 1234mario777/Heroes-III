@@ -136,4 +136,8 @@ public class Creature implements PropertyChangeListener {
     public boolean canCounterAttack() {
         return defenceContext.canCounterAttack();
     }
+
+    DefaultDamageApplier getDamageApplier() {
+        return defenceContext.getDamageApplier();
+    }
 }
