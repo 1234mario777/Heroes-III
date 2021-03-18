@@ -16,17 +16,17 @@ abstract class AbstractCalculateDamageStrategyIf implements CalculateDamageStrat
 
     public int calculateDamage(AttackerStatisticIf aAttackerStats, int aDefenderArmor) {
 
-        int randValue = rand.nextInt(aAttackerStats.getAttackerStatistic().getDamage().upperEndpoint() - aAttackerStats.getAttackerStatistic().getDamage().lowerEndpoint() + 1) + aAttackerStats.getAttackerStatistic().getDamage().lowerEndpoint();
+        int randValue = rand.nextInt(aAttackerStats.getDamage().upperEndpoint() - aAttackerStats.getDamage().lowerEndpoint() + 1) + aAttackerStats.getAttackerStatistic().getDamage().lowerEndpoint();
 
         double oneCreatureDamageToDeal;
-        if (aAttackerStats.getAttackerStatistic().getAttack() >= aDefenderArmor.getArmor()){
-            int attackPoints = aAttackerStats.getAttackerStatistic().getAttack() - aDefenderArmor.getArmor();
+        if (aAttackerStats.getAttack() >= aDefenderArmor){
+            int attackPoints = aAttackerStats.getAttack() - aDefenderArmor);
             if (attackPoints > 60){
                 attackPoints = 60;
             }
             oneCreatureDamageToDeal = randValue * (1 + (attackPoints)*0.05);
         }else{
-            int defencePoints = aDefenderArmor.getArmor() - aAttackerStats.getAttackerStatistic().getAttack();
+            int defencePoints = aDefenderArmor - aAttackerStats.getAttack();
             if (defencePoints > 12){
                 defencePoints = 12;
             }
@@ -36,10 +36,10 @@ abstract class AbstractCalculateDamageStrategyIf implements CalculateDamageStrat
         if (oneCreatureDamageToDeal < 0){
             oneCreatureDamageToDeal = 0;
         }
-        double wholeStackDamageToDeal = aAttackerStats.getAttackerStatistic().getAmount() * oneCreatureDamageToDeal;
+        double wholeStackDamageToDeal = aAttackerStats.getAmount() * oneCreatureDamageToDeal;
         double wholeStackDamageToDealAfterChange = changeDamageAfter(wholeStackDamageToDeal, aAttackerStats);
         return (int)wholeStackDamageToDealAfterChange;
     }
 
-    abstract double changeDamageAfter(double aWholeStackDamageToDeal, AttackContextIf aAttacker);
+    abstract double changeDamageAfter(double aWholeStackDamageToDeal, AttackerStatisticIf aAttacker);
 }
