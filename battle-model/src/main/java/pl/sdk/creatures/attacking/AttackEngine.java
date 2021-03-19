@@ -7,7 +7,8 @@ public class AttackEngine {
 
     public void attack(Creature aAttacker, Creature aDefender){
         attack(aAttacker.getAttackContext(), aDefender.getDefenceContext());
-        if (aDefender.canCounterAttack() && aAttacker.getAttackContext().canYouCounterAttackMe()) {
+        if (aDefender.canRetaliate() && aAttacker.getAttackContext().canYouCounterAttackMe()) {
+            aDefender.updateRetaliateCounter();
             attack(aDefender.getAttackContext(), aAttacker.getDefenceContext());
         }
     }

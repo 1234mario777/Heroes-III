@@ -5,6 +5,8 @@ import lombok.NoArgsConstructor;
 import pl.sdk.creatures.attacking.*;
 import pl.sdk.creatures.defending.DefenceContextFactory;
 import pl.sdk.creatures.defending.DefenceContextIf;
+import pl.sdk.creatures.retaliating.RetaliationContextFactory;
+import pl.sdk.creatures.retaliating.RetaliationContextIf;
 import pl.sdk.spells.BuffOrDebuffSpell;
 import pl.sdk.spells.BuffStatistic;
 
@@ -25,6 +27,7 @@ public class Creature implements PropertyChangeListener {
     private MoveContextIf moveContext;
     private DefenceContextIf defenceContext;
     private AttackContextIf attackContext;
+    private RetaliationContextIf retaliationContext;
 
     // Constructor for mockito. Don't use it! You have builder here.
 
@@ -32,6 +35,7 @@ public class Creature implements PropertyChangeListener {
         defenceContext = aDefenceContext;
         attackContext = aAttackContext;
         moveContext = aMoveContextIf;
+        retaliationContext = RetaliationContextFactory.create(1);
 
         buffContainter = new BuffContainer();
         magicDamageReducer = new DefaultMagicDamageReducer();
@@ -116,12 +120,15 @@ public class Creature implements PropertyChangeListener {
 
     @Override
     public void propertyChange(PropertyChangeEvent aPropertyChangeEvent) {
-//        defenceContext.endTurnEvent(aPropertyChangeEvent);
-        throw new UnsupportedOperationException();
+        retaliationContext.endTurnEvent(aPropertyChangeEvent);
     }
 
-    public boolean canCounterAttack() {
-        return defenceContext.canCounterAttack();
+    public boolean canRetaliate() {
+        return retaliationContext.canRetaliate();
+    }
+
+    public void updateRetaliateCounter() {
+        retaliationContext.retaliate();
     }
 
     public static class Builder {

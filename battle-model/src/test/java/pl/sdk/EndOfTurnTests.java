@@ -24,14 +24,14 @@ public class EndOfTurnTests {
 
         GameEngine engine = new GameEngine(new Hero(List.of(attacker)), new Hero(List.of(defender)),board);
 
-        assertEquals(true, defender.canCounterAttack());
+        assertEquals(true, defender.canRetaliate());
 
         engine.attack(1,2);
-        assertEquals(false, defender.canCounterAttack());
+        assertEquals(false, defender.canRetaliate());
 
         engine.pass();
         engine.pass();
-        assertEquals(true, defender.canCounterAttack());
+        assertEquals(true, defender.canRetaliate());
     }
 
     @Test
