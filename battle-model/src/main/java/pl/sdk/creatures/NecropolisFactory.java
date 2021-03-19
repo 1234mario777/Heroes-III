@@ -39,7 +39,8 @@ public class NecropolisFactory extends AbstractFractionFactory {
                             .statistic(CreatureStatistic.LICH)
                             .amount(aAmount)
                             .build();
-                    return new BlockCounterAttackCreatureDecorator(new ShootingCreatureDecorator(new SplashDamageCreatureDecorator(lich, getSplashForLich())));
+                    return lich;
+//                    return new BlockCounterAttackCreatureDecorator(new ShootingCreatureDecorator(new SplashDamageCreatureDecorator(lich, getSplashForLich())));
                 case 6:
                     return new Creature.Builder()
                             .statistic(CreatureStatistic.BLACK_KNIGHT)
@@ -66,10 +67,15 @@ public class NecropolisFactory extends AbstractFractionFactory {
                             .amount(aAmount)
                             .build();
                 case 3:
-                    return new RegenerationOnEndOfTurnCreatureDecorator(new Creature.Builder()
+                    return new Creature.Builder()
                             .statistic(CreatureStatistic.WRAITH)
                             .amount(aAmount)
-                            .build());
+                            .build();
+//                    return new RegenerationOnEndOfTurnCreatureDecorator(new Creature.Builder()
+//                            .statistic(CreatureStatistic.WRAITH)
+//                            .amount(aAmount)
+//                            .build());
+
                 case 4:
                     return new Creature.Builder()
                             .statistic(CreatureStatistic.VAMPIRE_LORD)
@@ -80,8 +86,9 @@ public class NecropolisFactory extends AbstractFractionFactory {
                             .statistic(CreatureStatistic.POWER_LICH)
                             .amount(aAmount)
                             .build();
-                    boolean[][] splashDamageTable = getSplashForLich();
-                    return new SplashDamageCreatureDecorator(new BlockCounterAttackCreatureDecorator(new ShootingCreatureDecorator(c)), splashDamageTable);
+                    return c;
+//                    boolean[][] splashDamageTable = getSplashForLich();
+//                    return new SplashDamageCreatureDecorator(new BlockCounterAttackCreatureDecorator(new ShootingCreatureDecorator(c)), splashDamageTable);
                 case 6:
                     return new Creature.Builder()
                             .statistic(CreatureStatistic.DREAD_KNIGHT)

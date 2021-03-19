@@ -1,7 +1,7 @@
 package pl.sdk;
 
 import org.junit.jupiter.api.Test;
-import pl.sdk.creatures.NecropolisFactory;
+import pl.sdk.creatures.AbstractFractionFactory;
 import pl.sdk.spells.SpellStatistic;
 
 import java.util.Set;
@@ -31,8 +31,8 @@ class SpellCastingRulesManagerTest {
         GameEngine gameEngine = mock(GameEngine.class);
         when(gameEngine.isAllyCreature(any())).thenReturn(false);
         when(gameEngine.isEnemyCreature(any())).thenReturn(true);
-        board.add(new Point(10,10), NecropolisFactory.createDefaultForTests());
-        board.add(new Point(11,10), NecropolisFactory.createDefaultForTests());
+        board.add(new Point(10,10), AbstractFractionFactory.createSkeleton());
+        board.add(new Point(11,10), AbstractFractionFactory.createSkeleton());
 
         Set<Point> result = spellCastingRulesManager.calc(SpellFactoryForTests.createMagicArrow(), board, new Point(10,10), gameEngine);
 
@@ -44,20 +44,20 @@ class SpellCastingRulesManagerTest {
     void shouldCastSpellForAllExistsCreature(){
         SpellCastingRulesManager spellCastingRulesManager = new SpellCastingRulesManager();
         Board board = new Board();
-        board.add(new Point(10,10), NecropolisFactory.createDefaultForTests());
-        board.add(new Point(9,10), NecropolisFactory.createDefaultForTests());
-        board.add(new Point(10,9), NecropolisFactory.createDefaultForTests());
-        board.add(new Point(11,10), NecropolisFactory.createDefaultForTests());
-        board.add(new Point(10,11), NecropolisFactory.createDefaultForTests());
-        board.add(new Point(9,9), NecropolisFactory.createDefaultForTests());
-        board.add(new Point(11,11), NecropolisFactory.createDefaultForTests());
-        board.add(new Point(9,11), NecropolisFactory.createDefaultForTests());
-        board.add(new Point(11,9), NecropolisFactory.createDefaultForTests());
+        board.add(new Point(10,10),AbstractFractionFactory.createSkeleton());
+        board.add(new Point(9,10), AbstractFractionFactory.createSkeleton());
+        board.add(new Point(10,9), AbstractFractionFactory.createSkeleton());
+        board.add(new Point(11,10),AbstractFractionFactory.createSkeleton());
+        board.add(new Point(10,11),AbstractFractionFactory.createSkeleton());
+        board.add(new Point(9,9), AbstractFractionFactory.createSkeleton());
+        board.add(new Point(11,11),AbstractFractionFactory.createSkeleton());
+        board.add(new Point(9,11), AbstractFractionFactory.createSkeleton());
+        board.add(new Point(11,9), AbstractFractionFactory.createSkeleton());
         //shouldn't be attacked
-        board.add(new Point(11,12), NecropolisFactory.createDefaultForTests());
-        board.add(new Point(12,11), NecropolisFactory.createDefaultForTests());
-        board.add(new Point(9,8), NecropolisFactory.createDefaultForTests());
-        board.add(new Point(8,9), NecropolisFactory.createDefaultForTests());
+        board.add(new Point(11,12),AbstractFractionFactory.createSkeleton());
+        board.add(new Point(12,11),AbstractFractionFactory.createSkeleton());
+        board.add(new Point(9,8), AbstractFractionFactory.createSkeleton());
+        board.add(new Point(8,9), AbstractFractionFactory.createSkeleton());
         GameEngine gameEngine = mock(GameEngine.class);
         when(gameEngine.isAllyCreature(any())).thenReturn(false);
         when(gameEngine.isEnemyCreature(any())).thenReturn(true);
@@ -71,9 +71,9 @@ class SpellCastingRulesManagerTest {
     void shouldCastSpellOnlyForAllies(){
         SpellCastingRulesManager spellCastingRulesManager = new SpellCastingRulesManager();
         Board board = new Board();
-        board.add(new Point(10,10), NecropolisFactory.createDefaultForTests());
-        board.add(new Point(9,9), NecropolisFactory.createDefaultForTests());
-        board.add(new Point(11,11), NecropolisFactory.createDefaultForTests());
+        board.add(new Point(10,10), AbstractFractionFactory.createSkeleton());
+        board.add(new Point(9,9), AbstractFractionFactory.createSkeleton());
+        board.add(new Point(11,11), AbstractFractionFactory.createSkeleton());
         GameEngine gameEngine = mock(GameEngine.class);
         when(gameEngine.isAllyCreature(new Point(11,11))).thenReturn(true);
         when(gameEngine.isAllyCreature(new Point(10,10))).thenReturn(true);
@@ -93,8 +93,8 @@ class SpellCastingRulesManagerTest {
     void shouldCastSpellOnlyForEnemies(){
         SpellCastingRulesManager spellCastingRulesManager = new SpellCastingRulesManager();
         Board board = new Board();
-        board.add(new Point(10,10), NecropolisFactory.createDefaultForTests());
-        board.add(new Point(10,11), NecropolisFactory.createDefaultForTests());
+        board.add(new Point(10,10), AbstractFractionFactory.createSkeleton());
+        board.add(new Point(10,11), AbstractFractionFactory.createSkeleton());
         GameEngine gameEngine = mock(GameEngine.class);
         when(gameEngine.isAllyCreature(new Point(11,11))).thenReturn(true);
         when(gameEngine.isAllyCreature(new Point(10,10))).thenReturn(false);

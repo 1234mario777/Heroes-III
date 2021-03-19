@@ -1,18 +1,19 @@
-package pl.sdk.creatures;
+package pl.sdk.creatures.spells;
 
-public class DefaultMagicDamageReducer {
+public class DefaultMagicRes implements MagicResistanceContextIf{
 
     private final int percentageSpellResistance;
 
-    DefaultMagicDamageReducer() {
+    DefaultMagicRes() {
         percentageSpellResistance = 0;
     }
 
-    DefaultMagicDamageReducer(int aPercentageSpellResistance) {
+    DefaultMagicRes(int aPercentageSpellResistance) {
         percentageSpellResistance = aPercentageSpellResistance;
     }
 
-    int reduceDamage(int aDamage) {
+    @Override
+    public int reduceMagicDamageDamage(int aDamage) {
         return (int) (aDamage * ((100-percentageSpellResistance) / 100.0));
     }
 }

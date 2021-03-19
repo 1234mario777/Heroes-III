@@ -1,8 +1,8 @@
-package pl.sdk.creatures;
+package pl.sdk.creatures.attacking;
 
 import java.util.Random;
 
-class DefaultCalculateStrategy extends AbstractCalculateDamageStrategy {
+public class DefaultCalculateStrategy extends AbstractCalculateDamageStrategyIf {
 
     private final Random rand;
 
@@ -16,7 +16,7 @@ class DefaultCalculateStrategy extends AbstractCalculateDamageStrategy {
     }
 
     @Override
-    double changeDamageAfter(double aWholeStackDamageToDeal, Creature aAttacker) {
+    double changeDamageAfter(double aWholeStackDamageToDeal, AttackerStatisticIf aAttacker) {
         return aWholeStackDamageToDeal;
     }
 }

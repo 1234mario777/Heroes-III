@@ -2,6 +2,7 @@ package pl.sdk.creatures;
 
 import com.google.common.collect.Range;
 import org.junit.jupiter.api.Test;
+import pl.sdk.creatures.attacking.AttackEngine;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -11,7 +12,7 @@ class CreatureCounterAttackTest {
 
     @Test
     void creatureShouldCounterAttack(){
-        Creature attacker = new Creature.BuilderForTesting()
+        Creature attacker = new Creature.Builder()
                 .name("Attacker")
                 .attack(NOT_IMPORTANT)
                 .armor(NOT_IMPORTANT)
@@ -19,7 +20,7 @@ class CreatureCounterAttackTest {
                 .moveRange(NOT_IMPORTANT)
                 .damage(Range.closed(NOT_IMPORTANT,NOT_IMPORTANT))
                 .build();
-        Creature defender = new Creature.BuilderForTesting()
+        Creature defender = new Creature.Builder()
                 .name("Defender")
                 .attack(NOT_IMPORTANT)
                 .armor(10)
@@ -28,14 +29,15 @@ class CreatureCounterAttackTest {
                 .damage(Range.closed(10,10))
                 .build();
 
-        attacker.attack(defender);
+        AttackEngine attackEngine = new AttackEngine();
+        attackEngine.attack(attacker,defender);
 
         assertEquals(90,attacker.getCurrentHp());
     }
 
     @Test
     void creatureShouldCounterAttackOnlyOnceAtTurn(){
-        Creature attacker = new Creature.BuilderForTesting()
+        Creature attacker = new Creature.Builder()
                 .name("Attacker")
                 .attack(NOT_IMPORTANT)
                 .armor(NOT_IMPORTANT)
@@ -43,7 +45,7 @@ class CreatureCounterAttackTest {
                 .moveRange(NOT_IMPORTANT)
                 .damage(Range.closed(NOT_IMPORTANT,NOT_IMPORTANT))
                 .build();
-        Creature attacker2 = new Creature.BuilderForTesting()
+        Creature attacker2 = new Creature.Builder()
                 .name("Attacker")
                 .attack(NOT_IMPORTANT)
                 .armor(NOT_IMPORTANT)
@@ -51,7 +53,7 @@ class CreatureCounterAttackTest {
                 .moveRange(NOT_IMPORTANT)
                 .damage(Range.closed(NOT_IMPORTANT,NOT_IMPORTANT))
                 .build();
-        Creature defender = new Creature.BuilderForTesting()
+        Creature defender = new Creature.Builder()
                 .name("Defender")
                 .attack(NOT_IMPORTANT)
                 .armor(10)
@@ -60,8 +62,9 @@ class CreatureCounterAttackTest {
                 .damage(Range.closed(10,10))
                 .build();
 
-        attacker.attack(defender);
-        attacker2.attack(defender);
+        AttackEngine attackEngine = new AttackEngine();
+        attackEngine.attack(attacker,defender);
+        attackEngine.attack(attacker2,defender);
 
         assertEquals(90,attacker.getCurrentHp());
         assertEquals(100,attacker2.getCurrentHp());

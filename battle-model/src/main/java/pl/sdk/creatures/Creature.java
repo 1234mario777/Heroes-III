@@ -1,340 +1,295 @@
 package pl.sdk.creatures;
 
 import com.google.common.collect.Range;
+import lombok.NoArgsConstructor;
+import pl.sdk.creatures.attacking.*;
+import pl.sdk.creatures.defending.DefenceContextFactory;
+import pl.sdk.creatures.defending.DefenceContextIf;
+import pl.sdk.creatures.spells.MagicResFactory;
+import pl.sdk.creatures.spells.MagicResistanceContextIf;
+import pl.sdk.creatures.retaliating.RetaliationContextFactory;
+import pl.sdk.creatures.retaliating.RetaliationContextIf;
 import pl.sdk.spells.BuffOrDebuffSpell;
 import pl.sdk.spells.BuffStatistic;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.*;
+import java.util.LinkedList;
+import java.util.Queue;
 
+
+@NoArgsConstructor
 public class Creature implements PropertyChangeListener {
 
-    private final CreatureStatisticIf stats;
+    private String name;
+
     private BuffContainer buffContainter;
-    private int currentHp;
-    private boolean counterAttackedInThisTurn;
-    private CalculateDamageStrategy calculateDamageStrategy;
-    private int amount;
-    private DefaultMagicDamageReducer magicDamageReducer;
+    private MagicResistanceContextIf magicDamageReducer;
+
+    private MoveContextIf moveContext;
+    private DefenceContextIf defenceContext;
+    private AttackContextIf attackContext;
+    private RetaliationContextIf retaliationContext;
 
     // Constructor for mockito. Don't use it! You have builder here.
-    Creature(){
-        stats = CreatureStatistic.TEST;
-        magicDamageReducer = new DefaultMagicDamageReducer();
+
+    Creature(String aName, DefenceContextIf aDefenceContext, AttackContextIf aAttackContext, MoveContextIf aMoveContextIf, MagicResistanceContextIf aMagicResContext) {
+        name = aName;
+        defenceContext = aDefenceContext;
+        attackContext = aAttackContext;
+        moveContext = aMoveContextIf;
+        retaliationContext = RetaliationContextFactory.create(1);
+        magicDamageReducer = aMagicResContext;
+
         buffContainter = new BuffContainer();
     }
 
-    Creature(CreatureStatisticIf aStats){
-        stats = aStats;
-        currentHp = stats.getMaxHp();
-        buffContainter = new BuffContainer();
-    }
 
-    public void attack(Creature aDefender) {
-        if (isAlive()){
-            int damageToDeal = calculateDamage(this, aDefender);
-            aDefender.applyDamage(damageToDeal);
-            counterAttack(aDefender);
-        }
-    }
-
-    int calculateDamage(Creature aAttacker, Creature aDefender) {
-        return calculateDamageStrategy.calculateDamage(aAttacker, aDefender);
-    }
-
-    void counterAttack(Creature aDefender) {
-        if (!aDefender.counterAttackedInThisTurn){
-            int damageToDealInCounterAttack = calculateDamage(aDefender, this);
-            applyDamage(damageToDealInCounterAttack);
-            aDefender.counterAttackedInThisTurn = true;
-        }
-    }
-
-    public BuffContainer getBuffContainer(){
+    public BuffContainer getBuffContainer() {
         return buffContainter;
     }
 
-    public void applyDamage(int aDamageToApply) {
-        int fullCurrentHp = (stats.getMaxHp() * (amount - 1)) + currentHp - aDamageToApply;
-        if (fullCurrentHp <= 0) {
-            amount = 0;
-            currentHp = 0;
-        }
-        else
-        {
-            if(fullCurrentHp % stats.getMaxHp()==0)
-            {
-                currentHp=stats.getMaxHp();
-                amount=fullCurrentHp/stats.getMaxHp();
-            }
-            else
-            {
-                currentHp = fullCurrentHp % stats.getMaxHp();
-                if (aDamageToApply >= 0){
-                    amount = (fullCurrentHp/stats.getMaxHp()) + 1;
-                }else{
-                    amount = (fullCurrentHp/stats.getMaxHp());
-                }
-            }
-        }
+    public DefenceContextIf getDefenceContext() {
+        return defenceContext;
     }
 
-    public DefaultMagicDamageReducer getMagicDamageReducer(){
-        return magicDamageReducer;
-    }
-
-    public boolean isAlive() {
-        return amount > 0;
+    public AttackContextIf getAttackContext() {
+        return attackContext;
     }
 
     public int getCurrentHp() {
-        return currentHp;
+        return defenceContext.getCurrentHp();
     }
 
-    public String getName(){
-        return stats.getTranslatedName();
-    }
-
-    public boolean canCounterAttack() {
-        return !counterAttackedInThisTurn;
+    public String getName() {
+        return name;
     }
 
     public int getMoveRange() {
-        int ret = stats.getMoveRange();
-        int percentageBuff = buffContainter.getAllBuffStats().stream()
-                .filter(b -> b.getMoveRangePercentage() != 0.0)
-                .mapToInt(b ->  (int)(Math.round( ret * (b.getMoveRangePercentage()))))
-                .sum();
-        int scalarBuff = buffContainter.getAllBuffStats().stream()
-                .filter(b -> b.getMoveRange() != 0)
-                .mapToInt(BuffStatistic::getMoveRange).sum();
+        int ret = moveContext.getMoveRange();
+        int percentageBuff = getPercentageBuff(ret);
+        int scalarBuff = getScalarBuff();
 
         return ret + percentageBuff + scalarBuff;
     }
 
-    public int getDefaultMoveRange() {
-        return stats.getMoveRange();
+    private int getScalarBuff() {
+        return buffContainter.getAllBuffStats().stream()
+                .filter(b -> b.getMoveRange() != 0)
+                .mapToInt(BuffStatistic::getMoveRange).sum();
     }
 
-    @Override
-    public void propertyChange(PropertyChangeEvent aPropertyChangeEvent) {
-        counterAttackedInThisTurn = false;
+    private int getPercentageBuff(int aRet) {
+        return buffContainter.getAllBuffStats().stream()
+                .filter(b -> b.getMoveRangePercentage() != 0.0)
+                .mapToInt(b -> (int) (Math.round(aRet * (b.getMoveRangePercentage()))))
+                .sum();
     }
 
-    public int getAttack() {
-        return stats.getAttack();
-    }
-
-    public int getArmor() {
-        return stats.getArmor();
-    }
-
-    public Range<Integer> getDamage() {
-        return stats.getDamage();
-    }
-
-    public int getAmount(){
-        return amount;
+    public int getAmount() {
+        return defenceContext.getCurrentAmount();
     }
 
     public String currentHealth() {
         StringBuilder sb = new StringBuilder();
         sb.append(getCurrentHp());
         sb.append("/");
-        sb.append(stats.getMaxHp());
+        sb.append(defenceContext.getMaxHp());
         return sb.toString();
     }
 
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(stats.getTranslatedName());
-        sb.append(System.lineSeparator());
-        sb.append(getCurrentHp());
-        sb.append("/");
-        sb.append(stats.getMaxHp());
-        return sb.toString();
-    }
-
-    public double getAttackRange() {
-        return 1.0;
-    }
-
-    void setCurrentHpToMaximum() {
-        currentHp = stats.getMaxHp();
-    }
-
-    public boolean[][] getSplashRange() {
-        boolean[][] ret = new boolean[3][3];
-        ret[1][1] = true;
-        return ret;
-    }
+//    @Override
+//    public String toString() {
+//        StringBuilder sb = new StringBuilder();
+//        sb.append(name);
+//        sb.append(System.lineSeparator());
+//        sb.append(getCurrentHp());
+//        sb.append("/");
+//        sb.append(getDefenceContext().getMaxHp());
+//        return sb.toString();
+//    }
 
     public void applyMagicDamage(int aDamage) {
-        applyDamage(getMagicDamageReducer().reduceDamage(aDamage));
+        defenceContext.applyDamage(magicDamageReducer.reduceMagicDamageDamage(aDamage));
     }
 
     public void buff(BuffOrDebuffSpell aBuffOrDebuff) {
         buffContainter.add(aBuffOrDebuff);
     }
 
-    public static class Builder {
-        private CreatureStatisticIf stats;
-        private CalculateDamageStrategy damageCalculator;
-        private DefaultMagicDamageReducer magicDamageReducer;
-        private Integer amount;
-
-        public Builder statistic(CreatureStatisticIf aStats){
-            this.stats = aStats;
-            return this;
-        };
-        public Builder amount(int amount){
-            this.amount=amount;
-            return this;
-        }
-        Builder damageCalculator (CalculateDamageStrategy aCalculateDamageStrategy){
-            this.damageCalculator = aCalculateDamageStrategy;
-            return this;
-        }
-        Builder defaultMagicDamageReducer (DefaultMagicDamageReducer aMagicDamageReducer){
-            this.magicDamageReducer = aMagicDamageReducer;
-            return this;
-        }
-
-        public Creature build(){
-            Set<String> emptyFields = new HashSet<>();
-            if (stats == null){
-                emptyFields.add("stats");
-            }
-            if (!emptyFields.isEmpty()){
-                throw new IllegalStateException("These fileds: " + Arrays.toString(emptyFields.toArray()) + " cannot be empty");
-            }
-
-            Creature ret = createInstance(stats);
-            if(amount == null){
-                ret.amount=1;
-            }
-            else{
-                ret.amount = amount;
-            }
-            if (damageCalculator != null){
-                ret.calculateDamageStrategy = damageCalculator;
-            }
-            else{
-                ret.calculateDamageStrategy = new DefaultCalculateStrategy();
-            }
-            if (magicDamageReducer != null){
-                ret.magicDamageReducer = magicDamageReducer;
-            }
-            else{
-                ret.magicDamageReducer = new DefaultMagicDamageReducer();
-            }
-            return ret;
-        }
-
-        Creature createInstance(CreatureStatisticIf aStats) {
-            return new Creature(aStats);
-        }
+    public int getMaxHp() {
+        return defenceContext.getMaxHp();
     }
 
-    static class BuilderForTesting {
+    @Override
+    public void propertyChange(PropertyChangeEvent aPropertyChangeEvent) {
+        retaliationContext.endTurnEvent(aPropertyChangeEvent);
+    }
+
+    public boolean canRetaliate() {
+        return retaliationContext.canRetaliate();
+    }
+
+    public void updateRetaliateCounter() {
+        retaliationContext.updateRetaliateCounter();
+    }
+
+    public static class Builder {
+        private CreatureStatistic stats;
+
         private String name;
         private Integer attack;
         private Integer armor;
         private Integer maxHp;
         private Integer moveRange;
         private Range<Integer> damage;
-        private CalculateDamageStrategy damageCalculator;
         private Integer amount;
-        private DefaultMagicDamageReducer magicDamageApplier;
+        private Integer attackRange;
+        private CalculateDamageStrategyIf calcDmgStrategy;
 
-        BuilderForTesting name (String name){
+        private Queue<AttackContextIf> attackDecorators = new LinkedList<>();
+        private Queue<DefenceContextIf> defenceDecorators = new LinkedList<>();
+        private Queue<MoveContextIf> moveDecorators = new LinkedList<>();
+        private MagicResistanceContextIf magicDamageReducer;
+
+        public Builder statistic(CreatureStatistic stats) {
+            this.stats = stats;
+            return this;
+        }
+
+        public Builder addAttackDecorator(AttackContextIf aAttackDecorator) {
+            attackDecorators.add(aAttackDecorator);
+            return this;
+        }
+
+        public Builder addDefenceDecorator(DefenceContextIf aDefenceDecorator) {
+            defenceDecorators.add(aDefenceDecorator);
+            return this;
+        }
+
+        public Builder addMoveDecorator(MoveContextIf aMoveDecorator) {
+            moveDecorators.add(aMoveDecorator);
+            return this;
+        }
+
+        public Builder magicResContext(MagicResistanceContextIf aMagicDamageReducer) {
+            magicDamageReducer = aMagicDamageReducer;
+            return this;
+        }
+
+        public Builder name(String name) {
             this.name = name;
             return this;
         }
-        BuilderForTesting attack (int attack){
+
+        public Builder attack(int attack) {
             this.attack = attack;
             return this;
         }
-        BuilderForTesting armor (int armor){
+
+        public Builder armor(int armor) {
             this.armor = armor;
             return this;
         }
-        BuilderForTesting maxHp (int maxHp){
+
+        public Builder maxHp(int maxHp) {
             this.maxHp = maxHp;
             return this;
         }
-        BuilderForTesting moveRange (int moveRange){
+
+        public Builder moveRange(int moveRange) {
             this.moveRange = moveRange;
             return this;
         }
-        BuilderForTesting damage (Range<Integer> damage){
+
+        public Builder damage(Range<Integer> damage) {
             this.damage = damage;
             return this;
-        };
-        BuilderForTesting amount(int amount){
-            this.amount=amount;
-            return this;
         }
-        BuilderForTesting damageCalculator (CalculateDamageStrategy aCalculateDamageStrategy){
-            this.damageCalculator = aCalculateDamageStrategy;
-            return this;
-        }
-        BuilderForTesting magicDamageApplier (DefaultMagicDamageReducer aMagicDamageApplier){
-            this.magicDamageApplier = aMagicDamageApplier;
+
+        public Builder amount(int amount) {
+            this.amount = amount;
             return this;
         }
 
-        Creature build(){
-            Set<String> emptyFields = new HashSet<>();
-            if (name == null ){
-                emptyFields.add("name");
-            }
-            if (attack == null){
-                emptyFields.add("attack");
-            }
-            if (armor == null){
-                emptyFields.add("armor");
-            }
-            if (maxHp == null){
-                emptyFields.add("maxHp");
-            }
-            if (moveRange == null){
-                emptyFields.add("moveRange");
-            }
-            if (damage == null){
-                emptyFields.add("damage");
-            }
-            if (!emptyFields.isEmpty()){
-                throw new IllegalStateException("These fileds: " + Arrays.toString(emptyFields.toArray()) + " cannot be empty");
-            }
+        public Builder calcDmgStrategy(CalculateDamageStrategyIf calcDmgStrategy) {
+            this.calcDmgStrategy = calcDmgStrategy;
+            return this;
+        }
 
-            CreatureStatisticIf stats = new CreatureStatisticForTesting(name, attack, armor, maxHp, moveRange, damage);
-            Creature ret = createInstance(stats);
-            if(amount == null){
-                ret.amount=1;
+        public Creature build() {
+            preconditions();
+            DefenceContextIf tempDefenceContext = prepareDefendingContext();
+            AttackContextIf tempAttackContext = prepareAttackingContext();
+            return new Creature(name, tempDefenceContext, tempAttackContext, new MoveContext(moveRange), magicDamageReducer);
+        }
+
+        private void preconditions() {
+            if (magicDamageReducer == null) {
+                this.magicDamageReducer = MagicResFactory.create(0);
             }
-            else{
-                ret.amount = amount;
+            if (amount == null) {
+                amount = 1;
             }
-            if (damageCalculator != null){
-                ret.calculateDamageStrategy = damageCalculator;
+            if (armor == null) {
+                armor = 1;
+                if (stats != null ){
+                    armor = stats.getArmor();
+                }
             }
-            else{
-                ret.calculateDamageStrategy = new DefaultCalculateStrategy();
+            if (attack == null) {
+                attack = 1;
+                if (stats != null ){
+                    attack = stats.getAttack();
+                }
             }
-            if(magicDamageApplier != null){
-                ret.magicDamageReducer = magicDamageApplier;
+            if (damage == null) {
+                damage = Range.closed(1,1);
+                if (stats != null ){
+                    damage = stats.getDamage();
+                }
             }
-            else{
-                ret.magicDamageReducer = new DefaultMagicDamageReducer();
+            if (moveRange == null) {
+                moveRange = 1;
+                if (stats != null ){
+                    moveRange = stats.getMoveRange();
+                }
+            }
+            if (maxHp == null) {
+                maxHp = 1;
+                if (stats != null ){
+                    maxHp = stats.getMaxHp();
+                }
+            }
+            if (name == null) {
+                if (stats != null ){
+                    name = stats.getTranslatedName();
+                }
+            }
+        }
+
+        private DefenceContextIf prepareDefendingContext() {
+            DefenceContextIf ret = DefenceContextFactory.create(this.armor, amount, maxHp);
+            if (!defenceDecorators.isEmpty()) {
+                DefenceContextIf decorator = defenceDecorators.peek();
+                // - selfdecorate.
             }
             return ret;
         }
 
-        Creature createInstance(CreatureStatisticIf aStats) {
-            return new Creature(aStats);
+        private AttackContextIf prepareAttackingContext() {
+            if (calcDmgStrategy == null) {
+                calcDmgStrategy = CalculateDamageStrategyIf.create(CalculateDamageStrategyIf.TYPE.DEFAULT);
+            }
+            return AttackContextFactory.create(
+                    AttackerWithBuffEtcStatistic.builder()
+                            .amount(this.amount)
+                            .attack(this.attack)
+                            .attackRange(1)
+                            .damage(this.damage)
+                            .build(),
+                    calcDmgStrategy
+            );
         }
     }
 }

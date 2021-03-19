@@ -3,10 +3,11 @@ package pl.sdk.converter;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import pl.sdk.Fraction;
 import pl.sdk.Hero;
 import pl.sdk.converter.spells.SpellFactory;
+import pl.sdk.creatures.AbstractFractionFactory;
 import pl.sdk.creatures.Creature;
-import pl.sdk.creatures.NecropolisFactory;
 import pl.sdk.gui.BattleMapController;
 import pl.sdk.spells.AbstractSpell;
 import pl.sdk.spells.SpellBook;
@@ -40,7 +41,7 @@ public class EcoBattleConverter {
 
     public static Hero convert(Player aPlayer1) {
         List<Creature> creatures = new ArrayList<>();
-        NecropolisFactory factory = new NecropolisFactory();
+        AbstractFractionFactory factory = AbstractFractionFactory.getInstance(Fraction.NECROPOLIS);
         aPlayer1.getCreatures().forEach(ecoCreature ->
                 creatures.add(factory.create(ecoCreature.isUpgraded(), ecoCreature.getTier(), ecoCreature.getAmount())));
 
