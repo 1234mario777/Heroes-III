@@ -21,7 +21,7 @@ public class DoubleDamageChanceCalculatorTest {
     void init(){
         attackerStats = AttackerWithBuffEtcStatistic.builder().
                 attack(10)
-                .amount(1)
+                .amount(20)
                 .damage(Range.closed(5,5))
                 .build();
         rand = mock(Random.class);

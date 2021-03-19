@@ -52,10 +52,10 @@ class BoardMovingTest {
 
     @Test
     void cannotMoveWhenCreatureHasNotEnoughtMovePoint(){
-        Creature creature = AbstractFractionFactory.createSkeleton();;
+        Creature creature = AbstractFractionFactory.createSkeleton();
         board.add(new Point(5,5), creature);
 
-        assertFalse(board.canMove(creature, 6,6 ));
+        assertFalse(board.canMove(creature, 13,6 ));
     }
 
     @Test

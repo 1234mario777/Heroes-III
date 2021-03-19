@@ -5,6 +5,8 @@ import lombok.NoArgsConstructor;
 import pl.sdk.creatures.attacking.*;
 import pl.sdk.creatures.defending.DefenceContextFactory;
 import pl.sdk.creatures.defending.DefenceContextIf;
+import pl.sdk.creatures.spells.MagicResFactory;
+import pl.sdk.creatures.spells.MagicResistanceContextIf;
 import pl.sdk.creatures.retaliating.RetaliationContextFactory;
 import pl.sdk.creatures.retaliating.RetaliationContextIf;
 import pl.sdk.spells.BuffOrDebuffSpell;
@@ -22,7 +24,7 @@ public class Creature implements PropertyChangeListener {
     private String name;
 
     private BuffContainer buffContainter;
-    private DefaultMagicDamageReducer magicDamageReducer;
+    private MagicResistanceContextIf magicDamageReducer;
 
     private MoveContextIf moveContext;
     private DefenceContextIf defenceContext;
@@ -31,14 +33,15 @@ public class Creature implements PropertyChangeListener {
 
     // Constructor for mockito. Don't use it! You have builder here.
 
-    Creature(DefenceContextIf aDefenceContext, AttackContextIf aAttackContext, MoveContextIf aMoveContextIf) {
+    Creature(String aName, DefenceContextIf aDefenceContext, AttackContextIf aAttackContext, MoveContextIf aMoveContextIf, MagicResistanceContextIf aMagicResContext) {
+        name = aName;
         defenceContext = aDefenceContext;
         attackContext = aAttackContext;
         moveContext = aMoveContextIf;
         retaliationContext = RetaliationContextFactory.create(1);
+        magicDamageReducer = aMagicResContext;
 
         buffContainter = new BuffContainer();
-        magicDamageReducer = new DefaultMagicDamageReducer();
     }
 
 
@@ -107,7 +110,7 @@ public class Creature implements PropertyChangeListener {
 //    }
 
     public void applyMagicDamage(int aDamage) {
-        defenceContext.applyDamage(magicDamageReducer.reduceDamage(aDamage));
+        defenceContext.applyDamage(magicDamageReducer.reduceMagicDamageDamage(aDamage));
     }
 
     public void buff(BuffOrDebuffSpell aBuffOrDebuff) {
@@ -147,7 +150,7 @@ public class Creature implements PropertyChangeListener {
         private Queue<AttackContextIf> attackDecorators = new LinkedList<>();
         private Queue<DefenceContextIf> defenceDecorators = new LinkedList<>();
         private Queue<MoveContextIf> moveDecorators = new LinkedList<>();
-        private DefaultMagicDamageReducer magicDamageReducer;
+        private MagicResistanceContextIf magicDamageReducer;
 
         public Builder statistic(CreatureStatistic stats) {
             this.stats = stats;
@@ -169,7 +172,7 @@ public class Creature implements PropertyChangeListener {
             return this;
         }
 
-        public Builder magicDamageReducer(DefaultMagicDamageReducer aMagicDamageReducer) {
+        public Builder magicResContext(MagicResistanceContextIf aMagicDamageReducer) {
             magicDamageReducer = aMagicDamageReducer;
             return this;
         }
@@ -218,12 +221,12 @@ public class Creature implements PropertyChangeListener {
             preconditions();
             DefenceContextIf tempDefenceContext = prepareDefendingContext();
             AttackContextIf tempAttackContext = prepareAttackingContext();
-            return new Creature(tempDefenceContext, tempAttackContext, new MoveContext(moveRange));
+            return new Creature(name, tempDefenceContext, tempAttackContext, new MoveContext(moveRange), magicDamageReducer);
         }
 
         private void preconditions() {
             if (magicDamageReducer == null) {
-                this.magicDamageReducer = new DefaultMagicDamageReducer();
+                this.magicDamageReducer = MagicResFactory.create(0);
             }
             if (amount == null) {
                 amount = 1;
@@ -256,6 +259,11 @@ public class Creature implements PropertyChangeListener {
                 maxHp = 1;
                 if (stats != null ){
                     maxHp = stats.getMaxHp();
+                }
+            }
+            if (name == null) {
+                if (stats != null ){
+                    name = stats.getTranslatedName();
                 }
             }
         }

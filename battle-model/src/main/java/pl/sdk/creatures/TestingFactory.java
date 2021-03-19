@@ -1,6 +1,7 @@
 package pl.sdk.creatures;
 
 import com.google.common.collect.Range;
+import pl.sdk.creatures.spells.MagicResFactory;
 
 
 public class TestingFactory extends AbstractFractionFactory {
@@ -89,7 +90,7 @@ public class TestingFactory extends AbstractFractionFactory {
                             .maxHp(100)
                             .moveRange(0)
                             .damage(Range.closed(0,0))
-                            .magicDamageReducer(new DefaultMagicDamageReducer(50))
+                            .magicResContext(MagicResFactory.create(50))
                             .build();
 
 
