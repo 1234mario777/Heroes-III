@@ -5,6 +5,9 @@ import lombok.NoArgsConstructor;
 import pl.sdk.creatures.attacking.*;
 import pl.sdk.creatures.defending.DefenceContextFactory;
 import pl.sdk.creatures.defending.DefenceContextIf;
+import pl.sdk.creatures.movingContext.MoveContext;
+import pl.sdk.creatures.movingContext.MoveContextIf;
+import pl.sdk.creatures.spells.BuffContainer;
 import pl.sdk.creatures.spells.MagicResFactory;
 import pl.sdk.creatures.spells.MagicResistanceContextIf;
 import pl.sdk.creatures.retaliating.RetaliationContextFactory;
@@ -124,6 +127,7 @@ public class Creature implements PropertyChangeListener {
     @Override
     public void propertyChange(PropertyChangeEvent aPropertyChangeEvent) {
         retaliationContext.endTurnEvent(aPropertyChangeEvent);
+        buffContainter.endTurnEvent(aPropertyChangeEvent);
     }
 
     public boolean canRetaliate() {

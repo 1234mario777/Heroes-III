@@ -1,4 +1,4 @@
-package pl.sdk.creatures;
+package pl.sdk.creatures.movingContext;
 
 import lombok.Getter;
 
@@ -7,7 +7,7 @@ public class MoveContext implements MoveContextIf{
 
     private int moveRange;
 
-    MoveContext(int aMoveRange) {
+    public MoveContext(int aMoveRange) {
         moveRange = aMoveRange;
     }
 

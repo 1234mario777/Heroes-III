@@ -1,4 +1,4 @@
-package pl.sdk.creatures;
+package pl.sdk.creatures.spells;
 
 import pl.sdk.spells.BuffOrDebuffSpell;
 import pl.sdk.spells.BuffStatistic;
@@ -12,11 +12,11 @@ import java.util.stream.Collectors;
 
 public class BuffContainer extends HashMap<BuffOrDebuffSpell, Integer> implements PropertyChangeListener {
 
-    List<BuffStatistic> getAllBuffStats() {
+    public List<BuffStatistic> getAllBuffStats() {
         return keySet().stream().map(BuffOrDebuffSpell::getBuffStats).collect(Collectors.toList());
     }
 
-    void add(BuffOrDebuffSpell aBuffStatistic) {
+    public void add(BuffOrDebuffSpell aBuffStatistic) {
         put(aBuffStatistic, aBuffStatistic.getDuration());
     }
 
@@ -32,5 +32,9 @@ public class BuffContainer extends HashMap<BuffOrDebuffSpell, Integer> implement
             }
         });
         toRemove.forEach(this::remove);
+    }
+
+    public void endTurnEvent(PropertyChangeEvent aPropertyChangeEvent) {
+
     }
 }

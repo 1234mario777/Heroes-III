@@ -1,4 +1,4 @@
-package pl.sdk.creatures;
+package pl.sdk.creatures.movingContext;
 
 public interface MoveContextIf {
 
