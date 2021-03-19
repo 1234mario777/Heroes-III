@@ -1,86 +1,17 @@
 package pl.sdk;
 
 import org.junit.jupiter.api.Test;
-import pl.sdk.creatures.AbstractFractionFactory;
-import pl.sdk.creatures.Creature;
-import pl.sdk.creatures.NecropolisFactory;
-
-import java.util.Collections;
-import java.util.List;
-
-import static org.mockito.Mockito.*;
 
 public class SplashDamageCreatureTest {
 
     @Test
     void checkSplashDamage() {
-        Creature splashCreature = AbstractFractionFactory.getInstance(Fraction.TEST_FRACTION).create(true, 5, 1);
-        Creature defender = spy(Creature.class);
-        Creature splashMock1 = spy(Creature.class);
-        Creature splashMock2 = spy(Creature.class);
-        Creature splashMock3 = spy(Creature.class);
-        Creature splashMock4 = spy(Creature.class);
-        Creature notSplashMock1 = spy(Creature.class);
-        Creature notSplashMock2 = spy(Creature.class);
-        Creature notSplashMock3 = spy(Creature.class);
 
-        Board board = new Board();
-        board.add(new Point(10, 10), defender);
-        board.add(new Point(10, 9), splashMock1);
-        board.add(new Point(10, 11), splashMock2);
-        board.add(new Point(9, 10), splashMock3);
-        board.add(new Point(11, 10), splashMock4);
-        board.add(new Point(11, 11), splashMock4);
-        board.add(new Point(11, 13), splashMock4);
-        board.add(new Point(0, 2), splashMock4);
-
-        GameEngine gameEngine = new GameEngine(new Hero(List.of(splashCreature)), new Hero(Collections.emptyList()), board);
-        gameEngine.attack(10, 10);
-
-        verify(defender.getDefenceContext()).applyDamage(anyInt());
-        verify(notSplashMock1.getDefenceContext(), never()).applyDamage(anyInt());
-        verify(notSplashMock2.getDefenceContext(), never()).applyDamage(anyInt());
-        verify(notSplashMock3.getDefenceContext(), never()).applyDamage(anyInt());
-        verify(splashMock1.getDefenceContext()).applyDamage(anyInt());
-        verify(splashMock2.getDefenceContext()).applyDamage(anyInt());
-        verify(splashMock3.getDefenceContext()).applyDamage(anyInt());
-        verify(splashMock4.getDefenceContext()).applyDamage(anyInt());
     }
 
-    ;
 
     @Test
     void checkUnitWithoutSplashDamage() {
-        Creature notSplashCreature = new NecropolisFactory().create(true, 2, 1);
-        Creature defender = spy(Creature.class); //need to mock defenceContext in all defenders
-        Creature splashMock1 = spy(Creature.class);
-        Creature splashMock2 = spy(Creature.class);
-        Creature splashMock3 = spy(Creature.class);
-        Creature splashMock4 = spy(Creature.class);
-        Creature notSplashMock1 = spy(Creature.class);
-        Creature notSplashMock2 = spy(Creature.class);
-        Creature notSplashMock3 = spy(Creature.class);
 
-        Board board = new Board();
-        board.add(new Point(1, 1), defender);
-        board.add(new Point(0, 0), splashMock1);
-        board.add(new Point(0, 2), splashMock2);
-        board.add(new Point(1, 2), splashMock3);
-        board.add(new Point(1, 0), splashMock4);
-        board.add(new Point(11, 11), splashMock4);
-        board.add(new Point(11, 13), splashMock4);
-        board.add(new Point(3, 2), splashMock4);
-
-        GameEngine gameEngine = new GameEngine(new Hero(List.of(notSplashCreature)), new Hero(Collections.emptyList()), board);
-        gameEngine.attack(1, 1);
-
-        verify(defender.getDefenceContext()).applyDamage(anyInt());
-        verify(notSplashMock1.getDefenceContext(), never()).applyDamage(anyInt());
-        verify(notSplashMock2.getDefenceContext(), never()).applyDamage(anyInt());
-        verify(notSplashMock3.getDefenceContext(), never()).applyDamage(anyInt());
-        verify(splashMock1.getDefenceContext(), never()).applyDamage(anyInt());
-        verify(splashMock2.getDefenceContext(), never()).applyDamage(anyInt());
-        verify(splashMock3.getDefenceContext(), never()).applyDamage(anyInt());
-        verify(splashMock4.getDefenceContext(), never()).applyDamage(anyInt());
     }
 }

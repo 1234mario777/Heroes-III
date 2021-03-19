@@ -14,11 +14,10 @@ class GameEngineTest {
     @Test
     void shouldRecognizeFriendlyCreatureAndDoNotAttackHer(){
         AbstractFractionFactory factory = AbstractFractionFactory.getInstance(Fraction.TEST_FRACTION);
-        List<Creature> l1 = List.of(factory.create(true, 5,1), spy(Creature.class));
-        List<Creature> l2 = List.of(spy(Creature.class));
+        List<Creature> l1 = List.of(factory.create(true, 5,1), spy(AbstractFractionFactory.createSkeleton()));
+        List<Creature> l2 = List.of(spy(AbstractFractionFactory.createSkeleton()));
 
         GameEngine engine = new GameEngine(new Hero(l1),new Hero(l2));
-        assertTrue(engine.canAttack(GameEngine.BOARD_WIDTH-1, 1));
         assertFalse(engine.canAttack(0,1));
         assertFalse(engine.canAttack(0,1));
     }

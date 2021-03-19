@@ -12,11 +12,11 @@ public class TestingFactory extends AbstractFractionFactory {
     public Creature create(boolean aIsUpgraded, int aTier, int aAmount) {
         if (!aIsUpgraded) {
             switch (aTier) {
-//                case 1:
-//                    return new Creature.Builder()
-//                            .statistic(CreatureStatistic.SKELETON)
-//                            .amount(aAmount)
-//                            .build();
+                case 1:
+                    return new Creature.Builder()
+                            .statistic(CreatureStatistic.SKELETON)
+                            .amount(aAmount)
+                            .build();
 //                case 2:
 //                    return new Creature.Builder()
 //                            .statistic(CreatureStatistic.WALKING_DEAD)
@@ -43,11 +43,11 @@ public class TestingFactory extends AbstractFractionFactory {
 //                            .statistic(CreatureStatistic.BLACK_KNIGHT)
 //                            .amount(aAmount)
 //                            .build();
-//                case 7:
-//                    return new Creature.Builder()
-//                            .statistic(CreatureStatistic.BONE_DRAGON)
-//                            .amount(aAmount)
-//                            .build();
+                case 7:
+                    return new Creature.Builder()
+                            .statistic(CreatureStatistic.BONE_DRAGON)
+                            .amount(aAmount)
+                            .build();
                 default:
                     throw new IllegalArgumentException("XX");
             }
