@@ -1,5 +1,7 @@
 package pl.sdk.creatures.attacking;
 
+import java.beans.PropertyChangeEvent;
+
 class ShootingCreatureDecorator implements AttackContextIf {
 
     private final AttackContextIf decorated;
@@ -22,15 +24,19 @@ class ShootingCreatureDecorator implements AttackContextIf {
     public AttackerStatisticIf getAttackerStatistic() {
         return AttackerWithBuffEtcStatistic.builder()
                 .damage(decorated.getAttackerStatistic().getDamage())
-                .attackRange(15.0)
+                .attackRange(Double.MAX_VALUE)
                 .attack(decorated.getAttackerStatistic().getAttack())
-                .amount(decorated.getAttackerStatistic().getAmount())
                 .build();
     }
 
     @Override
     public boolean canYouCounterAttackMe() {
         return false;
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent aPropertyChangeEvent) {
+        decorated.propertyChange(aPropertyChangeEvent);
     }
 
 }

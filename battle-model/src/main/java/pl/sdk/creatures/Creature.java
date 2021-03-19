@@ -17,13 +17,12 @@ import pl.sdk.spells.BuffStatistic;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.LinkedList;
-import java.util.Queue;
 
 
 @NoArgsConstructor
 public class Creature implements PropertyChangeListener {
 
+    public static final String LIFE_CHANGED = "LIFE_CHANGED";
     private String name;
 
     private BuffContainer buffContainter;
@@ -40,6 +39,7 @@ public class Creature implements PropertyChangeListener {
         name = aName;
         defenceContext = aDefenceContext;
         attackContext = aAttackContext;
+        defenceContext.addObserver(LIFE_CHANGED, aAttackContext);
         moveContext = aMoveContextIf;
         retaliationContext = RetaliationContextFactory.create(1);
         magicDamageReducer = aMagicResContext;
@@ -148,31 +148,12 @@ public class Creature implements PropertyChangeListener {
         private Integer moveRange;
         private Range<Integer> damage;
         private Integer amount;
-        private Integer attackRange;
         private CalculateDamageStrategyIf calcDmgStrategy;
 
-        private Queue<AttackContextIf> attackDecorators = new LinkedList<>();
-        private Queue<DefenceContextIf> defenceDecorators = new LinkedList<>();
-        private Queue<MoveContextIf> moveDecorators = new LinkedList<>();
         private MagicResistanceContextIf magicDamageReducer;
 
         public Builder statistic(CreatureStatistic stats) {
             this.stats = stats;
-            return this;
-        }
-
-        public Builder addAttackDecorator(AttackContextIf aAttackDecorator) {
-            attackDecorators.add(aAttackDecorator);
-            return this;
-        }
-
-        public Builder addDefenceDecorator(DefenceContextIf aDefenceDecorator) {
-            defenceDecorators.add(aDefenceDecorator);
-            return this;
-        }
-
-        public Builder addMoveDecorator(MoveContextIf aMoveDecorator) {
-            moveDecorators.add(aMoveDecorator);
             return this;
         }
 
@@ -273,15 +254,15 @@ public class Creature implements PropertyChangeListener {
         }
 
         private DefenceContextIf prepareDefendingContext() {
-            DefenceContextIf ret = DefenceContextFactory.create(this.armor, amount, maxHp);
-            if (!defenceDecorators.isEmpty()) {
-                DefenceContextIf decorator = defenceDecorators.peek();
-                // - selfdecorate.
-            }
-            return ret;
+            return DefenceContextFactory.create(this.armor, amount, maxHp);
         }
 
         private AttackContextIf prepareAttackingContext() {
+            if (stats != null){
+                return AttackContextFactory.create(stats);
+            }
+
+            //for testing
             if (calcDmgStrategy == null) {
                 calcDmgStrategy = CalculateDamageStrategyIf.create(CalculateDamageStrategyIf.TYPE.DEFAULT);
             }

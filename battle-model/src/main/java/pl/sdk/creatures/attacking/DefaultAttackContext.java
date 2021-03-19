@@ -1,5 +1,9 @@
 package pl.sdk.creatures.attacking;
 
+import pl.sdk.creatures.defending.CreatureLifeStats;
+
+import java.beans.PropertyChangeEvent;
+
 public class DefaultAttackContext implements AttackContextIf {
     private CalculateDamageStrategyIf calculateDamageStrategy;
     private AttackerStatisticIf stats;
@@ -27,5 +31,10 @@ public class DefaultAttackContext implements AttackContextIf {
     @Override
     public boolean canYouCounterAttackMe() {
         return true;
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent aPropertyChangeEvent) {
+        stats = new AttackerWithBuffEtcStatistic(((CreatureLifeStats)aPropertyChangeEvent.getNewValue()).getAmount(),stats);
     }
 }

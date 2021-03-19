@@ -1,5 +1,7 @@
 package pl.sdk.creatures.attacking;
 
+import java.beans.PropertyChangeEvent;
+
 class HealAfterAttackCreatureDecorator implements AttackContextIf {
 
     private double selfHealingPercentage;
@@ -28,5 +30,10 @@ class HealAfterAttackCreatureDecorator implements AttackContextIf {
     @Override
     public boolean canYouCounterAttackMe() {
         return decorated.canYouCounterAttackMe();
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent aPropertyChangeEvent) {
+        decorated.propertyChange(aPropertyChangeEvent);
     }
 }

@@ -40,7 +40,6 @@ public class NecropolisFactory extends AbstractFractionFactory {
                             .amount(aAmount)
                             .build();
                     return lich;
-//                    return new BlockCounterAttackCreatureDecorator(new ShootingCreatureDecorator(new SplashDamageCreatureDecorator(lich, getSplashForLich())));
                 case 6:
                     return new Creature.Builder()
                             .statistic(CreatureStatistic.BLACK_KNIGHT)

@@ -1,5 +1,7 @@
 package pl.sdk.creatures.attacking;
 
+import java.beans.PropertyChangeEvent;
+
 class BlockCounterAttackCreatureDecorator implements AttackContextIf {
 
     private final AttackContextIf decorated;
@@ -26,5 +28,10 @@ class BlockCounterAttackCreatureDecorator implements AttackContextIf {
     @Override
     public AttackerStatisticIf getAttackerStatistic() {
         return decorated.getAttackerStatistic();
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent aPropertyChangeEvent) {
+        decorated.propertyChange(aPropertyChangeEvent);
     }
 }

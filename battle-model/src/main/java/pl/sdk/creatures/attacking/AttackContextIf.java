@@ -1,6 +1,8 @@
 package pl.sdk.creatures.attacking;
 
-public interface AttackContextIf {
+import java.beans.PropertyChangeListener;
+
+public interface AttackContextIf extends PropertyChangeListener {
 
     SplashRange getSplashRange();
     CalculateDamageStrategyIf getDamageCalculator();

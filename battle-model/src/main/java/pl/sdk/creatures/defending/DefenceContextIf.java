@@ -1,16 +1,14 @@
 package pl.sdk.creatures.defending;
 
-import pl.sdk.creatures.attacking.CounterAttackerIf;
+import java.beans.PropertyChangeListener;
 
-import java.beans.PropertyChangeEvent;
+public interface DefenceContextIf {
 
-public interface DefenceContextIf extends CounterAttackerIf {
-
-    boolean canCounterAttack();
     int getArmor();
     int getCurrentHp();
     int getMaxHp();
     int getCurrentAmount();
+    void addObserver(String aEventType, PropertyChangeListener aObs);
 
     void applyDamage(int aDamageToDeal);
 }

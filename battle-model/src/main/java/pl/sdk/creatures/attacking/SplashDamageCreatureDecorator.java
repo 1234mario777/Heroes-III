@@ -1,17 +1,21 @@
 package pl.sdk.creatures.attacking;
 
 
+import java.beans.PropertyChangeEvent;
+
 public class SplashDamageCreatureDecorator implements AttackContextIf {
 
     AttackContextIf decorated;
+    SplashRange splashRange;
 
-    SplashDamageCreatureDecorator(AttackContextIf aDecorated) {
+    SplashDamageCreatureDecorator(SplashRange aSplashRange, AttackContextIf aDecorated) {
         decorated = aDecorated;
+        splashRange = aSplashRange;
     }
 
     @Override
     public SplashRange getSplashRange() {
-        return decorated.getSplashRange();
+        return splashRange;
     }
 
     @Override
@@ -27,5 +31,10 @@ public class SplashDamageCreatureDecorator implements AttackContextIf {
     @Override
     public boolean canYouCounterAttackMe() {
         return decorated.canYouCounterAttackMe();
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent aPropertyChangeEvent) {
+        decorated.propertyChange(aPropertyChangeEvent);
     }
 }
