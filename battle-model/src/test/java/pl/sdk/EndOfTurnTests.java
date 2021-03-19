@@ -9,8 +9,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 public class EndOfTurnTests {
 
@@ -36,7 +35,7 @@ public class EndOfTurnTests {
 
     @Test
     void shouldCallPropertyChangeAfterEndOfTurn(){
-        Creature attacker = spy(Creature.class);
+        Creature attacker = spy(AbstractFractionFactory.createSkeleton());
         Creature defender = AbstractFractionFactory.createSkeleton();
         GameEngine engine = new GameEngine(new Hero(List.of(attacker)), new Hero(List.of(defender)));
 

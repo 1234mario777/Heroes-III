@@ -11,8 +11,8 @@ public class DefaultRetaliationContext implements RetaliationContextIf{
     }
 
     @Override
-    public void retaliate() {
-        if (maxRetaliateOnRound < turnRetaliationCounter){
+    public void updateRetaliateCounter() {
+        if (maxRetaliateOnRound == turnRetaliationCounter){
             throw new IllegalStateException("You trying to retaliate more that round counter");
         }
         turnRetaliationCounter++;
@@ -20,7 +20,7 @@ public class DefaultRetaliationContext implements RetaliationContextIf{
 
     @Override
     public boolean canRetaliate() {
-        return turnRetaliationCounter <= maxRetaliateOnRound;
+        return turnRetaliationCounter < maxRetaliateOnRound;
     }
 
     @Override

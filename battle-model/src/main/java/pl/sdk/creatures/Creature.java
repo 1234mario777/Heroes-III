@@ -128,7 +128,7 @@ public class Creature implements PropertyChangeListener {
     }
 
     public void updateRetaliateCounter() {
-        retaliationContext.retaliate();
+        retaliationContext.updateRetaliateCounter();
     }
 
     public static class Builder {

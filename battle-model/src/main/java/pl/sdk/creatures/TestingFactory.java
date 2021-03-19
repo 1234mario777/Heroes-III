@@ -22,11 +22,11 @@ public class TestingFactory extends AbstractFractionFactory {
 //                            .statistic(CreatureStatistic.WALKING_DEAD)
 //                            .amount(aAmount)
 //                            .build();
-//                case 3:
-//                    return new Creature.Builder()
-//                            .statistic(CreatureStatistic.WIGHT)
-//                            .amount(aAmount)
-//                            .build();
+                case 3:
+                    return new Creature.Builder()
+                            .statistic(CreatureStatistic.WIGHT)
+                            .amount(aAmount)
+                            .build();
 //                case 4:
 //                    return new Creature.Builder()
 //                            .statistic(CreatureStatistic.VAMPIRE)

@@ -3,7 +3,7 @@ package pl.sdk.creatures.retaliating;
 import java.beans.PropertyChangeEvent;
 
 public interface RetaliationContextIf {
-    void retaliate();
+    void updateRetaliateCounter();
     boolean canRetaliate();
 
     void endTurnEvent(PropertyChangeEvent aPropertyChangeEvent);
