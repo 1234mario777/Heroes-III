@@ -18,6 +18,8 @@ public abstract class AbstractEconomyFractionFactory
 				return new EconomyFortressFactory();
 			case INFERNO:
 				return new EconomyInfernoFactory();
+			case STRONGHOLD:
+				return new EconomyStrongholdFactory();
 			default:
 				throw new IllegalArgumentException( INVALID_FRACTION_NAME );
 		}
