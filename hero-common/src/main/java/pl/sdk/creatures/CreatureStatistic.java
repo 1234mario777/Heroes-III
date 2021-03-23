@@ -83,7 +83,23 @@ public enum CreatureStatistic implements CreatureStatisticIf{
     GREATER_BASILISK("Greater Basilisk",12,12,40,7,Range.closed(6,10),4,"Good upgrade, improves basilisks all-around.\n",true, 4),
     MIGHTY_GORGON("Mighty Gorgon",11,16,70,6,Range.closed(12,16),5,"One of the best upgrades in the game, we can forget the minor stats upgrades, the special abbility is awesome!\nYes, even if it's an archangel commanded by a hero with 30 defence, he can die instantly from mighty gorgon's gaze.\n",true, 3),
     WYVERN_MONARCH("Wyvern Monarch",14,14,70,11,Range.closed(18,22),6,"Costly upgrade raises the damage by 4 and adds a poison abbility which can be very useful to weaken a strong stack.\n",true, 2),
-    CHAOS_HYDRA("Chaos Hydra",18,20,250,7,Range.closed(25,45),7,"Extra 75 hit points, 2 attack and defence, but most importantly extra speed.\nWell, speed still remains the slowest among level 7 upgrades, but the strategic use is at it's best.\n",true, 1);
+    CHAOS_HYDRA("Chaos Hydra",18,20,250,7,Range.closed(25,45),7,"Extra 75 hit points, 2 attack and defence, but most importantly extra speed.\nWell, speed still remains the slowest among level 7 upgrades, but the strategic use is at it's best.\n",true, 1),
+
+    //CASTLE FRACTION
+    PIKEMAN("Pikeman",4,5,10,4,Range.closed(1,3),1,"Toughest lvl1 unit, but a bit slow.",false,14),
+    ARCHER("Archer",6,3,10,4,Range.closed(2,3),2,"Archer's upgrade is literally 2 times better. Upgrade them quickly.",false,9),
+    GRIFFIN("Griffin",8,8,25,6,Range.closed(3,6),3,"High in population, griffins become castle's main unit for the midgame.",false,7),
+    SWORDSMAN("Swordsman",10,12,35,5,Range.closed(6,9),4,"Not too good unit the upgrade and also too slow.",false, 4),
+    MONK("Monk",12,7,30,5,Range.closed(10,12),5,"Good shooter, nice damage.",false,3),
+    CAVALIER("Cavalier",15,15,100,7,Range.closed(15,25),6,"Make sure that the path is as long as possible - they need some speed!",false,2),
+    ANGEL("Angel",20,20,100,7,Range.closed(50,50),7,"Nice combat ratings and great constant damage - no need to bless them.\nNote that before the update patches Angels and Archangels didn't cost any gems, just gold.\nThis has been added to try to balance the castle a little. I think it's still too powerful.",false,1),
+    HALBERDIER("Halberdier",6,5,10,5,Range.closed(2,3),1,"Now they are faster and do more damage. Will make a good defence for shooters.",true,14),
+    MARKSMAN("Marksman",6,3,10,6,Range.closed(2,3),2,"Awesome upgrade, but they still lack defence...",true,9),
+    ROYAL_GRIFFIN("Royal Griffin",9,9,25,9,Range.closed(3,6),3,"Send them right in the middle of the battlefield. Everyone who comes will get some ;)",true,7),
+    CRUSADER("Crusader",7,10,35,6,Range.closed(7,10),4,"Good upgrade, but still lacks speed. Seem undefeatable in large numbers.",true,4),
+    ZEALOT("Zealot",12,10,30,7,Range.closed(10,12),5,"Zealots are skilled enough to use the same magic powers at very close range. Better defence too.",true,3),
+    CHAMPION("Champion",16,16,100,9,Range.closed(20,25),6,"That's up to 45% extra damage possible! Champions also have better aiming skills.",true,2),
+    ARCHANGEL("Archangel",30,30,250,18,Range.closed(50,50),7,"Best attack, defence and speed in a whole game! Resurrection is a very convenient abbility.\nThose fast wings take up a whole extra hex! :] Possibly the best creature in the game.",true,1);
 
 
     private final String name;
