@@ -1,6 +1,7 @@
 package pl.sdk.creatures;
 
 import com.google.common.collect.Range;
+import pl.sdk.creatures.spells.MagicResFactory;
 
 
 public class TestingFactory extends AbstractFractionFactory {
@@ -12,21 +13,21 @@ public class TestingFactory extends AbstractFractionFactory {
     public Creature create(boolean aIsUpgraded, int aTier, int aAmount) {
         if (!aIsUpgraded) {
             switch (aTier) {
-//                case 1:
-//                    return new Creature.Builder()
-//                            .statistic(CreatureStatistic.SKELETON)
-//                            .amount(aAmount)
-//                            .build();
+                case 1:
+                    return new Creature.Builder()
+                            .statistic(CreatureStatistic.SKELETON)
+                            .amount(aAmount)
+                            .build();
 //                case 2:
 //                    return new Creature.Builder()
 //                            .statistic(CreatureStatistic.WALKING_DEAD)
 //                            .amount(aAmount)
 //                            .build();
-//                case 3:
-//                    return new Creature.Builder()
-//                            .statistic(CreatureStatistic.WIGHT)
-//                            .amount(aAmount)
-//                            .build();
+                case 3:
+                    return new Creature.Builder()
+                            .statistic(CreatureStatistic.WIGHT)
+                            .amount(aAmount)
+                            .build();
 //                case 4:
 //                    return new Creature.Builder()
 //                            .statistic(CreatureStatistic.VAMPIRE)
@@ -43,11 +44,11 @@ public class TestingFactory extends AbstractFractionFactory {
 //                            .statistic(CreatureStatistic.BLACK_KNIGHT)
 //                            .amount(aAmount)
 //                            .build();
-//                case 7:
-//                    return new Creature.Builder()
-//                            .statistic(CreatureStatistic.BONE_DRAGON)
-//                            .amount(aAmount)
-//                            .build();
+                case 7:
+                    return new Creature.Builder()
+                            .statistic(CreatureStatistic.BONE_DRAGON)
+                            .amount(aAmount)
+                            .build();
                 default:
                     throw new IllegalArgumentException("XX");
             }
@@ -73,23 +74,23 @@ public class TestingFactory extends AbstractFractionFactory {
 //                            .statistic(CreatureStatistic.VAMPIRE_LORD)
 //                            .amount(aAmount)
 //                            .build();
-//                case 5:
-//                    Creature c = new Creature.Builder()
-//                            .statistic(CreatureStatistic.POWER_LICH)
-//                            .amount(aAmount)
-//                            .build();
-//                    boolean[][] splashDamageTable = getSplashForLich();
+                case 5:
+                    Creature c = new Creature.Builder()
+                            .statistic(CreatureStatistic.POWER_LICH)
+                            .amount(aAmount)
+                            .build();
+                    boolean[][] splashDamageTable = getSplashForLich();
+                    return c;
 //                    return new SplashDamageCreatureDecorator(new BlockCounterAttackCreatureDecorator(new ShootingCreatureDecorator(c)), splashDamageTable);
                 case FOR_MAGIC_RESISTANCE:
-                    return new Creature.BuilderForTesting()
+                    return new Creature.Builder()
                             .attack(0)
                             .armor(0)
-                            .name("")
                             .amount(aAmount)
                             .maxHp(100)
                             .moveRange(0)
                             .damage(Range.closed(0,0))
-                            .magicDamageApplier(new DefaultMagicDamageReducer(50))
+                            .magicResContext(MagicResFactory.create(50))
                             .build();
 
 

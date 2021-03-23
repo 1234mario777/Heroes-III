@@ -67,7 +67,23 @@ enum CreatureStatistic implements CreatureStatisticIf{
     ARCH_MAGE("Arch Mage",12,9,30,7,Range.closed(7,9),4,"Reasonable upgrade adds speed, improves defensive ratings and wall penetration will decrease the range penalty in seige attacks.",true,4),
     MASTER_GENIE("Master Genie",12,12,40,11,Range.closed(13,16),5,"Master genies are a totally different story with their spellcasting abbilities. If you have room in your army, split master genies in many stacks to be able to cast more beneficial spells on your units per turn.\n Remember that most of their spells last for 6 turns and that a single unit stack can have a maximum of 3 spells affecting it. Great upgrade for 50 extra gold.",true,3),
     NAGA_QUEEN("Naga Queen",16,13,110,7,Range.closed(30,30),6,"Extra speed and extra 50% of that constant damage are worth the extra 500 gold that make naga queen the most expensive in level 6.",true,2),
-    TITAN("Titan",24,24,300,11,Range.closed(40,60),7,"The best shooter in the game and the most expensive level 7 unit. Shooting abbility is great, as well as twice the hit points and major increases in speed/attack/defence, but the price is more than doubled...\nThis is really an endgame creature because the dwelling costs 25000 gold and 30 gems to upgrade and the titans are so expensive too.",true,1);
+    TITAN("Titan",24,24,300,11,Range.closed(40,60),7,"The best shooter in the game and the most expensive level 7 unit. Shooting abbility is great, as well as twice the hit points and major increases in speed/attack/defence, but the price is more than doubled...\nThis is really an endgame creature because the dwelling costs 25000 gold and 30 gems to upgrade and the titans are so expensive too.",true,1),
+
+    // FORTRESS FRACTION
+    GNOLL("Gnoll",3,5,6,4,Range.closed(2,3),1,"Above-average level 1 creature with good defence ratings and damage.",false, 12),
+    LIZARDMAN("Lizardman",5,6,14,4,Range.closed(2,3),2,"This table shows lizardman stats with the latest game patch applied.\nOriginally they've had 12 hit points, 1-3 damage and population of 8. A much-needed balancing for Fortress.",false, 9 ),
+    SERPENT_FLY("Serpent Fly",7,9,20,9,Range.closed(2,5),3,"Costly and weakish. Also good to give to scouts for lots of movement.\nBefore the patch their attack and defence was lower by 1 point each.",false, 8),
+    BASILISK("Basilisk",11,11,35,5,Range.closed(6,10),4,"Finally a better creature, normal for level 4. Useful for both offence and defence.\nStoning abbility can be especially nice to block the holes in your seige walls for a while with... stoned enemies!",false, 4),
+    GORGON("Gorgon",10,14,70,5,Range.closed(12,16),5,"To compensate for the previous creatures, fortress rules in level 5.\nGorgons are very tough, but try to save them until the upgrade, that's where they become extremely valuable.\n",false, 3),
+    WYVERN("Wyvern",14,14,70,7,Range.closed(14,18),6,"Below-average level 6 creature. Damage is ok, but wyverns die quickly because they are the only strong flies in fortress...\n", false, 2),
+    HYDRA("Hydra",16,18,175,5,Range.closed(25,45),7,"Costs no special resources and the special abbility is one of the greatest: hydras attack all 8 hexes around them without fear of retaliation!\n",false, 1),
+    GNOLL_MARADEUR("Gnoll Maradeur",4,6,6,5,Range.closed(2,3),1,"1 speed, 1 attack and 1 defence for 20 gold extra? Bad upgrade looking at the value, also costs 10 wood to upgrade the dwelling, so it's not worth doing unless you're really wealthy.",true, 12),
+    LIZARD_WARRIOR("Lizard Warrior",6,8,15,5,Range.closed(2,5),2,"Bless/curse will make a lot of difference to lizard warriors.\n",true, 9),
+    DRAGON_FLY("Dragon Fly",8,10,20,13,Range.closed(2,5),3,"Flies are very annoying to spellcasters.\nIf you have spare slots in your army, split the flies so that you can dispel and weaken more enemies.\n",true, 8),
+    GREATER_BASILISK("Greater Basilisk",12,12,40,7,Range.closed(6,10),4,"Good upgrade, improves basilisks all-around.\n",true, 4),
+    MIGHTY_GORGON("Mighty Gorgon",11,16,70,6,Range.closed(12,16),5,"One of the best upgrades in the game, we can forget the minor stats upgrades, the special abbility is awesome!\nYes, even if it's an archangel commanded by a hero with 30 defence, he can die instantly from mighty gorgon's gaze.\n",true, 3),
+    WYVERN_MONARCH("Wyvern Monarch",14,14,70,11,Range.closed(18,22),6,"Costly upgrade raises the damage by 4 and adds a poison abbility which can be very useful to weaken a strong stack.\n",true, 2),
+    CHAOS_HYDRA("Chaos Hydra",18,20,250,7,Range.closed(25,45),7,"Extra 75 hit points, 2 attack and defence, but most importantly extra speed.\nWell, speed still remains the slowest among level 7 upgrades, but the strategic use is at it's best.\n",true, 1);
 
 
     private final String name;
@@ -134,5 +150,4 @@ enum CreatureStatistic implements CreatureStatisticIf{
     {
         return growth;
     }
-
 }

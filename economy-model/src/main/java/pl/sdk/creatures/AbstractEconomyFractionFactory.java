@@ -14,6 +14,8 @@ public abstract class AbstractEconomyFractionFactory
 				return new EconomyNecropolisFactory();
 			case TEST_FRACTION	:
 				return new EconomyTestFractionFactory();
+			case FORTRESS:
+				return new EconomyFortressFactory();
 			case INFERNO:
 				return new EconomyInfernoFactory();
 			case TOWER:

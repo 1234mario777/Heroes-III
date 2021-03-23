@@ -2,8 +2,8 @@ package pl.sdk;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import pl.sdk.creatures.AbstractFractionFactory;
 import pl.sdk.creatures.Creature;
-import pl.sdk.creatures.NecropolisFactory;
 
 import java.util.List;
 
@@ -20,7 +20,7 @@ class CreatureTurnQueueTest {
 
     @BeforeEach
     void init(){
-        NecropolisFactory necroFactory = new NecropolisFactory();
+        AbstractFractionFactory necroFactory = AbstractFractionFactory.getInstance(Fraction.NECROPOLIS);
         a = necroFactory.create(false,3,1);
         b = necroFactory.create(false,1,1);
         c = necroFactory.create(false,7,1);

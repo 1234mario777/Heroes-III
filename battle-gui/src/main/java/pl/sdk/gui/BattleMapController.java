@@ -6,8 +6,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import pl.sdk.*;
 import pl.sdk.Point;
+import pl.sdk.creatures.AbstractFractionFactory;
 import pl.sdk.creatures.Creature;
-import pl.sdk.creatures.NecropolisFactory;
 import pl.sdk.spells.*;
 
 import java.beans.PropertyChangeEvent;
@@ -34,7 +34,8 @@ public class BattleMapController implements PropertyChangeListener {
     public BattleMapController() {
         List<Creature> notUpgradedCreatures = new ArrayList<>();
         List<Creature> upgradedCreatures = new ArrayList<>();
-        NecropolisFactory factory = new NecropolisFactory();
+
+        AbstractFractionFactory factory = AbstractFractionFactory.getInstance(Fraction.NECROPOLIS);
         for (int i = 1; i <= 7; i++) {
             notUpgradedCreatures.add(factory.create(false, i, 10));
         }

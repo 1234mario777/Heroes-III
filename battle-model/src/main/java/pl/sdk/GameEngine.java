@@ -1,15 +1,14 @@
 package pl.sdk;
 
+import pl.sdk.creatures.attacking.AttackEngine;
 import pl.sdk.creatures.Creature;
 import pl.sdk.spells.AbstractSpell;
-import pl.sdk.spells.SpellStatistic;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class GameEngine {
 
@@ -24,6 +23,7 @@ public class GameEngine {
     public static final String AFTER_ATTACK = "AFTER_ATTACK";
     private final Board board;
     private final TurnQueue queue;
+    private final AttackEngine attackEngine;
     private final PropertyChangeSupport observerSupport;
     private final Hero hero1;
     private final Hero hero2;
@@ -34,9 +34,11 @@ public class GameEngine {
 
     public GameEngine(Hero aHero1, Hero aHero2) {
         this(aHero1, aHero2, new Board());
+        putCreaturesToBoard(creatures1, creatures2);
     }
 
     GameEngine(Hero aHero1, Hero aHero2, Board aBoard) {
+        attackEngine = new AttackEngine();
         board = aBoard;
         hero1 = aHero1;
         hero2 = aHero2;
@@ -45,8 +47,6 @@ public class GameEngine {
         hero2.toSubscribeEndOfTurn(queue);
         creatures1 = aHero1.getCreatures();
         creatures2 = aHero2.getCreatures();
-        putCreaturesToBoard(creatures1, creatures2);
-
 
         observerSupport = new PropertyChangeSupport(this);
     }
@@ -92,13 +92,13 @@ public class GameEngine {
             return;
         }
         Creature activeCreature = queue.getActiveCreature();
-        boolean[][] splashRange = activeCreature.getSplashRange();
+        boolean[][] splashRange = activeCreature.getAttackContext().getSplashRange().getSplashRange();
         for (int x = 0; x < splashRange.length; x++) {
             for (int y = 0; y < splashRange.length; y++) {
                 if (splashRange[x][y]) {
                     Creature attackedCreature = board.get(aX + x - 1, aY + y - 1);
                     if (attackedCreature != null){
-                        activeCreature.attack(board.get(aX + x - 1, aY + y - 1));
+                        attackEngine.attack(activeCreature, attackedCreature);
                     }
                 }
             }
@@ -146,7 +146,7 @@ public class GameEngine {
             theSamePlayerUnit = creatures2.contains(board.get(aX, aY));
         }
 
-        return !theSamePlayerUnit && board.get(getActiveCreature()).distance(new Point(aX, aY)) <= getActiveCreature().getAttackRange();
+        return !theSamePlayerUnit && board.get(getActiveCreature()).distance(new Point(aX, aY)) <= getActiveCreature().getAttackContext().getAttackerStatistic().getAttackRange();
     }
 
     public boolean isHeroTwoCreature( Creature aCreature )

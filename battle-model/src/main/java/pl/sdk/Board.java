@@ -71,4 +71,8 @@ class Board {
         double distance = currentPosition.distance(new Point(aX,aY));
         return distance <= aCreature.getMoveRange() && !isTileTaken(new Point(aX,aY));
     }
+
+    void add(int aX, int aY, Creature aCreture) {
+        add(new Point(aX, aY),aCreture);
+    }
 }

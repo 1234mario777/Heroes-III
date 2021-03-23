@@ -2,8 +2,8 @@ package pl.sdk;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import pl.sdk.creatures.AbstractFractionFactory;
 import pl.sdk.creatures.Creature;
-import pl.sdk.creatures.NecropolisFactory;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -15,7 +15,7 @@ class BoardMovingTest {
     @BeforeEach
     void init(){
         board = new Board();
-        creature = NecropolisFactory.createDefaultForTests();
+        creature = AbstractFractionFactory.createSkeleton();
         board.add(new Point(0,0), creature);
     }
 
@@ -31,7 +31,7 @@ class BoardMovingTest {
 
     @Test
     void shouldThrowExceptionWhenCreatureTryingToMoveToNotEmptyField(){
-        board.add(new Point(0,1), NecropolisFactory.createDefaultForTests());
+        board.add(new Point(0,1), AbstractFractionFactory.createSkeleton());
 
         assertThrows(IllegalArgumentException.class, () -> board.move(new Point(0,0), new Point(0,1)));
 
@@ -41,7 +41,7 @@ class BoardMovingTest {
 
     @Test
     void canMoveWhenCreatureHasEnoughtMovePoint(){
-        creature = NecropolisFactory.createDefaultForTests();
+        creature = AbstractFractionFactory.createSkeleton();;
         board.add(new Point(5,5), creature);
 
         assertTrue(board.canMove(creature, 6,5 ));
@@ -52,15 +52,15 @@ class BoardMovingTest {
 
     @Test
     void cannotMoveWhenCreatureHasNotEnoughtMovePoint(){
-        Creature creature = NecropolisFactory.createDefaultForTests();
+        Creature creature = AbstractFractionFactory.createSkeleton();
         board.add(new Point(5,5), creature);
 
-        assertFalse(board.canMove(creature, 6,6 ));
+        assertFalse(board.canMove(creature, 13,6 ));
     }
 
     @Test
     void cannotMoveWhenTileIsTaken(){
-        Creature creature = NecropolisFactory.createDefaultForTests();
+        Creature creature = AbstractFractionFactory.createSkeleton();;
         board.add(new Point(5,5), creature);
 
         assertFalse(board.canMove(creature, 0,0 ));
