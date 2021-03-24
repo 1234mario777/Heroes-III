@@ -101,7 +101,6 @@ public enum CreatureStatistic implements CreatureStatisticIf{
     CHAMPION("Champion",16,16,100,9,Range.closed(20,25),6,"That's up to 45% extra damage possible! Champions also have better aiming skills.",true,2),
     ARCHANGEL("Archangel",30,30,250,18,Range.closed(50,50),7,"Best attack, defence and speed in a whole game! Resurrection is a very convenient abbility.\nThose fast wings take up a whole extra hex! :] Possibly the best creature in the game.",true,1);
 
-
     private final String name;
     private final int attack;
     private final int armor;
