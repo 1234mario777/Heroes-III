@@ -4,8 +4,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import pl.sdk.EconomyEngine;
 import pl.sdk.Fraction;
+import pl.sdk.creatures.EconomyCastleFactory;
 import pl.sdk.creatures.EconomyTestFractionFactory;
-import pl.sdk.creatures.EconomyTowerFactory;
+
 
 import java.util.Random;
 
@@ -19,7 +20,7 @@ public class BuyingCreatureTest {
 
     private EconomyHero hero1;
     private final EconomyTestFractionFactory creatureFactory = new EconomyTestFractionFactory();
-    private final EconomyTowerFactory towerFactory = new EconomyTowerFactory();
+    private final EconomyCastleFactory castleFactory = new EconomyCastleFactory();
     private EconomyEngine economyEngine;
     private EconomyHero hero2;
     private Player player1;
@@ -46,10 +47,10 @@ public class BuyingCreatureTest {
     }
 
     @Test
-    void heroShouldCanBuyCreatureFromTowerFactory() {
-        economyEngine.buyCreature(towerFactory.create(false, 1, 1 ) );
+    void heroShouldCanBuyCreatureFromCastleFactory() {
+        economyEngine.buyCreature(castleFactory.create(false, 1, 1 ) );
 
-        assertEquals(970, player1.getGold());
+        assertEquals(940, player1.getGold());
     }
 
     @Test

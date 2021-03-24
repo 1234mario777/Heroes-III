@@ -15,4 +15,5 @@ public class CreatureStatisticForTesting {
     private final String description;
     private final boolean isUpgraded;
     private final int growth;
+
 }
