@@ -16,6 +16,9 @@ public class Player
 	List<AbstractShop> shops;
 	private int gold;
 	Fraction fraction;
+	String heroName;
+
+
 
 	public Player(Fraction aFraction, int aGold , Hero aHero)
 	{
@@ -25,6 +28,7 @@ public class Player
 		shops = List.of(creatureShop, spellShop );
 		gold = aGold;
 		fraction = aFraction;
+		heroName = aHero.toString();
 	}
 
 	public Player(Fraction aFraction, int aGold )
@@ -35,6 +39,7 @@ public class Player
 		shops = List.of(creatureShop, spellShop );
 		gold = aGold;
 		fraction = aFraction;
+
 	}
 
 	public Player( Fraction aFraction, int aGold, EconomyHero aEconomyHero )
@@ -89,6 +94,9 @@ public class Player
 		return gold;
 	}
 
+	public String getHeroName() {
+		return heroName;
+	}
 	public void buyCreature( Player aActivePlayer, EconomyCreature aEconomyCreature )
 	{
 		creatureShop.buy( aActivePlayer, aEconomyCreature );

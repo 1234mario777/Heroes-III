@@ -47,7 +47,8 @@ public class EcoController implements PropertyChangeListener {
     Label currentGoldLabel;
     @FXML
     Label roundNumberLabel;
-
+    @FXML
+    Label currentHeroNameLabel;
     private final EconomyEngine economyEngine;
 
     public EcoController()
@@ -57,7 +58,7 @@ public class EcoController implements PropertyChangeListener {
         Fraction playerFraction2 = chooseFractionDialog();
         Hero playerHero2 = chooseHeroDialog();
 
-        economyEngine = new EconomyEngine( new Player(playerFraction, 1000 ), new Player(playerFraction2, 1000 ) );
+        economyEngine = new EconomyEngine( new Player(playerFraction, 1000, playerHero), new Player(playerFraction2, 1000, playerHero2) );
     }
 
     @FXML
@@ -79,6 +80,7 @@ public class EcoController implements PropertyChangeListener {
         playerLabel.setText(economyEngine.playerToString() );
         currentGoldLabel.setText(String.valueOf( getGold() ) );
         roundNumberLabel.setText(String.valueOf(economyEngine.getRoundNumber()));
+        currentHeroNameLabel.setText(getHeroName());
         shopsBox.getChildren().clear();
         heroStateHBox.getChildren().clear();
 
@@ -209,6 +211,10 @@ public class EcoController implements PropertyChangeListener {
     public int getGold()
     {
         return economyEngine.getActivePlayer().getGold();
+    }
+    public String getHeroName()
+    {
+        return economyEngine.getActivePlayer().getHeroName();
     }
 
     void buyCreature(EconomyCreature aCreature ) {
