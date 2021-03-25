@@ -39,7 +39,7 @@ public class Player
 		shops = List.of(creatureShop, spellShop );
 		gold = aGold;
 		fraction = aFraction;
-
+		heroName = "Default";
 	}
 
 	public Player( Fraction aFraction, int aGold, EconomyHero aEconomyHero )
@@ -50,6 +50,8 @@ public class Player
 		shops = List.of(creatureShop, spellShop );
 		gold = aGold;
 		fraction = aFraction;
+		heroName = "Default";
+
 	}
 
 	Player( EconomyHero aHero, CreatureShop aCreatureShop, int aGold )
@@ -58,6 +60,8 @@ public class Player
 		creatureShop = aCreatureShop;
 		shops = List.of(creatureShop);
 		gold = aGold;
+		heroName = "Default";
+
 	}
 
 	Player( EconomyHero aHero, SpellShop aShop, int aGold )
@@ -66,6 +70,8 @@ public class Player
 		spellShop = aShop;
 		shops = List.of(spellShop);
 		gold = aGold;
+		heroName = "Default";
+
 	}
 
 	void substractGold(int aAmount){
