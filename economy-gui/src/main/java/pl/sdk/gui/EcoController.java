@@ -11,6 +11,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import pl.sdk.EconomyEngine;
 import pl.sdk.Fraction;
+import pl.sdk.Hero;
 import pl.sdk.converter.EcoBattleConverter;
 import pl.sdk.creatures.AbstractEconomyFractionFactory;
 import pl.sdk.creatures.EconomyCreature;
@@ -25,6 +26,7 @@ import java.util.List;
 
 import static pl.sdk.EconomyEngine.END_OF_TURN;
 import static pl.sdk.gui.ChooseFractionDialog.chooseFractionDialog;
+import static pl.sdk.gui.ChooseHeroDialog.chooseHeroDialog;
 
 public class EcoController implements PropertyChangeListener {
     @FXML
@@ -50,7 +52,12 @@ public class EcoController implements PropertyChangeListener {
 
     public EcoController()
     {
-        economyEngine = new EconomyEngine( new Player( chooseFractionDialog(), 1000 ), new Player( chooseFractionDialog(), 1000 ) );
+        Fraction playerFraction = chooseFractionDialog();
+        Hero playerHero = chooseHeroDialog();
+        Fraction playerFraction2 = chooseFractionDialog();
+        Hero playerHero2 = chooseHeroDialog();
+
+        economyEngine = new EconomyEngine( new Player(playerFraction, 1000 ), new Player(playerFraction2, 1000 ) );
     }
 
     @FXML

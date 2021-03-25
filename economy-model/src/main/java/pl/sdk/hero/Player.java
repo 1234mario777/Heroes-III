@@ -1,6 +1,7 @@
 package pl.sdk.hero;
 
 import pl.sdk.Fraction;
+import pl.sdk.Hero;
 import pl.sdk.creatures.EconomyCreature;
 import pl.sdk.spells.EconomySpell;
 
@@ -15,6 +16,16 @@ public class Player
 	List<AbstractShop> shops;
 	private int gold;
 	Fraction fraction;
+
+	public Player(Fraction aFraction, int aGold , Hero aHero)
+	{
+		hero = new EconomyHero(new HeroStats(AbstractEconomyHeroFactory.getInstance(aFraction).create(aHero)));
+		creatureShop = new CreatureShop( aFraction );
+		spellShop = new SpellShop();
+		shops = List.of(creatureShop, spellShop );
+		gold = aGold;
+		fraction = aFraction;
+	}
 
 	public Player(Fraction aFraction, int aGold )
 	{

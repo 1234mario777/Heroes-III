@@ -1,4 +1,7 @@
 package pl.sdk;
 
-public class Hero {
+public enum Hero
+{
+    WARRIOR,
+    MAG,
 }
