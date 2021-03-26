@@ -4,6 +4,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceDialog;
 import javafx.stage.StageStyle;
 import pl.sdk.Hero;
+import pl.sdk.HeroEnum;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -17,9 +18,9 @@ class ChooseHeroDialog
     private static String HEADER_TITLE = "Please choose your Hero";
     private static String CONTENT_TEXT = "Select Hero:";
 
-    static Hero chooseHeroDialog()
+    static HeroEnum chooseHeroDialog()
     {
-        List<Hero> fractions = new ArrayList<>( Arrays.asList( Hero.class.getEnumConstants() ) );
+        List<HeroEnum> fractions = new ArrayList<>( Arrays.asList( HeroEnum.class.getEnumConstants() ) );
         fractions.removeIf( f -> f.name()
                 .equals( TEST_FRACTION.name() ) );
 
@@ -43,7 +44,7 @@ class ChooseHeroDialog
         dialog.setHeaderText( HEADER_TITLE );
         dialog.setContentText( CONTENT_TEXT );
         dialog.showAndWait();
-        return Hero.valueOf( dialog.getSelectedItem()
+        return HeroEnum.valueOf( dialog.getSelectedItem()
                 .toString() );
     }
 }

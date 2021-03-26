@@ -1,7 +1,7 @@
 package pl.sdk.hero;
 
 import pl.sdk.Fraction;
-import pl.sdk.Hero;
+import pl.sdk.HeroEnum;
 
 public abstract class AbstractEconomyHeroFactory {
     private static final String INVALID_FRACTION_NAME = "Invalid hero name";
@@ -15,5 +15,5 @@ public abstract class AbstractEconomyHeroFactory {
         }
     }
 
-    abstract public HeroStats create(Hero aHero);
+    abstract public HeroStats create(HeroEnum aHero);
 }

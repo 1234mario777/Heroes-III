@@ -1,6 +1,6 @@
 package pl.sdk;
 
-public enum Hero
+public enum HeroEnum
 {
     WARRIOR,
     MAG,
