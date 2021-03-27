@@ -22,6 +22,8 @@ public abstract class AbstractEconomyFractionFactory
 				return new EconomyTowerFactory();
 			case CASTLE:
 				return new EconomyCastleFactory();
+			case STRONGHOLD:
+				return new EconomyStrongholdFactory();
 			default:
 				throw new IllegalArgumentException( INVALID_FRACTION_NAME );
 		}
