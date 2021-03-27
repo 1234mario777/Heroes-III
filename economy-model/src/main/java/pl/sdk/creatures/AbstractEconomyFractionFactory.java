@@ -18,6 +18,10 @@ public abstract class AbstractEconomyFractionFactory
 				return new EconomyFortressFactory();
 			case INFERNO:
 				return new EconomyInfernoFactory();
+			case TOWER:
+				return new EconomyTowerFactory();
+			case CASTLE:
+				return new EconomyCastleFactory();
 			case STRONGHOLD:
 				return new EconomyStrongholdFactory();
 			default:
