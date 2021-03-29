@@ -7,11 +7,7 @@ public class EconomySkillFactory extends AbstractEconomySkillFactory {
 
     @Override
     public EconomySpell create(String aName) {
-return null;
-//        switch (aName){
-//            ARCHER:
-//                return null;
-//        }
+        return null;
     }
 
 }

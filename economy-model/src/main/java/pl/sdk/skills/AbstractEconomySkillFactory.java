@@ -7,12 +7,12 @@ import java.util.List;
 public abstract class AbstractEconomySkillFactory {
     private static final String INVALID_FACTORY_NAME = "Invalid spell type name";
 
-    public static AbstractEconomySkillFactory getInstance(SpellFactoryType aFactory ) {
-        switch (aFactory) {
+    public static AbstractEconomySkillFactory getInstance(SkillStatistic aSkill ) {
+        switch (aSkill) {
             case ARCHERY:
                 return new EconomySkillFactory();
             case TEST:
-                return new EconomyTestSpellFactory();
+                return new EconomyTestSkillFactory();
             default:
                 throw new IllegalArgumentException( INVALID_FACTORY_NAME );
         }

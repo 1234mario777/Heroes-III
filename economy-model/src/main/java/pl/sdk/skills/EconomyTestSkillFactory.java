@@ -1,4 +1,11 @@
 package pl.sdk.skills;
 
-public class EconomyTestSkillFactory {
+import pl.sdk.spells.EconomySpell;
+
+public class EconomyTestSkillFactory extends AbstractEconomySkillFactory{
+
+    @Override
+    public EconomySpell create(String aName) {
+        return null;
+    }
 }
