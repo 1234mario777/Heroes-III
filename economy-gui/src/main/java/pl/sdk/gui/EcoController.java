@@ -119,7 +119,22 @@ public class EcoController implements PropertyChangeListener {
         spellList.forEach( s -> spellShop.getChildren().add( new SpellButton(this, factory, s.getName()) ));
         return spellShop;
     }
-
+//    private HBox createSkillShop(){
+//        AbstractEconomyFractionFactory factory = AbstractEconomyFractionFactory.getInstance( economyEngine.getActivePlayer().getFraction() );
+//        HBox creatureShop = new HBox( );
+//        VBox creatureNotUpgraded = new VBox();
+//        VBox creatureUpgraded = new VBox();
+//        for (int i = 1; i < 8; i++) {
+//            creatureNotUpgraded.getChildren().add(new CreatureButton(this, factory, false,i) );
+//            creatureUpgraded.getChildren().add(new CreatureButton(this, factory, true,i));
+//        }
+//        creatureShop.getChildren().add( creatureNotUpgraded );
+//        Separator separator = new Separator(  );
+//        creatureShop.getChildren().add( separator );
+//        creatureShop.getChildren().add( creatureUpgraded );
+//        return creatureShop;
+//
+//    }
     private HBox createCreatureShop()
     {
         AbstractEconomyFractionFactory factory = AbstractEconomyFractionFactory.getInstance( economyEngine.getActivePlayer().getFraction() );
