@@ -18,16 +18,9 @@ public class Player
 	Fraction fraction;
 	String heroName;
 
-
-
 	public Player(Fraction aFraction, int aGold , HeroEnum aHero)
 	{
-		hero = new EconomyHero(new HeroStats(AbstractEconomyHeroFactory.getInstance(aFraction).create(aHero)));
-		creatureShop = new CreatureShop( aFraction );
-		spellShop = new SpellShop();
-		shops = List.of(creatureShop, spellShop );
-		gold = aGold;
-		fraction = aFraction;
+		this(aFraction,aGold,new EconomyHero(new HeroStats(AbstractEconomyHeroFactory.getInstance(aFraction).create(aHero))));
 		heroName = aHero.toString();
 	}
 
@@ -39,7 +32,6 @@ public class Player
 		shops = List.of(creatureShop, spellShop );
 		gold = aGold;
 		fraction = aFraction;
-		heroName = "Default";
 	}
 
 	public Player( Fraction aFraction, int aGold, EconomyHero aEconomyHero )
@@ -50,7 +42,6 @@ public class Player
 		shops = List.of(creatureShop, spellShop );
 		gold = aGold;
 		fraction = aFraction;
-		heroName = "Default";
 
 	}
 
@@ -60,7 +51,6 @@ public class Player
 		creatureShop = aCreatureShop;
 		shops = List.of(creatureShop);
 		gold = aGold;
-		heroName = "Default";
 
 	}
 
@@ -70,7 +60,6 @@ public class Player
 		spellShop = aShop;
 		shops = List.of(spellShop);
 		gold = aGold;
-		heroName = "Default";
 
 	}
 
