@@ -1,5 +1,6 @@
 package pl.sdk.hero;
 
+import org.checkerframework.checker.units.qual.g;
 import pl.sdk.Fraction;
 import pl.sdk.creatures.AbstractEconomyFractionFactory;
 import pl.sdk.creatures.EconomyCreature;
@@ -19,7 +20,7 @@ class CreatureShop extends AbstractShop
 
     CreatureShop(Fraction aFraction)
     {
-        calculator = new CreatureShopCalculator(  );
+        super(new CreatureShopCalculator());
         creatureFactory = AbstractEconomyFractionFactory.getInstance( aFraction );
         creaturePopulation = new HashMap<>();
         createPopulation(creaturePopulation);
@@ -27,7 +28,7 @@ class CreatureShop extends AbstractShop
 
     CreatureShop( Random aRand, Fraction aFraction )
     {
-        calculator = new CreatureShopCalculator(aRand);
+        super(new CreatureShopCalculator(aRand));
         creatureFactory = AbstractEconomyFractionFactory.getInstance( aFraction );
         creaturePopulation = new HashMap<>();
         createPopulation(creaturePopulation);
@@ -46,7 +47,7 @@ class CreatureShop extends AbstractShop
 
     private int calculatePopulation( int aTier )
     {
-        return calculator.randomize( creatureFactory.create( false, aTier, 1 ).getGrowth() );
+        return getCalculator().randomize( creatureFactory.create( false, aTier, 1 ).getGrowth() );
     }
 
     void buy(Player aPlayer, EconomyCreature aEconomyCreature) {
@@ -80,7 +81,7 @@ class CreatureShop extends AbstractShop
 
     public int calculateMaxAmount( Player aHero, EconomyCreature aCreature )
     {
-        return calculator.calculateMaxAmount(aHero.getGold(), creaturePopulation.get( aCreature.getTier() ), aCreature.getGoldCost());
+        return getCalculator().calculateMaxAmount(aHero.getGold(), creaturePopulation.get( aCreature.getTier() ), aCreature.getGoldCost());
     }
 
     public int getCurrentPopulation( int aTier )
