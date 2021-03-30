@@ -15,12 +15,16 @@ public class HeroStatsTest {
         EconomyHero hero = new EconomyHero(new HeroStats(new EconomyTestHeroFactory().create(HeroEnum.WARRIOR)));
         assertEquals(hero.getPower(),1);
         assertEquals(hero.getWisdom(),1);
+        assertEquals(hero.getDefence(),1);
+        assertEquals(hero.getAttack(),1);
     }
 
     @Test
     public void shouldCreateHeroWithRandomStats(){
-        EconomyHero hero = new EconomyHero(new HeroStats(new EconomyTestHeroFactory().create(HeroEnum.MAG)));
+        EconomyHero hero = new EconomyHero(new HeroStats(new EconomyTestHeroFactory().create(HeroEnum.WARRIOR)));
         assertTrue(1 <= hero.getPower() && hero.getPower() <= 3);
         assertTrue(1 <= hero.getWisdom() && hero.getWisdom() <= 3);
+        assertTrue(1 <= hero.getAttack() && hero.getAttack() <= 5);
+        assertTrue(1 <= hero.getDefence() && hero.getDefence() <= 5);
     }
 }
