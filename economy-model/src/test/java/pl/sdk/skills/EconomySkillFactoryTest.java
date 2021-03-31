@@ -13,12 +13,12 @@ public class EconomySkillFactoryTest {
     public static final String ARCHERY = "Archery";
 
 
-    @Test
-    void factoryShouldCreateSpellCorrectly()
-    {
-        AbstractEconomySkillFactory skill = AbstractEconomySkillFactory.getInstance(SkillStatistic.ARCHERY );
-
-        assertEquals( ARCHERY, skill.getName () );
-    }
+//    @Test
+//    void factoryShouldCreateSpellCorrectly()
+//    {
+//        AbstractEconomySkillFactory skill = AbstractEconomySkillFactory.getInstance(SkillStatistic.ARCHERY );
+//
+//        assertEquals( ARCHERY, skill.getName () );
+//    }
 
 }

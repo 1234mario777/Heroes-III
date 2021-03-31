@@ -43,7 +43,12 @@ class EconomyHero {
     int getPower() {
         return stats.getPower();
     }
-
+    int getAttack(){
+        return stats.getAttack();
+    }
+    int getDefence(){
+        return stats.getDefence();
+    }
     int getWisdom(){
         return stats.getWisdom();
     }
