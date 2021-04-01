@@ -7,14 +7,14 @@ import java.util.List;
 public abstract class AbstractEconomySkillFactory {
     private static final String INVALID_FACTORY_NAME = "Invalid skill type name";
 
-    public static AbstractEconomySkillFactory getInstance(SkillStatistic aSkill ) {
+    public static AbstractEconomySkillFactory getInstance(SkillFactoryType aSkill ) {
         switch (aSkill) {
-            case ARCHERY:
+            case DEFAULT:
                 return new EconomySkillFactory();
             default:
                 throw new IllegalArgumentException( INVALID_FACTORY_NAME );
         }
     }
 
-    public abstract EconomySkill create(String aName );
+    public abstract EconomySkill create(SkillStatistic aName );
 }

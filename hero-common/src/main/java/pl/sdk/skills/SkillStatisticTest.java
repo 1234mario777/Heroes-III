@@ -5,10 +5,10 @@ public enum SkillStatisticTest {
 
     private String name;
     private String description;
-    private SkillIncreaseRangeDamage effect;
+    private Object effect;
 
 
-    SkillStatisticTest(String aName, String aDescription, SkillIncreaseRangeDamage aSkill) {
+    SkillStatisticTest(String aName, String aDescription, Object  aSkill) {
         name = aName;
         description = aDescription;
         effect = aSkill;
@@ -20,7 +20,7 @@ public enum SkillStatisticTest {
     public String getDescription(){
         return description;
     }
-    public SkillIncreaseRangeDamage getEffect(){
+    public Object getEffect(){
         return effect;
     }
 }
