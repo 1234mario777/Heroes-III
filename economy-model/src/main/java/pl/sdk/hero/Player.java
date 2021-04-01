@@ -1,6 +1,7 @@
 package pl.sdk.hero;
 
 import pl.sdk.Fraction;
+import pl.sdk.HeroEnum;
 import pl.sdk.creatures.EconomyCreature;
 import pl.sdk.spells.EconomySpell;
 
@@ -15,6 +16,13 @@ public class Player
 	List<AbstractShop> shops;
 	private int gold;
 	Fraction fraction;
+	String heroName;
+
+	public Player(Fraction aFraction, int aGold , HeroEnum aHero)
+	{
+		this(aFraction,aGold,new EconomyHero(new HeroStats(AbstractEconomyHeroFactory.getInstance(aFraction).create(aHero))));
+		heroName = aHero.toString();
+	}
 
 	public Player(Fraction aFraction, int aGold )
 	{
@@ -34,6 +42,7 @@ public class Player
 		shops = List.of(creatureShop, spellShop );
 		gold = aGold;
 		fraction = aFraction;
+
 	}
 
 	Player( EconomyHero aHero, CreatureShop aCreatureShop, int aGold )
@@ -42,6 +51,7 @@ public class Player
 		creatureShop = aCreatureShop;
 		shops = List.of(creatureShop);
 		gold = aGold;
+
 	}
 
 	Player( EconomyHero aHero, SpellShop aShop, int aGold )
@@ -50,6 +60,7 @@ public class Player
 		spellShop = aShop;
 		shops = List.of(spellShop);
 		gold = aGold;
+
 	}
 
 	void substractGold(int aAmount){
@@ -78,6 +89,9 @@ public class Player
 		return gold;
 	}
 
+	public String getHeroName() {
+		return heroName;
+	}
 	public void buyCreature( Player aActivePlayer, EconomyCreature aEconomyCreature )
 	{
 		creatureShop.buy( aActivePlayer, aEconomyCreature );

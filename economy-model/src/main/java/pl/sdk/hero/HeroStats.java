@@ -14,6 +14,13 @@ public class HeroStats {
         power = aPower;
     }
 
+    public HeroStats(HeroStats aHeroStats) {
+        attack = aHeroStats.getAttack();
+        defence = aHeroStats.getDefence();
+        wisdom = aHeroStats.getWisdom();
+        power = aHeroStats.getPower();
+    }
+
     int getAttack() {
         return attack;
     }

@@ -11,6 +11,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import pl.sdk.EconomyEngine;
 import pl.sdk.Fraction;
+import pl.sdk.HeroEnum;
 import pl.sdk.converter.EcoBattleConverter;
 import pl.sdk.creatures.AbstractEconomyFractionFactory;
 import pl.sdk.creatures.EconomyCreature;
@@ -25,6 +26,7 @@ import java.util.List;
 
 import static pl.sdk.EconomyEngine.END_OF_TURN;
 import static pl.sdk.gui.ChooseFractionDialog.chooseFractionDialog;
+import static pl.sdk.gui.ChooseHeroDialog.chooseHeroDialog;
 
 public class EcoController implements PropertyChangeListener {
     @FXML
@@ -45,12 +47,18 @@ public class EcoController implements PropertyChangeListener {
     Label currentGoldLabel;
     @FXML
     Label roundNumberLabel;
-
+    @FXML
+    Label currentHeroNameLabel;
     private final EconomyEngine economyEngine;
 
     public EcoController()
     {
-        economyEngine = new EconomyEngine( new Player( chooseFractionDialog(), 1000 ), new Player( chooseFractionDialog(), 1000 ) );
+        Fraction playerFraction = chooseFractionDialog();
+        HeroEnum playerHero = chooseHeroDialog();
+        Fraction playerFraction2 = chooseFractionDialog();
+        HeroEnum playerHero2 = chooseHeroDialog();
+
+        economyEngine = new EconomyEngine( new Player(playerFraction, 1000, playerHero), new Player(playerFraction2, 1000, playerHero2) );
     }
 
     @FXML
@@ -72,6 +80,7 @@ public class EcoController implements PropertyChangeListener {
         playerLabel.setText(economyEngine.playerToString() );
         currentGoldLabel.setText(String.valueOf( getGold() ) );
         roundNumberLabel.setText(String.valueOf(economyEngine.getRoundNumber()));
+        currentHeroNameLabel.setText(getHeroName());
         shopsBox.getChildren().clear();
         heroStateHBox.getChildren().clear();
 
@@ -202,6 +211,10 @@ public class EcoController implements PropertyChangeListener {
     public int getGold()
     {
         return economyEngine.getActivePlayer().getGold();
+    }
+    public String getHeroName()
+    {
+        return economyEngine.getActivePlayer().getHeroName();
     }
 
     void buyCreature(EconomyCreature aCreature ) {
