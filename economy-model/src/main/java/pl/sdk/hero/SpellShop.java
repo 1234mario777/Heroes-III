@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 
 import static pl.sdk.spells.SpellFactoryType.DEFAULT;
 
-public class SpellShop extends AbstractShop
+public class SpellShop extends AbstractShop<EconomySpell>
 {
 	public static final String EXCEPTION_MESSAGE = "hero cannot consume more spells";
 	public static final String PLAYER_HAS_ALREADY_BOUGHT_THIS_SPELL = "Player has already bought this spell!";
@@ -23,7 +23,7 @@ public class SpellShop extends AbstractShop
 
 	SpellShop( )
 	{
-		calculator = new SpellShopCalculator(  );
+		super(new SpellShopCalculator());
 		spellFactory = AbstractEconomySpellFactory.getInstance( DEFAULT );
 		spellPopulation = new ArrayList<>();
 		createPopulation();
@@ -31,7 +31,7 @@ public class SpellShop extends AbstractShop
 
 	SpellShop( Random aRand, AbstractEconomySpellFactory aFactory )
 	{
-		calculator = new SpellShopCalculator(aRand);
+		super(new SpellShopCalculator(aRand));
 		spellFactory = aFactory;
 		spellPopulation = new ArrayList<>();
 		createPopulation();
@@ -52,7 +52,7 @@ public class SpellShop extends AbstractShop
 
 	private int calculatePopulation( int aSize )
 	{
-		return calculator.randomize( aSize );
+		return getCalculator().randomize( aSize );
 	}
 
 	List<EconomySpell> getCurrentSpellPopulation()
@@ -101,7 +101,7 @@ public class SpellShop extends AbstractShop
 
 	int calculateMaxAmount( Player aPlayer, EconomySpell aSpell )
 	{
-		return calculator.calculateMaxAmount(aPlayer.getGold(), aSpell.getGrowth(), aSpell.getGoldCost());
+		return getCalculator().calculateMaxAmount(aPlayer.getGold(), aSpell.getGrowth(), aSpell.getGoldCost());
 	}
 
 }
