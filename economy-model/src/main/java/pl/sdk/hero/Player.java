@@ -26,12 +26,7 @@ public class Player
 
 	public Player(Fraction aFraction, int aGold )
 	{
-		hero = new EconomyHero(new HeroStats(5,5,15,3));
-		creatureShop = new CreatureShop( aFraction );
-		spellShop = new SpellShop();
-		shops = List.of(creatureShop, spellShop );
-		gold = aGold;
-		fraction = aFraction;
+		this(aFraction, aGold, new EconomyHero(new HeroStats(5,5,15,3)));
 	}
 
 	public Player( Fraction aFraction, int aGold, EconomyHero aEconomyHero )
