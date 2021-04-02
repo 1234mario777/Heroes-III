@@ -12,6 +12,9 @@ import javafx.scene.layout.VBox;
 import pl.sdk.EconomyEngine;
 import pl.sdk.Fraction;
 import pl.sdk.HeroEnum;
+import pl.sdk.artifacts.AbstractEconomyArtifactFactory;
+import pl.sdk.artifacts.ArtifactFactoryType;
+import pl.sdk.artifacts.EconomyArtifact;
 import pl.sdk.converter.EcoBattleConverter;
 import pl.sdk.creatures.AbstractEconomyFractionFactory;
 import pl.sdk.creatures.EconomyCreature;
@@ -96,14 +99,17 @@ public class EcoController implements PropertyChangeListener {
     {
         HBox creatureShop = createCreatureShop();
         VBox spellShop = createSpellShop();
+        VBox artifactShop = createArtifactShop();
 
         TabPane tabPane = new TabPane(  );
+
         Tab creatureTab = new Tab();
         creatureTab.setContent( creatureShop );
         ImageView creatureTabImage = new ImageView(new Image(getClass().getResourceAsStream("/icons/sword.png" )));
         creatureTabImage.setFitHeight(48);
         creatureTabImage.setFitWidth(48);
         creatureTab.setGraphic( creatureTabImage );
+
         Tab spellTab = new Tab(  );
         spellTab.setContent( spellShop );
         ImageView spellTabImage = new ImageView(new Image(getClass().getResourceAsStream("/icons/magic-book.png" )));
@@ -112,8 +118,17 @@ public class EcoController implements PropertyChangeListener {
         spellTab.setGraphic( spellTabImage );
         spellTab.getStyleClass().add( "tab" );
 
+        Tab artifactTab = new Tab(  );
+        artifactTab.setContent( artifactShop );
+        ImageView artifactTabImage = new ImageView(new Image(getClass().getResourceAsStream("/icons/artifact.png" )));
+        artifactTabImage.setFitHeight(48);
+        artifactTabImage.setFitWidth(48);
+        artifactTab.setGraphic( artifactTabImage );
+        artifactTab.getStyleClass().add( "tab" );
+
         tabPane.getTabs().add( creatureTab );
         tabPane.getTabs().add( spellTab );
+        tabPane.getTabs().add( artifactTab );
 
         tabPane.getTabs().forEach( tab -> tab.setClosable( false ) );
         return tabPane;
@@ -146,15 +161,27 @@ public class EcoController implements PropertyChangeListener {
         return creatureShop;
     }
 
+    private VBox createArtifactShop() {
+        AbstractEconomyArtifactFactory factory = AbstractEconomyArtifactFactory.getInstance( ArtifactFactoryType.DEFAULT.DEFAULT );
+        VBox artifactShop = new VBox( );
+
+        List<EconomyArtifact> artifactList = economyEngine.getCurrentArtifactPopulation();
+        artifactList.forEach( artifact -> artifactShop.getChildren().add( new ArtifactButton(this, factory, artifact.getName()) ));
+        return artifactShop;
+    }
+
     private VBox createStateBox()
     {
         VBox stateBox = new VBox( );
         VBox spellBox = new VBox( );
         VBox creaturesBox = new VBox();
+        VBox artifactBox = new VBox();
         createCreatureStateBox( creaturesBox );
         createSpellStateBox( spellBox );
+        createArtifactStateBox( artifactBox );
         stateBox.getChildren().add( creaturesBox );
         stateBox.getChildren().add( spellBox );
+        stateBox.getChildren().add( artifactBox );
         return stateBox;
     }
 
@@ -208,6 +235,29 @@ public class EcoController implements PropertyChangeListener {
         });
     }
 
+    private void createArtifactStateBox( VBox aArtifactBox )
+    {
+        economyEngine.getActivePlayer().getArtifacts().forEach(a ->
+        {
+            HBox tempHbox = new HBox();
+
+            ImageView image = new ImageView(new Image(getClass().getResourceAsStream("/graphics/icons/" + a.getName() + ".png" )));
+            image.setFitHeight(55);
+            image.setFitWidth(55);
+            tempHbox.getChildren().add(image);
+
+            Label artifactName = new Label(a.getName());
+            artifactName.getStyleClass().add( "hero-state" );
+            tempHbox.getChildren().add(artifactName);
+
+            tempHbox.setAlignment( Pos.CENTER_LEFT );
+            tempHbox.setPadding( new Insets( 15, 15 ,15,  15 ) );
+            aArtifactBox.getChildren().add(tempHbox );
+            Separator stateSeparator = new Separator(  );
+            aArtifactBox.getChildren().add( stateSeparator );
+        });
+    }
+
     public int getGold()
     {
         return economyEngine.getActivePlayer().getGold();
@@ -225,6 +275,10 @@ public class EcoController implements PropertyChangeListener {
         economyEngine.buySpell(aSpell );
     }
 
+    void buyArtifact(EconomyArtifact aArtifact ) {
+        economyEngine.buyArtifact(aArtifact);
+    }
+
     public int calculateCreatureMaxAmount( EconomyCreature aCreature )
     {
         return economyEngine.calculateCreatureMaxAmount( aCreature );
@@ -233,6 +287,11 @@ public class EcoController implements PropertyChangeListener {
     public int calculateSpellMaxAmount( EconomySpell aSpell )
     {
         return economyEngine.calculateSpellMaxAmount( aSpell );
+    }
+
+    public int calculateArtifactMaxAmount( EconomyArtifact aArtifact )
+    {
+        return economyEngine.calculateArtifactMaxAmount( aArtifact );
     }
 
     @Override
@@ -256,5 +315,15 @@ public class EcoController implements PropertyChangeListener {
     boolean hasSpell( String aName )
     {
         return economyEngine.hasSpell(aName);
+    }
+
+    boolean hasArtifact( String aName )
+    {
+        return economyEngine.hasArtifact(aName);
+    }
+
+    boolean hasEmptySlotForArtifact( String aName )
+    {
+        return economyEngine.hasEmptySlotForArtifact(aName);
     }
 }

@@ -1,11 +1,13 @@
 package pl.sdk;
 
+import pl.sdk.artifacts.EconomyArtifact;
 import pl.sdk.creatures.EconomyCreature;
 import pl.sdk.hero.Player;
 import pl.sdk.spells.EconomySpell;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.util.Collection;
 import java.util.List;
 
 public class EconomyEngine {
@@ -45,6 +47,11 @@ public class EconomyEngine {
         observerSupport.firePropertyChange( PLAYER_BOUGHT_ITEM, null, null );
     }
 
+    public void buyArtifact(EconomyArtifact aEconomyArtifact) {
+        activePlayer.buyArtifact(activePlayer, aEconomyArtifact);
+        observerSupport.firePropertyChange( PLAYER_BOUGHT_ITEM, null, null );
+    }
+
     public int calculateCreatureMaxAmount( EconomyCreature aCreature )
     {
         return activePlayer.calculateMaxAmount(aCreature);
@@ -53,6 +60,11 @@ public class EconomyEngine {
     public int calculateSpellMaxAmount( EconomySpell aSpell )
     {
         return activePlayer.calculateSpellMaxAmount(aSpell);
+    }
+
+    public int calculateArtifactMaxAmount( EconomyArtifact aArtifact )
+    {
+        return activePlayer.calculateArtifactMaxAmount(aArtifact);
     }
 
     public Player getActivePlayer() {
@@ -141,4 +153,16 @@ public class EconomyEngine {
 	{
 	    return activePlayer.hasSpell(aName);
 	}
+
+    public List<EconomyArtifact> getCurrentArtifactPopulation() {
+        return activePlayer.getCurrentArtifactPopulation();
+    }
+
+    public boolean hasArtifact(String aName) {
+        return activePlayer.hasArtifact(aName);
+    }
+
+    public boolean hasEmptySlotForArtifact(String aName) {
+        return activePlayer.hasEmptySlotForArtifact(aName);
+    }
 }

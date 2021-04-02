@@ -1,5 +1,6 @@
 package pl.sdk.hero;
 
+import pl.sdk.artifacts.EconomyArtifact;
 import pl.sdk.creatures.EconomyCreature;
 import pl.sdk.spells.EconomySpell;
 
@@ -11,6 +12,7 @@ class EconomyHero {
     private final List<EconomyCreature> creatureList;
     private final HeroStats stats;
     private final List<EconomySpell> spellList;
+    private final ArtifactList artifactList;
 
     public EconomyHero() {
         this(new HeroStats(0,0,0,0));
@@ -19,6 +21,7 @@ class EconomyHero {
     public EconomyHero(HeroStats aStats) {
         creatureList = new ArrayList<>();
         spellList = new ArrayList<>();
+        artifactList = new ArtifactList();
         stats = aStats;
     }
     void addCreature(EconomyCreature aCreature){
@@ -38,6 +41,18 @@ class EconomyHero {
 
     List<EconomySpell> getSpells() {
         return List.copyOf(spellList);
+    }
+
+    void addArtifact(EconomyArtifact aEconomyArtifact) {
+        artifactList.add(aEconomyArtifact);
+    }
+
+    List<EconomyArtifact> getArtifacts() {
+        return artifactList.getArtifacts();
+    }
+
+    boolean hasEmptySlotForArtifact(String aName) {
+        return artifactList.hasEmptySlot(aName);
     }
 
     int getPower() {

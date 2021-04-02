@@ -1,6 +1,7 @@
 package pl.sdk.hero;
 
 import pl.sdk.Fraction;
+import pl.sdk.artifacts.EconomyArtifact;
 import pl.sdk.HeroEnum;
 import pl.sdk.creatures.EconomyCreature;
 import pl.sdk.spells.EconomySpell;
@@ -13,6 +14,7 @@ public class Player
 	EconomyHero hero;
 	CreatureShop creatureShop;
 	SpellShop spellShop;
+	ArtifactShop artifactShop;
 	List<AbstractShop> shops;
 	private int gold;
 	Fraction fraction;
@@ -26,12 +28,7 @@ public class Player
 
 	public Player(Fraction aFraction, int aGold )
 	{
-		hero = new EconomyHero(new HeroStats(5,5,15,3));
-		creatureShop = new CreatureShop( aFraction );
-		spellShop = new SpellShop();
-		shops = List.of(creatureShop, spellShop );
-		gold = aGold;
-		fraction = aFraction;
+		this(aFraction, aGold, new EconomyHero(new HeroStats(5,5,15,3)));
 	}
 
 	public Player( Fraction aFraction, int aGold, EconomyHero aEconomyHero )
@@ -39,10 +36,10 @@ public class Player
 		hero = aEconomyHero;
 		creatureShop = new CreatureShop( aFraction );
 		spellShop = new SpellShop();
-		shops = List.of(creatureShop, spellShop );
+		artifactShop = new ArtifactShop();
+		shops = List.of(creatureShop, spellShop, artifactShop);
 		gold = aGold;
 		fraction = aFraction;
-
 	}
 
 	Player( EconomyHero aHero, CreatureShop aCreatureShop, int aGold )
@@ -51,7 +48,6 @@ public class Player
 		creatureShop = aCreatureShop;
 		shops = List.of(creatureShop);
 		gold = aGold;
-
 	}
 
 	Player( EconomyHero aHero, SpellShop aShop, int aGold )
@@ -60,7 +56,14 @@ public class Player
 		spellShop = aShop;
 		shops = List.of(spellShop);
 		gold = aGold;
+	}
 
+	Player( EconomyHero aHero, ArtifactShop aShop, int aGold )
+	{
+		hero = aHero;
+		artifactShop = aShop;
+		shops = List.of(artifactShop);
+		gold = aGold;
 	}
 
 	void substractGold(int aAmount){
@@ -102,6 +105,10 @@ public class Player
 		spellShop.buy( aActivePlayer, aEconomySpell );
 	}
 
+	public void buyArtifact(Player aActivePlayer, EconomyArtifact aEconomyArtifact) {
+		artifactShop.buy(aActivePlayer, aEconomyArtifact);
+	}
+
 	public int calculateMaxAmount( EconomyCreature aCreature )
 	{
 		return creatureShop.calculateMaxAmount(this, aCreature );
@@ -110,6 +117,11 @@ public class Player
 	public int calculateSpellMaxAmount( EconomySpell aSpell )
 	{
 		return spellShop.calculateMaxAmount(this, aSpell );
+	}
+
+	public int calculateArtifactMaxAmount( EconomyArtifact aArtifact )
+	{
+		return artifactShop.calculateMaxAmount(this, aArtifact );
 	}
 
 	public int getCurrentPopulation( int aTier )
@@ -146,5 +158,25 @@ public class Player
 	public boolean hasSpell( String aName )
 	{
 		return getSpells().stream().map( EconomySpell::getName ).collect( Collectors.toList() ).contains( aName );
+	}
+
+	void addArtifact(EconomyArtifact aEconomyArtifact) {
+		hero.addArtifact(aEconomyArtifact);
+	}
+
+	public List<EconomyArtifact> getCurrentArtifactPopulation() {
+		return artifactShop.getCurrentArtifactPopulation();
+	}
+
+	public List<EconomyArtifact> getArtifacts() {
+		return hero.getArtifacts();
+	}
+
+	public boolean hasArtifact(String aName) {
+		return getArtifacts().stream().map(EconomyArtifact::getName).collect(Collectors.toList()).contains(aName);
+	}
+
+	public boolean hasEmptySlotForArtifact(String aName) {
+		return hero.hasEmptySlotForArtifact(aName);
 	}
 }
