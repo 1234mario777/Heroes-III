@@ -13,10 +13,9 @@ public class EconomySkillFactoryTest {
     public static final String ARCHERY = "Archery";
 
     @Test
-    void factoryShouldCreateSpellCorrectly()
+    void factoryShouldCreateSpellNameCorrectly()
     {
         EconomySkill skill = AbstractEconomySkillFactory.getInstance(SkillFactoryType.DEFAULT).create(SkillStatistic.ARCHERY);
         assertEquals( ARCHERY, skill.getName() );
     }
-
 }

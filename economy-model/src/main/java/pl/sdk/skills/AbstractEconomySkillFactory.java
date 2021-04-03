@@ -7,8 +7,8 @@ import java.util.List;
 public abstract class AbstractEconomySkillFactory {
     private static final String INVALID_FACTORY_NAME = "Invalid skill type name";
 
-    public static AbstractEconomySkillFactory getInstance(SkillFactoryType aSkill ) {
-        switch (aSkill) {
+    public static AbstractEconomySkillFactory getInstance(SkillFactoryType aType ) {
+        switch (aType) {
             case DEFAULT:
                 return new EconomySkillFactory();
             default:

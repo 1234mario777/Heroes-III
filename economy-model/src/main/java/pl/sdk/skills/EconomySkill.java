@@ -1,5 +1,7 @@
 package pl.sdk.skills;
 
+import pl.sdk.spells.SpellStatistic;
+
 public class EconomySkill {
 
     private final SkillStatistic skillStatistic;
@@ -8,15 +10,16 @@ public class EconomySkill {
         skillStatistic = aSkillStatistic;
     }
 
-    String getName() {
+    public String getName() {
         return skillStatistic.getName();
     }
-
-    String getDescription(){
-        return skillStatistic.getDescription();
-    }
-
-    Object getEffect(){
+    public String getDescription(){return skillStatistic.getDescription();}
+    public SkillStatistic.TargetType getTargetType() { return skillStatistic.getTargetType(); }
+    public SkillStatistic.SkillType getSkillType() { return skillStatistic.getSkillType(); }
+    public Object getEffect(){
         return skillStatistic.getEffect();
+    }
+    public SkillStatistic getSkillStatistic(){
+        return skillStatistic;
     }
 }
