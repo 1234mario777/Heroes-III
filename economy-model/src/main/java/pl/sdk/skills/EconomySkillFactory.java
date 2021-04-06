@@ -1,9 +1,5 @@
 package pl.sdk.skills;
 
-import pl.sdk.spells.EconomySpell;
-
-import static pl.sdk.creatures.CreatureStatistic.ARCHER;
-
 public class EconomySkillFactory extends AbstractEconomySkillFactory {
     private static final String EXCEPTION_MESSAGE = "Invalid skill name";
 

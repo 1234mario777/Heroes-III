@@ -10,7 +10,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import pl.sdk.spells.AbstractSpell;
+import pl.sdk.AbstractSpell;
 
 import java.util.List;
 import java.util.function.Consumer;

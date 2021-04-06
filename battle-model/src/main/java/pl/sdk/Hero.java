@@ -1,8 +1,8 @@
 package pl.sdk;
 
 import pl.sdk.creatures.Creature;
-import pl.sdk.spells.AbstractSpell;
-import pl.sdk.spells.SpellBook;
+import pl.sdk.skills.AbstractSkill;
+import pl.sdk.skills.SkillBook;
 import pl.sdk.spells.SpellStatistic;
 
 import java.util.List;
@@ -11,6 +11,7 @@ public class Hero {
 
     private final List<Creature> creatures;
     private final SpellBook spellBook;
+    private final SkillBook skillBook;
 
     public Hero(List<Creature> aCreatures) {
         this(aCreatures, new SpellBook(15, List.of(SpellFactoryForTests.createMagicArrow(),
@@ -21,14 +22,24 @@ public class Hero {
     public Hero(List<Creature> aCreatures, SpellBook aSpellBook) {
         creatures = aCreatures;
         spellBook = aSpellBook;
+        skillBook = new SkillBook(List.of(SkillFactoryForTests.createArchery()));
     }
 
+    public Hero(List<Creature> aCreatures, SkillBook aSkillBook) {
+        creatures = aCreatures;
+        skillBook = aSkillBook;
+        spellBook = new SpellBook(15, List.of(SpellFactoryForTests.createMagicArrow()));
+    }
     public List<Creature> getCreatures() {
         return creatures;
     }
 
     public List<AbstractSpell> getSpells() {
         return spellBook.getSpells();
+    }
+
+    public List<AbstractSkill> getSkills() {
+        return skillBook.getSkills();
     }
 
     boolean canCastSpell() {

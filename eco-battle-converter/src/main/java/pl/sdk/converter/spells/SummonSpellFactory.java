@@ -1,9 +1,9 @@
 package pl.sdk.converter.spells;
 
 import pl.sdk.converter.SpellMasteries;
-import pl.sdk.spells.AbstractSpell;
+import pl.sdk.AbstractSpell;
 import pl.sdk.spells.EconomySpell;
-import pl.sdk.spells.SummonSpell;
+import pl.sdk.SummonSpell;
 
 class SummonSpellFactory extends SpellFactory {
 

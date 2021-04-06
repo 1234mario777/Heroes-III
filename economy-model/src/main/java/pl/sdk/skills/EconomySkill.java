@@ -1,10 +1,8 @@
 package pl.sdk.skills;
 
-import pl.sdk.spells.SpellStatistic;
-
 public class EconomySkill {
 
-    private final SkillStatistic skillStatistic;
+    public final SkillStatistic skillStatistic;
 
     public EconomySkill(SkillStatistic aSkillStatistic){
         skillStatistic = aSkillStatistic;
@@ -19,7 +17,6 @@ public class EconomySkill {
     public Object getEffect(){
         return skillStatistic.getEffect();
     }
-    public SkillStatistic getSkillStatistic(){
-        return skillStatistic;
-    }
+    public SkillStatistic getSkillStatistic(){ return skillStatistic; }
+    public SkillStatistic.SkillLevel getSkillLevel(){ return skillStatistic.getSkillLevel(); }
 }

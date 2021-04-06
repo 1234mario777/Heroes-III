@@ -1,8 +1,9 @@
-package pl.sdk.spells;
+package pl.sdk;
 
 
 import pl.sdk.GameEngine;
 import pl.sdk.creatures.Creature;
+import pl.sdk.spells.SpellStatistic;
 
 public abstract class AbstractSpell {
 

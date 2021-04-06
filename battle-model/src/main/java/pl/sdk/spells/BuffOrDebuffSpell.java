@@ -1,10 +1,11 @@
 package pl.sdk.spells;
 
+import pl.sdk.AbstractSpell;
 import pl.sdk.creatures.Creature;
 
 import java.util.Objects;
 
-public class BuffOrDebuffSpell extends AbstractSpell{
+public class BuffOrDebuffSpell extends AbstractSpell {
 
     private final int duration;
     private BuffStatistic buffStats;

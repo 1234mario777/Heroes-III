@@ -7,9 +7,9 @@ public abstract class SkillFactory {
     public static AbstractSkill create(EconomySkill aEs){
         switch (aEs.getSkillType()){
             case BUFF:
-                return new BuffOrDebuffSkillTypeFactory().createInner(aEs);
+                return new BuffOrDebuffSkillFactory().createInner(aEs);
             case DEBUFF:
-                return new BuffOrDebuffSkillTypeFactory().createInner(aEs);
+                return new BuffOrDebuffSkillFactory().createInner(aEs);
 //            case EFFECT:
 //                return  new EffectSkillFactory().createInner(aEs);
             case MAP_CHANGE:

@@ -1,4 +1,4 @@
-package pl.sdk.spells;
+package pl.sdk;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -36,7 +36,7 @@ public class SpellBook implements PropertyChangeListener {
         return currentMana >= aSpell.getManaCost() && canCastSpell();
     }
 
-    void endOfTurn() {
+    public void endOfTurn() {
         spellWasCastedInThisTurn = false;
     }
 

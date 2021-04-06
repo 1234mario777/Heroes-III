@@ -1,7 +1,7 @@
 package pl.sdk.converter.spells;
 
 import pl.sdk.converter.SpellMasteries;
-import pl.sdk.spells.AbstractSpell;
+import pl.sdk.AbstractSpell;
 import pl.sdk.spells.EconomySpell;
 
 public abstract class SpellFactory {
