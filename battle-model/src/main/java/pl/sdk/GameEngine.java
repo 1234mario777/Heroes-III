@@ -168,28 +168,7 @@ public class GameEngine {
         return calc.canCast(aSpell, aPoint, this, board);
     }
 
-    public void initSkills(){
-        List<AbstractSkill> skills = queue.getActiveHero().getSkills();
-        skills.stream().forEach((skill) -> startSkill(skill));
-    }
-    public void startSkill(AbstractSkill aSkill){
-        switch (aSkill.getSkillType()){
-            case DEBUFF:
-            case BUFF:
-                switch (aSkill.getTargetType()){
-                    case ALLIES:
 
-                    case HERO:
-                        throw new UnsupportedOperationException("not implement yet!");
-                    default:
-                        throw new UnsupportedOperationException("not implement yet!");
-                }
-            case EFFECT:
-                throw new UnsupportedOperationException("not implement yet!");
-            default:
-                throw new UnsupportedOperationException("not implement yet!");
-        }
-    }
     public void castSpell(AbstractSpell aSpell) {
         queue.getActiveHero().castSpell(aSpell);
         switch (aSpell.getTargetType()){

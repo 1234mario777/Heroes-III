@@ -1,5 +1,9 @@
 package pl.sdk.skills;
 
+import pl.sdk.creatures.EconomyCreature;
+
+import java.util.List;
+
 public class EconomySkill {
 
     public final SkillStatistic skillStatistic;
@@ -19,4 +23,9 @@ public class EconomySkill {
     }
     public SkillStatistic getSkillStatistic(){ return skillStatistic; }
     public SkillStatistic.SkillLevel getSkillLevel(){ return skillStatistic.getSkillLevel(); }
+
+    public void applyEffect(List<EconomyCreature> aCreatures) {
+        skillStatistic.getEffect().apply(aCreatures);
+    }
 }
+

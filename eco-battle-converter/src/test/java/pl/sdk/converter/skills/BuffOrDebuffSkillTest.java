@@ -24,7 +24,6 @@ public class BuffOrDebuffSkillTest {
         AbstractSkill archery = SkillFactory.create(new EconomySkill(SkillStatistic.ARCHERY));
 
         GameEngine engine = new GameEngine(new Hero(List.of(c1), new SkillBook(List.of(archery))), new Hero(List.of(c2), new SkillBook(List.of(archery))));
-        engine.initSkills();
 
     }
 }

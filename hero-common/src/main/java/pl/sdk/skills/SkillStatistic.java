@@ -6,7 +6,7 @@ public enum SkillStatistic {
     private final TargetType targetType;
     private final String name;
     private final String description;
-    private final Object effect;
+    private final SkillIncreaseRangeDamage effect;
     private final SkillType skillType;
     private final SkillLevel skillLevel;
 
@@ -20,7 +20,7 @@ public enum SkillStatistic {
         HERO, ALLIES, ENEMY_HERO, ALL_ENEMIES, MAP, TOUR_END;
     }
 
-    SkillStatistic(String aName, String aDescription, Object aSkillEffect, SkillType aSkillType, TargetType aTargetType, SkillLevel aLevel) {
+    SkillStatistic(String aName, String aDescription, SkillIncreaseRangeDamage aSkillEffect, SkillType aSkillType, TargetType aTargetType, SkillLevel aLevel) {
         name = aName;
         description = aDescription;
         effect = aSkillEffect;
@@ -36,7 +36,7 @@ public enum SkillStatistic {
     public String getDescription(){
         return description;
     }
-    public Object getEffect(){
+    public SkillIncreaseRangeDamage getEffect(){
         return effect;
     }
     public TargetType getTargetType() {
