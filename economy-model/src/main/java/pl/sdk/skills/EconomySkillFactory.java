@@ -6,7 +6,9 @@ public class EconomySkillFactory {
     public CreatureEconomySkill create(SkillStatistic aName) {
         switch (aName.getTargetType()){
             case ALLIES:
-                return new CreatureEconomySkill(SkillStatistic.ARCHERY);
+                return new CreatureEconomySkill(aName);
+            case HERO:
+                return new HeroEconomySkill(aName);
             default:
                 throw new IllegalArgumentException(EXCEPTION_MESSAGE);
         }
