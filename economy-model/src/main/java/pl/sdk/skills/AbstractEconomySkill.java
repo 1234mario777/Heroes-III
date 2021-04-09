@@ -9,13 +9,8 @@ public abstract class AbstractEconomySkill {
 
     public final SkillStatistic skillStatistic;
 
-    public AbstractEconomySkill(SkillStatistic aSkillStatistic){
-        skillStatistic = aSkillStatistic;
-    }
-
-    public String getName() {
-        return skillStatistic.getName();
-    }
+    public AbstractEconomySkill(SkillStatistic aSkillStatistic){ skillStatistic = aSkillStatistic; }
+    public String getName() {return skillStatistic.getName(); }
     public String getDescription(){return skillStatistic.getDescription();}
     public SkillStatistic.TargetType getTargetType() { return skillStatistic.getTargetType(); }
     public SkillStatistic.SkillType getSkillType() { return skillStatistic.getSkillType(); }

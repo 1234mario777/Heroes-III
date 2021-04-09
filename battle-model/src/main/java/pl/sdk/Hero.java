@@ -21,11 +21,6 @@ public class Hero {
         creatures = aCreatures;
         spellBook = aSpellBook;
     }
-
-    public Hero(List<Creature> aCreatures, SkillBook aSkillBook) {
-        creatures = aCreatures;
-        spellBook = new SpellBook(15, List.of(SpellFactoryForTests.createMagicArrow()));
-    }
     public List<Creature> getCreatures() {
         return creatures;
     }
