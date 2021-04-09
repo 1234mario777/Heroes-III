@@ -1,16 +1,16 @@
 package pl.sdk.skills;
 
-public class EconomySkillFactory extends AbstractEconomySkillFactory {
+public class EconomySkillFactory {
     private static final String EXCEPTION_MESSAGE = "Invalid skill name";
 
-    @Override
-    public EconomySkill create(SkillStatistic aName) {
-        switch (aName){
-            case ARCHERY:
-                return new EconomySkill(SkillStatistic.ARCHERY);
+    public CreatureEconomySkill create(SkillStatistic aName) {
+        switch (aName.getTargetType()){
+            case ALLIES:
+                return new CreatureEconomySkill(SkillStatistic.ARCHERY);
             default:
                 throw new IllegalArgumentException(EXCEPTION_MESSAGE);
         }
     }
+
 
 }

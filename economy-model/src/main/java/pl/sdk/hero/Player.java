@@ -2,7 +2,8 @@ package pl.sdk.hero;
 
 import pl.sdk.Fraction;
 import pl.sdk.creatures.EconomyCreature;
-import pl.sdk.skills.EconomySkill;
+import pl.sdk.skills.AbstractEconomySkill;
+import pl.sdk.skills.SkillStatistic;
 import pl.sdk.spells.EconomySpell;
 
 import java.util.List;
@@ -16,9 +17,9 @@ public class Player
 	List<AbstractShop> shops;
 	private int gold;
 	Fraction fraction;
-	List<EconomySkill> skills;
+	List<SkillStatistic> skills;
 
-	public Player(Fraction aFraction, int aGold, List<EconomySkill> aSkills)
+	public Player(Fraction aFraction, int aGold, List<SkillStatistic> aSkills)
 	{
 		hero = new EconomyHero(new HeroStats(5,5,15,3));
 		creatureShop = new CreatureShop( aFraction );
@@ -146,7 +147,7 @@ public class Player
 		return getSpells().stream().map( EconomySpell::getName ).collect( Collectors.toList() ).contains( aName );
 	}
 
-	public List<EconomySkill> getSkills() {
+	public List<SkillStatistic> getSkills() {
 		return skills;
 	}
 }

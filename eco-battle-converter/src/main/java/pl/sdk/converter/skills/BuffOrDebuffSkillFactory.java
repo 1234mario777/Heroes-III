@@ -1,13 +1,11 @@
 package pl.sdk.converter.skills;
 
-import pl.sdk.skills.AbstractSkill;
-import pl.sdk.skills.BuffOrDebuffSkill;
-import pl.sdk.skills.EconomySkill;
+import pl.sdk.skills.AbstractEconomySkill;
 import pl.sdk.spells.BuffStatistic;
 
 public class BuffOrDebuffSkillFactory extends SkillFactory{
     @Override
-    AbstractSkill createInner(EconomySkill aEs){
+    AbstractSkill createInner(AbstractEconomySkill aEs){
         BuffStatistic stats;
         switch(aEs.getSkillStatistic()){
             case ARCHERY:

@@ -1,14 +1,15 @@
 package pl.sdk.skills;
 
 import pl.sdk.creatures.EconomyCreature;
+import pl.sdk.hero.Player;
 
 import java.util.List;
 
-public class EconomySkill {
+public abstract class AbstractEconomySkill {
 
     public final SkillStatistic skillStatistic;
 
-    public EconomySkill(SkillStatistic aSkillStatistic){
+    public AbstractEconomySkill(SkillStatistic aSkillStatistic){
         skillStatistic = aSkillStatistic;
     }
 
@@ -18,14 +19,9 @@ public class EconomySkill {
     public String getDescription(){return skillStatistic.getDescription();}
     public SkillStatistic.TargetType getTargetType() { return skillStatistic.getTargetType(); }
     public SkillStatistic.SkillType getSkillType() { return skillStatistic.getSkillType(); }
-    public Object getEffect(){
-        return skillStatistic.getEffect();
-    }
     public SkillStatistic getSkillStatistic(){ return skillStatistic; }
     public SkillStatistic.SkillLevel getSkillLevel(){ return skillStatistic.getSkillLevel(); }
 
-    public void applyEffect(List<EconomyCreature> aCreatures) {
-        skillStatistic.getEffect().apply(aCreatures);
-    }
+    public abstract void applyEffect(Player aPlayer);
 }
 

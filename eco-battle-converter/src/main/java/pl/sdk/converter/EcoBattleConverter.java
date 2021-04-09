@@ -13,8 +13,8 @@ import pl.sdk.AbstractSpell;
 import pl.sdk.SpellBook;
 
 import pl.sdk.hero.Player;
-import pl.sdk.skills.AbstractSkill;
-import pl.sdk.skills.EconomySkill;
+import pl.sdk.skills.AbstractEconomySkill;
+import pl.sdk.skills.EconomySkillFactory;
 import pl.sdk.skills.SkillStatistic;
 
 import java.io.IOException;
@@ -58,26 +58,9 @@ public class EcoBattleConverter {
                 .map(es -> SpellFactory.create(es, aPlayer1.getPower(), masteries))
                 .collect(Collectors.toList());
 
-        Arrays.asList(aPlayer1.getSkills()).stream().forEach((skill) -> initSkills((EconomySkill) skill,  aPlayer1));
+//        Arrays.asList(aPlayer1.getSkills()).stream().forEach((skill) -> skill.applyEffect(aPlayer1));
 
         return new Hero(creatures, new SpellBook(aPlayer1.getWisdom(), spells));
     }
-    public static void initSkills(EconomySkill aSkill, Player aPlayer1){
-        switch (aSkill.getSkillType()){
-            case DEBUFF:
-            case BUFF:
-                switch (aSkill.getTargetType()){
-                    case ALLIES:
-                        aSkill.applyEffect(aPlayer1.getCreatures());
-                    case HERO:
-                        throw new UnsupportedOperationException("not implement yet!");
-                    default:
-                        throw new UnsupportedOperationException("not implement yet!");
-                }
-            case EFFECT:
-                throw new UnsupportedOperationException("not implement yet!");
-            default:
-                throw new UnsupportedOperationException("not implement yet!");
-        }
-    }
+
 }

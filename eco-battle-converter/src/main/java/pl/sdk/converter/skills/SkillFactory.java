@@ -1,10 +1,9 @@
 package pl.sdk.converter.skills;
 
-import pl.sdk.skills.AbstractSkill;
-import pl.sdk.skills.EconomySkill;
+import pl.sdk.skills.AbstractEconomySkill;
 
 public abstract class SkillFactory {
-    public static AbstractSkill create(EconomySkill aEs){
+    public static AbstractSkill create(AbstractEconomySkill aEs){
         switch (aEs.getSkillType()){
             case BUFF:
                 return new BuffOrDebuffSkillFactory().createInner(aEs);
@@ -19,5 +18,5 @@ public abstract class SkillFactory {
 
         }
     }
-    abstract AbstractSkill createInner(EconomySkill aType);
+    abstract AbstractSkill createInner(AbstractEconomySkill aType);
 }

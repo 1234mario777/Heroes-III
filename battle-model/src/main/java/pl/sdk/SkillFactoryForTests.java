@@ -1,6 +1,5 @@
 package pl.sdk;
 
-import pl.sdk.skills.BuffOrDebuffSkill;
 import pl.sdk.skills.SkillStatistic;
 
 public class SkillFactoryForTests {

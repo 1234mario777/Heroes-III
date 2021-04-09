@@ -1,8 +1,6 @@
 package pl.sdk;
 
 import pl.sdk.creatures.Creature;
-import pl.sdk.skills.AbstractSkill;
-import pl.sdk.skills.SkillBook;
 import pl.sdk.spells.SpellStatistic;
 
 import java.util.List;
