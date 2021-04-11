@@ -13,18 +13,13 @@ import static pl.sdk.Fraction.NECROPOLIS;
 public class EconomySkillFactoryTest {
 
     public static final String ARCHERY = "Archery";
-    private AbstractEconomySkill skill;
+    private EconomySkill skill;
 
     @BeforeEach
-    void init(){
-        skill = new  EconomySkillFactory().create(SkillStatistic.ARCHERY);
-    }
+    void init(){ skill = new  EconomySkillFactory().create(SkillStatistic.ARCHERY); }
     @Test
     void factoryShouldCreateSpellNameCorrectly()
     {
         assertEquals( ARCHERY, skill.getName() );
     }
-
-
-
 }

@@ -1,7 +1,7 @@
 package pl.sdk.hero;
 
 import pl.sdk.creatures.EconomyCreature;
-import pl.sdk.skills.AbstractEconomySkill;
+import pl.sdk.skills.EconomySkill;
 import pl.sdk.skills.SkillStatistic;
 import pl.sdk.spells.EconomySpell;
 
@@ -14,7 +14,7 @@ class EconomyHero {
     private final List<EconomyCreature> creatureList;
     private final HeroStats stats;
     private final List<EconomySpell> spellList;
-    private final HashMap<AbstractEconomySkill, SkillStatistic.SkillLevel> skillMap;
+    private final HashMap<EconomySkill, SkillStatistic.SkillLevel> skillMap;
 
     public EconomyHero() {
         this(new HeroStats(0,0,0,0));
@@ -23,7 +23,7 @@ class EconomyHero {
     public EconomyHero(HeroStats aStats) {
         creatureList = new ArrayList<>();
         spellList = new ArrayList<>();
-        skillMap = new HashMap<AbstractEconomySkill, SkillStatistic.SkillLevel>();
+        skillMap = new HashMap<EconomySkill, SkillStatistic.SkillLevel>();
         stats = aStats;
     }
     void addCreature(EconomyCreature aCreature){
@@ -41,16 +41,14 @@ class EconomyHero {
         spellList.add(aEconomySpell);
     }
 
-    void addSkill(AbstractEconomySkill aSkill) {
-        skillMap.put(aSkill,aSkill.skillStatistic.getSkillLevel());
-    }
+    void addSkill(EconomySkill aSkill) { skillMap.put(aSkill,aSkill.getAbstractEconomySkill().getSkillLevel()); }
 
-    HashMap<AbstractEconomySkill, SkillStatistic.SkillLevel> getSkillsMap() {
+    HashMap<EconomySkill, SkillStatistic.SkillLevel> getSkillsMap() {
         return skillMap;
     }
 
-    boolean hasSkill(AbstractEconomySkill aSkill) {
-        for ( AbstractEconomySkill key : skillMap.keySet() ) {
+    boolean hasSkill(EconomySkill aSkill) {
+        for ( EconomySkill key : skillMap.keySet() ) {
            return aSkill.equals(key);
         }
         return false;
@@ -72,7 +70,11 @@ class EconomyHero {
         return stats.getWisdom();
     }
 
-    void upgradeSkill(AbstractEconomySkill aSkill) {
+    void upgradeSkill(EconomySkill aSkill) {
         skillMap.put(aSkill, skillMap.get(aSkill).equals(SkillStatistic.SkillLevel.BASIC) ? SkillStatistic.SkillLevel.ADVANCED : SkillStatistic.SkillLevel.EXPERT);
+    }
+
+    List<EconomySkill> getSkillList() {
+        return new ArrayList<>(skillMap.keySet());
     }
 }

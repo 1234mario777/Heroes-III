@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import pl.sdk.creatures.EconomyTestFractionFactory;
 import pl.sdk.skills.AbstractEconomySkill;
+import pl.sdk.skills.EconomySkill;
 import pl.sdk.skills.EconomySkillFactory;
 import pl.sdk.skills.SkillStatistic;
 
@@ -14,7 +15,7 @@ import static pl.sdk.Fraction.NECROPOLIS;
 public class EconomySkillHeroTest {
     public static final String ARCHERY = "Archery";
     private Player player;
-    private AbstractEconomySkill skill;
+    private EconomySkill skill;
     @BeforeEach
     void init(){
         skill = new EconomySkillFactory().create(SkillStatistic.ARCHERY);

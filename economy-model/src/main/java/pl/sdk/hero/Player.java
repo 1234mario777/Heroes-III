@@ -2,7 +2,7 @@ package pl.sdk.hero;
 
 import pl.sdk.Fraction;
 import pl.sdk.creatures.EconomyCreature;
-import pl.sdk.skills.AbstractEconomySkill;
+import pl.sdk.skills.EconomySkill;
 import pl.sdk.skills.SkillStatistic;
 import pl.sdk.spells.EconomySpell;
 
@@ -18,12 +18,15 @@ public class Player
 	List<AbstractShop> shops;
 	private int gold;
 	Fraction fraction;
+	SkillShop skillShop;
+
 
 	public Player(Fraction aFraction, int aGold )
 	{
 		hero = new EconomyHero(new HeroStats(5,5,15,3));
 		creatureShop = new CreatureShop( aFraction );
 		spellShop = new SpellShop();
+		skillShop = new SkillShop();
 		shops = List.of(creatureShop, spellShop );
 		gold = aGold;
 		fraction = aFraction;
@@ -34,6 +37,7 @@ public class Player
 		hero = aEconomyHero;
 		creatureShop = new CreatureShop( aFraction );
 		spellShop = new SpellShop();
+		skillShop = new SkillShop();
 		shops = List.of(creatureShop, spellShop );
 		gold = aGold;
 		fraction = aFraction;
@@ -137,18 +141,27 @@ public class Player
 		return getSpells().stream().map( EconomySpell::getName ).collect( Collectors.toList() ).contains( aName );
 	}
 
-	public HashMap<AbstractEconomySkill, SkillStatistic.SkillLevel> getSkillsMap() {
+	public HashMap<EconomySkill, SkillStatistic.SkillLevel> getSkillsMap() {
 		return hero.getSkillsMap();
 	}
 
-	public boolean hasSkill(AbstractEconomySkill aSkill){
+	public boolean hasSkill(EconomySkill aSkill){
 		return hero.hasSkill(aSkill);
 	}
-	void addSkill(AbstractEconomySkill aSkill) {
-		hero.addSkill(aSkill);
+	void addSkill(EconomySkill aSkill) { hero.addSkill(aSkill); }
+	void upgradeSkill(EconomySkill aSkill) { hero.upgradeSkill(aSkill); }
+	public List<EconomySkill> getSkillList(){
+		return hero.getSkillList();
+	}
+	public void buySkill(Player aActivePlayer, EconomySkill aSkill) {
+		skillShop.buy(aActivePlayer,aSkill);
 	}
 
-	void upgradeSkill(AbstractEconomySkill aSkill) {
-		hero.upgradeSkill(aSkill);
+	public List<EconomySkill> getCurrentSkillPopulation() {
+		return skillShop.getCurrentSkillPopulation();
 	}
+
+	 public int calculateSkillMaxAmount(EconomySkill aSkill) {
+		return skillShop.calculateMaxAmount(this, aSkill);
+	 }
 }

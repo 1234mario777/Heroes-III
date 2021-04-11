@@ -1,20 +1,29 @@
 package pl.sdk.skills;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class EconomySkillFactory {
     private static final String EXCEPTION_MESSAGE = "Invalid skill name";
 
-    public CreatureEconomySkill create(SkillStatistic aName) {
+    public EconomySkill create(SkillStatistic aName) {
         switch (aName.getTargetType()){
             case ALL_ENEMIES:
             case ALLIES:
-                return new CreatureEconomySkill(aName);
+                return new EconomySkill(new CreatureEconomySkill(aName),1000);
             case ENEMY_HERO: //Uwazaj aby nie dac debafow na bohatera ze skillem
             case HERO:
-                return new HeroEconomySkill(aName);
+                return new EconomySkill(new HeroEconomySkill(aName),1000);
             default:
                 throw new IllegalArgumentException(EXCEPTION_MESSAGE);
         }
     }
 
 
+    public List<EconomySkill> getAllSpells(){
+        List<EconomySkill> skillList = new ArrayList<>();
+        List.of( SkillStatistic.ARCHERY, SkillStatistic.OFFENCE, SkillStatistic.ARMOURER, SkillStatistic.LEADERSHIP,SkillStatistic.RESISTANCE,SkillStatistic.LUCK)
+                .forEach( skillName -> skillList.add( create( skillName ) ) );
+        return skillList;
+    }
 }
