@@ -19,11 +19,12 @@ import static pl.sdk.GameEngine.AFTER_MOVE;
 class MapTile extends StackPane implements PropertyChangeListener
 {
 
+    public static final int MAP_TILE_SIZE = 60;
     private final Rectangle rec;
     private MapTileState state;
 
     public MapTile() {
-        rec = new Rectangle(60, 60);
+        rec = new Rectangle(MAP_TILE_SIZE, MAP_TILE_SIZE);
         rec.setStroke(Color.BLACK);
         state = new MapTileDefaultState();
         handleState();

@@ -1,5 +1,6 @@
 package pl.sdk.hero;
 
+import pl.sdk.artifacts.EconomyArtifact;
 import pl.sdk.creatures.EconomyCreature;
 import pl.sdk.skills.EconomySkill;
 import pl.sdk.skills.SkillStatistic;
@@ -15,6 +16,7 @@ class EconomyHero {
     private final HeroStats stats;
     private final List<EconomySpell> spellList;
     private final HashMap<EconomySkill, SkillStatistic.SkillLevel> skillMap;
+    private final ArtifactList artifactList;
 
     public EconomyHero() {
         this(new HeroStats(0,0,0,0));
@@ -23,6 +25,7 @@ class EconomyHero {
     public EconomyHero(HeroStats aStats) {
         creatureList = new ArrayList<>();
         spellList = new ArrayList<>();
+        artifactList = new ArtifactList();
         skillMap = new HashMap<EconomySkill, SkillStatistic.SkillLevel>();
         stats = aStats;
     }
@@ -57,6 +60,18 @@ class EconomyHero {
         return List.copyOf(spellList);
     }
 
+    void addArtifact(EconomyArtifact aEconomyArtifact) {
+        artifactList.add(aEconomyArtifact);
+    }
+
+    List<EconomyArtifact> getArtifacts() {
+        return artifactList.getArtifacts();
+    }
+
+    boolean hasEmptySlotForArtifact(String aName) {
+        return artifactList.hasEmptySlot(aName);
+    }
+
     int getPower() {
         return stats.getPower();
     }
@@ -66,6 +81,7 @@ class EconomyHero {
     int getDefence(){
         return stats.getDefence();
     }
+
     int getWisdom(){
         return stats.getWisdom();
     }

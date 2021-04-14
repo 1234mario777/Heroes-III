@@ -44,7 +44,6 @@ class ChooseFractionDialog
 		dialog.setHeaderText( HEADER_TITLE );
 		dialog.setContentText( CONTENT_TEXT );
 		dialog.showAndWait();
-
 		return Fraction.valueOf( dialog.getSelectedItem()
 		                               .toString() );
 	}
