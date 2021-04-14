@@ -2,7 +2,6 @@ package pl.sdk.hero;
 
 import pl.sdk.skills.EconomySkill;
 import pl.sdk.skills.EconomySkillFactory;
-import pl.sdk.spells.EconomySpell;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +22,7 @@ public class SkillShop extends AbstractShop<EconomySkill>{
     }
 
     private void createPopulation() {
-        List<EconomySkill> allSkills = skillFactory.getAllSpells();
+        List<EconomySkill> allSkills = skillFactory.getAllSkills();
         int populationSize = calculatePopulation( allSkills.size() );
         Random rand = new Random();
 

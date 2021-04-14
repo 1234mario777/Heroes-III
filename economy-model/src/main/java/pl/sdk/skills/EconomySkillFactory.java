@@ -20,7 +20,7 @@ public class EconomySkillFactory {
     }
 
 
-    public List<EconomySkill> getAllSpells(){
+    public List<EconomySkill> getAllSkills(){
         List<EconomySkill> skillList = new ArrayList<>();
         List.of( SkillStatistic.ARCHERY, SkillStatistic.OFFENCE, SkillStatistic.ARMOURER, SkillStatistic.LEADERSHIP,SkillStatistic.RESISTANCE,SkillStatistic.LUCK)
                 .forEach( skillName -> skillList.add( create( skillName ) ) );
