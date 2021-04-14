@@ -22,14 +22,13 @@ public class Player
 	private int gold;
 	Fraction fraction;
 	String heroName;
+	SkillShop skillShop;
 
 	public Player(Fraction aFraction, int aGold , HeroEnum aHero)
 	{
 		this(aFraction,aGold,new EconomyHero(new HeroStats(AbstractEconomyHeroFactory.getInstance(aFraction).create(aHero))));
 		heroName = aHero.toString();
 	}
-	SkillShop skillShop;
-
 
 	public Player(Fraction aFraction, int aGold )
 	{
@@ -190,6 +189,7 @@ public class Player
 	 public int calculateSkillMaxAmount(EconomySkill aSkill) {
 		return skillShop.calculateMaxAmount(this, aSkill);
 	 }
+
 
 	void addArtifact(EconomyArtifact aEconomyArtifact) {
 		hero.addArtifact(aEconomyArtifact);

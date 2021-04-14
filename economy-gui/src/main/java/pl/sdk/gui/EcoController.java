@@ -105,14 +105,12 @@ public class EcoController implements PropertyChangeListener {
         VBox skillShop = createSkillShop();
 
         TabPane tabPane = new TabPane(  );
-
         Tab creatureTab = new Tab();
         creatureTab.setContent( creatureShop );
         ImageView creatureTabImage = new ImageView(new Image(getClass().getResourceAsStream("/icons/sword.png" )));
         creatureTabImage.setFitHeight(48);
         creatureTabImage.setFitWidth(48);
         creatureTab.setGraphic( creatureTabImage );
-
         Tab spellTab = new Tab(  );
         spellTab.setContent( spellShop );
         ImageView spellTabImage = new ImageView(new Image(getClass().getResourceAsStream("/icons/magic-book.png" )));
@@ -305,6 +303,7 @@ public class EcoController implements PropertyChangeListener {
         });
     }
 
+
     public int getGold()
     {
         return economyEngine.getActivePlayer().getGold();
@@ -382,4 +381,5 @@ public class EcoController implements PropertyChangeListener {
     {
         return economyEngine.hasEmptySlotForArtifact(aName);
     }
+
 }

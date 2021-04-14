@@ -160,15 +160,6 @@ public class EconomyEngine {
 	    return activePlayer.hasSpell(aName);
 	}
 
-    public void buySkill(EconomySkill aSkill) {
-        activePlayer.buySkill(activePlayer,aSkill);
-        observerSupport.firePropertyChange(PLAYER_BOUGHT_ITEM,null,null);
-    }
-
-    public List<EconomySkill> getCurrentSkillPopulation() {
-        return activePlayer.getCurrentSkillPopulation();
-    }
-
     public List<EconomyArtifact> getCurrentArtifactPopulation() {
         return activePlayer.getCurrentArtifactPopulation();
     }
@@ -180,4 +171,14 @@ public class EconomyEngine {
     public boolean hasEmptySlotForArtifact(String aName) {
         return activePlayer.hasEmptySlotForArtifact(aName);
     }
+
+    public void buySkill(EconomySkill aSkill) {
+        activePlayer.buySkill(activePlayer,aSkill);
+        observerSupport.firePropertyChange(PLAYER_BOUGHT_ITEM,null,null);
+    }
+
+    public List<EconomySkill> getCurrentSkillPopulation() {
+        return activePlayer.getCurrentSkillPopulation();
+    }
+
 }
