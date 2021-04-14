@@ -1,7 +1,5 @@
 package pl.sdk.spells;
 
-import pl.sdk.AbstractSpell;
-
 public class TeleportSpell extends AbstractSpell {
 
     public TeleportSpell(String aName) {

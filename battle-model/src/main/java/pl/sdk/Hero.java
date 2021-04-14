@@ -1,6 +1,7 @@
 package pl.sdk;
 
 import pl.sdk.creatures.Creature;
+import pl.sdk.spells.AbstractSpell;
 import pl.sdk.spells.SpellStatistic;
 
 import java.util.List;

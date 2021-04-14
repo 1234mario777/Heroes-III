@@ -1,6 +1,5 @@
 package pl.sdk.spells;
 
-import pl.sdk.AbstractSpell;
 import pl.sdk.creatures.Creature;
 
 public class DamageSpell extends AbstractSpell {

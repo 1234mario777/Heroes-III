@@ -9,17 +9,13 @@ import pl.sdk.converter.spells.SpellFactory;
 import pl.sdk.creatures.AbstractFractionFactory;
 import pl.sdk.creatures.Creature;
 import pl.sdk.gui.BattleMapController;
-import pl.sdk.AbstractSpell;
+import pl.sdk.spells.AbstractSpell;
 import pl.sdk.SpellBook;
 
 import pl.sdk.hero.Player;
-import pl.sdk.skills.AbstractEconomySkill;
-import pl.sdk.skills.EconomySkillFactory;
-import pl.sdk.skills.SkillStatistic;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 

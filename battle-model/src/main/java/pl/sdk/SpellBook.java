@@ -1,5 +1,7 @@
 package pl.sdk;
 
+import pl.sdk.spells.AbstractSpell;
+
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;

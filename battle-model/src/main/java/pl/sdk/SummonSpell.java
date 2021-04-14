@@ -1,6 +1,6 @@
 package pl.sdk;
 
-import pl.sdk.AbstractSpell;
+import pl.sdk.spells.AbstractSpell;
 import pl.sdk.spells.SpellStatistic;
 
 public class SummonSpell extends AbstractSpell {

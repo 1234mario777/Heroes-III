@@ -1,5 +1,6 @@
 package pl.sdk;
 
+import pl.sdk.spells.AbstractSpell;
 import pl.sdk.spells.DamageSpell;
 import pl.sdk.spells.SpellStatistic;
 

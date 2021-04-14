@@ -1,7 +1,5 @@
 package pl.sdk.spells;
 
-import pl.sdk.AbstractSpell;
-
 public class DispelSpell extends AbstractSpell {
 
     public DispelSpell(SpellStatistic.TargetType aTargetType, String aName) {

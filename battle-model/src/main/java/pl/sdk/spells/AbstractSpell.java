@@ -1,4 +1,4 @@
-package pl.sdk;
+package pl.sdk.spells;
 
 
 import pl.sdk.GameEngine;
