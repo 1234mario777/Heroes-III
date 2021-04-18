@@ -363,6 +363,9 @@ public class EcoController implements PropertyChangeListener {
         return economyEngine.hasSpell(aName);
     }
 
+    boolean hasSkill(EconomySkill aSkill){
+        return economyEngine.hasSkill(aSkill);
+    }
     void buySkill(EconomySkill aSkill) {
         economyEngine.buySkill(aSkill);
     }

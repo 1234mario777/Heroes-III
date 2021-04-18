@@ -26,7 +26,7 @@ class EconomyHero {
         creatureList = new ArrayList<>();
         spellList = new ArrayList<>();
         artifactList = new ArtifactList();
-        skillMap = new HashMap<EconomySkill, SkillStatistic.SkillLevel>();
+        skillMap = new HashMap<>();
         stats = aStats;
     }
     void addCreature(EconomyCreature aCreature){

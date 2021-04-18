@@ -1,8 +1,8 @@
 package pl.sdk.hero;
 
 import pl.sdk.Fraction;
-import pl.sdk.artifacts.EconomyArtifact;
 import pl.sdk.HeroEnum;
+import pl.sdk.artifacts.EconomyArtifact;
 import pl.sdk.creatures.EconomyCreature;
 import pl.sdk.skills.EconomySkill;
 import pl.sdk.skills.SkillStatistic;

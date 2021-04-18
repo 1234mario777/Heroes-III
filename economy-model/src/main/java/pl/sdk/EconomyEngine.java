@@ -181,4 +181,7 @@ public class EconomyEngine {
         return activePlayer.getCurrentSkillPopulation();
     }
 
+    public boolean hasSkill(EconomySkill aSkill) {
+        return activePlayer.hasSkill(aSkill);
+    }
 }

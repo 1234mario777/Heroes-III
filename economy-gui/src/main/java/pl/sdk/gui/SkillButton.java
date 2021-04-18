@@ -62,8 +62,8 @@ public class SkillButton extends Button {
         buttonContent.getChildren().add( topPane );
         buttonContent.getChildren().add( borderPane );
         this.setGraphic( buttonContent );
-        if ( aEcoController.calculateSkillMaxAmount(skill) <= 0  || aEcoController.hasSpell(skill.getName()))
-            setDisable( true );
+//            if ( aEcoController.hasSkill(skill))
+        if ( aEcoController.calculateSkillMaxAmount(skill) <= 0) setDisable( true );
         getStyleClass().add("creatureButton");
     }
 }
