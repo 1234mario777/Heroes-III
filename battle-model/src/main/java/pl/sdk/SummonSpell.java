@@ -1,6 +1,9 @@
-package pl.sdk.spells;
+package pl.sdk;
 
-public class SummonSpell extends AbstractSpell{
+import pl.sdk.spells.AbstractSpell;
+import pl.sdk.spells.SpellStatistic;
+
+public class SummonSpell extends AbstractSpell {
 
     private final int duration;
     private final int creatureAmount;

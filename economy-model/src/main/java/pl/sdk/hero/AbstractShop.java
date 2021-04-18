@@ -2,6 +2,7 @@ package pl.sdk.hero;
 
 import pl.sdk.Fraction;
 import pl.sdk.Shop;
+import pl.sdk.spells.EconomySpell;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -37,5 +38,4 @@ public abstract class AbstractShop <T> implements PropertyChangeListener
 	}
 
 	protected abstract void handlePopulation();
-
 }

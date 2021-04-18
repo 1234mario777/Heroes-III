@@ -2,10 +2,9 @@ package pl.sdk.converter.spells;
 
 import org.junit.jupiter.api.Test;
 import pl.sdk.converter.SpellMasteries;
-import pl.sdk.converter.spells.SummonSpellFactory;
 import pl.sdk.spells.EconomySpell;
 import pl.sdk.spells.SpellStatistic;
-import pl.sdk.spells.SummonSpell;
+import pl.sdk.SummonSpell;
 
 import static org.junit.jupiter.api.Assertions.*;
 
