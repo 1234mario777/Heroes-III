@@ -1,22 +1,33 @@
 package pl.sdk.gui;
 
+import javafx.animation.*;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
+import javafx.util.Duration;
 import pl.sdk.*;
 import pl.sdk.Point;
 import pl.sdk.creatures.AbstractFractionFactory;
 import pl.sdk.creatures.Creature;
 import pl.sdk.spells.*;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
-import static pl.sdk.GameEngine.AFTER_ATTACK;
-import static pl.sdk.GameEngine.AFTER_MOVE;
+import static pl.sdk.GameEngine.*;
+import static pl.sdk.gui.MapTile.MAP_TILE_SIZE;
 
 public class BattleMapController implements PropertyChangeListener {
 
@@ -139,8 +150,68 @@ public class BattleMapController implements PropertyChangeListener {
 
     @Override
     public void propertyChange(PropertyChangeEvent aPropertyChangeEvent) {
-        refreshGui(null);
+        if(aPropertyChangeEvent.getPropertyName().equals(CREATURE_MOVED)){
+            Point oldPoint = (Point) aPropertyChangeEvent.getOldValue();
+            Point newPoint = (Point) aPropertyChangeEvent.getNewValue();
+            Node nodeFromGridMap = getNodeFromGridMap(oldPoint);
+
+            BufferedImage bigImg = null;
+            try {
+                bigImg = ImageIO.read(getClass().getResourceAsStream("/graphics/creatures/Bone Dragon2.png"));
+            } catch (IOException aE) {
+                aE.printStackTrace();
+            }
+
+            final int width = 229;
+            final int height = 200;
+            final int rows = 2;
+            final int cols = 8;
+            Duration duration = Duration.millis(oldPoint.distance(newPoint)*100);
+            List<BufferedImage> sprites = new ArrayList<>();
+            for (int i = 0; i < rows; i++) {
+                for (int j = 0; j < cols; j++) {
+                    sprites.add(bigImg.getSubimage(
+                            j * width,
+                            i * height + 150,
+                            width,
+                            height
+                    ));
+                }
+            }
+
+            List<Image>slides = sprites.stream().map(b -> SwingFXUtils.toFXImage(b, null )).collect(Collectors.toList());
+            ImageView imageView = (ImageView) ((Pane)(((Pane)nodeFromGridMap).getChildren().get(1))).getChildren().get(0);
+            Transition animation = new Transition() {
+                {
+                    setCycleDuration(duration);
+                }
+
+                @Override
+                protected void interpolate(double fraction) {
+                    int index = (int) (fraction*(slides.size()-1));
+                    imageView.setImage(slides.get(index));
+                }
+            };
+            animation.play();
+
+            nodeFromGridMap.toFront();
+            TranslateTransition transition = new TranslateTransition(duration, nodeFromGridMap);
+            transition.setByX((newPoint.getX()-oldPoint.getX())*(MAP_TILE_SIZE+1));
+            transition.setByY((newPoint.getY()-oldPoint.getY())*(MAP_TILE_SIZE+1));
+            transition.setAutoReverse(true);
+            transition.play();
+        }
+        else{
+            refreshGui(null);
+        }
     }
 
-
+    private Node getNodeFromGridMap(Point aOldPoint) {
+        for (Node node: gridMap.getChildren()) {
+            if (GridPane.getColumnIndex(node) == aOldPoint.getX() && GridPane.getRowIndex(node) == aOldPoint.getY()){
+                return node;
+            }
+        }
+        return null;
+    }
 }

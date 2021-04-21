@@ -1,9 +1,8 @@
 package pl.sdk.spells;
 
-import pl.sdk.GameEngine;
 import pl.sdk.creatures.Creature;
 
-public class DamageSpell extends AbstractSpell{
+public class DamageSpell extends AbstractSpell {
 
     private final int damage;
     private final int splashRange;

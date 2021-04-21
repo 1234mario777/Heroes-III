@@ -24,6 +24,10 @@ public abstract class AbstractEconomyFractionFactory
 				return new EconomyCastleFactory();
 			case RAMPART:
 				return new EconomyRampartFactory();
+			case STRONGHOLD:
+				return new EconomyStrongholdFactory();
+			case DUNGEON:
+				return new EconomyDungeonFactory();
 			default:
 				throw new IllegalArgumentException( INVALID_FRACTION_NAME );
 		}

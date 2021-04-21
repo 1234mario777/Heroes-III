@@ -168,6 +168,7 @@ public class GameEngine {
         return calc.canCast(aSpell, aPoint, this, board);
     }
 
+
     public void castSpell(AbstractSpell aSpell) {
         queue.getActiveHero().castSpell(aSpell);
         switch (aSpell.getTargetType()){

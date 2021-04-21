@@ -2,7 +2,6 @@ package pl.sdk;
 
 import pl.sdk.creatures.Creature;
 import pl.sdk.spells.AbstractSpell;
-import pl.sdk.spells.SpellBook;
 import pl.sdk.spells.SpellStatistic;
 
 import java.util.List;
@@ -11,6 +10,7 @@ public class Hero {
 
     private final List<Creature> creatures;
     private final SpellBook spellBook;
+
 
     public Hero(List<Creature> aCreatures) {
         this(aCreatures, new SpellBook(15, List.of(SpellFactoryForTests.createMagicArrow(),
@@ -22,7 +22,6 @@ public class Hero {
         creatures = aCreatures;
         spellBook = aSpellBook;
     }
-
     public List<Creature> getCreatures() {
         return creatures;
     }

@@ -12,11 +12,11 @@ public class Point {
         y = aY;
     }
 
-    int getX() {
+    public int getX() {
         return x;
     }
 
-    int getY() {
+    public int getY() {
         return y;
     }
 
@@ -34,7 +34,7 @@ public class Point {
         return Objects.hash(x, y);
     }
 
-    double distance(Point aPoint) {
+    public double distance(Point aPoint) {
         return Math.sqrt((aPoint.y - y) * (aPoint.y - y) + (aPoint.x - x) * (aPoint.x - x));
     }
 }

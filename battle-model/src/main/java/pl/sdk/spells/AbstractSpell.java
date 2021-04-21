@@ -3,6 +3,7 @@ package pl.sdk.spells;
 
 import pl.sdk.GameEngine;
 import pl.sdk.creatures.Creature;
+import pl.sdk.spells.SpellStatistic;
 
 public abstract class AbstractSpell {
 
