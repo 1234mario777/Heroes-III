@@ -1,6 +1,8 @@
 package pl.sdk.skills;
 
-public class EconomySkill {
+import pl.sdk.hero.EconomyShopIf;
+
+public class EconomySkill implements EconomyShopIf {
     private final int goldCost;
     private final AbstractEconomySkill skill;
     public static final int SKILL_GROWTH = 1;

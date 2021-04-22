@@ -58,19 +58,17 @@ public class EconomyEngine {
         return activePlayer.calculateMaxAmount(aCreature);
     }
 
+    public boolean canBuySpell(EconomySpell aSpell) {
+        return activePlayer.canBuySpell(aSpell);
+    }
+
     public int calculateSkillMaxAmount( EconomySkill aSkill)
     {
         return activePlayer.calculateSkillMaxAmount(aSkill);
     }
 
-    public int calculateSpellMaxAmount( EconomySpell aSpell )
-    {
-        return activePlayer.calculateSpellMaxAmount(aSpell);
-    }
-
-    public int calculateArtifactMaxAmount( EconomyArtifact aArtifact )
-    {
-        return activePlayer.calculateArtifactMaxAmount(aArtifact);
+    public boolean canBuyArtifact(EconomyArtifact aArtifact) {
+        return activePlayer.canBuyArtifact(aArtifact);
     }
 
     public Player getActivePlayer() {
