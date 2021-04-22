@@ -44,7 +44,7 @@ class EconomyHero {
         spellList.add(aEconomySpell);
     }
 
-    void addSkill(EconomySkill aSkill) { skillMap.put(aSkill,aSkill.getAbstractEconomySkill().getSkillLevel()); }
+    void addSkill(EconomySkill aSkill) { skillMap.put(aSkill,aSkill.getSkillLevel()); }
 
     HashMap<EconomySkill, SkillStatistic.SkillLevel> getSkillsMap() {
         return skillMap;
@@ -86,6 +86,7 @@ class EconomyHero {
         return stats.getWisdom();
     }
 
+    HashMap<EconomySkill, SkillStatistic.SkillLevel> getSkillMap(){ return skillMap; }
     void upgradeSkill(EconomySkill aSkill) {
         skillMap.put(aSkill, skillMap.get(aSkill).equals(SkillStatistic.SkillLevel.BASIC) ? SkillStatistic.SkillLevel.ADVANCED : SkillStatistic.SkillLevel.EXPERT);
     }

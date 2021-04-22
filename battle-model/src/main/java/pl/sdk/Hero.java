@@ -22,6 +22,7 @@ public class Hero {
         creatures = aCreatures;
         spellBook = aSpellBook;
     }
+
     public List<Creature> getCreatures() {
         return creatures;
     }

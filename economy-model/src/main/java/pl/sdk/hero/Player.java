@@ -186,9 +186,9 @@ public class Player
 		return skillShop.getCurrentSkillPopulation();
 	}
 
-	 public int calculateSkillMaxAmount(EconomySkill aSkill) {
+	public int calculateSkillMaxAmount(EconomySkill aSkill) {
 		return skillShop.calculateMaxAmount(this, aSkill);
-	 }
+	}
 
 
 	void addArtifact(EconomyArtifact aEconomyArtifact) {

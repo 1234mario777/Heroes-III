@@ -5,10 +5,14 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import pl.sdk.Fraction;
 import pl.sdk.Hero;
+import pl.sdk.converter.skills.SkillFactory;
 import pl.sdk.converter.spells.SpellFactory;
 import pl.sdk.creatures.AbstractFractionFactory;
 import pl.sdk.creatures.Creature;
 import pl.sdk.gui.BattleMapController;
+import pl.sdk.skills.AbstractSkill;
+import pl.sdk.skills.EconomySkill;
+import pl.sdk.skills.SkillStatistic;
 import pl.sdk.spells.AbstractSpell;
 import pl.sdk.SpellBook;
 
@@ -16,6 +20,7 @@ import pl.sdk.hero.Player;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -47,15 +52,21 @@ public class EcoBattleConverter {
                 creatures.add(factory.create(ecoCreature.isUpgraded(), ecoCreature.getTier(), ecoCreature.getAmount())));
 
         // -> artefakty
-        SpellMasteries masteries = new SpellMasteries(BASIC, BASIC, BASIC, BASIC);
+        SpellMasteries spellMasteries = new SpellMasteries(BASIC, BASIC, BASIC, BASIC);
         //Artefacts skills itd.
+        SkillMasteries skillMasteries = new SkillMasteries(aPlayer1.getSkillsMap());
+
+        HashMap<EconomySkill, SkillStatistic.SkillLevel> skillsMap = aPlayer1.getSkillsMap();
 
         List<AbstractSpell> spells = aPlayer1.getSpells().stream()
-                .map(es -> SpellFactory.create(es, aPlayer1.getPower(), masteries))
+                .map(es -> SpellFactory.create(es, aPlayer1.getPower(), spellMasteries))
+                .collect(Collectors.toList());
+
+        List<AbstractSkill> skills = aPlayer1.getSkillList().stream()
+                .map(es -> SkillFactory.create(es, skillMasteries))
                 .collect(Collectors.toList());
 
 //        Arrays.asList(aPlayer1.getSkills()).stream().forEach((skill) -> skill.applyEffect(aPlayer1));
-
         return new Hero(creatures, new SpellBook(aPlayer1.getWisdom(), spells));
     }
 

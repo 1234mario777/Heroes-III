@@ -16,7 +16,7 @@ public class EconomySkillFactoryTest {
     private EconomySkill skill;
 
     @BeforeEach
-    void init(){ skill = new  EconomySkillFactory().create(SkillStatistic.ARCHERY); }
+    void init(){ skill = new EconomySkillFactory().create(SkillStatistic.ARCHERY); }
     @Test
     void factoryShouldCreateSpellNameCorrectly()
     {
