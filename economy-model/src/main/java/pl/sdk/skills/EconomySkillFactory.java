@@ -10,10 +10,9 @@ public class EconomySkillFactory {
         switch (aName.getTargetType()){
             case ALL_ENEMIES:
             case ALLIES:
-                return new EconomySkill(new CreatureEconomySkill(aName));
             case ENEMY_HERO: //Uwazaj aby nie dac debafow na bohatera ze skillem
             case HERO:
-                return new EconomySkill(new HeroEconomySkill(aName));
+                return new EconomySkill(aName);
             default:
                 throw new IllegalArgumentException(EXCEPTION_MESSAGE);
         }

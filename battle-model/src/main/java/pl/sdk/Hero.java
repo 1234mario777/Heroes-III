@@ -42,7 +42,6 @@ public class Hero {
     void castSpell(AbstractSpell aSpell) {
         spellBook.cast(aSpell);
     }
-
     void toSubscribeEndOfTurn(TurnQueue aQueue) {
         aQueue.addObserver(spellBook);
     }

@@ -1,9 +1,7 @@
-package pl.sdk.converter.skills;
+package pl.sdk.creatures.skills;
 
-import pl.sdk.creatures.Creature;
-import pl.sdk.hero.Player;
+import pl.sdk.Hero;
 import pl.sdk.skills.SkillStatistic;
-import pl.sdk.spells.BuffOrDebuffSpell;
 
 import java.util.Objects;
 
@@ -26,12 +24,12 @@ public class BuffOrDebuffSkill extends AbstractSkill {
     }
 
     @Override
-    void applyEffect(Player aPLayer,double aI) {
-        aPLayer.getCreatures().stream().forEach(c ->{
-            if(c.isArcher()){
-                this.applyEffect(aPLayer,aI);
-            }
-        });
+    public void applyEffect(Hero aHero) {
+//        aHero.getCreatures().stream().forEach(c ->{
+//            if(c.isArcher()){
+//                c.applySkill(this);
+//            }
+//        });
     }
 
 

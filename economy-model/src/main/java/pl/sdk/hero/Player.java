@@ -210,4 +210,5 @@ public class Player
 	public boolean hasEmptySlotForArtifact(String aName) {
 		return hero.hasEmptySlotForArtifact(aName);
 	}
+
 }

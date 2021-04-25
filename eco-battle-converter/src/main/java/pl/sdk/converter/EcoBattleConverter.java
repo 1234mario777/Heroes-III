@@ -5,12 +5,14 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import pl.sdk.Fraction;
 import pl.sdk.Hero;
+import pl.sdk.HeroEnum;
 import pl.sdk.converter.skills.SkillFactory;
 import pl.sdk.converter.spells.SpellFactory;
 import pl.sdk.creatures.AbstractFractionFactory;
 import pl.sdk.creatures.Creature;
 import pl.sdk.gui.BattleMapController;
-import pl.sdk.converter.skills.AbstractSkill;
+import pl.sdk.creatures.skills.AbstractSkill;
+import pl.sdk.hero.HeroStats;
 import pl.sdk.skills.EconomySkill;
 import pl.sdk.skills.SkillStatistic;
 import pl.sdk.spells.AbstractSpell;
@@ -20,6 +22,7 @@ import pl.sdk.hero.Player;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -66,8 +69,9 @@ public class EcoBattleConverter {
                 .map(es -> SkillFactory.create(es, skillMasteries))
                 .collect(Collectors.toList());
 
-//        Arrays.asList(aPlayer1.getSkills()).stream().forEach((skill) -> skill.applyEffect(aPlayer1));
-        return new Hero(creatures, new SpellBook(aPlayer1.getWisdom(), spells));
+        Hero hero = new Hero(creatures, new SpellBook(aPlayer1.getWisdom(), spells));
+        skills.stream().forEach((skill) -> skill.applyEffect(hero));
+        return hero;
     }
 
 }

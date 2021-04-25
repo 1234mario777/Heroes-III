@@ -1,15 +1,17 @@
 package pl.sdk.skills;
 
+import pl.sdk.hero.Player;
+
 public class EconomySkill {
     private final int goldCost;
-    private final AbstractEconomySkill skill;
+    private final SkillStatistic skill;
     public static final int SKILL_GROWTH = 1;
-    public EconomySkill(AbstractEconomySkill aSkill) {
+    public EconomySkill(SkillStatistic aSkill) {
         skill = aSkill;
         goldCost = 1000;
     }
     public int getGoldCost() { return goldCost; }
-    public SkillStatistic getSkillStatistic() {return skill.getSkillStatistic(); }
+    public SkillStatistic getSkillStatistic() {return skill; }
     public String getName() {return skill.getName(); }
     public String getDescription(){return skill.getDescription();}
     public SkillStatistic.TargetType getTargetType() { return skill.getTargetType(); }

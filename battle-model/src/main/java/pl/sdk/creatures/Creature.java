@@ -7,6 +7,8 @@ import pl.sdk.creatures.defending.DefenceContextFactory;
 import pl.sdk.creatures.defending.DefenceContextIf;
 import pl.sdk.creatures.movingContext.MoveContext;
 import pl.sdk.creatures.movingContext.MoveContextIf;
+import pl.sdk.creatures.skills.BuffOrDebuffSkill;
+import pl.sdk.creatures.skills.BuffSkillContainer;
 import pl.sdk.creatures.spells.BuffContainer;
 import pl.sdk.creatures.spells.MagicResFactory;
 import pl.sdk.creatures.spells.MagicResistanceContextIf;
@@ -27,7 +29,7 @@ public class Creature implements PropertyChangeListener {
 
     private BuffContainer buffContainter;
     private MagicResistanceContextIf magicDamageReducer;
-
+    private BuffSkillContainer buffSkillContainer;
     private MoveContextIf moveContext;
     private DefenceContextIf defenceContext;
     private AttackContextIf attackContext;
@@ -46,10 +48,15 @@ public class Creature implements PropertyChangeListener {
 
         buffContainter = new BuffContainer();
     }
-
-
+    public boolean isArcher(){
+        return true;
+    }
     public BuffContainer getBuffContainer() {
         return buffContainter;
+    }
+
+    BuffSkillContainer getBuffSkillContainer() {
+        return buffSkillContainer;
     }
 
     public DefenceContextIf getDefenceContext() {
@@ -136,6 +143,10 @@ public class Creature implements PropertyChangeListener {
 
     public void updateRetaliateCounter() {
         retaliationContext.updateRetaliateCounter();
+    }
+
+    public void applySkill(BuffOrDebuffSkill aBuffOrDebuffSkill) {
+        buffSkillContainer.add(aBuffOrDebuffSkill);
     }
 
     public static class Builder {

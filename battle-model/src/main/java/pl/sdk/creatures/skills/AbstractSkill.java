@@ -1,6 +1,7 @@
-package pl.sdk.converter.skills;
+package pl.sdk.creatures.skills;
 
-import pl.sdk.hero.Player;
+import pl.sdk.Hero;
+
 import pl.sdk.skills.SkillStatistic;
 
 public abstract class AbstractSkill {
@@ -15,7 +16,7 @@ public abstract class AbstractSkill {
 
     SkillStatistic.TargetType getTargetType() { return targetType; }
     String getName() { return name; }
-    abstract void applyEffect(Player aPlayer, double aIterator);
+    public abstract void applyEffect(Hero aHero);
     @Override
     public String toString() { return "AbstractSkill{" + "name='" + name + '\'' + '}'; }
 }

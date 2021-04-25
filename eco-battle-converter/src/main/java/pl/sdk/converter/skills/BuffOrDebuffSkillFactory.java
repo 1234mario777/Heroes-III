@@ -1,6 +1,9 @@
 package pl.sdk.converter.skills;
 
 import pl.sdk.converter.SkillMasteries;
+import pl.sdk.creatures.skills.AbstractSkill;
+import pl.sdk.creatures.skills.BuffOrDebuffSkill;
+import pl.sdk.creatures.skills.BuffStatistic;
 import pl.sdk.skills.*;
 
 public class BuffOrDebuffSkillFactory extends SkillFactory {
