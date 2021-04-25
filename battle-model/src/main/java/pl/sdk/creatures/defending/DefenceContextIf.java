@@ -9,6 +9,5 @@ public interface DefenceContextIf {
     int getMaxHp();
     int getCurrentAmount();
     void addObserver(String aEventType, PropertyChangeListener aObs);
-
     void applyDamage(int aDamageToDeal);
 }

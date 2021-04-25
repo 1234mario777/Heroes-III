@@ -1,5 +1,8 @@
-package pl.sdk.skills;
+package pl.sdk.converter.skills;
 
+import pl.sdk.creatures.Creature;
+import pl.sdk.hero.Player;
+import pl.sdk.skills.SkillStatistic;
 import pl.sdk.spells.BuffOrDebuffSpell;
 
 import java.util.Objects;
@@ -23,12 +26,14 @@ public class BuffOrDebuffSkill extends AbstractSkill {
     }
 
     @Override
-    public boolean equals(Object aO) {
-        if (this == aO) return true;
-        if (aO == null || getClass() != aO.getClass() || getName() == null) return false;
-        BuffOrDebuffSpell that = (BuffOrDebuffSpell) aO;
-        return getName().equals(that.getName());
+    void applyEffect(Player aPLayer,double aI) {
+        aPLayer.getCreatures().stream().forEach(c ->{
+            if(c.isArcher()){
+                this.applyEffect(aPLayer,aI);
+            }
+        });
     }
+
 
     @Override
     public int hashCode() {

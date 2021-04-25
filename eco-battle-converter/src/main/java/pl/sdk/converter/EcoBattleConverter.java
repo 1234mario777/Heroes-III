@@ -10,7 +10,7 @@ import pl.sdk.converter.spells.SpellFactory;
 import pl.sdk.creatures.AbstractFractionFactory;
 import pl.sdk.creatures.Creature;
 import pl.sdk.gui.BattleMapController;
-import pl.sdk.skills.AbstractSkill;
+import pl.sdk.converter.skills.AbstractSkill;
 import pl.sdk.skills.EconomySkill;
 import pl.sdk.skills.SkillStatistic;
 import pl.sdk.spells.AbstractSpell;

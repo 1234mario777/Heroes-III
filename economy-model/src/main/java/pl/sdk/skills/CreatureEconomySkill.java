@@ -42,7 +42,6 @@ public class CreatureEconomySkill extends AbstractEconomySkill {
     }
 
     private void increaseRangeUnitDamage(EconomyCreature aC, double aIncrease) {
-
     }
     private void increaseMeleeDamage(EconomyCreature aC, double aIncrease) {
 

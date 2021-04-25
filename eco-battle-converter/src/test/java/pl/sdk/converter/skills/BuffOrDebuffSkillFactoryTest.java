@@ -19,12 +19,10 @@ public class BuffOrDebuffSkillFactoryTest {
         skill = new EconomySkillFactory().create(SkillStatistic.ARCHERY);
         player = new Player(NECROPOLIS, 3000);
     }
-
     @Test
     void shouldConvertArcherySkillCorrectly(){
-        BuffOrDebuffSkill convSkill = (BuffOrDebuffSkill) new BuffOrDebuffSkillFactory().createInner(skill,new SkillMasteries(skill,SkillStatistic.SkillLevel.BASIC));
-//        int a = 1;
-//        assertEquals(SkillStatistic.TargetType.ALLIES, convSkill.getTargetType());
+        BuffOrDebuffSkill convSkill = (BuffOrDebuffSkill) new BuffOrDebuffSkillFactory().createInner(skill, new SkillMasteries(skill, SkillStatistic.SkillLevel.BASIC));
+        assertEquals(SkillStatistic.TargetType.ALLIES, convSkill.getTargetType());
     }
     @Test
     void shouldReturnEconomySkillList(){

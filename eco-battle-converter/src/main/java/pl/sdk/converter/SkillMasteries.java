@@ -9,13 +9,15 @@ public class SkillMasteries {
     private HashMap<EconomySkill, SkillStatistic.SkillLevel> skillMap;
 
     public SkillMasteries(HashMap<EconomySkill, SkillStatistic.SkillLevel> aSkillMap) {
+        skillMap = new HashMap<>();
         aSkillMap.forEach((key,val) ->{ skillMap.put(key, val); });
     }
 
     public SkillMasteries(EconomySkill aKey,SkillStatistic.SkillLevel aVal) {
+        skillMap = new HashMap<>();
         skillMap.put(aKey, aVal);
     }
-    public SkillStatistic.SkillLevel get(SkillStatistic akey){
+    public SkillStatistic.SkillLevel get(EconomySkill akey){
         return skillMap.get(akey);
     }
 

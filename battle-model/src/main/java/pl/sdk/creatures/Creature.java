@@ -148,6 +148,7 @@ public class Creature implements PropertyChangeListener {
         private Integer moveRange;
         private Range<Integer> damage;
         private Integer amount;
+        private boolean isArcher;
         private CalculateDamageStrategyIf calcDmgStrategy;
 
         private MagicResistanceContextIf magicDamageReducer;
@@ -201,7 +202,6 @@ public class Creature implements PropertyChangeListener {
             this.calcDmgStrategy = calcDmgStrategy;
             return this;
         }
-
         public Creature build() {
             preconditions();
             DefenceContextIf tempDefenceContext = prepareDefendingContext();

@@ -56,4 +56,5 @@ public class DefaultDefenceContext implements DefenceContextIf {
         obsSupport.addPropertyChangeListener(aEventType, aObs);
         obsSupport.firePropertyChange(LIFE_CHANGED, null, new CreatureLifeStats(currentHp,amount));
     }
+
 }

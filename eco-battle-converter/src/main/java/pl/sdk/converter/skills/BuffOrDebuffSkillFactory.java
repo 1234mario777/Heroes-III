@@ -9,7 +9,7 @@ public class BuffOrDebuffSkillFactory extends SkillFactory {
         BuffStatistic stats;
         switch (aEs.getSkillStatistic()) {
             case ARCHERY:
-                switch (aSkillMasteries.get(SkillStatistic.ARCHERY)) {
+                switch (aSkillMasteries.get(aEs)) {
                     case BASIC:
                         stats = BuffStatistic.builder().attackPercentage(0.1).build();
                         return new BuffOrDebuffSkill(aEs.getName(), aEs.getTargetType(), stats);
