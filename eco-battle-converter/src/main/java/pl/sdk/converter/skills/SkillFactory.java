@@ -1,7 +1,7 @@
 package pl.sdk.converter.skills;
 
 import pl.sdk.converter.SkillMasteries;
-import pl.sdk.creatures.skills.AbstractSkill;
+import pl.sdk.skills.AbstractSkill;
 import pl.sdk.skills.EconomySkill;
 
 public abstract class SkillFactory {

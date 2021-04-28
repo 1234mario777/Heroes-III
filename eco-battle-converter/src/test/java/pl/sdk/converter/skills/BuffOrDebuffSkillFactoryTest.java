@@ -3,9 +3,11 @@ package pl.sdk.converter.skills;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import pl.sdk.converter.SkillMasteries;
-import pl.sdk.creatures.skills.BuffOrDebuffSkill;
+import pl.sdk.skills.BuffOrDebuffSkill;
 import pl.sdk.hero.Player;
-import pl.sdk.skills.*;
+import pl.sdk.skills.EconomySkill;
+import pl.sdk.skills.EconomySkillFactory;
+import pl.sdk.skills.SkillStatistic;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static pl.sdk.Fraction.NECROPOLIS;

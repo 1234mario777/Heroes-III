@@ -2,6 +2,7 @@ package pl.sdk.gui;
 
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
@@ -10,7 +11,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import pl.sdk.skills.EconomySkill;
 import pl.sdk.skills.EconomySkillFactory;
-
 
 
 public class SkillButton extends Button {
@@ -33,26 +33,26 @@ public class SkillButton extends Button {
         image.setFitHeight(20);
         image.setFitWidth(20);
         topPane.getChildren().add(image);
-        javafx.scene.control.Label spellName = new javafx.scene.control.Label( skill.getName() );
+        Label spellName = new Label( skill.getName() );
         spellName.getStyleClass().add( "buy-creature-text" );
         topPane.getChildren().add( spellName );
         topPane.setAlignment( Pos.CENTER );
 
         VBox borderPane = new VBox( );
         HBox statisticBox = new HBox(  );
-        javafx.scene.control.Label goldCost = new javafx.scene.control.Label("Gold: " + skill.getGoldCost());
+        Label goldCost = new Label("Gold: " + skill.getGoldCost());
         goldCost.getStyleClass().add( "creature-button-statistic" );
         statisticBox.getChildren().add(goldCost );
-        javafx.scene.control.Label levelLabel = new javafx.scene.control.Label("Level: " + skill.getSkillLevel());
+        Label levelLabel = new Label("Level: " + skill.getSkillLevel());
         levelLabel.getStyleClass().add( "creature-button-statistic" );
         statisticBox.getChildren().add(levelLabel );
-        javafx.scene.control.Label targetLabel = new javafx.scene.control.Label("Target: " + skill.getTargetType());
+        Label targetLabel = new Label("Target: " + skill.getTargetType());
         targetLabel.getStyleClass().add( "creature-button-statistic" );
         statisticBox.getChildren().add(targetLabel );
         statisticBox.setAlignment( Pos.CENTER );
         borderPane.getChildren().add( statisticBox );
 
-        javafx.scene.control.Label descriptionLabel = new javafx.scene.control.Label( skill.getDescription());
+        Label descriptionLabel = new Label( skill.getDescription());
         descriptionLabel.getStyleClass().add( "creature-button-statistic" );
         borderPane.getChildren().add( descriptionLabel );
         borderPane.setAlignment( Pos.CENTER );

@@ -1,10 +1,10 @@
 package pl.sdk.converter.skills;
 
 import pl.sdk.converter.SkillMasteries;
-import pl.sdk.creatures.skills.AbstractSkill;
-import pl.sdk.creatures.skills.BuffOrDebuffSkill;
-import pl.sdk.creatures.skills.BuffStatistic;
-import pl.sdk.skills.*;
+import pl.sdk.skills.AbstractSkill;
+import pl.sdk.skills.BuffOrDebuffSkill;
+import pl.sdk.skills.BuffStatistic;
+import pl.sdk.skills.EconomySkill;
 
 public class BuffOrDebuffSkillFactory extends SkillFactory {
 

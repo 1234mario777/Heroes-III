@@ -7,8 +7,6 @@ import pl.sdk.creatures.defending.DefenceContextFactory;
 import pl.sdk.creatures.defending.DefenceContextIf;
 import pl.sdk.creatures.movingContext.MoveContext;
 import pl.sdk.creatures.movingContext.MoveContextIf;
-import pl.sdk.creatures.skills.BuffOrDebuffSkill;
-import pl.sdk.creatures.skills.BuffSkillContainer;
 import pl.sdk.creatures.spells.BuffContainer;
 import pl.sdk.creatures.spells.MagicResFactory;
 import pl.sdk.creatures.spells.MagicResistanceContextIf;
@@ -29,7 +27,6 @@ public class Creature implements PropertyChangeListener {
 
     private BuffContainer buffContainter;
     private MagicResistanceContextIf magicDamageReducer;
-    private BuffSkillContainer buffSkillContainer;
     private MoveContextIf moveContext;
     private DefenceContextIf defenceContext;
     private AttackContextIf attackContext;
@@ -49,14 +46,10 @@ public class Creature implements PropertyChangeListener {
         buffContainter = new BuffContainer();
     }
     public boolean isArcher(){
-        return true;
+        return this.getAttackContext().getAttackerStatistic().getAttackRange() >= 100;
     }
     public BuffContainer getBuffContainer() {
         return buffContainter;
-    }
-
-    BuffSkillContainer getBuffSkillContainer() {
-        return buffSkillContainer;
     }
 
     public DefenceContextIf getDefenceContext() {
@@ -145,9 +138,9 @@ public class Creature implements PropertyChangeListener {
         retaliationContext.updateRetaliateCounter();
     }
 
-    public void applySkill(BuffOrDebuffSkill aBuffOrDebuffSkill) {
-        buffSkillContainer.add(aBuffOrDebuffSkill);
-    }
+//    public void applySkill(BuffOrDebuffSkill aBuffOrDebuffSkill, Creature aC) {
+//        aC.
+//    }
 
     public static class Builder {
         private CreatureStatistic stats;
@@ -159,7 +152,6 @@ public class Creature implements PropertyChangeListener {
         private Integer moveRange;
         private Range<Integer> damage;
         private Integer amount;
-        private boolean isArcher;
         private CalculateDamageStrategyIf calcDmgStrategy;
 
         private MagicResistanceContextIf magicDamageReducer;

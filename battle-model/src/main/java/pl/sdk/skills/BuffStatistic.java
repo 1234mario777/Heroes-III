@@ -1,4 +1,4 @@
-package pl.sdk.creatures.skills;
+package pl.sdk.skills;
 
 import com.google.common.collect.Range;
 import lombok.AllArgsConstructor;

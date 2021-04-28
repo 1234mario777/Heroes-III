@@ -1,8 +1,6 @@
-package pl.sdk.creatures.skills;
+package pl.sdk.skills;
 
 import pl.sdk.Hero;
-
-import pl.sdk.skills.SkillStatistic;
 
 public abstract class AbstractSkill {
 
