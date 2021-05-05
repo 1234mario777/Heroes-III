@@ -33,6 +33,8 @@ public class SplashDamageCreatureDecorator implements AttackContextIf {
         return decorated.canYouCounterAttackMe();
     }
 
+
+
     @Override
     public void propertyChange(PropertyChangeEvent aPropertyChangeEvent) {
         decorated.propertyChange(aPropertyChangeEvent);

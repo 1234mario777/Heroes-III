@@ -1,6 +1,9 @@
 package pl.sdk.skills;
 
 import pl.sdk.Hero;
+import pl.sdk.creatures.Creature;
+
+import java.util.List;
 
 public abstract class AbstractSkill {
 
@@ -15,6 +18,8 @@ public abstract class AbstractSkill {
     SkillStatistic.TargetType getTargetType() { return targetType; }
     String getName() { return name; }
     public abstract void applyEffect(Hero aHero);
+    public abstract void applyEffect(List<Creature> aCreatureList);
+    public abstract void applyEffect(Creature aCreature);
     @Override
     public String toString() { return "AbstractSkill{" + "name='" + name + '\'' + '}'; }
 }

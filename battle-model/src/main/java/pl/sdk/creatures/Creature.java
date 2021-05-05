@@ -31,6 +31,7 @@ public class Creature implements PropertyChangeListener {
     private DefenceContextIf defenceContext;
     private AttackContextIf attackContext;
     private RetaliationContextIf retaliationContext;
+    private CreatureDynamicStats addictionalStats;
 
     // Constructor for mockito. Don't use it! You have builder here.
 
@@ -45,6 +46,7 @@ public class Creature implements PropertyChangeListener {
 
         buffContainter = new BuffContainer();
     }
+
     public boolean isArcher(){
         return this.getAttackContext().getAttackerStatistic().getAttackRange() >= 100;
     }
@@ -73,7 +75,7 @@ public class Creature implements PropertyChangeListener {
         int percentageBuff = getPercentageBuff(ret);
         int scalarBuff = getScalarBuff();
 
-        return ret + percentageBuff + scalarBuff;
+        return ret + percentageBuff + scalarBuff + addictionalStats.getMoveRange();
     }
 
     private int getScalarBuff() {
@@ -138,9 +140,13 @@ public class Creature implements PropertyChangeListener {
         retaliationContext.updateRetaliateCounter();
     }
 
-//    public void applySkill(BuffOrDebuffSkill aBuffOrDebuffSkill, Creature aC) {
-//        aC.
-//    }
+    public void increaseStatByPercentage(CreatureDynamicStats aBuilder) {
+        addictionalStats = aBuilder;
+    }
+
+    public void increaseStat(CreatureDynamicStats aBuilder) {
+        addictionalStats = aBuilder;
+    }
 
     public static class Builder {
         private CreatureStatistic stats;
@@ -264,7 +270,6 @@ public class Creature implements PropertyChangeListener {
             if (stats != null){
                 return AttackContextFactory.create(stats);
             }
-
             //for testing
             if (calcDmgStrategy == null) {
                 calcDmgStrategy = CalculateDamageStrategyIf.create(CalculateDamageStrategyIf.TYPE.DEFAULT);

@@ -33,6 +33,7 @@ public class DefaultAttackContext implements AttackContextIf {
         return true;
     }
 
+
     @Override
     public void propertyChange(PropertyChangeEvent aPropertyChangeEvent) {
         stats = new AttackerWithBuffEtcStatistic(((CreatureLifeStats)aPropertyChangeEvent.getNewValue()).getAmount(),stats);

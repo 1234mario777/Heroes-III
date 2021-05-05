@@ -9,6 +9,7 @@ import pl.sdk.converter.skills.SkillFactory;
 import pl.sdk.converter.spells.SpellFactory;
 import pl.sdk.creatures.AbstractFractionFactory;
 import pl.sdk.creatures.Creature;
+import pl.sdk.creatures.CreatureDynamicStats;
 import pl.sdk.gui.BattleMapController;
 import pl.sdk.skills.AbstractSkill;
 import pl.sdk.skills.EconomySkill;
@@ -46,24 +47,30 @@ public class EcoBattleConverter {
     }
 
     public static Hero convert(Player aPlayer1) {
+        SkillMasteries skillMasteries = new SkillMasteries(aPlayer1.getSkillsMap());
+
+        List<AbstractSkill> skills = aPlayer1.getSkillList().stream()
+                .map(es -> SkillFactory.create(es, skillMasteries))
+                .collect(Collectors.toList());
+
         List<Creature> creatures = new ArrayList<>();
         AbstractFractionFactory factory = AbstractFractionFactory.getInstance(Fraction.NECROPOLIS);
         aPlayer1.getCreatures().forEach(ecoCreature ->
                 creatures.add(factory.create(ecoCreature.isUpgraded(), ecoCreature.getTier(), ecoCreature.getAmount())));
+        skills.stream().forEach(s -> s.applyEffect(creatures));
+
+//        creatures = skills.stream().forEach((skill) -> skill.applyEffect(creatures));
+
 
         // -> artefakty
         SpellMasteries spellMasteries = new SpellMasteries(BASIC, BASIC, BASIC, BASIC);
         //Artefacts skills itd.
-        SkillMasteries skillMasteries = new SkillMasteries(aPlayer1.getSkillsMap());
+
 
         HashMap<EconomySkill, SkillStatistic.SkillLevel> skillsMap = aPlayer1.getSkillsMap();
 
         List<AbstractSpell> spells = aPlayer1.getSpells().stream()
                 .map(es -> SpellFactory.create(es, aPlayer1.getPower(), spellMasteries))
-                .collect(Collectors.toList());
-
-        List<AbstractSkill> skills = aPlayer1.getSkillList().stream()
-                .map(es -> SkillFactory.create(es, skillMasteries))
                 .collect(Collectors.toList());
 
         Hero hero = new Hero(creatures, new SpellBook(aPlayer1.getWisdom(), spells));

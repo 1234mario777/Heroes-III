@@ -13,7 +13,7 @@ public class SkillMasteries {
         aSkillMap.forEach((key,val) ->{ skillMap.put(key, val); });
     }
 
-    public SkillMasteries(EconomySkill aKey,SkillStatistic.SkillLevel aVal) {
+    public SkillMasteries(EconomySkill aKey, SkillStatistic.SkillLevel aVal) {
         skillMap = new HashMap<>();
         skillMap.put(aKey, aVal);
     }

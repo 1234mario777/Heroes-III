@@ -1,5 +1,6 @@
 package pl.sdk.creatures.attacking;
 
+import com.google.common.collect.Range;
 import pl.sdk.creatures.CreatureStatistic;
 
 public class AttackContextFactory {
@@ -37,4 +38,5 @@ public class AttackContextFactory {
                 .damage(aStatistic.getDamage())
                 .build();
     }
+
 }
