@@ -17,6 +17,7 @@ import pl.sdk.spells.BuffStatistic;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.List;
 
 
 @NoArgsConstructor
@@ -31,7 +32,7 @@ public class Creature implements PropertyChangeListener {
     private DefenceContextIf defenceContext;
     private AttackContextIf attackContext;
     private RetaliationContextIf retaliationContext;
-    private CreatureDynamicStats addictionalStats;
+    private List<CreatureDynamicStats> addictionalStats;
 
     // Constructor for mockito. Don't use it! You have builder here.
 
@@ -74,8 +75,8 @@ public class Creature implements PropertyChangeListener {
         int ret = moveContext.getMoveRange();
         int percentageBuff = getPercentageBuff(ret);
         int scalarBuff = getScalarBuff();
-
-        return ret + percentageBuff + scalarBuff + addictionalStats.getMoveRange();
+        int addictionalSum = addictionalStats.stream().mapToInt(a -> a.getMoveRange()).sum();
+        return ret + percentageBuff + scalarBuff + addictionalSum;
     }
 
     private int getScalarBuff() {
@@ -141,11 +142,11 @@ public class Creature implements PropertyChangeListener {
     }
 
     public void increaseStatByPercentage(CreatureDynamicStats aBuilder) {
-        addictionalStats = aBuilder;
+        addictionalStats.add(aBuilder);
     }
 
     public void increaseStat(CreatureDynamicStats aBuilder) {
-        addictionalStats = aBuilder;
+        addictionalStats.add(aBuilder);
     }
 
     public static class Builder {
