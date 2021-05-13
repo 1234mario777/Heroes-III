@@ -1,5 +1,7 @@
 package pl.sdk.creatures.attacking;
 
+import pl.sdk.creatures.CreatureDynamicStats;
+
 import java.beans.PropertyChangeListener;
 
 public interface AttackContextIf extends PropertyChangeListener {
@@ -8,4 +10,5 @@ public interface AttackContextIf extends PropertyChangeListener {
     CalculateDamageStrategyIf getDamageCalculator();
     AttackerStatisticIf getAttackerStatistic();
     boolean canYouCounterAttackMe();
+    void addAdictionalStats(CreatureDynamicStats aS);
 }

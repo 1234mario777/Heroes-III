@@ -1,6 +1,8 @@
 package pl.sdk.creatures.attacking;
 
 
+import pl.sdk.creatures.CreatureDynamicStats;
+
 import java.beans.PropertyChangeEvent;
 
 public class SplashDamageCreatureDecorator implements AttackContextIf {
@@ -33,6 +35,11 @@ public class SplashDamageCreatureDecorator implements AttackContextIf {
         return decorated.canYouCounterAttackMe();
     }
 
+    @Override
+    public void addAdictionalStats(CreatureDynamicStats aS) {
+        decorated.getAttackerStatistic().setDamage(aS);
+        decorated.getAttackerStatistic().setAttack(aS);
+    }
 
 
     @Override

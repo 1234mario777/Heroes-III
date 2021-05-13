@@ -1,5 +1,6 @@
 package pl.sdk.creatures.attacking;
 
+import pl.sdk.creatures.CreatureDynamicStats;
 import pl.sdk.creatures.defending.CreatureLifeStats;
 
 import java.beans.PropertyChangeEvent;
@@ -7,6 +8,7 @@ import java.beans.PropertyChangeEvent;
 public class DefaultAttackContext implements AttackContextIf {
     private CalculateDamageStrategyIf calculateDamageStrategy;
     private AttackerStatisticIf stats;
+    private CreatureDynamicStats ds;
 
     DefaultAttackContext(CalculateDamageStrategyIf aCalculateDamageStrategy, AttackerStatisticIf aStats) {
         calculateDamageStrategy = aCalculateDamageStrategy;
@@ -31,6 +33,12 @@ public class DefaultAttackContext implements AttackContextIf {
     @Override
     public boolean canYouCounterAttackMe() {
         return true;
+    }
+
+    @Override
+    public void addAdictionalStats(CreatureDynamicStats aS) {
+        stats.setDamage(aS);
+        stats.setAttack(aS);
     }
 
 

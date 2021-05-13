@@ -17,6 +17,7 @@ import pl.sdk.spells.BuffStatistic;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -32,7 +33,7 @@ public class Creature implements PropertyChangeListener {
     private DefenceContextIf defenceContext;
     private AttackContextIf attackContext;
     private RetaliationContextIf retaliationContext;
-    private List<CreatureDynamicStats> addictionalStats;
+    private List<CreatureDynamicStats> addictionalStats = new ArrayList<>();
 
     // Constructor for mockito. Don't use it! You have builder here.
 
@@ -44,7 +45,6 @@ public class Creature implements PropertyChangeListener {
         moveContext = aMoveContextIf;
         retaliationContext = RetaliationContextFactory.create(1);
         magicDamageReducer = aMagicResContext;
-
         buffContainter = new BuffContainer();
     }
 
@@ -145,8 +145,9 @@ public class Creature implements PropertyChangeListener {
         addictionalStats.add(aBuilder);
     }
 
-    public void increaseStat(CreatureDynamicStats aBuilder) {
-        addictionalStats.add(aBuilder);
+    public void increaseStat(CreatureDynamicStats aS) {
+        addictionalStats.add(aS);
+        attackContext.addAdictionalStats(aS);
     }
 
     public static class Builder {

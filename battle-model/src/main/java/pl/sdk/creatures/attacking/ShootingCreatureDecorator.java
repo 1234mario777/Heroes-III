@@ -1,5 +1,7 @@
 package pl.sdk.creatures.attacking;
 
+import pl.sdk.creatures.CreatureDynamicStats;
+
 import java.beans.PropertyChangeEvent;
 
 class ShootingCreatureDecorator implements AttackContextIf {
@@ -32,6 +34,11 @@ class ShootingCreatureDecorator implements AttackContextIf {
     @Override
     public boolean canYouCounterAttackMe() {
         return false;
+    }
+
+    @Override
+    public void addAdictionalStats(CreatureDynamicStats aS) {
+
     }
 
     @Override

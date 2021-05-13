@@ -19,7 +19,6 @@ public abstract class AbstractSkill {
     String getName() { return name; }
     public abstract void applyEffect(Hero aHero);
     public abstract void applyEffect(List<Creature> aCreatureList);
-    public abstract void applyEffect(Creature aCreature);
     @Override
     public String toString() { return "AbstractSkill{" + "name='" + name + '\'' + '}'; }
 }

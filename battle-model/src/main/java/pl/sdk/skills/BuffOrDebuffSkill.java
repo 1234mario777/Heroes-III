@@ -34,18 +34,7 @@ public class BuffOrDebuffSkill extends AbstractSkill {
 //        });
     }
     public void applyEffect(List<Creature> aC) {
-        aC.stream().forEach(c->{
-            if(c.isArcher()){
-                c.increaseStatByPercentage(buffStats);
-            }else{
-                return ;
-            }
-        });
-    }
-
-    @Override
-    public void applyEffect(Creature aCreature) {
-
+        aC.stream().forEach(c-> c.increaseStat(buffStats));
     }
 
     @Override

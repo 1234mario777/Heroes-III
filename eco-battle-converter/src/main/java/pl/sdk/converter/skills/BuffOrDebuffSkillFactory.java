@@ -15,13 +15,13 @@ public class BuffOrDebuffSkillFactory extends SkillFactory {
             case ARCHERY:
                 switch (aSkillMasteries.get(aEs)) {
                     case BASIC:
-                        stats = CreatureDynamicStats.builder().attackPercentage(0.1).build();
+                        stats = CreatureDynamicStats.builder().damagePercentage(0.1).build();
                         return new BuffOrDebuffSkill(aEs.getName(), aEs.getTargetType(), stats);
                     case ADVANCED:
-                        stats = CreatureDynamicStats.builder().attackPercentage(0.2).build();
+                        stats = CreatureDynamicStats.builder().damagePercentage(0.2).build();
                         return new BuffOrDebuffSkill(aEs.getName(), aEs.getTargetType(), stats);
                     case EXPERT:
-                        stats = CreatureDynamicStats.builder().attackPercentage(0.5).build();
+                        stats = CreatureDynamicStats.builder().damagePercentage(0.5).build();
                         return new BuffOrDebuffSkill(aEs.getName(), aEs.getTargetType(), stats);
                 }
             case OFFENCE:

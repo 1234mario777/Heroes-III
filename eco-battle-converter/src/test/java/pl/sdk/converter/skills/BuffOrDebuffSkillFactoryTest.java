@@ -43,10 +43,13 @@ public class BuffOrDebuffSkillFactoryTest {
     @Test
     void shouldIncreaseDamageForShoutingCreature(){
         Creature archer = factroy.create(false,5,1);
+        assertEquals(archer.getAttackContext().getAttackerStatistic().getDamage().lowerEndpoint(),11);
+        assertEquals(archer.getAttackContext().getAttackerStatistic().getDamage().upperEndpoint(),15);
         List<Creature> creatures = new ArrayList<>();
         creatures.add(archer);
-        abstractArcherySkill.applyEffect( creatures);
-
+        abstractArcherySkill.applyEffect(creatures);
+        assertEquals(archer.getAttackContext().getAttackerStatistic().getDamage().lowerEndpoint(),12);
+        assertEquals(archer.getAttackContext().getAttackerStatistic().getDamage().upperEndpoint(),16);
     }
 
 }

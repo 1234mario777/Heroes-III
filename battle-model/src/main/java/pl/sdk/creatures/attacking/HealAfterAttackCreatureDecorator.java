@@ -1,5 +1,7 @@
 package pl.sdk.creatures.attacking;
 
+import pl.sdk.creatures.CreatureDynamicStats;
+
 import java.beans.PropertyChangeEvent;
 
 class HealAfterAttackCreatureDecorator implements AttackContextIf {
@@ -30,6 +32,11 @@ class HealAfterAttackCreatureDecorator implements AttackContextIf {
     @Override
     public boolean canYouCounterAttackMe() {
         return decorated.canYouCounterAttackMe();
+    }
+
+    @Override
+    public void addAdictionalStats(CreatureDynamicStats aS) {
+
     }
 
     @Override
