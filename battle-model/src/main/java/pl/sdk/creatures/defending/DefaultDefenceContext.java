@@ -7,6 +7,7 @@ import static pl.sdk.creatures.Creature.LIFE_CHANGED;
 
 public class DefaultDefenceContext implements DefenceContextIf {
 
+//    Dodac tu pole DamgeReduction i wysylac je do damageApplier
     private DefaultDamageApplier damageApplier;
     private int armor;
     private int currentHp;

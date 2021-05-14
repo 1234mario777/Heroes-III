@@ -41,7 +41,7 @@ public class BuffOrDebuffSkillFactoryTest {
         assertEquals(player.getSkillList().get(0), economyArcherySkill);
     }
     @Test
-    void shouldIncreaseDamageForShoutingCreature(){
+    void shouldIncreaseDamageForShoutingCreatureBy10(){
         Creature archer = factroy.create(false,5,1);
         assertEquals(archer.getAttackContext().getAttackerStatistic().getDamage().lowerEndpoint(),11);
         assertEquals(archer.getAttackContext().getAttackerStatistic().getDamage().upperEndpoint(),15);
@@ -51,5 +51,18 @@ public class BuffOrDebuffSkillFactoryTest {
         assertEquals(archer.getAttackContext().getAttackerStatistic().getDamage().lowerEndpoint(),12);
         assertEquals(archer.getAttackContext().getAttackerStatistic().getDamage().upperEndpoint(),16);
     }
+    @Test
+    void shouldIncreaseDamageForShoutingCreatureBy20(){
+        SkillMasteries sM = new SkillMasteries(economyArcherySkill, SkillStatistic.SkillLevel.ADVANCED);
+        abstractArcherySkill = SkillFactory.create(economyArcherySkill,sM);
 
+        Creature archer = factroy.create(false,5,1);
+        assertEquals(archer.getAttackContext().getAttackerStatistic().getDamage().lowerEndpoint(),11);
+        assertEquals(archer.getAttackContext().getAttackerStatistic().getDamage().upperEndpoint(),15);
+        List<Creature> creatures = new ArrayList<>();
+        creatures.add(archer);
+        abstractArcherySkill.applyEffect(creatures);
+        assertEquals(archer.getAttackContext().getAttackerStatistic().getDamage().lowerEndpoint(),13);
+        assertEquals(archer.getAttackContext().getAttackerStatistic().getDamage().upperEndpoint(),18);
+    }
 }
