@@ -148,6 +148,7 @@ public class Creature implements PropertyChangeListener {
     public void increaseStat(CreatureDynamicStats aS) {
         addictionalStats.add(aS);
         attackContext.addAdictionalStats(aS);
+        defenceContext.addAdictionalStats(aS);
     }
 
     public static class Builder {

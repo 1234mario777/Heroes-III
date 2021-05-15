@@ -15,6 +15,7 @@ public class CreatureDynamicStats {
     private int maxHp;
     private Range<Integer> damage;
 
+    private double damageReduction;
     private double moveRangePercentage;
     private double attackPercentage;
     private double armorPercentage;

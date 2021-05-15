@@ -33,6 +33,7 @@ public class BuffOrDebuffSkill extends AbstractSkill {
 //            }
 //        });
     }
+    @Override
     public void applyEffect(List<Creature> aC) {
         aC.stream().forEach(c-> c.increaseStat(buffStats));
     }

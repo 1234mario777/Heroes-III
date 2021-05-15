@@ -38,7 +38,7 @@ public class SplashDamageCreatureDecorator implements AttackContextIf {
     @Override
     public void addAdictionalStats(CreatureDynamicStats aS) {
         decorated.getAttackerStatistic().setDamage(aS);
-        decorated.getAttackerStatistic().setAttack(aS);
+//        decorated.getAttackerStatistic().setAttack(aS);
     }
 
 

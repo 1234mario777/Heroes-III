@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import pl.sdk.converter.SkillMasteries;
 import pl.sdk.creatures.Creature;
 import pl.sdk.creatures.NecropolisFactory;
+import pl.sdk.creatures.attacking.AttackEngine;
 import pl.sdk.skills.*;
 import pl.sdk.hero.Player;
 
@@ -16,18 +17,28 @@ import static pl.sdk.Fraction.NECROPOLIS;
 
 public class BuffOrDebuffSkillFactoryTest {
     public static final String ARCHERY = "Archery";
-    private EconomySkill economyArcherySkill;
     private Player player;
     NecropolisFactory factroy;
     private SkillMasteries skillMasteries;
+    private EconomySkill economyArcherySkill;
+    private EconomySkill economyArmourSkill;
+    private EconomySkill economyOffenceSkill;
+    
     private AbstractSkill abstractArcherySkill;
+    private AbstractSkill abstractOffenceSkill;
+    private AbstractSkill abstractArmourSkill;
+
 
     @BeforeEach
     void init(){
         factroy  = new NecropolisFactory();
         economyArcherySkill = new EconomySkillFactory().create(SkillStatistic.ARCHERY);
+        economyArmourSkill = new EconomySkillFactory().create(SkillStatistic.ARMOURER);
+        economyOffenceSkill = new EconomySkillFactory().create(SkillStatistic.OFFENCE);
         skillMasteries = new SkillMasteries(economyArcherySkill, SkillStatistic.SkillLevel.BASIC);
         abstractArcherySkill = SkillFactory.create(economyArcherySkill,skillMasteries);
+        abstractArmourSkill = SkillFactory.create(economyArmourSkill,skillMasteries);
+        abstractOffenceSkill = SkillFactory.create(economyOffenceSkill,skillMasteries);
         player = new Player(NECROPOLIS, 3000);
     }
     @Test
@@ -65,4 +76,5 @@ public class BuffOrDebuffSkillFactoryTest {
         assertEquals(archer.getAttackContext().getAttackerStatistic().getDamage().lowerEndpoint(),13);
         assertEquals(archer.getAttackContext().getAttackerStatistic().getDamage().upperEndpoint(),18);
     }
+
 }

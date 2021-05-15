@@ -1,5 +1,7 @@
 package pl.sdk.creatures.defending;
 
+import pl.sdk.creatures.CreatureDynamicStats;
+
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
@@ -9,6 +11,8 @@ public class DefaultDefenceContext implements DefenceContextIf {
 
 //    Dodac tu pole DamgeReduction i wysylac je do damageApplier
     private DefaultDamageApplier damageApplier;
+    private double damageReductionPercent;
+    private double damageIncreasePercent;
     private int armor;
     private int currentHp;
     private int maxHp;
@@ -47,10 +51,18 @@ public class DefaultDefenceContext implements DefenceContextIf {
 
     @Override
     public void applyDamage(int aDamageToDeal) {
-        CreatureLifeStats creatureLifeStats = damageApplier.countDamageToApply(this, aDamageToDeal);
+        CreatureLifeStats creatureLifeStats = damageApplier.countDamageToApply(this, aDamageToDeal, damageReductionPercent, damageIncreasePercent);
         obsSupport.firePropertyChange(LIFE_CHANGED, new CreatureLifeStats(currentHp,amount), creatureLifeStats);
         amount = creatureLifeStats.getAmount();
         currentHp = creatureLifeStats.getHp();
+    }
+
+
+
+    @Override
+    public void addAdictionalStats(CreatureDynamicStats aS) {
+        setDamageReductionPercent(aS.getDamageReduction());
+        setDamageIncreasePercent(aS.getDamagePercentage());
     }
 
     public void addObserver(String aEventType, PropertyChangeListener aObs){
@@ -58,4 +70,11 @@ public class DefaultDefenceContext implements DefenceContextIf {
         obsSupport.firePropertyChange(LIFE_CHANGED, null, new CreatureLifeStats(currentHp,amount));
     }
 
+    void setDamageIncreasePercent(double aDamageIncreasePercent) {
+        damageIncreasePercent = aDamageIncreasePercent;
+    }
+
+    void setDamageReductionPercent(double aDamageReductionPercent) {
+        damageReductionPercent = aDamageReductionPercent;
+    }
 }

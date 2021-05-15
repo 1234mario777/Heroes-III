@@ -25,9 +25,29 @@ public class BuffOrDebuffSkillFactory extends SkillFactory {
                         return new BuffOrDebuffSkill(aEs.getName(), aEs.getTargetType(), stats);
                 }
             case OFFENCE:
-                break;
+                switch (aSkillMasteries.get(aEs)) {
+                    case BASIC:
+                        stats = CreatureDynamicStats.builder().damagePercentage(0.1).build();
+                        return new BuffOrDebuffSkill(aEs.getName(), aEs.getTargetType(), stats);
+                    case ADVANCED:
+                        stats = CreatureDynamicStats.builder().damagePercentage(0.2).build();
+                        return new BuffOrDebuffSkill(aEs.getName(), aEs.getTargetType(), stats);
+                    case EXPERT:
+                        stats = CreatureDynamicStats.builder().damagePercentage(0.3).build();
+                        return new BuffOrDebuffSkill(aEs.getName(), aEs.getTargetType(), stats);
+                }
             case ARMOURER:
-                break;
+                switch (aSkillMasteries.get(aEs)) {
+                    case BASIC:
+                        stats = CreatureDynamicStats.builder().damageReduction(0.05).build();
+                        return new BuffOrDebuffSkill(aEs.getName(), aEs.getTargetType(), stats);
+                    case ADVANCED:
+                        stats = CreatureDynamicStats.builder().damageReduction(0.1).build();
+                        return new BuffOrDebuffSkill(aEs.getName(), aEs.getTargetType(), stats);
+                    case EXPERT:
+                        stats = CreatureDynamicStats.builder().damageReduction(0.15).build();
+                        return new BuffOrDebuffSkill(aEs.getName(), aEs.getTargetType(), stats);
+                }
             case LEADERSHIP:
                 break;
             case RESISTANCE:

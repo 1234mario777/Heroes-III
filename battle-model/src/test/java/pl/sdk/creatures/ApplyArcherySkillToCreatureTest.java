@@ -1,32 +1,25 @@
 package pl.sdk.creatures;
 
-import com.google.common.collect.Range;
-import net.bytebuddy.asm.Advice;
-import org.checkerframework.checker.units.qual.C;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import pl.sdk.creatures.attacking.AttackEngine;
 import pl.sdk.skills.AbstractSkill;
-import pl.sdk.skills.SkillStatistic;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class ApplySkillEffectToCreature {
+public class ApplyArcherySkillToCreatureTest {
     NecropolisFactory factroy;
     private AbstractSkill skill;
-    private Creature archer;
+    private Creature basicArcher;
 
     @BeforeEach
     void init(){
         factroy  = new NecropolisFactory();
-        archer = factroy.create(false,5,1);
+        basicArcher = factroy.create(false,5,1);
     }
     @Test
     void shouldReturnTrueWhileTestingIsCreatureIsShoutingUnit(){
-        assertTrue(archer.isArcher());
+        assertTrue(basicArcher.isArcher());
     }
     @Test
     void shouldReturnFalseWhileTestingIsCreatureIsShoutingUnit(){
@@ -35,6 +28,7 @@ public class ApplySkillEffectToCreature {
     }
     @Test
     void shouldIncreaseCreatureDamageStatistic(){
+        Creature archer = factroy.create(false,5,1);
         assertEquals(archer.getAttackContext().getAttackerStatistic().getDamage().lowerEndpoint(),11);
         assertEquals(archer.getAttackContext().getAttackerStatistic().getDamage().upperEndpoint(),15);
         CreatureDynamicStats s = CreatureDynamicStats.builder().damagePercentage(0.2).build();
