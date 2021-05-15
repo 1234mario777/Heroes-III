@@ -36,6 +36,4 @@ public class ApplyArcherySkillToCreatureTest {
         assertEquals(archer.getAttackContext().getAttackerStatistic().getDamage().lowerEndpoint(),13);
         assertEquals(archer.getAttackContext().getAttackerStatistic().getDamage().upperEndpoint(),18);
     }
-
-
 }

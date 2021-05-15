@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 import pl.sdk.converter.SkillMasteries;
 import pl.sdk.creatures.Creature;
 import pl.sdk.creatures.NecropolisFactory;
-import pl.sdk.creatures.attacking.AttackEngine;
 import pl.sdk.skills.*;
 import pl.sdk.hero.Player;
 
@@ -36,6 +35,8 @@ public class BuffOrDebuffSkillFactoryTest {
         economyArmourSkill = new EconomySkillFactory().create(SkillStatistic.ARMOURER);
         economyOffenceSkill = new EconomySkillFactory().create(SkillStatistic.OFFENCE);
         skillMasteries = new SkillMasteries(economyArcherySkill, SkillStatistic.SkillLevel.BASIC);
+        skillMasteries.put(economyArmourSkill,SkillStatistic.SkillLevel.BASIC);
+        skillMasteries.put(economyOffenceSkill,SkillStatistic.SkillLevel.BASIC);
         abstractArcherySkill = SkillFactory.create(economyArcherySkill,skillMasteries);
         abstractArmourSkill = SkillFactory.create(economyArmourSkill,skillMasteries);
         abstractOffenceSkill = SkillFactory.create(economyOffenceSkill,skillMasteries);
@@ -61,6 +62,17 @@ public class BuffOrDebuffSkillFactoryTest {
         abstractArcherySkill.applyEffect(creatures);
         assertEquals(archer.getAttackContext().getAttackerStatistic().getDamage().lowerEndpoint(),12);
         assertEquals(archer.getAttackContext().getAttackerStatistic().getDamage().upperEndpoint(),16);
+    }
+    @Test
+    void shouldNotIncreaseDamageForShoutingCreatureBy10(){
+        Creature notArcher = factroy.create(false,1,1);
+        assertEquals(notArcher.getAttackContext().getAttackerStatistic().getDamage().lowerEndpoint(),1);
+        assertEquals(notArcher.getAttackContext().getAttackerStatistic().getDamage().upperEndpoint(),3);
+        List<Creature> creatures = new ArrayList<>();
+        creatures.add(notArcher);
+        abstractArcherySkill.applyEffect(creatures);
+        assertEquals(notArcher.getAttackContext().getAttackerStatistic().getDamage().lowerEndpoint(),1);
+        assertEquals(notArcher.getAttackContext().getAttackerStatistic().getDamage().upperEndpoint(),3);
     }
     @Test
     void shouldIncreaseDamageForShoutingCreatureBy20(){
