@@ -15,5 +15,5 @@ public interface CalculateDamageStrategyIf {
         }
     }
 
-    int calculateDamage(AttackerStatisticIf aAttackerStats, int aDefenderArmor);
+    int calculateDamage(AttackStatistic aAttackerStats, int aDefenderArmor);
 }

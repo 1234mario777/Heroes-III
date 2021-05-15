@@ -13,7 +13,7 @@ import pl.sdk.creatures.spells.MagicResistanceContextIf;
 import pl.sdk.creatures.retaliating.RetaliationContextFactory;
 import pl.sdk.creatures.retaliating.RetaliationContextIf;
 import pl.sdk.spells.BuffOrDebuffSpell;
-import pl.sdk.spells.BuffStatistic;
+import pl.sdk.spells.UpgradeCreatureStats;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -44,9 +44,8 @@ public class Creature implements PropertyChangeListener {
         retaliationContext = RetaliationContextFactory.create(1);
         magicDamageReducer = aMagicResContext;
 
-        buffContainter = new BuffContainer();
+        buffContainter = new BuffContainer(this::upgradeCreatureStatistics );
     }
-
 
     public BuffContainer getBuffContainer() {
         return buffContainter;
@@ -61,7 +60,7 @@ public class Creature implements PropertyChangeListener {
     }
 
     public int getCurrentHp() {
-        return defenceContext.getCurrentHp();
+        return defenceContext.getDefenceStatistic().getCurrentHp();
     }
 
     public String getName() {
@@ -69,48 +68,12 @@ public class Creature implements PropertyChangeListener {
     }
 
     public int getMoveRange() {
-        int ret = moveContext.getMoveRange();
-        int percentageBuff = getPercentageBuff(ret);
-        int scalarBuff = getScalarBuff();
-
-        return ret + percentageBuff + scalarBuff;
-    }
-
-    private int getScalarBuff() {
-        return buffContainter.getAllBuffStats().stream()
-                .filter(b -> b.getMoveRange() != 0)
-                .mapToInt(BuffStatistic::getMoveRange).sum();
-    }
-
-    private int getPercentageBuff(int aRet) {
-        return buffContainter.getAllBuffStats().stream()
-                .filter(b -> b.getMoveRangePercentage() != 0.0)
-                .mapToInt(b -> (int) (Math.round(aRet * (b.getMoveRangePercentage()))))
-                .sum();
+        return moveContext.getMoveStatistic().getMoveRange();
     }
 
     public int getAmount() {
-        return defenceContext.getCurrentAmount();
+        return defenceContext.getDefenceStatistic().getAmount();
     }
-
-    public String currentHealth() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getCurrentHp());
-        sb.append("/");
-        sb.append(defenceContext.getMaxHp());
-        return sb.toString();
-    }
-
-//    @Override
-//    public String toString() {
-//        StringBuilder sb = new StringBuilder();
-//        sb.append(name);
-//        sb.append(System.lineSeparator());
-//        sb.append(getCurrentHp());
-//        sb.append("/");
-//        sb.append(getDefenceContext().getMaxHp());
-//        return sb.toString();
-//    }
 
     public void applyMagicDamage(int aDamage) {
         defenceContext.applyDamage(magicDamageReducer.reduceMagicDamageDamage(aDamage));
@@ -120,14 +83,39 @@ public class Creature implements PropertyChangeListener {
         buffContainter.add(aBuffOrDebuff);
     }
 
+    public void upgradeCreatureStatistics( UpgradeCreatureStats aUpgradeStats ) {
+       moveContext.getMoveStatistic().setMoveRange( moveContext.getMoveStatistic().getMoveRange() + aUpgradeStats.getMoveRange() );
+       moveContext.getMoveStatistic().setMoveRange( calculateUpgradingStats( moveContext.getMoveStatistic().getMoveRange(), aUpgradeStats.getMoveRangePercentage() ) );
+
+       defenceContext.getDefenceStatistic().setArmor(defenceContext.getDefenceStatistic().getArmor() + aUpgradeStats.getArmor());
+       defenceContext.getDefenceStatistic().setArmor( calculateUpgradingStats(defenceContext.getDefenceStatistic().getArmor(), aUpgradeStats.getArmor()) );
+       defenceContext.getDefenceStatistic().setMaxAmount( defenceContext.getDefenceStatistic().getMaxHp() + aUpgradeStats.getMaxHp() );
+       defenceContext.getDefenceStatistic().setMaxAmount( calculateUpgradingStats( defenceContext.getDefenceStatistic().getMaxHp(), aUpgradeStats.getMaxHp() ));
+       defenceContext.getDefenceStatistic().setMaxAmount( defenceContext.getDefenceStatistic().getMaxAmount() + aUpgradeStats.getMaxHp());
+       defenceContext.getDefenceStatistic().setMaxAmount( calculateUpgradingStats( defenceContext.getDefenceStatistic().getMaxAmount(), aUpgradeStats.getMaxHp() ));
+
+       attackContext.getAttackerStatistic().setAttack(attackContext.getAttackerStatistic().getAttack() + aUpgradeStats.getAttack());
+       attackContext.getAttackerStatistic().setAttack(calculateUpgradingStats( attackContext.getAttackerStatistic().getAttack(), aUpgradeStats.getAttack()));
+       attackContext.getAttackerStatistic().setDamage( Range.closed(
+               attackContext.getAttackerStatistic().getDamage().lowerEndpoint() + aUpgradeStats.getDamage().lowerEndpoint(),
+               attackContext.getAttackerStatistic().getDamage().upperEndpoint() + aUpgradeStats.getDamage().upperEndpoint()));
+        attackContext.getAttackerStatistic().setDamage( Range.closed(
+                attackContext.getAttackerStatistic().getDamage().lowerEndpoint() + (int)(attackContext.getAttackerStatistic().getDamage().lowerEndpoint() * aUpgradeStats.getArmorPercentage()),
+                attackContext.getAttackerStatistic().getDamage().upperEndpoint() + (int)(attackContext.getAttackerStatistic().getDamage().upperEndpoint() * aUpgradeStats.getArmorPercentage())));
+    }
+
+    private int calculateUpgradingStats( int aCurrent, double abuffPercentage )
+    {
+        return aCurrent + (int)(aCurrent * abuffPercentage);
+    }
+
     public int getMaxHp() {
-        return defenceContext.getMaxHp();
+        return defenceContext.getDefenceStatistic().getMaxHp();
     }
 
     @Override
     public void propertyChange(PropertyChangeEvent aPropertyChangeEvent) {
         retaliationContext.endTurnEvent(aPropertyChangeEvent);
-        buffContainter.endTurnEvent(aPropertyChangeEvent);
     }
 
     public boolean canRetaliate() {
@@ -267,12 +255,12 @@ public class Creature implements PropertyChangeListener {
                 calcDmgStrategy = CalculateDamageStrategyIf.create(CalculateDamageStrategyIf.TYPE.DEFAULT);
             }
             return AttackContextFactory.create(
-                    AttackerWithBuffEtcStatistic.builder()
-                            .amount(this.amount)
-                            .attack(this.attack)
-                            .attackRange(1)
-                            .damage(this.damage)
-                            .build(),
+                    AttackStatistic.builder()
+                                   .amount(this.amount)
+                                   .attack(this.attack)
+                                   .attackRange(1)
+                                   .damage(this.damage)
+                                   .build(),
                     calcDmgStrategy
             );
         }

@@ -21,12 +21,12 @@ class ShootingCreatureDecorator implements AttackContextIf {
     }
 
     @Override
-    public AttackerStatisticIf getAttackerStatistic() {
-        return AttackerWithBuffEtcStatistic.builder()
-                .damage(decorated.getAttackerStatistic().getDamage())
-                .attackRange(Double.MAX_VALUE)
-                .attack(decorated.getAttackerStatistic().getAttack())
-                .build();
+    public AttackStatistic getAttackerStatistic() {
+        return AttackStatistic.builder()
+                              .damage(decorated.getAttackerStatistic().getDamage())
+                              .attackRange(Double.MAX_VALUE)
+                              .attack(decorated.getAttackerStatistic().getAttack())
+                              .build();
     }
 
     @Override

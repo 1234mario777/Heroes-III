@@ -14,7 +14,7 @@ public class AttackEngine {
     }
 
     void attack(AttackContextIf aAttacker, DefenceContextIf aDefender) {
-        int damageToDeal = aAttacker.getDamageCalculator().calculateDamage(aAttacker.getAttackerStatistic(), aDefender.getArmor());
+        int damageToDeal = aAttacker.getDamageCalculator().calculateDamage(aAttacker.getAttackerStatistic(), aDefender.getDefenceStatistic().getArmor());
         aDefender.applyDamage(damageToDeal);
     }
 }

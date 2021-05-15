@@ -8,16 +8,31 @@ import lombok.Getter;
 @Builder
 @Getter
 @AllArgsConstructor
-public class AttackerWithBuffEtcStatistic implements AttackerStatisticIf{
+public class AttackStatistic {
     double attackRange;
     int attack;
     Range<Integer> damage;
     int amount;
 
-    AttackerWithBuffEtcStatistic(int aAmount, AttackerStatisticIf aCopy) {
+    AttackStatistic(int aAmount, AttackStatistic aCopy ) {
         amount = aAmount;
         attack = aCopy.getAttack();
         damage = aCopy.getDamage();
         attackRange = aCopy.getAttackRange();
+    }
+
+    public void setAttackRange( double aAttackRange )
+    {
+        attackRange = aAttackRange;
+    }
+
+    public void setAttack( int aAttack )
+    {
+        attack = aAttack;
+    }
+
+    public void setDamage( Range<Integer> aDamage )
+    {
+        damage = aDamage;
     }
 }

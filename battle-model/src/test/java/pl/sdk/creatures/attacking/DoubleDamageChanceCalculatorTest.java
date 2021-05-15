@@ -14,16 +14,16 @@ import static org.mockito.Mockito.when;
 public class DoubleDamageChanceCalculatorTest {
 
     private int DEFENDER_DEFENCE = 10;
-    private AttackerStatisticIf attackerStats;
+    private AttackStatistic attackerStats;
     private Random rand;
 
     @BeforeEach
     void init(){
-        attackerStats = AttackerWithBuffEtcStatistic.builder().
+        attackerStats = AttackStatistic.builder().
                 attack(10)
-                .amount(20)
-                .damage(Range.closed(5,5))
-                .build();
+                                       .amount(20)
+                                       .damage(Range.closed(5,5))
+                                       .build();
         rand = mock(Random.class);
         when(rand.nextInt(anyInt())).thenReturn(0);
     }

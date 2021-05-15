@@ -24,7 +24,7 @@ public class SplashDamageCreatureDecorator implements AttackContextIf {
     }
 
     @Override
-    public AttackerStatisticIf getAttackerStatistic() {
+    public AttackStatistic getAttackerStatistic() {
         return decorated.getAttackerStatistic();
     }
 

@@ -7,9 +7,9 @@ import java.util.Objects;
 public class BuffOrDebuffSpell extends AbstractSpell{
 
     private final int duration;
-    private BuffStatistic buffStats;
+    private UpgradeCreatureStats buffStats;
 
-    public BuffOrDebuffSpell(int aManaCost, int aDuration, SpellStatistic.SpellElement aElement, SpellStatistic.TargetType aTargetType, String aName, BuffStatistic aSpellStats) {
+    public BuffOrDebuffSpell(int aManaCost, int aDuration, SpellStatistic.SpellElement aElement, SpellStatistic.TargetType aTargetType, String aName, UpgradeCreatureStats aSpellStats ) {
         super(aManaCost, aTargetType, aElement, aName);
         duration = aDuration;
         buffStats = aSpellStats;
@@ -19,7 +19,7 @@ public class BuffOrDebuffSpell extends AbstractSpell{
         return duration;
     }
 
-    public BuffStatistic getBuffStats() {
+    public UpgradeCreatureStats getBuffStats() {
         return buffStats;
     }
 

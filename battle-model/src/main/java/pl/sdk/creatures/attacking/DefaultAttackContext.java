@@ -6,9 +6,9 @@ import java.beans.PropertyChangeEvent;
 
 public class DefaultAttackContext implements AttackContextIf {
     private CalculateDamageStrategyIf calculateDamageStrategy;
-    private AttackerStatisticIf stats;
+    private AttackStatistic stats;
 
-    DefaultAttackContext(CalculateDamageStrategyIf aCalculateDamageStrategy, AttackerStatisticIf aStats) {
+    DefaultAttackContext(CalculateDamageStrategyIf aCalculateDamageStrategy, AttackStatistic aStats) {
         calculateDamageStrategy = aCalculateDamageStrategy;
         stats = aStats;
     }
@@ -24,7 +24,7 @@ public class DefaultAttackContext implements AttackContextIf {
     }
 
     @Override
-    public AttackerStatisticIf getAttackerStatistic() {
+    public AttackStatistic getAttackerStatistic() {
         return stats;
     }
 
@@ -35,6 +35,6 @@ public class DefaultAttackContext implements AttackContextIf {
 
     @Override
     public void propertyChange(PropertyChangeEvent aPropertyChangeEvent) {
-        stats = new AttackerWithBuffEtcStatistic(((CreatureLifeStats)aPropertyChangeEvent.getNewValue()).getAmount(),stats);
+        stats = new AttackStatistic(((CreatureLifeStats)aPropertyChangeEvent.getNewValue()).getAmount(),stats);
     }
 }

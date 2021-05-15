@@ -16,7 +16,7 @@ class DefaultDamageCalculatorWithSelfHealingTest {
 
     private int NOT_IMPORTANT = 5;
     private int THE_SAME_FOR_BOTH_CREATURES = 10;
-    private AttackerStatisticIf attackerStats;
+    private AttackStatistic attackerStats;
     private Creature defender;
     private Random rand;
 

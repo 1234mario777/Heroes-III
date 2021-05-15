@@ -5,10 +5,10 @@ import lombok.Getter;
 @Getter
 public class MoveContext implements MoveContextIf{
 
-    private int moveRange;
 
-    public MoveContext(int aMoveRange) {
-        moveRange = aMoveRange;
+    private final MoveStatistic moveStatistic;
+
+    public MoveContext(int aMoveRange ) {
+        moveStatistic = new MoveStatistic( aMoveRange );
     }
-
 }
