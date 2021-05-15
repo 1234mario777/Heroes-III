@@ -12,13 +12,13 @@ import static pl.sdk.artifacts.ArtifactStatistic.*;
 class ArtifactListTest {
 
     private ArtifactList artifactList;
-    private AbstractEconomyArtifactFactory factory = AbstractEconomyArtifactFactory.getInstance(ArtifactFactoryType.TEST);
+    private EconomyArtifactFactory factory = new EconomyArtifactFactory();
     private EconomyArtifact artifact;
 
     @BeforeEach
     void init() {
         artifactList = new ArtifactList();
-        artifact = factory.create(TEST_RING_OF_VITALITY.getName());
+        artifact = factory.create(STATEMANS_MEDAL.getName());
     }
 
     @Test
@@ -40,17 +40,15 @@ class ArtifactListTest {
 
     @Test
     void shouldNotAddArtifactWithTheSameSlot() {
-        EconomyArtifact secondArtifactWithTheSameSlot = factory.create(TEST_RING_OF_LIFE.getName());
-        EconomyArtifact thirdArtifactWithTheSameSlot = factory.create(TEST_RING_OF_CONJURING.getName());
+        EconomyArtifact secondArtifactWithTheSameSlot = factory.create(COLLAR_OF_CONJURING.getName());
         artifactList.add(artifact);
-        artifactList.add(secondArtifactWithTheSameSlot);
 
-        assertThrows(IllegalStateException.class, () -> artifactList.add(thirdArtifactWithTheSameSlot));
+        assertThrows(IllegalStateException.class, () -> artifactList.add(secondArtifactWithTheSameSlot));
     }
 
     @Test
     void shouldReturnListOfAllArtifacts() {
-        EconomyArtifact artifact2 = factory.create(TEST_RING_OF_LIFE.getName());
+        EconomyArtifact artifact2 = factory.create(GOLDEN_BOW.getName());
         //when
         artifactList.add(artifact);
         artifactList.add(artifact2);

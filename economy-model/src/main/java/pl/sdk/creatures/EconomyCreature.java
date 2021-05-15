@@ -1,11 +1,12 @@
 package pl.sdk.creatures;
 
 import com.google.common.collect.Range;
+import pl.sdk.hero.EconomyShopIf;
 
-public class EconomyCreature {
+public class EconomyCreature implements EconomyShopIf {
 
     private final CreatureStatistic stats;
-    private final int amount;
+    private int amount;
     private final int goldCost;
 
     EconomyCreature(CreatureStatistic aStats, int aAmount, int aGoldCost) {

@@ -4,7 +4,7 @@ import pl.sdk.creatures.Creature;
 
 import java.util.Objects;
 
-public class BuffOrDebuffSpell extends AbstractSpell{
+public class BuffOrDebuffSpell extends AbstractSpell {
 
     private final int duration;
     private UpgradeCreatureStats buffStats;

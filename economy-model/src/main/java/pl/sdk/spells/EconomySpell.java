@@ -1,6 +1,8 @@
 package pl.sdk.spells;
 
-public class EconomySpell {
+import pl.sdk.hero.EconomyShopIf;
+
+public class EconomySpell implements EconomyShopIf {
 
     public static final int SPELL_GROWTH = 1;
     private final SpellStatistic spellStats;

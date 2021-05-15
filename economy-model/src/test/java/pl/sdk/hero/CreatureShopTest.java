@@ -23,6 +23,7 @@ class CreatureShopTest
 	{
 		Random rand = mock( Random.class );
 		when( rand.nextDouble() ).thenReturn( 1.0 );
+
 		CreatureShop shop1 = new CreatureShop(rand, fraction);
 		CreatureShop shop2 = new CreatureShop(rand, fraction);
 		EconomyHero hero1 = new EconomyHero();

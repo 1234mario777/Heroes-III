@@ -15,6 +15,8 @@ public abstract class AbstractEconomyHeroFactory {
             case INFERNO:
             case TOWER:
             case STRONGHOLD:
+            case RAMPART:
+            case DUNGEON:
                 return new EconomyNecropolisHeroFactory();
             case TEST_FRACTION:
                 return new EconomyTestHeroFactory();

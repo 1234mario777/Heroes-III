@@ -1,107 +1,70 @@
 package pl.sdk.hero;
 
-import pl.sdk.Fraction;
-import pl.sdk.creatures.AbstractEconomyFractionFactory;
-import pl.sdk.creatures.EconomyCreature;
 import pl.sdk.spells.AbstractEconomySpellFactory;
 import pl.sdk.spells.EconomySpell;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Random;
-import java.util.stream.Collectors;
+import java.util.*;
 
 import static pl.sdk.spells.SpellFactoryType.DEFAULT;
 
 public class SpellShop extends AbstractShop<EconomySpell>
 {
-	public static final String EXCEPTION_MESSAGE = "hero cannot consume more spells";
 	public static final String PLAYER_HAS_ALREADY_BOUGHT_THIS_SPELL = "Player has already bought this spell!";
+	public static final String HERO_CANNOT_CONSUME_MORE_SPELLS = "Hero cannot consume more spells";
 	private final AbstractEconomySpellFactory spellFactory;
-	private List<EconomySpell> spellPopulation;
+	private final Random rand;
 
 	SpellShop( )
 	{
-		super(new SpellShopCalculator());
+		super(new DefaultShopCalculator(), new ArrayList<>());
 		spellFactory = AbstractEconomySpellFactory.getInstance( DEFAULT );
-		spellPopulation = new ArrayList<>();
+		rand = new Random();
 		createPopulation();
 	}
 
 	SpellShop( Random aRand, AbstractEconomySpellFactory aFactory )
 	{
-		super(new SpellShopCalculator(aRand));
+		super(new DefaultShopCalculator(aRand), new ArrayList<>());
 		spellFactory = aFactory;
-		spellPopulation = new ArrayList<>();
+		rand = aRand;
 		createPopulation();
 	}
 
-	private void createPopulation( )
+	@Override
+	protected void createPopulation( )
 	{
 		List<EconomySpell> allSpells = spellFactory.getAllSpells();
-		int populationSize = calculatePopulation( allSpells.size() );
-		Random rand = new Random();
-
-		for (int i = 0; i < populationSize; i++) {
-			int randomIndex = rand.nextInt(allSpells.size());
-			spellPopulation.add( allSpells.get( randomIndex ) );
-			allSpells.remove(randomIndex);
-		}
+		int spellAmount = getSpellAmount(allSpells);
+		Collections.shuffle(allSpells);
+		allSpells.subList(0, spellAmount).forEach(s -> getShopPopulation().add(s));
 	}
 
-	private int calculatePopulation( int aSize )
-	{
-		return getCalculator().randomize( aSize );
+	@Override
+	protected void addItem(Player aActivePlayer, EconomySpell aShopItem) {
+		aActivePlayer.addSpell(aShopItem);
+	}
+
+	@Override
+	protected String getSubtractPopulationErrorMessage() {
+		return PLAYER_HAS_ALREADY_BOUGHT_THIS_SPELL;
+	}
+
+	@Override
+	protected String getBuyErrorMessage() {
+		return HERO_CANNOT_CONSUME_MORE_SPELLS;
 	}
 
 	List<EconomySpell> getCurrentSpellPopulation()
 	{
-		return spellPopulation;
+		return List.copyOf(getShopPopulation());
 	}
 
-	@Override
-	protected void handlePopulation()
-	{
-		spellPopulation = new ArrayList<>();
-		createPopulation();
+	boolean canBuySpell(Player aPlayer, EconomySpell aSpell) {
+		return getCalculator().calculateMaxAmount(aPlayer.getGold(), aSpell.getGrowth(), aSpell.getGoldCost()) == 1;
 	}
 
-	void buy( Player aActivePlayer, EconomySpell aEconomySpell )
-	{
-		aActivePlayer.substractGold(aEconomySpell.getGoldCost());
-		subtractPopulation(aEconomySpell);
-		try{
-			aActivePlayer.addSpell(aEconomySpell);
-		}catch(Exception e){
-			aActivePlayer.addGold(aEconomySpell.getGoldCost());
-			restorePopulation( aEconomySpell );
-			throw new IllegalStateException( EXCEPTION_MESSAGE );
-		}
+	private int getSpellAmount(List<EconomySpell> allSpells) {
+		int amount = allSpells.size()/2;
+		return 1 + amount + rand.nextInt(amount);
 	}
-
-	private void restorePopulation( EconomySpell aEconomySpell )
-	{
-		spellPopulation.add( aEconomySpell );
-	}
-
-	private void subtractPopulation( EconomySpell aEconomySpell )
-	{
-		if ( !spellPopulation.stream().map( EconomySpell::getName ).collect( Collectors.toList() ).contains( aEconomySpell.getName() ))
-		{
-			throw new IllegalStateException( PLAYER_HAS_ALREADY_BOUGHT_THIS_SPELL );
-
-		}
-		for ( int i = 0; i < spellPopulation.size() ; i++ )
-		{
-			if ( spellPopulation.get( i ).getName().equals( aEconomySpell.getName() ) )
-				spellPopulation.remove( i );
-		}
-	}
-
-	int calculateMaxAmount( Player aPlayer, EconomySpell aSpell )
-	{
-		return getCalculator().calculateMaxAmount(aPlayer.getGold(), aSpell.getGrowth(), aSpell.getGoldCost());
-	}
-
 }

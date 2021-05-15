@@ -10,9 +10,10 @@ import pl.sdk.creatures.AbstractFractionFactory;
 import pl.sdk.creatures.Creature;
 import pl.sdk.gui.BattleMapController;
 import pl.sdk.spells.AbstractSpell;
-import pl.sdk.spells.SpellBook;
+import pl.sdk.SpellBook;
 
 import pl.sdk.hero.Player;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -52,6 +53,10 @@ public class EcoBattleConverter {
         List<AbstractSpell> spells = aPlayer1.getSpells().stream()
                 .map(es -> SpellFactory.create(es, aPlayer1.getPower(), masteries))
                 .collect(Collectors.toList());
+
+//        Arrays.asList(aPlayer1.getSkills()).stream().forEach((skill) -> skill.applyEffect(aPlayer1));
+
         return new Hero(creatures, new SpellBook(aPlayer1.getWisdom(), spells));
     }
+
 }

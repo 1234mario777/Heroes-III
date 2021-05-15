@@ -3,6 +3,7 @@ package pl.sdk;
 import pl.sdk.artifacts.EconomyArtifact;
 import pl.sdk.creatures.EconomyCreature;
 import pl.sdk.hero.Player;
+import pl.sdk.skills.EconomySkill;
 import pl.sdk.spells.EconomySpell;
 
 import java.beans.PropertyChangeListener;
@@ -57,14 +58,17 @@ public class EconomyEngine {
         return activePlayer.calculateMaxAmount(aCreature);
     }
 
-    public int calculateSpellMaxAmount( EconomySpell aSpell )
-    {
-        return activePlayer.calculateSpellMaxAmount(aSpell);
+    public boolean canBuySpell(EconomySpell aSpell) {
+        return activePlayer.canBuySpell(aSpell);
     }
 
-    public int calculateArtifactMaxAmount( EconomyArtifact aArtifact )
+    public int calculateSkillMaxAmount( EconomySkill aSkill)
     {
-        return activePlayer.calculateArtifactMaxAmount(aArtifact);
+        return activePlayer.calculateSkillMaxAmount(aSkill);
+    }
+
+    public boolean canBuyArtifact(EconomyArtifact aArtifact) {
+        return activePlayer.canBuyArtifact(aArtifact);
     }
 
     public Player getActivePlayer() {
@@ -165,4 +169,14 @@ public class EconomyEngine {
     public boolean hasEmptySlotForArtifact(String aName) {
         return activePlayer.hasEmptySlotForArtifact(aName);
     }
+
+    public void buySkill(EconomySkill aSkill) {
+        activePlayer.buySkill(activePlayer,aSkill);
+        observerSupport.firePropertyChange(PLAYER_BOUGHT_ITEM,null,null);
+    }
+
+    public List<EconomySkill> getCurrentSkillPopulation() {
+        return activePlayer.getCurrentSkillPopulation();
+    }
+
 }

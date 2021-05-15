@@ -66,7 +66,7 @@ public class SpellButton extends Button
 		buttonContent.getChildren().add( topPane );
 		buttonContent.getChildren().add( borderPane );
 		this.setGraphic( buttonContent );
-		if ( aEcoController.calculateSpellMaxAmount(spell ) <= 0  || aEcoController.hasSpell(spell.getName()))
+		if ( !aEcoController.canBuySpell(spell )  || aEcoController.hasSpell(spell.getName()))
 			setDisable( true );
 		getStyleClass().add("creatureButton");
 	}

@@ -11,6 +11,8 @@ import pl.sdk.spells.SpellFactoryType;
 import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.anyDouble;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static pl.sdk.Fraction.NECROPOLIS;
@@ -21,40 +23,40 @@ class SpellShopTest
 	EconomyEngine economyEngine;
 	private final AbstractEconomySpellFactory spellFactory = AbstractEconomySpellFactory.getInstance( SpellFactoryType.TEST );
 	Player player1;
+	Player player2;
+
 	@BeforeEach
 	void init()
 	{
 		Random playerOneRand = mock( Random.class );
-		when( playerOneRand.nextDouble() ).thenReturn( 1.0 );
+		when( playerOneRand.nextInt(anyInt())).thenReturn(4);
 		Random playerTwoRand = mock( Random.class );
-		when( playerTwoRand.nextDouble() ).thenReturn( 0.2 );
+		when( playerTwoRand.nextInt(anyInt())).thenReturn(4);
 		SpellShop shop1 = new SpellShop(playerOneRand, spellFactory);
 		SpellShop shop2 = new SpellShop(playerTwoRand, spellFactory);
 		EconomyHero hero1 = new EconomyHero();
 		EconomyHero hero2 = new EconomyHero();
 		player1 = new Player( hero1, shop1, 1000 );
-		Player player2 = new Player( hero2, shop2, 1000 );
+		player2 = new Player( hero2, shop2, 1000 );
 		economyEngine = new EconomyEngine(player1, player2);
 	}
 
 	@Test
-	void shouldCorrectlyRandomizePopulationForBothPlayers()
+	void shouldCorrectlyCreatePopulationForBothPlayers()
 	{
 		assertEquals( 9, economyEngine.getCurrentSpellPopulation().size() );
-
 		economyEngine.pass();
-
-		assertEquals( 5, economyEngine.getCurrentSpellPopulation().size() );
+		assertEquals( 9, economyEngine.getCurrentSpellPopulation().size() );
 	}
 
 	@Test
-	void afterRoundEndPopulationInShopShouldBeRandomized()
+	void afterRoundEndPopulationInShopShouldBeRecreated()
 	{
 		economyEngine.pass();
 		economyEngine.pass();
 		assertEquals( 9, economyEngine.getCurrentSpellPopulation().size() );
 		economyEngine.pass();
-		assertEquals( 5, economyEngine.getCurrentSpellPopulation().size() );
+		assertEquals( 9, economyEngine.getCurrentSpellPopulation().size() );
 
 	}
 
@@ -86,21 +88,16 @@ class SpellShopTest
 	@Test
 	void heroOnePurchaseShouldNotAffectOnHeroTwoPopulation()
 	{
-		Random playerTwoRand = mock( Random.class );
-		when( playerTwoRand.nextDouble() ).thenReturn( 1.0 );
-		SpellShop shopBuy2 = new SpellShop(playerTwoRand, spellFactory);
-		EconomyHero heroBuy2 = new EconomyHero();
-		Player playerBuy2 = new Player( heroBuy2, shopBuy2, 1000 );
-		economyEngine = new EconomyEngine(player1, playerBuy2);
-		//when
 		economyEngine.buySpell(spellFactory.create(TEST_HASTE.getName()));
-		//then
+
 		assertEquals( 8, economyEngine.getCurrentSpellPopulation().size() );
 		assertEquals(1, player1.getSpells().size());
+
 		economyEngine.pass();
 		economyEngine.buySpell(spellFactory.create(TEST_HASTE.getName()));
+
 		assertEquals( 8, economyEngine.getCurrentSpellPopulation().size() );
-		assertEquals(1, playerBuy2.getSpells().size());
+		assertEquals(1, player2.getSpells().size());
 	}
 
 	@Test

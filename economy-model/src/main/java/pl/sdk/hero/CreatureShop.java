@@ -1,48 +1,96 @@
 package pl.sdk.hero;
 
-import org.checkerframework.checker.units.qual.g;
 import pl.sdk.Fraction;
 import pl.sdk.creatures.AbstractEconomyFractionFactory;
 import pl.sdk.creatures.EconomyCreature;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
-import static pl.sdk.EconomyEngine.*;
-
-class CreatureShop extends AbstractShop
+class CreatureShop extends AbstractShop<EconomyCreature>
 {
 
-    private final HashMap<Integer, Integer> creaturePopulation;
+    public static final int TIER_AMOUNT = 7;
+    public static final String HERO_CANNOT_BUY_MORE_CREATURES_THAN_POPULATION_IS = "Hero cannot buy more creatures than population is";
+    public static final String HERO_CANNOT_CONSUME_MORE_CREATURES = "Hero cannot consume more creatures";
     private final AbstractEconomyFractionFactory creatureFactory;
 
     CreatureShop(Fraction aFraction)
     {
-        super(new CreatureShopCalculator());
+        super(new CreatureShopCalculator(), new ArrayList<>());
         creatureFactory = AbstractEconomyFractionFactory.getInstance( aFraction );
-        creaturePopulation = new HashMap<>();
-        createPopulation(creaturePopulation);
+        createPopulation();
     }
 
     CreatureShop( Random aRand, Fraction aFraction )
     {
-        super(new CreatureShopCalculator(aRand));
+        super(new CreatureShopCalculator(aRand), new ArrayList<>());
         creatureFactory = AbstractEconomyFractionFactory.getInstance( aFraction );
-        creaturePopulation = new HashMap<>();
-        createPopulation(creaturePopulation);
+        createPopulation();
     }
 
-    private void createPopulation( HashMap<Integer, Integer> aPopulationMap )
+    @Override
+    protected void handlePopulation()
     {
-        aPopulationMap.put( 1, calculatePopulation(1) );
-        aPopulationMap.put( 2, calculatePopulation(2) );
-        aPopulationMap.put( 3, calculatePopulation(3) );
-        aPopulationMap.put( 4, calculatePopulation(4) );
-        aPopulationMap.put( 5, calculatePopulation(5) );
-        aPopulationMap.put( 6, calculatePopulation(6) );
-        aPopulationMap.put( 7, calculatePopulation(7) );
+        addPopulation();
+    }
+
+    @Override
+    protected void subtractGold(Player aActivePlayer, EconomyCreature aShopItem) {
+        aActivePlayer.substractGold(aShopItem.getGoldCost() * aShopItem.getAmount());
+    }
+
+    @Override
+    protected void restoreGold(Player aActivePlayer, EconomyCreature aShopItem) {
+        aActivePlayer.addGold(aShopItem.getAmount() * aShopItem.getGoldCost());
+    }
+
+    @Override
+    protected void subtractPopulation(EconomyCreature aShopItem) {
+        int currentPopulation = getShopPopulation().get(aShopItem.getTier() - 1).getAmount();
+        int populationToSubstract = aShopItem.getAmount();
+
+        if(currentPopulation >= populationToSubstract)
+        {
+            getShopPopulation().remove(aShopItem.getTier() - 1);
+            getShopPopulation().add(aShopItem.getTier() - 1, creatureFactory.create(false, aShopItem.getTier(), currentPopulation - populationToSubstract));
+        }
+        else
+        {
+            throw new IllegalStateException(getSubtractPopulationErrorMessage());
+        }
+    }
+
+    @Override
+    protected void restorePopulation(EconomyCreature aShopItem) {
+        int currentPopulation = getShopPopulation().get(aShopItem.getTier() - 1).getAmount();
+        int populationToRestore = aShopItem.getAmount();
+        getShopPopulation().remove(aShopItem.getTier() - 1);
+        getShopPopulation().add(aShopItem.getTier() - 1, creatureFactory.create(false, aShopItem.getTier(), currentPopulation + populationToRestore));
+    }
+
+    @Override
+    protected void addItem(Player aActivePlayer, EconomyCreature aShopItem) {
+        aActivePlayer.addCreature(aShopItem);
+    }
+
+    @Override
+    protected void createPopulation(  )
+    {
+        for (int i = 0; i < TIER_AMOUNT; i++) {
+            getShopPopulation().add(i, creatureFactory.create(false, i + 1, calculatePopulation(i + 1)));
+        }
+    }
+
+    @Override
+    protected String getSubtractPopulationErrorMessage() {
+        return HERO_CANNOT_BUY_MORE_CREATURES_THAN_POPULATION_IS;
+    }
+
+    @Override
+    protected String getBuyErrorMessage() {
+        return HERO_CANNOT_CONSUME_MORE_CREATURES;
     }
 
     private int calculatePopulation( int aTier )
@@ -50,59 +98,22 @@ class CreatureShop extends AbstractShop
         return getCalculator().randomize( creatureFactory.create( false, aTier, 1 ).getGrowth() );
     }
 
-    void buy(Player aPlayer, EconomyCreature aEconomyCreature) {
-        aPlayer.substractGold(aEconomyCreature.getGoldCost() * aEconomyCreature.getAmount());
-        subtractPopulation(aEconomyCreature.getTier(), aEconomyCreature.getAmount());
-        try{
-            aPlayer.addCreature(aEconomyCreature);
-        }catch(Exception e){
-            aPlayer.addGold(aEconomyCreature.getGoldCost() * aEconomyCreature.getAmount());
-            restorePopulation( aEconomyCreature.getTier(), aEconomyCreature.getAmount() );
-            throw new IllegalStateException("hero cannot consume more creature");
-        }
-    }
-
-    private void subtractPopulation( int aTier, int aAmount )
-    {
-        if(creaturePopulation.get( aTier ) >= aAmount)
-        {
-            creaturePopulation.put( aTier, creaturePopulation.get( aTier ) - aAmount );
-        }
-        else
-        {
-            throw new IllegalStateException("hero cannot buy more creatures than population is");
-        }
-    }
-
-    private void restorePopulation( int aTier, int aAmount )
-    {
-        creaturePopulation.put( aTier, creaturePopulation.get( aTier ) + aAmount );
-    }
-
     public int calculateMaxAmount( Player aHero, EconomyCreature aCreature )
     {
-        return getCalculator().calculateMaxAmount(aHero.getGold(), creaturePopulation.get( aCreature.getTier() ), aCreature.getGoldCost());
+        return getCalculator().calculateMaxAmount(aHero.getGold(), getShopPopulation().get(aCreature.getTier() - 1).getAmount(), aCreature.getGoldCost());
     }
 
     public int getCurrentPopulation( int aTier )
     {
-        return creaturePopulation.get( aTier );
+        return getShopPopulation().get(aTier - 1).getAmount();
     }
 
-    @Override
-    protected void handlePopulation()
+    private void addPopulation()
     {
-        addPopulation(creaturePopulation);
-    }
-
-        private void addPopulation( HashMap<Integer, Integer> aPopulationMap )
-    {
-        aPopulationMap.put( 1, aPopulationMap.get( 1 ) + calculatePopulation(1) );
-        aPopulationMap.put( 2,  aPopulationMap.get( 2 ) + calculatePopulation(2) );
-        aPopulationMap.put( 3,  aPopulationMap.get( 3 ) + calculatePopulation(3) );
-        aPopulationMap.put( 4,  aPopulationMap.get( 4 ) + calculatePopulation(4) );
-        aPopulationMap.put( 5,  aPopulationMap.get( 5 ) + calculatePopulation(5) );
-        aPopulationMap.put( 6,  aPopulationMap.get( 6 ) + calculatePopulation(6) );
-        aPopulationMap.put( 7,  aPopulationMap.get( 7 ) + calculatePopulation(7) );
+        for (int i = 0; i < TIER_AMOUNT; i++) {
+            int currentPopulation = getShopPopulation().get(i).getAmount();
+            getShopPopulation().remove(i);
+            getShopPopulation().add(i, creatureFactory.create(false, i + 1, currentPopulation + calculatePopulation(i + 1)));
+        }
     }
 }

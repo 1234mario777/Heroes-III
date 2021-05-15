@@ -2,12 +2,12 @@ package pl.sdk.hero;
 
 import java.util.Random;
 
-class ArtifactShopCalculator extends AbstractShopCalculator {
+class DefaultShopCalculator extends AbstractShopCalculator {
 
-    ArtifactShopCalculator() { super();
+    DefaultShopCalculator() { super();
     }
 
-    ArtifactShopCalculator(Random aRand) {
+    DefaultShopCalculator(Random aRand) {
         super(aRand);
     }
 
