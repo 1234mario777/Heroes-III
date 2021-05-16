@@ -1,6 +1,7 @@
 package pl.sdk;
 
 import org.junit.jupiter.api.Test;
+import pl.sdk.board.Point;
 
 import static org.junit.jupiter.api.Assertions.*;
 

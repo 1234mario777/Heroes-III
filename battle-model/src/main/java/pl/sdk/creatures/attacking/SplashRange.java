@@ -1,6 +1,6 @@
 package pl.sdk.creatures.attacking;
 
-import pl.sdk.Point;
+import pl.sdk.board.Point;
 
 public class SplashRange {
     final boolean[][] splashDamageTable;

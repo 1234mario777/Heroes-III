@@ -1,5 +1,7 @@
 package pl.sdk;
 
+import pl.sdk.board.Point;
+import pl.sdk.creatures.Creature;
 import pl.sdk.spells.AbstractSpell;
 import pl.sdk.spells.SpellStatistic;
 
@@ -8,17 +10,17 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class SpellCastingRulesManager {
-    Set<Point> calc(AbstractSpell aSpell, Board aBoard, Point aTargetPoint, GameEngine aGameEngine) {
+    Set<Point> calc(AbstractSpell aSpell, Point aTargetPoint, GameEngine aGameEngine ) {
         Set<Point> ret = new HashSet<>();
         if (isTileTargetSpell(aTargetPoint)){
             int splash = aSpell.getSplashRange();
             for (int x = aTargetPoint.getX()-splash; x <= aTargetPoint.getX()+splash; x++) {
                 for (int y = aTargetPoint.getY()-splash; y <= aTargetPoint.getY()+splash; y++) {
-                    ret.add(new Point (x,y));
+                    ret.add(new Point(x,y) );
                 }
             }
 
-            ret = ret.stream().filter(p -> aBoard.get(p) != null).collect(Collectors.toSet());
+            ret = ret.stream().filter(p -> aGameEngine.getBoardManager().getCreatureByPoint(p ) != null ).collect(Collectors.toSet() );
 
             if (shouldCastOnlyForAllyCreatures(aSpell)){
                 ret = ret.stream().filter(aGameEngine::isAllyCreature).collect(Collectors.toSet());
@@ -32,7 +34,7 @@ public class SpellCastingRulesManager {
         return ret;
     }
 
-    boolean canCast(AbstractSpell aSpell, Point aPoint, GameEngine aGameEngine, Board aBoard) {
+    boolean canCast(AbstractSpell aSpell, Point aPoint, GameEngine aGameEngine, Creature aCreature ) {
         if (shouldCastOnlyForEnemyCreatures(aSpell)){
             return aGameEngine.isEnemyCreature(aPoint);
         }
@@ -40,7 +42,7 @@ public class SpellCastingRulesManager {
             return aGameEngine.isAllyCreature(aPoint);
         }
         if (shouldCastForAnyCreature(aSpell)){
-            return aBoard.get(aPoint) != null;
+            return aCreature != null;
         }
         return false;
     }

@@ -3,12 +3,7 @@ package pl.sdk.converter.spells;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.mockito.ArgumentMatchers.anyInt;
-
 import pl.sdk.Fraction;
-import pl.sdk.GameEngine;
-import pl.sdk.Hero;
-import pl.sdk.Point;
 import pl.sdk.converter.SpellMasteries;
 import pl.sdk.creatures.*;
 import pl.sdk.creatures.AbstractFractionFactory;
@@ -16,11 +11,7 @@ import pl.sdk.spells.DamageSpell;
 import pl.sdk.spells.EconomySpell;
 import pl.sdk.spells.SpellStatistic;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.*;
 import static pl.sdk.creatures.TestingFactory.FOR_MAGIC_RESISTANCE;
 
 public class DamageSpellTest {

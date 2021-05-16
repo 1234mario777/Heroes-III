@@ -2,11 +2,12 @@ package pl.sdk.creatures;
 
 import com.google.common.collect.Range;
 import lombok.NoArgsConstructor;
+import pl.sdk.board.TileIf;
 import pl.sdk.creatures.attacking.*;
 import pl.sdk.creatures.defending.DefenceContextFactory;
 import pl.sdk.creatures.defending.DefenceContextIf;
-import pl.sdk.creatures.movingContext.MoveContext;
-import pl.sdk.creatures.movingContext.MoveContextIf;
+import pl.sdk.creatures.moving.MoveContextFactory;
+import pl.sdk.creatures.moving.MoveContextIf;
 import pl.sdk.creatures.spells.BuffContainer;
 import pl.sdk.creatures.spells.MagicResFactory;
 import pl.sdk.creatures.spells.MagicResistanceContextIf;
@@ -20,7 +21,8 @@ import java.beans.PropertyChangeListener;
 
 
 @NoArgsConstructor
-public class Creature implements PropertyChangeListener {
+public class Creature implements PropertyChangeListener, TileIf
+{
 
     public static final String LIFE_CHANGED = "LIFE_CHANGED";
     private String name;
@@ -58,6 +60,8 @@ public class Creature implements PropertyChangeListener {
     public AttackContextIf getAttackContext() {
         return attackContext;
     }
+
+    public MoveContextIf getMoveContext() { return moveContext; }
 
     public int getCurrentHp() {
         return defenceContext.getDefenceStatistic().getCurrentHp();
@@ -126,6 +130,21 @@ public class Creature implements PropertyChangeListener {
         retaliationContext.updateRetaliateCounter();
     }
 
+    @Override
+    public boolean isStandable()
+    {
+        return false;
+    }
+
+    @Override
+    public boolean isCrossable( MovementType aMovementType )
+    {
+        if (aMovementType.equals( MovementType.FLYING ))
+            return true;
+        else
+            return false;
+    }
+
     public static class Builder {
         private CreatureStatistic stats;
 
@@ -137,6 +156,7 @@ public class Creature implements PropertyChangeListener {
         private Range<Integer> damage;
         private Integer amount;
         private CalculateDamageStrategyIf calcDmgStrategy;
+        private MovementType movementType;
 
         private MagicResistanceContextIf magicDamageReducer;
 
@@ -190,11 +210,18 @@ public class Creature implements PropertyChangeListener {
             return this;
         }
 
+        public Builder moveStrategy( MovementType aMovementType )
+        {
+            this.movementType = aMovementType;
+            return this;
+        }
+
         public Creature build() {
             preconditions();
             DefenceContextIf tempDefenceContext = prepareDefendingContext();
             AttackContextIf tempAttackContext = prepareAttackingContext();
-            return new Creature(name, tempDefenceContext, tempAttackContext, new MoveContext(moveRange), magicDamageReducer);
+            MoveContextIf tempMoveContext = prepareMovingContext();
+            return new Creature(name, tempDefenceContext, tempAttackContext, tempMoveContext, magicDamageReducer);
         }
 
         private void preconditions() {
@@ -226,6 +253,12 @@ public class Creature implements PropertyChangeListener {
                 moveRange = 1;
                 if (stats != null ){
                     moveRange = stats.getMoveRange();
+                }
+            }
+            if (movementType == null) {
+                movementType = MovementType.GROUND;
+                if (stats != null ){
+                    movementType = stats.getMovementType();
                 }
             }
             if (maxHp == null) {
@@ -263,6 +296,15 @@ public class Creature implements PropertyChangeListener {
                                    .build(),
                     calcDmgStrategy
             );
+        }
+
+        private MoveContextIf prepareMovingContext()
+        {
+            if ( stats != null )
+            {
+                return MoveContextFactory.create( stats.getMovementType(), stats.getMoveRange() );
+            }
+            return MoveContextFactory.create( movementType, moveRange );
         }
     }
 }

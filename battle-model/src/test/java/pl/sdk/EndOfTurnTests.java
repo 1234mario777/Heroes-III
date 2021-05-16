@@ -1,6 +1,7 @@
 package pl.sdk;
 
 import org.junit.jupiter.api.Test;
+import pl.sdk.board.Point;
 import pl.sdk.creatures.AbstractFractionFactory;
 import pl.sdk.creatures.Creature;
 
@@ -17,11 +18,10 @@ public class EndOfTurnTests {
     void shouldResetCounterAttackFlagAfterEndOfTurn(){
         Creature attacker = AbstractFractionFactory.getInstance(Fraction.TEST_FRACTION).create(false,3,1);
         Creature defender = AbstractFractionFactory.createSkeleton();
-        Board board = new Board();
-        board.add(1,1,attacker);
-        board.add(1,2,defender);
 
-        GameEngine engine = new GameEngine(new Hero(List.of(attacker)), new Hero(List.of(defender)),board);
+        GameEngine engine = new GameEngine(new Hero(List.of(attacker)), new Hero(List.of(defender)));
+        engine.getBoardManager().putOnBoard(new Point( 1, 1 ),attacker );
+        engine.getBoardManager().putOnBoard(new Point( 1, 2 ),defender );
 
         assertEquals(true, defender.canRetaliate());
 

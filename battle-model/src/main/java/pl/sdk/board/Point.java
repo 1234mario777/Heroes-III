@@ -1,4 +1,4 @@
-package pl.sdk;
+package pl.sdk.board;
 
 import java.util.Objects;
 

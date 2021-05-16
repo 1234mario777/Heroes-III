@@ -1,4 +1,4 @@
-package pl.sdk.creatures.movingContext;
+package pl.sdk.creatures.moving;
 
 import lombok.Getter;
 import lombok.Setter;
