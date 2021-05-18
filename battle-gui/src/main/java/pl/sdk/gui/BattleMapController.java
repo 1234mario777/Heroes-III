@@ -12,7 +12,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 import pl.sdk.*;
-import pl.sdk.Point;
+import pl.sdk.board.Point;
 import pl.sdk.creatures.AbstractFractionFactory;
 import pl.sdk.creatures.Creature;
 import pl.sdk.spells.*;
@@ -58,7 +58,7 @@ public class BattleMapController implements PropertyChangeListener {
         SpellBook spellBook = new SpellBook(15, List.of(SpellFactoryForTests.createMagicArrow(),
                 SpellFactoryForTests.createMagicArrowWithSplashAndTargetType(2, SpellStatistic.TargetType.ALLY),
                 SpellFactoryForTests.createMagicArrowWithSplash(2),
-                new BuffOrDebuffSpell(1, 2, SpellStatistic.SpellElement.AIR, SpellStatistic.TargetType.ALL_ALLIES, "HASTE", new BuffStatistic(5))));
+                new BuffOrDebuffSpell(1, 2, SpellStatistic.SpellElement.AIR, SpellStatistic.TargetType.ALL_ALLIES, "HASTE", UpgradeCreatureStats.builder().moveRange(5 ).build()) ));
 
         gameEngine = new GameEngine(new Hero(notUpgradedCreatures, spellBook), new Hero(upgradedCreatures));
     }
@@ -152,7 +152,9 @@ public class BattleMapController implements PropertyChangeListener {
     public void propertyChange(PropertyChangeEvent aPropertyChangeEvent) {
         if(aPropertyChangeEvent.getPropertyName().equals(CREATURE_MOVED)){
             Point oldPoint = (Point) aPropertyChangeEvent.getOldValue();
-            Point newPoint = (Point) aPropertyChangeEvent.getNewValue();
+            List<Point> path = ( List<Point> ) aPropertyChangeEvent.getNewValue();
+            Point newPoint = path.get( path.size() - 1 );
+
             Node nodeFromGridMap = getNodeFromGridMap(oldPoint);
 
             BufferedImage bigImg = null;

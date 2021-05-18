@@ -12,9 +12,8 @@ import javafx.scene.layout.VBox;
 import pl.sdk.EconomyEngine;
 import pl.sdk.Fraction;
 import pl.sdk.HeroEnum;
-import pl.sdk.artifacts.AbstractEconomyArtifactFactory;
-import pl.sdk.artifacts.ArtifactFactoryType;
 import pl.sdk.artifacts.EconomyArtifact;
+import pl.sdk.artifacts.EconomyArtifactFactory;
 import pl.sdk.converter.EcoBattleConverter;
 import pl.sdk.creatures.AbstractEconomyFractionFactory;
 import pl.sdk.creatures.EconomyCreature;
@@ -179,7 +178,7 @@ public class EcoController implements PropertyChangeListener {
     }
 
     private VBox createArtifactShop() {
-        AbstractEconomyArtifactFactory factory = AbstractEconomyArtifactFactory.getInstance( ArtifactFactoryType.DEFAULT.DEFAULT );
+        EconomyArtifactFactory factory = new EconomyArtifactFactory();
         VBox artifactShop = new VBox( );
 
         List<EconomyArtifact> artifactList = economyEngine.getCurrentArtifactPopulation();
@@ -330,14 +329,12 @@ public class EcoController implements PropertyChangeListener {
         return economyEngine.calculateCreatureMaxAmount( aCreature );
     }
 
-    public int calculateSpellMaxAmount( EconomySpell aSpell )
-    {
-        return economyEngine.calculateSpellMaxAmount( aSpell );
+    public boolean canBuySpell(EconomySpell aSpell) {
+        return economyEngine.canBuySpell(aSpell);
     }
 
-    public int calculateArtifactMaxAmount( EconomyArtifact aArtifact )
-    {
-        return economyEngine.calculateArtifactMaxAmount( aArtifact );
+    public boolean canBuyArtifact(EconomyArtifact aArtifact) {
+        return economyEngine.canBuyArtifact(aArtifact);
     }
 
     @Override

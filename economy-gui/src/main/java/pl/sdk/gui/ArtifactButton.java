@@ -2,19 +2,18 @@ package pl.sdk.gui;
 
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import pl.sdk.artifacts.AbstractEconomyArtifactFactory;
 import pl.sdk.artifacts.EconomyArtifact;
+import pl.sdk.artifacts.EconomyArtifactFactory;
 
 
 class ArtifactButton extends Button {
-    public ArtifactButton(EcoController aEcoController, AbstractEconomyArtifactFactory aFactory, String aName) {
+    public ArtifactButton(EcoController aEcoController, EconomyArtifactFactory aFactory, String aName) {
         super();
         EconomyArtifact artifact = aFactory.create( aName );
 
@@ -58,7 +57,7 @@ class ArtifactButton extends Button {
         buttonContent.getChildren().add( topPane );
         buttonContent.getChildren().add( borderPane );
         this.setGraphic( buttonContent );
-        if ( aEcoController.calculateArtifactMaxAmount(artifact ) <= 0  || !aEcoController.hasEmptySlotForArtifact(artifact.getName()))
+        if ( !aEcoController.canBuyArtifact(artifact )  || !aEcoController.hasEmptySlotForArtifact(artifact.getName()))
             setDisable( true );
         getStyleClass().add("creatureButton");
     }

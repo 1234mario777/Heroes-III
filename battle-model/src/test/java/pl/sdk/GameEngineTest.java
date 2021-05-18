@@ -1,6 +1,8 @@
 package pl.sdk;
 
 import org.junit.jupiter.api.Test;
+import pl.sdk.board.Point;
+import pl.sdk.board.TileIf;
 import pl.sdk.creatures.AbstractFractionFactory;
 import pl.sdk.creatures.Creature;
 
@@ -30,7 +32,7 @@ class GameEngineTest {
 
         //hero1 is active
         assertTrue(engine.canCastSpell());
-        engine.castSpell(SpellFactoryForTests.createMagicArrow(), new Point(0,1));
+        engine.castSpell(SpellFactoryForTests.createMagicArrow(), new Point(0,1) );
         assertFalse(engine.canCastSpell());
         engine.pass();
 
@@ -57,5 +59,23 @@ class GameEngineTest {
         //when && then
         assertFalse( engine.isHeroOneCreature( creature ) );
         assertTrue( engine.isHeroTwoCreature( creature ) );
+    }
+
+    @Test
+    void creatureShouldNotMoveTwoTimesAtTheSameRound()
+    {
+        //given
+        Creature creature = AbstractFractionFactory.createSkeleton();
+        GameEngine engine = new GameEngine(new Hero(List.of(creature)), new Hero(List.of()));
+
+        //when
+        engine.move( new Point( 0, 2 ) );
+        engine.move( new Point( 0, 3 ) );
+        TileIf positionAfterFirstMove =  engine.getBoardManager().getTileByPoint( new Point( 0, 2 ) );
+        TileIf positionAfterSecondMove =  engine.getBoardManager().getTileByPoint( new Point( 0, 3 ) );
+
+        //then
+        assertEquals( creature, positionAfterFirstMove );
+        assertNull( positionAfterSecondMove );
     }
 }

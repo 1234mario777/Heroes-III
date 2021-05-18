@@ -1,7 +1,11 @@
 package pl.sdk;
 
+import pl.sdk.board.BoardManager;
+import pl.sdk.board.Point;
+import pl.sdk.board.TileIf;
 import pl.sdk.creatures.attacking.AttackEngine;
 import pl.sdk.creatures.Creature;
+import pl.sdk.creatures.moving.MoveEngine;
 import pl.sdk.spells.AbstractSpell;
 
 import java.beans.PropertyChangeEvent;
@@ -21,25 +25,22 @@ public class GameEngine {
     public static final String END_OF_TURN = "END_OF_TURN";
     public static final String AFTER_MOVE = "AFTER_MOVE";
     public static final String AFTER_ATTACK = "AFTER_ATTACK";
-    private final Board board;
     private final TurnQueue queue;
     private final AttackEngine attackEngine;
+    private final MoveEngine moveEngine;
     private final PropertyChangeSupport observerSupport;
     private final Hero hero1;
     private final Hero hero2;
+    private final BoardManager boardManager;
     private boolean blockMoving;
     private boolean blockAttacking;
     private List<Creature> creatures1;
     private List<Creature> creatures2;
 
-    public GameEngine(Hero aHero1, Hero aHero2) {
-        this(aHero1, aHero2, new Board());
-        putCreaturesToBoard(creatures1, creatures2);
-    }
-
-    GameEngine(Hero aHero1, Hero aHero2, Board aBoard) {
+    public GameEngine(Hero aHero1, Hero aHero2 ) {
         attackEngine = new AttackEngine();
-        board = aBoard;
+        boardManager = new BoardManager();
+        moveEngine = new MoveEngine(boardManager);
         hero1 = aHero1;
         hero2 = aHero2;
         queue = new TurnQueue(aHero1, aHero2);
@@ -47,8 +48,8 @@ public class GameEngine {
         hero2.toSubscribeEndOfTurn(queue);
         creatures1 = aHero1.getCreatures();
         creatures2 = aHero2.getCreatures();
-
         observerSupport = new PropertyChangeSupport(this);
+        boardManager.putCreaturesOnBoard(creatures1, creatures2);
     }
 
     public void addObserver(String aEventType, PropertyChangeListener aObs) {
@@ -71,10 +72,10 @@ public class GameEngine {
         if (blockMoving) {
             return;
         }
-        Point oldPosition = board.get(queue.getActiveCreature());
-        board.move(queue.getActiveCreature(), aTargetPoint);
+        Point oldPosition = boardManager.getPointByTile(queue.getActiveCreature() );
+        List<Point> path = moveEngine.move(queue.getActiveCreature(), aTargetPoint);
         blockMoving = true;
-        notifyObservers(new PropertyChangeEvent(this, CREATURE_MOVED, oldPosition, aTargetPoint));
+        notifyObservers(new PropertyChangeEvent(this, CREATURE_MOVED, oldPosition, path));
         observerSupport.firePropertyChange( AFTER_MOVE, null, null );
     }
 
@@ -96,9 +97,11 @@ public class GameEngine {
         for (int x = 0; x < splashRange.length; x++) {
             for (int y = 0; y < splashRange.length; y++) {
                 if (splashRange[x][y]) {
-                    Creature attackedCreature = board.get(aX + x - 1, aY + y - 1);
+                    int pointX = aX + x - 1;
+                    int pointY = aY + y - 1;
+                    Creature attackedCreature = boardManager.getCreatureByPoint( new Point( pointX, pointY ) );
                     if (attackedCreature != null){
-                        attackEngine.attack(activeCreature, attackedCreature);
+                        attackEngine.attack(activeCreature, attackedCreature );
                     }
                 }
             }
@@ -112,19 +115,8 @@ public class GameEngine {
         observerSupport.firePropertyChange( AFTER_MOVE, null, null );
     }
 
-    private void putCreaturesToBoard(List<Creature> aCreatures1, List<Creature> aCreatures2) {
-        putCreaturesFromOneSideToBoard(aCreatures1, 0);
-        putCreaturesFromOneSideToBoard(aCreatures2, GameEngine.BOARD_WIDTH - 1);
-    }
-
-    private void putCreaturesFromOneSideToBoard(List<Creature> aCreatures, int aX) {
-        for (int i = 0; i < aCreatures.size(); i++) {
-            board.add(new Point(aX, i * 2 + 1), aCreatures.get(i));
-        }
-    }
-
     public Creature get(int aX, int aY) {
-        return board.get(aX, aY);
+        return boardManager.getCreatureByPoint( new Point( aX, aY ) );
     }
 
     public Creature getActiveCreature() {
@@ -134,19 +126,19 @@ public class GameEngine {
 
 
     public boolean canMove(int aX, int aY) {
-        return board.canMove(getActiveCreature(), aX, aY);
+        return moveEngine.canMove(getActiveCreature(), new Point( aX, aY ));
     }
 
     public boolean canAttack(int aX, int aY) {
         boolean isP1Creature = creatures1.contains(getActiveCreature());
         boolean theSamePlayerUnit;
         if (isP1Creature) {
-            theSamePlayerUnit = creatures1.contains(board.get(aX, aY));
+            theSamePlayerUnit = creatures1.contains( boardManager.getCreatureByPoint( new Point( aX, aY ) ) );
         } else {
-            theSamePlayerUnit = creatures2.contains(board.get(aX, aY));
+            theSamePlayerUnit = creatures2.contains( boardManager.getCreatureByPoint( new Point( aX, aY ) ) );
         }
 
-        return !theSamePlayerUnit && board.get(getActiveCreature()).distance(new Point(aX, aY)) <= getActiveCreature().getAttackContext().getAttackerStatistic().getAttackRange();
+        return !theSamePlayerUnit && boardManager.getPointByTile(getActiveCreature() ).distance(new Point(aX, aY) ) <= getActiveCreature().getAttackContext().getAttackerStatistic().getAttackRange();
     }
 
     public boolean isHeroTwoCreature( Creature aCreature )
@@ -165,7 +157,7 @@ public class GameEngine {
 
     public boolean canCastSpell(AbstractSpell aSpell, Point aPoint){
         SpellCastingRulesManager calc = new SpellCastingRulesManager();
-        return calc.canCast(aSpell, aPoint, this, board);
+        return calc.canCast(aSpell, aPoint, this, boardManager.getCreatureByPoint(aPoint ) );
     }
 
 
@@ -175,7 +167,7 @@ public class GameEngine {
             case ALL_ALLIES:
                 getActiveHero().getCreatures()
                         .stream()
-                        .map(c -> board.get(c))
+                        .map(c -> boardManager.getPointByTile(c ) )
                         .forEach(p -> innerCastSpell(aSpell,p));
             break;
             case ALL_ENEMIES:
@@ -186,7 +178,7 @@ public class GameEngine {
                 allCreatures.addAll(creatures2);
 
                 allCreatures.stream()
-                        .map(c -> board.get(c))
+                        .map(c -> boardManager.getPointByTile(c ) )
                         .forEach(p -> innerCastSpell(aSpell,p));
             break;
             case ALL:
@@ -211,8 +203,9 @@ public class GameEngine {
                     continue;
                 }
 
-                if ( board.get(x,y) != null){
-                    aSpell.cast(board.get(x,y));
+                if ( boardManager.getCreatureByPoint( new Point( x, y ) ) != null )
+                {
+                    aSpell.cast( boardManager.getCreatureByPoint( new Point( x, y ) ) );
                     aSpell.getSplashRange();
                 }
             }
@@ -220,15 +213,19 @@ public class GameEngine {
     }
 
     boolean isAllyCreature(Point aP) {
-        return queue.getActiveHero().getCreatures().contains(board.get(aP));
+        return queue.getActiveHero().getCreatures().contains(boardManager.getCreatureByPoint(aP ) );
     }
 
     boolean isEnemyCreature(Point aP) {
-        return board.get(aP) != null && !queue.getActiveHero().getCreatures().contains(board.get(aP));
+        return boardManager.getCreatureByPoint(aP ) != null && !queue.getActiveHero().getCreatures().contains(boardManager.getCreatureByPoint(aP ) );
     }
 
     public Hero getActiveHero() {
         return queue.getActiveHero();
     }
 
+    BoardManager getBoardManager()
+    {
+        return boardManager;
+    }
 }

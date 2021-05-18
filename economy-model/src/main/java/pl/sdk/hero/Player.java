@@ -120,14 +120,12 @@ public class Player
 		return creatureShop.calculateMaxAmount(this, aCreature );
 	}
 
-	public int calculateSpellMaxAmount( EconomySpell aSpell )
-	{
-		return spellShop.calculateMaxAmount(this, aSpell );
+	public boolean canBuySpell(EconomySpell aSpell) {
+		return spellShop.canBuySpell(this, aSpell);
 	}
 
-	public int calculateArtifactMaxAmount( EconomyArtifact aArtifact )
-	{
-		return artifactShop.calculateMaxAmount(this, aArtifact );
+	public boolean canBuyArtifact(EconomyArtifact aArtifact) {
+		return artifactShop.canBuyArtifact(this, aArtifact);
 	}
 
 	public int getCurrentPopulation( int aTier )

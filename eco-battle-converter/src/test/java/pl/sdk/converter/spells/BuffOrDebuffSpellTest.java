@@ -2,6 +2,7 @@ package pl.sdk.converter.spells;
 
 import org.junit.jupiter.api.Test;
 import pl.sdk.*;
+import pl.sdk.board.Point;
 import pl.sdk.converter.SpellMasteries;
 import pl.sdk.creatures.AbstractFractionFactory;
 import pl.sdk.creatures.Creature;
@@ -102,7 +103,7 @@ class BuffOrDebuffSpellTest {
         assertEquals(17, c1.getMoveRange());
 
         endTurn(engine);
-        engine.castSpell(spell2, new Point(0, 1));
+        engine.castSpell(spell2, new Point(0, 1) );
         assertEquals(17, c1.getMoveRange());
         endTurn(engine);
         assertEquals(17, c1.getMoveRange());

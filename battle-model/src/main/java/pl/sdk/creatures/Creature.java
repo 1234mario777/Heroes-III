@@ -2,38 +2,38 @@ package pl.sdk.creatures;
 
 import com.google.common.collect.Range;
 import lombok.NoArgsConstructor;
+import pl.sdk.board.TileIf;
 import pl.sdk.creatures.attacking.*;
 import pl.sdk.creatures.defending.DefenceContextFactory;
 import pl.sdk.creatures.defending.DefenceContextIf;
-import pl.sdk.creatures.movingContext.MoveContext;
-import pl.sdk.creatures.movingContext.MoveContextIf;
+import pl.sdk.creatures.moving.MoveContextFactory;
+import pl.sdk.creatures.moving.MoveContextIf;
 import pl.sdk.creatures.spells.BuffContainer;
 import pl.sdk.creatures.spells.MagicResFactory;
 import pl.sdk.creatures.spells.MagicResistanceContextIf;
 import pl.sdk.creatures.retaliating.RetaliationContextFactory;
 import pl.sdk.creatures.retaliating.RetaliationContextIf;
 import pl.sdk.spells.BuffOrDebuffSpell;
-import pl.sdk.spells.BuffStatistic;
+import pl.sdk.spells.UpgradeCreatureStats;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
-import java.util.List;
 
 
 @NoArgsConstructor
-public class Creature implements PropertyChangeListener {
+public class Creature implements PropertyChangeListener, TileIf
+{
 
     public static final String LIFE_CHANGED = "LIFE_CHANGED";
     private String name;
 
     private BuffContainer buffContainter;
     private MagicResistanceContextIf magicDamageReducer;
+
     private MoveContextIf moveContext;
     private DefenceContextIf defenceContext;
     private AttackContextIf attackContext;
     private RetaliationContextIf retaliationContext;
-    private List<CreatureDynamicStats> addictionalStats = new ArrayList<>();
 
     // Constructor for mockito. Don't use it! You have builder here.
 
@@ -45,12 +45,10 @@ public class Creature implements PropertyChangeListener {
         moveContext = aMoveContextIf;
         retaliationContext = RetaliationContextFactory.create(1);
         magicDamageReducer = aMagicResContext;
-        buffContainter = new BuffContainer();
+
+        buffContainter = new BuffContainer(this::upgradeCreatureStatistics );
     }
 
-    public boolean isArcher(){
-        return this.getAttackContext().getAttackerStatistic().getAttackRange() >= 100;
-    }
     public BuffContainer getBuffContainer() {
         return buffContainter;
     }
@@ -63,8 +61,10 @@ public class Creature implements PropertyChangeListener {
         return attackContext;
     }
 
+    public MoveContextIf getMoveContext() { return moveContext; }
+
     public int getCurrentHp() {
-        return defenceContext.getCurrentHp();
+        return defenceContext.getDefenceStatistic().getCurrentHp();
     }
 
     public String getName() {
@@ -72,48 +72,12 @@ public class Creature implements PropertyChangeListener {
     }
 
     public int getMoveRange() {
-        int ret = moveContext.getMoveRange();
-        int percentageBuff = getPercentageBuff(ret);
-        int scalarBuff = getScalarBuff();
-        int addictionalSum = addictionalStats.stream().mapToInt(a -> a.getMoveRange()).sum();
-        return ret + percentageBuff + scalarBuff + addictionalSum;
-    }
-
-    private int getScalarBuff() {
-        return buffContainter.getAllBuffStats().stream()
-                .filter(b -> b.getMoveRange() != 0)
-                .mapToInt(BuffStatistic::getMoveRange).sum();
-    }
-
-    private int getPercentageBuff(int aRet) {
-        return buffContainter.getAllBuffStats().stream()
-                .filter(b -> b.getMoveRangePercentage() != 0.0)
-                .mapToInt(b -> (int) (Math.round(aRet * (b.getMoveRangePercentage()))))
-                .sum();
+        return moveContext.getMoveStatistic().getMoveRange();
     }
 
     public int getAmount() {
-        return defenceContext.getCurrentAmount();
+        return defenceContext.getDefenceStatistic().getAmount();
     }
-
-    public String currentHealth() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getCurrentHp());
-        sb.append("/");
-        sb.append(defenceContext.getMaxHp());
-        return sb.toString();
-    }
-
-//    @Override
-//    public String toString() {
-//        StringBuilder sb = new StringBuilder();
-//        sb.append(name);
-//        sb.append(System.lineSeparator());
-//        sb.append(getCurrentHp());
-//        sb.append("/");
-//        sb.append(getDefenceContext().getMaxHp());
-//        return sb.toString();
-//    }
 
     public void applyMagicDamage(int aDamage) {
         defenceContext.applyDamage(magicDamageReducer.reduceMagicDamageDamage(aDamage));
@@ -123,14 +87,39 @@ public class Creature implements PropertyChangeListener {
         buffContainter.add(aBuffOrDebuff);
     }
 
+    public void upgradeCreatureStatistics( UpgradeCreatureStats aUpgradeStats ) {
+       moveContext.getMoveStatistic().setMoveRange( moveContext.getMoveStatistic().getMoveRange() + aUpgradeStats.getMoveRange() );
+       moveContext.getMoveStatistic().setMoveRange( calculateUpgradingStats( moveContext.getMoveStatistic().getMoveRange(), aUpgradeStats.getMoveRangePercentage() ) );
+
+       defenceContext.getDefenceStatistic().setArmor(defenceContext.getDefenceStatistic().getArmor() + aUpgradeStats.getArmor());
+       defenceContext.getDefenceStatistic().setArmor( calculateUpgradingStats(defenceContext.getDefenceStatistic().getArmor(), aUpgradeStats.getArmor()) );
+       defenceContext.getDefenceStatistic().setMaxAmount( defenceContext.getDefenceStatistic().getMaxHp() + aUpgradeStats.getMaxHp() );
+       defenceContext.getDefenceStatistic().setMaxAmount( calculateUpgradingStats( defenceContext.getDefenceStatistic().getMaxHp(), aUpgradeStats.getMaxHp() ));
+       defenceContext.getDefenceStatistic().setMaxAmount( defenceContext.getDefenceStatistic().getMaxAmount() + aUpgradeStats.getMaxHp());
+       defenceContext.getDefenceStatistic().setMaxAmount( calculateUpgradingStats( defenceContext.getDefenceStatistic().getMaxAmount(), aUpgradeStats.getMaxHp() ));
+
+       attackContext.getAttackerStatistic().setAttack(attackContext.getAttackerStatistic().getAttack() + aUpgradeStats.getAttack());
+       attackContext.getAttackerStatistic().setAttack(calculateUpgradingStats( attackContext.getAttackerStatistic().getAttack(), aUpgradeStats.getAttack()));
+       attackContext.getAttackerStatistic().setDamage( Range.closed(
+               attackContext.getAttackerStatistic().getDamage().lowerEndpoint() + aUpgradeStats.getDamage().lowerEndpoint(),
+               attackContext.getAttackerStatistic().getDamage().upperEndpoint() + aUpgradeStats.getDamage().upperEndpoint()));
+        attackContext.getAttackerStatistic().setDamage( Range.closed(
+                attackContext.getAttackerStatistic().getDamage().lowerEndpoint() + (int)(attackContext.getAttackerStatistic().getDamage().lowerEndpoint() * aUpgradeStats.getArmorPercentage()),
+                attackContext.getAttackerStatistic().getDamage().upperEndpoint() + (int)(attackContext.getAttackerStatistic().getDamage().upperEndpoint() * aUpgradeStats.getArmorPercentage())));
+    }
+
+    private int calculateUpgradingStats( int aCurrent, double abuffPercentage )
+    {
+        return aCurrent + (int)(aCurrent * abuffPercentage);
+    }
+
     public int getMaxHp() {
-        return defenceContext.getMaxHp();
+        return defenceContext.getDefenceStatistic().getMaxHp();
     }
 
     @Override
     public void propertyChange(PropertyChangeEvent aPropertyChangeEvent) {
         retaliationContext.endTurnEvent(aPropertyChangeEvent);
-        buffContainter.endTurnEvent(aPropertyChangeEvent);
     }
 
     public boolean canRetaliate() {
@@ -141,14 +130,19 @@ public class Creature implements PropertyChangeListener {
         retaliationContext.updateRetaliateCounter();
     }
 
-    public void increaseStatByPercentage(CreatureDynamicStats aBuilder) {
-        addictionalStats.add(aBuilder);
+    @Override
+    public boolean isStandable()
+    {
+        return false;
     }
 
-    public void increaseStat(CreatureDynamicStats aS) {
-        addictionalStats.add(aS);
-        attackContext.addAdictionalStats(aS);
-        defenceContext.addAdictionalStats(aS);
+    @Override
+    public boolean isCrossable( MovementType aMovementType )
+    {
+        if (aMovementType.equals( MovementType.FLYING ))
+            return true;
+        else
+            return false;
     }
 
     public static class Builder {
@@ -162,6 +156,7 @@ public class Creature implements PropertyChangeListener {
         private Range<Integer> damage;
         private Integer amount;
         private CalculateDamageStrategyIf calcDmgStrategy;
+        private MovementType movementType;
 
         private MagicResistanceContextIf magicDamageReducer;
 
@@ -214,11 +209,19 @@ public class Creature implements PropertyChangeListener {
             this.calcDmgStrategy = calcDmgStrategy;
             return this;
         }
+
+        public Builder moveStrategy( MovementType aMovementType )
+        {
+            this.movementType = aMovementType;
+            return this;
+        }
+
         public Creature build() {
             preconditions();
             DefenceContextIf tempDefenceContext = prepareDefendingContext();
             AttackContextIf tempAttackContext = prepareAttackingContext();
-            return new Creature(name, tempDefenceContext, tempAttackContext, new MoveContext(moveRange), magicDamageReducer);
+            MoveContextIf tempMoveContext = prepareMovingContext();
+            return new Creature(name, tempDefenceContext, tempAttackContext, tempMoveContext, magicDamageReducer);
         }
 
         private void preconditions() {
@@ -252,6 +255,12 @@ public class Creature implements PropertyChangeListener {
                     moveRange = stats.getMoveRange();
                 }
             }
+            if (movementType == null) {
+                movementType = MovementType.GROUND;
+                if (stats != null ){
+                    movementType = stats.getMovementType();
+                }
+            }
             if (maxHp == null) {
                 maxHp = 1;
                 if (stats != null ){
@@ -273,19 +282,29 @@ public class Creature implements PropertyChangeListener {
             if (stats != null){
                 return AttackContextFactory.create(stats);
             }
+
             //for testing
             if (calcDmgStrategy == null) {
                 calcDmgStrategy = CalculateDamageStrategyIf.create(CalculateDamageStrategyIf.TYPE.DEFAULT);
             }
             return AttackContextFactory.create(
-                    AttackerWithBuffEtcStatistic.builder()
-                            .amount(this.amount)
-                            .attack(this.attack)
-                            .attackRange(1)
-                            .damage(this.damage)
-                            .build(),
+                    AttackStatistic.builder()
+                                   .amount(this.amount)
+                                   .attack(this.attack)
+                                   .attackRange(1)
+                                   .damage(this.damage)
+                                   .build(),
                     calcDmgStrategy
             );
+        }
+
+        private MoveContextIf prepareMovingContext()
+        {
+            if ( stats != null )
+            {
+                return MoveContextFactory.create( stats.getMovementType(), stats.getMoveRange() );
+            }
+            return MoveContextFactory.create( movementType, moveRange );
         }
     }
 }

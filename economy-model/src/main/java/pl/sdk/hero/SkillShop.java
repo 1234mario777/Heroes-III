@@ -9,74 +9,53 @@ import java.util.Random;
 import java.util.stream.Collectors;
 
 public class SkillShop extends AbstractShop<EconomySkill>{
-    public static final String EXCEPTION_MESSAGE = "hero cannot consume more spells";
-    public static final String PLAYER_HAS_ALREADY_BOUGHT_THIS_SPELL = "Player has already bought this spell!";
+    public static final String HERO_CANNOT_CONSUME_MORE_SKILLS = "Hero cannot consume more skills";
+    public static final String PLAYER_HAS_ALREADY_BOUGHT_THIS_SKILL = "Player has already bought this skill!";
     private final EconomySkillFactory skillFactory;
-    private List<EconomySkill> skillPopulation;
 
     SkillShop() {
-        super(new SkillShopCalculator());
+        super(new DefaultShopCalculator(), new ArrayList<>());
         skillFactory = new EconomySkillFactory();
-        skillPopulation = new ArrayList<>();
         createPopulation();
     }
 
-    private void createPopulation() {
+    @Override
+    protected void createPopulation() {
         List<EconomySkill> allSkills = skillFactory.getAllSkills();
         int populationSize = calculatePopulation( allSkills.size() );
         Random rand = new Random();
 
         for (int i = 0; i < populationSize; i++) {
             int randomIndex = rand.nextInt(allSkills.size());
-            skillPopulation.add( allSkills.get( randomIndex ) );
+            getShopPopulation().add( allSkills.get( randomIndex ) );
             allSkills.remove(randomIndex);
         }
     }
 
-    List<EconomySkill> getCurrentSkillPopulation() { return skillPopulation; }
-
-    private int calculatePopulation( int aSize )
-    {
-        return getCalculator().randomize( aSize );
-    }
-
-    void buy(Player aActivePlayer, EconomySkill aSkill) {
-        aActivePlayer.substractGold(aSkill.getGoldCost());
-        subtractPopulation(aSkill);
-        try{
-            aActivePlayer.addSkill(aSkill);
-        }catch(Exception e){
-            aActivePlayer.addGold(aSkill.getGoldCost());
-            restorePopulation( aSkill );
-            throw new IllegalStateException( EXCEPTION_MESSAGE );
-        }
-    }
-
-    private void restorePopulation(EconomySkill aSkill) { skillPopulation.add( aSkill ); }
-
-    private void subtractPopulation(EconomySkill aSkill) {
-        if ( !skillPopulation.stream().map( EconomySkill::getName ).collect( Collectors.toList() ).contains( aSkill.getName() ))
-        {
-            throw new IllegalStateException( PLAYER_HAS_ALREADY_BOUGHT_THIS_SPELL );
-
-        }
-        for ( int i = 0; i < skillPopulation.size() ; i++ )
-        {
-            if ( skillPopulation.get( i ).getName().equals( aSkill.getName() ) )
-                skillPopulation.remove( i );
-        }
-
+    @Override
+    protected void addItem(Player aActivePlayer, EconomySkill aShopItem) {
+        aActivePlayer.addSkill(aShopItem);
     }
 
     @Override
-    protected void handlePopulation()
-    {
-        skillPopulation = new ArrayList<>();
-        createPopulation();
+    protected String getSubtractPopulationErrorMessage() {
+        return PLAYER_HAS_ALREADY_BOUGHT_THIS_SKILL;
     }
+
+    @Override
+    protected String getBuyErrorMessage() {
+        return HERO_CANNOT_CONSUME_MORE_SKILLS;
+    }
+
+    List<EconomySkill> getCurrentSkillPopulation() { return List.copyOf(getShopPopulation()); }
 
     int calculateMaxAmount( Player aPlayer, EconomySkill aSkill )
     {
         return getCalculator().calculateMaxAmount(aPlayer.getGold(), aSkill.getGrowth(), aSkill.getGoldCost());
+    }
+
+    private int calculatePopulation( int aSize )
+    {
+        return getCalculator().randomize( aSize );
     }
 }

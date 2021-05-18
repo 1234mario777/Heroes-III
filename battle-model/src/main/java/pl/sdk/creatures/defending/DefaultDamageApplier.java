@@ -3,12 +3,11 @@ package pl.sdk.creatures.defending;
 public class DefaultDamageApplier {
 
 
-    CreatureLifeStats countDamageToApply(DefenceContextIf aDefender, int aDamageToApply, double aDamageReductionPercentage, double aDamageIncreasePercent) {
-        int amount = aDefender.getCurrentAmount();
-        int currentHp = aDefender.getCurrentHp();
-        int maxHp = aDefender.getMaxHp();
-        int damageAfterApplyOffenceSkill = (int) (aDamageToApply + (aDamageToApply *aDamageIncreasePercent));
-        int fullCurrentHp = (maxHp * (amount - 1)) + currentHp - (int) (damageAfterApplyOffenceSkill - (damageAfterApplyOffenceSkill * aDamageReductionPercentage));
+    CreatureLifeStats countDamageToApply(DefenceContextIf aDefender, int aDamageToApply) {
+        int amount = aDefender.getDefenceStatistic().getAmount();
+        int currentHp = aDefender.getDefenceStatistic().getCurrentHp();
+        int maxHp = aDefender.getDefenceStatistic().getMaxHp();
+        int fullCurrentHp = (maxHp * (amount - 1)) + currentHp - aDamageToApply;
         if (fullCurrentHp <= 0) {
             amount = 0;
             currentHp = 0;

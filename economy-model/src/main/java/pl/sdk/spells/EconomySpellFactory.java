@@ -59,7 +59,15 @@ class EconomySpellFactory extends AbstractEconomySpellFactory
 	public List<EconomySpell> getAllSpells()
 	{
 		List<EconomySpell> spellList = new ArrayList<>();
-		List.of( HASTE.getName(), MAGIC_ARROW.getName(), DEATH_RIPPLE.getName(), IMPLOSION.getName(), SLOW.getName(), FIRE_BALL.getName(), TELEPORT.getName(), DISPEL.getName(), SUMMON_AIR_ELEMENTAL.getName() )
+		List.of( HASTE.getName(),
+				MAGIC_ARROW.getName(),
+				DEATH_RIPPLE.getName(),
+				IMPLOSION.getName(),
+				SLOW.getName(),
+				FIRE_BALL.getName(),
+				TELEPORT.getName(),
+				DISPEL.getName(),
+				SUMMON_AIR_ELEMENTAL.getName() )
 		    .forEach( spellName -> spellList.add( create( spellName ) ) );
 		return spellList;
 	}

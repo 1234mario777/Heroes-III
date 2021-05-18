@@ -171,7 +171,7 @@ class BuyCreatureDialog
 		recruitLabel.getStyleClass().add("buy-creature-text");
 		aTopPane.getChildren().add(recruitLabel);
 
-		ImageView image = new ImageView(new Image(getClass().getResourceAsStream("/graphics/creatures/" + creatureName + ".png" )));
+		ImageView image = new ImageView(new Image(getClass().getResourceAsStream("/creatures/" + creatureName + ".png" )));
 		image.setFitHeight(200);
 		image.setFitWidth(200);
 		aTopPane.getChildren().add(image);

@@ -8,7 +8,7 @@ public interface AttackContextIf extends PropertyChangeListener {
 
     SplashRange getSplashRange();
     CalculateDamageStrategyIf getDamageCalculator();
-    AttackerStatisticIf getAttackerStatistic();
+    AttackStatistic getAttackerStatistic();
     boolean canYouCounterAttackMe();
     void addAdictionalStats(CreatureDynamicStats aS);
 }

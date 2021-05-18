@@ -2,6 +2,7 @@ package pl.sdk.hero;
 
 import java.util.Random;
 
+
 public abstract class AbstractShopCalculator
 {
 	private final Random rand;
