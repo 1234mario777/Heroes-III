@@ -6,14 +6,11 @@ public class EconomySkill implements EconomyShopIf {
     private final int goldCost;
     private final AbstractEconomySkill skill;
     public static final int SKILL_GROWTH = 1;
-    public EconomySkill(AbstractEconomySkill aSkill, int aGoldCost) {
-        skill = aSkill;
+    public EconomySkill(SkillStatistic aSkill, int aGoldCost) {
+        skill = ;
         goldCost = aGoldCost;
     }
-    public EconomySkill(SkillStatistic aSkill) {
-        skill = aSkill;
-        goldCost = 1000;
-    }
+
     public int getGoldCost() { return goldCost; }
     public AbstractEconomySkill getAbstractEconomySkill() {return skill; }
     public SkillStatistic getSkillStatistic() {return skill.getSkillStatistic(); }

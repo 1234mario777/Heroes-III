@@ -161,7 +161,7 @@ public enum CreatureStatistic implements CreatureStatisticIf{
     private final int growth;
     private final MovementType movementType;
 
-    CreatureStatistic(String aName, int aAttack, int aArmor, int aMaxHp, int aMoveRange, Range<Integer> aDamage, int aTier, String aDescription, boolean aIsUpgraded, int aGrowth) {
+    CreatureStatistic(String aName, int aAttack, int aArmor, int aMaxHp, int aMoveRange, Range<Integer> aDamage, int aTier, String aDescription, boolean aIsUpgraded, int aGrowth, MovementType aMovementType) {
         name = aName;
         attack = aAttack;
         armor = aArmor;

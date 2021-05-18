@@ -40,15 +40,6 @@ class EconomyHero {
         return List.copyOf(creatureList);
     }
 
-    List<EconomyCreature> getArchers() {
-        ArrayList<EconomyCreature> archerList = new ArrayList<>();
-        List.copyOf(creatureList).stream().forEach(c->{
-            if(c.isArcher()){
-                archerList.add(c);
-            }
-        });
-        return archerList;
-    }
     void addSpell(EconomySpell aEconomySpell) {
         spellList.add(aEconomySpell);
     }

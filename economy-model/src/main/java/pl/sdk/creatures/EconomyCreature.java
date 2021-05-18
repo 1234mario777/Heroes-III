@@ -30,9 +30,7 @@ public class EconomyCreature implements EconomyShopIf {
     public boolean isUpgraded() {
         return stats.isUpgraded();
     }
-    public boolean isArcher(){
-        return  stats.isArcher();
-    }
+
     public int getTier() {
         return stats.getTier();
     }

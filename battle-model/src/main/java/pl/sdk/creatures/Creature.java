@@ -49,6 +49,9 @@ public class Creature implements PropertyChangeListener, TileIf
         buffContainter = new BuffContainer(this::upgradeCreatureStatistics );
     }
 
+    public boolean isArcher(){
+        return getMoveRange() > 100;
+    }
     public BuffContainer getBuffContainer() {
         return buffContainter;
     }
