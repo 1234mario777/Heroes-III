@@ -14,6 +14,7 @@ public class UpgradeCreatureStats
     private int attack;
     private int armor;
     private int maxHp;
+    private int maxAmount;
     private Range<Integer> damage;
 
     private double moveRangePercentage;
@@ -21,13 +22,15 @@ public class UpgradeCreatureStats
     private double armorPercentage;
     private double maxHpPercentage;
     private double damagePercentage;
+    private double maxAmountPercentage;
 
-    UpgradeCreatureStats( int aMoveRange, int aAttack, int aArmor, int aMaxHp, Range<Integer> aDamage, double aMoveRangePercentage, double aAttackPercentage, double aArmorPercentage, double aMaxHpPercentage, double aDamagePercentage )
+    UpgradeCreatureStats( int aMoveRange, int aAttack, int aArmor, int aMaxHp, int aMaxAmount, Range<Integer> aDamage, double aMoveRangePercentage, double aAttackPercentage, double aArmorPercentage, double aMaxHpPercentage, double aDamagePercentage, double aMaxAmountPercentage )
     {
         moveRange = aMoveRange;
         attack = aAttack;
         armor = aArmor;
         maxHp = aMaxHp;
+        maxAmount = aMaxAmount;
         if (damage == null){
             damage = Range.closed( 0,0 );
         }
@@ -40,6 +43,7 @@ public class UpgradeCreatureStats
         armorPercentage = aArmorPercentage;
         maxHpPercentage = aMaxHpPercentage;
         damagePercentage = aDamagePercentage;
+        maxAmountPercentage = aMaxAmountPercentage;
     }
 
     public UpgradeCreatureStats reverse()

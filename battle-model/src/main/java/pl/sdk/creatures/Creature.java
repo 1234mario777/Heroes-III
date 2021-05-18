@@ -88,24 +88,27 @@ public class Creature implements PropertyChangeListener, TileIf
     }
 
     public void upgradeCreatureStatistics( UpgradeCreatureStats aUpgradeStats ) {
-       moveContext.getMoveStatistic().setMoveRange( moveContext.getMoveStatistic().getMoveRange() + aUpgradeStats.getMoveRange() );
-       moveContext.getMoveStatistic().setMoveRange( calculateUpgradingStats( moveContext.getMoveStatistic().getMoveRange(), aUpgradeStats.getMoveRangePercentage() ) );
+        moveContext.getMoveStatistic().setMoveRange( moveContext.getMoveStatistic().getMoveRange() + aUpgradeStats.getMoveRange() );
+        moveContext.getMoveStatistic().setMoveRange( calculateUpgradingStats( moveContext.getMoveStatistic().getMoveRange(), aUpgradeStats.getMoveRangePercentage() ) );
 
-       defenceContext.getDefenceStatistic().setArmor(defenceContext.getDefenceStatistic().getArmor() + aUpgradeStats.getArmor());
-       defenceContext.getDefenceStatistic().setArmor( calculateUpgradingStats(defenceContext.getDefenceStatistic().getArmor(), aUpgradeStats.getArmor()) );
-       defenceContext.getDefenceStatistic().setMaxAmount( defenceContext.getDefenceStatistic().getMaxHp() + aUpgradeStats.getMaxHp() );
-       defenceContext.getDefenceStatistic().setMaxAmount( calculateUpgradingStats( defenceContext.getDefenceStatistic().getMaxHp(), aUpgradeStats.getMaxHp() ));
-       defenceContext.getDefenceStatistic().setMaxAmount( defenceContext.getDefenceStatistic().getMaxAmount() + aUpgradeStats.getMaxHp());
-       defenceContext.getDefenceStatistic().setMaxAmount( calculateUpgradingStats( defenceContext.getDefenceStatistic().getMaxAmount(), aUpgradeStats.getMaxHp() ));
+        defenceContext.getDefenceStatistic().setArmor(defenceContext.getDefenceStatistic().getArmor() + aUpgradeStats.getArmor());
+        defenceContext.getDefenceStatistic().setArmor( calculateUpgradingStats(defenceContext.getDefenceStatistic().getArmor(), aUpgradeStats.getArmorPercentage()) );
 
-       attackContext.getAttackerStatistic().setAttack(attackContext.getAttackerStatistic().getAttack() + aUpgradeStats.getAttack());
-       attackContext.getAttackerStatistic().setAttack(calculateUpgradingStats( attackContext.getAttackerStatistic().getAttack(), aUpgradeStats.getAttack()));
-       attackContext.getAttackerStatistic().setDamage( Range.closed(
-               attackContext.getAttackerStatistic().getDamage().lowerEndpoint() + aUpgradeStats.getDamage().lowerEndpoint(),
-               attackContext.getAttackerStatistic().getDamage().upperEndpoint() + aUpgradeStats.getDamage().upperEndpoint()));
+        defenceContext.getDefenceStatistic().setMaxHp( defenceContext.getDefenceStatistic().getMaxHp() + aUpgradeStats.getMaxHp() );
+        defenceContext.getDefenceStatistic().setMaxHp( calculateUpgradingStats( defenceContext.getDefenceStatistic().getMaxHp(), aUpgradeStats.getMaxHpPercentage() ));
+
+        defenceContext.getDefenceStatistic().setMaxAmount( defenceContext.getDefenceStatistic().getMaxAmount() + aUpgradeStats.getMaxAmount());
+        defenceContext.getDefenceStatistic().setMaxAmount( calculateUpgradingStats( defenceContext.getDefenceStatistic().getMaxAmount(), aUpgradeStats.getArmorPercentage() ));
+
+        attackContext.getAttackerStatistic().setAttack(attackContext.getAttackerStatistic().getAttack() + aUpgradeStats.getAttack());
+        attackContext.getAttackerStatistic().setAttack(calculateUpgradingStats( attackContext.getAttackerStatistic().getAttack(), aUpgradeStats.getAttackPercentage()));
+
         attackContext.getAttackerStatistic().setDamage( Range.closed(
-                attackContext.getAttackerStatistic().getDamage().lowerEndpoint() + (int)(attackContext.getAttackerStatistic().getDamage().lowerEndpoint() * aUpgradeStats.getArmorPercentage()),
-                attackContext.getAttackerStatistic().getDamage().upperEndpoint() + (int)(attackContext.getAttackerStatistic().getDamage().upperEndpoint() * aUpgradeStats.getArmorPercentage())));
+                attackContext.getAttackerStatistic().getDamage().lowerEndpoint() + aUpgradeStats.getDamage().lowerEndpoint(),
+                attackContext.getAttackerStatistic().getDamage().upperEndpoint() + aUpgradeStats.getDamage().upperEndpoint()));
+        attackContext.getAttackerStatistic().setDamage( Range.closed(
+                attackContext.getAttackerStatistic().getDamage().lowerEndpoint() + (int)(attackContext.getAttackerStatistic().getDamage().lowerEndpoint() * aUpgradeStats.getDamagePercentage()),
+                attackContext.getAttackerStatistic().getDamage().upperEndpoint() + (int)(attackContext.getAttackerStatistic().getDamage().upperEndpoint() * aUpgradeStats.getDamagePercentage())));
     }
 
     private int calculateUpgradingStats( int aCurrent, double abuffPercentage )
