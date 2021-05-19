@@ -16,6 +16,8 @@ public class UpgradeCreatureStats
     private int maxHp;
     private int maxAmount;
     private Range<Integer> damage;
+    private double attackRange;
+    private boolean shootingThroughObstacle;
 
     private double moveRangePercentage;
     private double attackPercentage;
@@ -23,8 +25,9 @@ public class UpgradeCreatureStats
     private double maxHpPercentage;
     private double damagePercentage;
     private double maxAmountPercentage;
+    private double magicResistancePercentage;
 
-    UpgradeCreatureStats( int aMoveRange, int aAttack, int aArmor, int aMaxHp, int aMaxAmount, Range<Integer> aDamage, double aMoveRangePercentage, double aAttackPercentage, double aArmorPercentage, double aMaxHpPercentage, double aDamagePercentage, double aMaxAmountPercentage )
+    UpgradeCreatureStats( int aMoveRange, int aAttack, int aArmor, int aMaxHp, int aMaxAmount, Range<Integer> aDamage, double aAttackRange, boolean aShootingThroughObstacle, double aMoveRangePercentage, double aAttackPercentage, double aArmorPercentage, double aMaxHpPercentage, double aDamagePercentage, double aMaxAmountPercentage, double aMagicResistancePercentage )
     {
         moveRange = aMoveRange;
         attack = aAttack;
@@ -38,12 +41,15 @@ public class UpgradeCreatureStats
         {
             damage = aDamage;
         }
+        attackRange = aAttackRange;
+        shootingThroughObstacle = aShootingThroughObstacle;
         moveRangePercentage = aMoveRangePercentage;
         attackPercentage = aAttackPercentage;
         armorPercentage = aArmorPercentage;
         maxHpPercentage = aMaxHpPercentage;
         damagePercentage = aDamagePercentage;
         maxAmountPercentage = aMaxAmountPercentage;
+        magicResistancePercentage = aMagicResistancePercentage;
     }
 
     public UpgradeCreatureStats reverse()
@@ -54,11 +60,14 @@ public class UpgradeCreatureStats
                                    .armor(-armor)
                                    .maxHp(-maxHp)
                                    .damage(Range.closed( -damage.lowerEndpoint(), -damage.upperEndpoint() ))
+                                   .attackRange(-attackRange)
+                                   .shootingThroughObstacle(!shootingThroughObstacle)
                                    .moveRangePercentage(-moveRangePercentage)
                                    .attackPercentage(-attackPercentage)
                                    .armorPercentage(-armorPercentage)
                                    .maxHpPercentage(-maxHpPercentage)
                                    .damagePercentage(-damagePercentage)
+                                   .magicResistancePercentage(-magicResistancePercentage)
                                    .build();
     }
 }

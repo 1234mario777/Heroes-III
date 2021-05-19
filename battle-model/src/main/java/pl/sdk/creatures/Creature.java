@@ -10,6 +10,7 @@ import pl.sdk.creatures.moving.MoveContextFactory;
 import pl.sdk.creatures.moving.MoveContextIf;
 import pl.sdk.creatures.spells.BuffContainer;
 import pl.sdk.creatures.spells.MagicResFactory;
+import pl.sdk.creatures.spells.MagicResStatistic;
 import pl.sdk.creatures.spells.MagicResistanceContextIf;
 import pl.sdk.creatures.retaliating.RetaliationContextFactory;
 import pl.sdk.creatures.retaliating.RetaliationContextIf;
@@ -103,17 +104,30 @@ public class Creature implements PropertyChangeListener, TileIf
         attackContext.getAttackerStatistic().setAttack(attackContext.getAttackerStatistic().getAttack() + aUpgradeStats.getAttack());
         attackContext.getAttackerStatistic().setAttack(calculateUpgradingStats( attackContext.getAttackerStatistic().getAttack(), aUpgradeStats.getAttackPercentage()));
 
+        attackContext.getAttackerStatistic().setAttackRange(attackContext.getAttackerStatistic().getAttackRange() + aUpgradeStats.getAttackRange());
+
+        if (aUpgradeStats.isShootingThroughObstacle() && isShooter()) {
+            attackContext.getAttackerStatistic().setAttackRange(Double.MAX_VALUE);
+        }
+
         attackContext.getAttackerStatistic().setDamage( Range.closed(
                 attackContext.getAttackerStatistic().getDamage().lowerEndpoint() + aUpgradeStats.getDamage().lowerEndpoint(),
                 attackContext.getAttackerStatistic().getDamage().upperEndpoint() + aUpgradeStats.getDamage().upperEndpoint()));
         attackContext.getAttackerStatistic().setDamage( Range.closed(
                 attackContext.getAttackerStatistic().getDamage().lowerEndpoint() + (int)(attackContext.getAttackerStatistic().getDamage().lowerEndpoint() * aUpgradeStats.getDamagePercentage()),
                 attackContext.getAttackerStatistic().getDamage().upperEndpoint() + (int)(attackContext.getAttackerStatistic().getDamage().upperEndpoint() * aUpgradeStats.getDamagePercentage())));
+
+        magicDamageReducer.getMagicResStatistic().setPercentageSpellResistance(magicDamageReducer.getMagicResStatistic().getPercentageSpellResistance() + aUpgradeStats.getMagicResistancePercentage());
     }
 
-    private int calculateUpgradingStats( int aCurrent, double abuffPercentage )
+    private int calculateUpgradingStats( int aCurrent, double aBuffPercentage )
     {
-        return aCurrent + (int)(aCurrent * abuffPercentage);
+        return aCurrent + (int)(aCurrent * aBuffPercentage);
+    }
+
+    private double calculateUpgradingStats( double aCurrent, double aBuffPercentage )
+    {
+        return aCurrent + (aCurrent * aBuffPercentage);
     }
 
     public int getMaxHp() {
@@ -131,6 +145,10 @@ public class Creature implements PropertyChangeListener, TileIf
 
     public void updateRetaliateCounter() {
         retaliationContext.updateRetaliateCounter();
+    }
+
+    private boolean isShooter() {
+        return attackContext.getAttackerStatistic().getAttackRange() == Double.MAX_VALUE;
     }
 
     @Override
@@ -229,7 +247,7 @@ public class Creature implements PropertyChangeListener, TileIf
 
         private void preconditions() {
             if (magicDamageReducer == null) {
-                this.magicDamageReducer = MagicResFactory.create(0);
+                this.magicDamageReducer = MagicResFactory.create(MagicResStatistic.builder().percentageSpellResistance(0).build());
             }
             if (amount == null) {
                 amount = 1;

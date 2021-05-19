@@ -6,10 +6,9 @@ import pl.sdk.hero.EconomyShopIf;
 public class EconomyArtifact implements EconomyShopIf {
 
     public static final int ARTIFACT_GROWTH = 1;
-
     private final ArtifactStatistic artifactStats;
-
     private final int goldCost;
+
     EconomyArtifact(ArtifactStatistic aArtifactStats) {
         artifactStats = aArtifactStats;
         goldCost = aArtifactStats.getGoldCost();

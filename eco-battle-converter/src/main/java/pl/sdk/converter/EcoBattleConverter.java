@@ -5,6 +5,8 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import pl.sdk.Fraction;
 import pl.sdk.Hero;
+import pl.sdk.converter.artifacts.AbstractArtifact;
+import pl.sdk.converter.artifacts.ArtifactFactory;
 import pl.sdk.converter.spells.SpellFactory;
 import pl.sdk.creatures.AbstractFractionFactory;
 import pl.sdk.creatures.Creature;
@@ -46,6 +48,8 @@ public class EcoBattleConverter {
         aPlayer1.getCreatures().forEach(ecoCreature ->
                 creatures.add(factory.create(ecoCreature.isUpgraded(), ecoCreature.getTier(), ecoCreature.getAmount())));
 
+
+
         // -> artefakty
         SpellMasteries masteries = new SpellMasteries(BASIC, BASIC, BASIC, BASIC);
         //Artefacts skills itd.
@@ -54,9 +58,16 @@ public class EcoBattleConverter {
                 .map(es -> SpellFactory.create(es, aPlayer1.getPower(), masteries))
                 .collect(Collectors.toList());
 
-//        Arrays.asList(aPlayer1.getSkills()).stream().forEach((skill) -> skill.applyEffect(aPlayer1));
+//        Arrays.asList(aPlayer1.getSkills()).stream().forEach((skill) -> skill.applyEffect(Hero));
 
-        return new Hero(creatures, new SpellBook(aPlayer1.getWisdom(), spells));
+        Hero hero = new Hero(creatures, new SpellBook(aPlayer1.getWisdom(), spells));
+
+        //Applying artifacts
+        aPlayer1.getArtifacts().stream()
+                .map(ea -> ArtifactFactory.create(ea))
+                .forEach(a -> a.apply(hero));
+
+        return hero;
     }
 
 }
