@@ -17,10 +17,6 @@ class BlockCounterAttackCreatureDecorator implements AttackContextIf {
         return false;
     }
 
-    @Override
-    public void addAdictionalStats(CreatureDynamicStats aS) {
-
-    }
 
     @Override
     public SplashRange getSplashRange() {

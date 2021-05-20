@@ -34,10 +34,6 @@ class HealAfterAttackCreatureDecorator implements AttackContextIf {
         return decorated.canYouCounterAttackMe();
     }
 
-    @Override
-    public void addAdictionalStats(CreatureDynamicStats aS) {
-
-    }
 
     @Override
     public void propertyChange(PropertyChangeEvent aPropertyChangeEvent) {

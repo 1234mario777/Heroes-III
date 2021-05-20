@@ -10,5 +10,4 @@ public interface AttackContextIf extends PropertyChangeListener {
     CalculateDamageStrategyIf getDamageCalculator();
     AttackStatistic getAttackerStatistic();
     boolean canYouCounterAttackMe();
-    void addAdictionalStats(CreatureDynamicStats aS);
 }

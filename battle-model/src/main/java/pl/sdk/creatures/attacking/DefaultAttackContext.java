@@ -33,11 +33,11 @@ public class DefaultAttackContext implements AttackContextIf {
         return true;
     }
 
-    @Override
-    public void addAdictionalStats(CreatureDynamicStats aS) {
-        stats.setDamage(aS);
-        stats.setAttack(aS);
-    }
+//    @Override
+//    public void addAdictionalStats(CreatureDynamicStats aS) {
+//        stats.setDamage(aS);
+//        stats.setAttack(aS);
+//    }
 
 
     @Override

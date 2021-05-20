@@ -57,15 +57,10 @@ public class EcoBattleConverter {
         AbstractFractionFactory factory = AbstractFractionFactory.getInstance(Fraction.NECROPOLIS);
         aPlayer1.getCreatures().forEach(ecoCreature ->
                 creatures.add(factory.create(ecoCreature.isUpgraded(), ecoCreature.getTier(), ecoCreature.getAmount())));
-        skills.stream().forEach(s -> s.applyEffect(creatures));
-
-//        creatures = skills.stream().forEach((skill) -> skill.applyEffect(creatures));
-
 
         // -> artefakty
         SpellMasteries spellMasteries = new SpellMasteries(BASIC, BASIC, BASIC, BASIC);
         //Artefacts skills itd.
-
 
         HashMap<EconomySkill, SkillStatistic.SkillLevel> skillsMap = aPlayer1.getSkillsMap();
 

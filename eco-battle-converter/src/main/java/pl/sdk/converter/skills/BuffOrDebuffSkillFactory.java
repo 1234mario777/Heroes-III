@@ -6,46 +6,47 @@ import pl.sdk.skills.AbstractSkill;
 import pl.sdk.skills.BuffOrDebuffSkill;
 import pl.sdk.skills.BuffStatistic;
 import pl.sdk.skills.EconomySkill;
+import pl.sdk.spells.UpgradeCreatureStats;
 
 public class BuffOrDebuffSkillFactory extends SkillFactory {
 
     AbstractSkill createInner(EconomySkill aEs, SkillMasteries aSkillMasteries) {
-        CreatureDynamicStats stats;
+        UpgradeCreatureStats stats;
         switch (aEs.getSkillStatistic()) {
             case ARCHERY:
                 switch (aSkillMasteries.get(aEs)) {
                     case BASIC:
-                        stats = CreatureDynamicStats.builder().damagePercentage(0.1).build();
+                        stats = UpgradeCreatureStats.builder().damagePercentage(0.1).build();
                         return new BuffOrDebuffSkill(aEs.getName(), aEs.getTargetType(), stats);
                     case ADVANCED:
-                        stats = CreatureDynamicStats.builder().damagePercentage(0.2).build();
+                        stats = UpgradeCreatureStats.builder().damagePercentage(0.2).build();
                         return new BuffOrDebuffSkill(aEs.getName(), aEs.getTargetType(), stats);
                     case EXPERT:
-                        stats = CreatureDynamicStats.builder().damagePercentage(0.5).build();
+                        stats = UpgradeCreatureStats.builder().damagePercentage(0.5).build();
                         return new BuffOrDebuffSkill(aEs.getName(), aEs.getTargetType(), stats);
                 }
             case OFFENCE:
                 switch (aSkillMasteries.get(aEs)) {
                     case BASIC:
-                        stats = CreatureDynamicStats.builder().damagePercentage(0.1).build();
+                        stats = UpgradeCreatureStats.builder().damagePercentage(0.1).build();
                         return new BuffOrDebuffSkill(aEs.getName(), aEs.getTargetType(), stats);
                     case ADVANCED:
-                        stats = CreatureDynamicStats.builder().damagePercentage(0.2).build();
+                        stats = UpgradeCreatureStats.builder().damagePercentage(0.2).build();
                         return new BuffOrDebuffSkill(aEs.getName(), aEs.getTargetType(), stats);
                     case EXPERT:
-                        stats = CreatureDynamicStats.builder().damagePercentage(0.3).build();
+                        stats = UpgradeCreatureStats.builder().damagePercentage(0.3).build();
                         return new BuffOrDebuffSkill(aEs.getName(), aEs.getTargetType(), stats);
                 }
             case ARMOURER:
                 switch (aSkillMasteries.get(aEs)) {
                     case BASIC:
-                        stats = CreatureDynamicStats.builder().damageReduction(0.05).build();
+                        stats = UpgradeCreatureStats.builder().armorPercentage(0.05).build();
                         return new BuffOrDebuffSkill(aEs.getName(), aEs.getTargetType(), stats);
                     case ADVANCED:
-                        stats = CreatureDynamicStats.builder().damageReduction(0.1).build();
+                        stats = UpgradeCreatureStats.builder().armorPercentage(0.1).build();
                         return new BuffOrDebuffSkill(aEs.getName(), aEs.getTargetType(), stats);
                     case EXPERT:
-                        stats = CreatureDynamicStats.builder().damageReduction(0.15).build();
+                        stats = UpgradeCreatureStats.builder().armorPercentage(0.15).build();
                         return new BuffOrDebuffSkill(aEs.getName(), aEs.getTargetType(), stats);
                 }
             case LEADERSHIP:

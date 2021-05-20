@@ -37,11 +37,6 @@ class ShootingCreatureDecorator implements AttackContextIf {
     }
 
     @Override
-    public void addAdictionalStats(CreatureDynamicStats aS) {
-
-    }
-
-    @Override
     public void propertyChange(PropertyChangeEvent aPropertyChangeEvent) {
         decorated.propertyChange(aPropertyChangeEvent);
     }
