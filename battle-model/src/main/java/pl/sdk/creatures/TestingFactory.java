@@ -2,6 +2,7 @@ package pl.sdk.creatures;
 
 import com.google.common.collect.Range;
 import pl.sdk.creatures.spells.MagicResFactory;
+import pl.sdk.creatures.spells.MagicResStatistic;
 
 
 public class TestingFactory extends AbstractFractionFactory {
@@ -90,7 +91,7 @@ public class TestingFactory extends AbstractFractionFactory {
                             .maxHp(100)
                             .moveRange(0)
                             .damage(Range.closed(0,0))
-                            .magicResContext(MagicResFactory.create(50))
+                            .magicResContext(MagicResFactory.create(MagicResStatistic.builder().percentageSpellResistance(0.5).build()))
                             .build();
 
 

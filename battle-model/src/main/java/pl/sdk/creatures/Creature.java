@@ -10,6 +10,7 @@ import pl.sdk.creatures.moving.MoveContextFactory;
 import pl.sdk.creatures.moving.MoveContextIf;
 import pl.sdk.creatures.spells.BuffContainer;
 import pl.sdk.creatures.spells.MagicResFactory;
+import pl.sdk.creatures.spells.MagicResStatistic;
 import pl.sdk.creatures.spells.MagicResistanceContextIf;
 import pl.sdk.creatures.retaliating.RetaliationContextFactory;
 import pl.sdk.creatures.retaliating.RetaliationContextIf;
@@ -91,29 +92,45 @@ public class Creature implements PropertyChangeListener, TileIf
     }
 
     public void upgradeCreatureStatistics( UpgradeCreatureStats aUpgradeStats ) {
-       moveContext.getMoveStatistic().setMoveRange( moveContext.getMoveStatistic().getMoveRange() + aUpgradeStats.getMoveRange() );
-       moveContext.getMoveStatistic().setMoveRange( calculateUpgradingStats( moveContext.getMoveStatistic().getMoveRange(), aUpgradeStats.getMoveRangePercentage() ) );
+        moveContext.getMoveStatistic().setMoveRange( moveContext.getMoveStatistic().getMoveRange() + aUpgradeStats.getMoveRange() );
+        moveContext.getMoveStatistic().setMoveRange( calculateUpgradingStats( moveContext.getMoveStatistic().getMoveRange(), aUpgradeStats.getMoveRangePercentage() ) );
 
-       defenceContext.getDefenceStatistic().setArmor(defenceContext.getDefenceStatistic().getArmor() + aUpgradeStats.getArmor());
-       defenceContext.getDefenceStatistic().setArmor( calculateUpgradingStats(defenceContext.getDefenceStatistic().getArmor(), aUpgradeStats.getArmor()) );
-       defenceContext.getDefenceStatistic().setMaxAmount( defenceContext.getDefenceStatistic().getMaxHp() + aUpgradeStats.getMaxHp() );
-       defenceContext.getDefenceStatistic().setMaxAmount( calculateUpgradingStats( defenceContext.getDefenceStatistic().getMaxHp(), aUpgradeStats.getMaxHp() ));
-       defenceContext.getDefenceStatistic().setMaxAmount( defenceContext.getDefenceStatistic().getMaxAmount() + aUpgradeStats.getMaxHp());
-       defenceContext.getDefenceStatistic().setMaxAmount( calculateUpgradingStats( defenceContext.getDefenceStatistic().getMaxAmount(), aUpgradeStats.getMaxHp() ));
+        defenceContext.getDefenceStatistic().setArmor(defenceContext.getDefenceStatistic().getArmor() + aUpgradeStats.getArmor());
+        defenceContext.getDefenceStatistic().setArmor( calculateUpgradingStats(defenceContext.getDefenceStatistic().getArmor(), aUpgradeStats.getArmorPercentage()) );
 
-       attackContext.getAttackerStatistic().setAttack(attackContext.getAttackerStatistic().getAttack() + aUpgradeStats.getAttack());
-       attackContext.getAttackerStatistic().setAttack(calculateUpgradingStats( attackContext.getAttackerStatistic().getAttack(), aUpgradeStats.getAttack()));
-       attackContext.getAttackerStatistic().setDamage( Range.closed(
-               attackContext.getAttackerStatistic().getDamage().lowerEndpoint() + aUpgradeStats.getDamage().lowerEndpoint(),
-               attackContext.getAttackerStatistic().getDamage().upperEndpoint() + aUpgradeStats.getDamage().upperEndpoint()));
+        defenceContext.getDefenceStatistic().setMaxHp( defenceContext.getDefenceStatistic().getMaxHp() + aUpgradeStats.getMaxHp() );
+        defenceContext.getDefenceStatistic().setMaxHp( calculateUpgradingStats( defenceContext.getDefenceStatistic().getMaxHp(), aUpgradeStats.getMaxHpPercentage() ));
+
+        defenceContext.getDefenceStatistic().setMaxAmount( defenceContext.getDefenceStatistic().getMaxAmount() + aUpgradeStats.getMaxAmount());
+        defenceContext.getDefenceStatistic().setMaxAmount( calculateUpgradingStats( defenceContext.getDefenceStatistic().getMaxAmount(), aUpgradeStats.getArmorPercentage() ));
+
+        attackContext.getAttackerStatistic().setAttack(attackContext.getAttackerStatistic().getAttack() + aUpgradeStats.getAttack());
+        attackContext.getAttackerStatistic().setAttack(calculateUpgradingStats( attackContext.getAttackerStatistic().getAttack(), aUpgradeStats.getAttackPercentage()));
+
+        attackContext.getAttackerStatistic().setAttackRange(attackContext.getAttackerStatistic().getAttackRange() + aUpgradeStats.getAttackRange());
+
+        if (aUpgradeStats.isShootingThroughObstacle() && isShooter()) {
+            attackContext.getAttackerStatistic().setAttackRange(Double.MAX_VALUE);
+        }
+
         attackContext.getAttackerStatistic().setDamage( Range.closed(
-                attackContext.getAttackerStatistic().getDamage().lowerEndpoint() + (int)(attackContext.getAttackerStatistic().getDamage().lowerEndpoint() * aUpgradeStats.getArmorPercentage()),
-                attackContext.getAttackerStatistic().getDamage().upperEndpoint() + (int)(attackContext.getAttackerStatistic().getDamage().upperEndpoint() * aUpgradeStats.getArmorPercentage())));
+                attackContext.getAttackerStatistic().getDamage().lowerEndpoint() + aUpgradeStats.getDamage().lowerEndpoint(),
+                attackContext.getAttackerStatistic().getDamage().upperEndpoint() + aUpgradeStats.getDamage().upperEndpoint()));
+        attackContext.getAttackerStatistic().setDamage( Range.closed(
+                attackContext.getAttackerStatistic().getDamage().lowerEndpoint() + (int)(attackContext.getAttackerStatistic().getDamage().lowerEndpoint() * aUpgradeStats.getDamagePercentage()),
+                attackContext.getAttackerStatistic().getDamage().upperEndpoint() + (int)(attackContext.getAttackerStatistic().getDamage().upperEndpoint() * aUpgradeStats.getDamagePercentage())));
+
+        magicDamageReducer.getMagicResStatistic().setPercentageSpellResistance(magicDamageReducer.getMagicResStatistic().getPercentageSpellResistance() + aUpgradeStats.getMagicResistancePercentage());
     }
 
-    private int calculateUpgradingStats( int aCurrent, double abuffPercentage )
+    private int calculateUpgradingStats( int aCurrent, double aBuffPercentage )
     {
-        return aCurrent + (int)(aCurrent * abuffPercentage);
+        return aCurrent + (int)(aCurrent * aBuffPercentage);
+    }
+
+    private double calculateUpgradingStats( double aCurrent, double aBuffPercentage )
+    {
+        return aCurrent + (aCurrent * aBuffPercentage);
     }
 
     public int getMaxHp() {
@@ -131,6 +148,10 @@ public class Creature implements PropertyChangeListener, TileIf
 
     public void updateRetaliateCounter() {
         retaliationContext.updateRetaliateCounter();
+    }
+
+    private boolean isShooter() {
+        return attackContext.getAttackerStatistic().getAttackRange() == Double.MAX_VALUE;
     }
 
     @Override
@@ -229,7 +250,7 @@ public class Creature implements PropertyChangeListener, TileIf
 
         private void preconditions() {
             if (magicDamageReducer == null) {
-                this.magicDamageReducer = MagicResFactory.create(0);
+                this.magicDamageReducer = MagicResFactory.create(MagicResStatistic.builder().percentageSpellResistance(0).build());
             }
             if (amount == null) {
                 amount = 1;
