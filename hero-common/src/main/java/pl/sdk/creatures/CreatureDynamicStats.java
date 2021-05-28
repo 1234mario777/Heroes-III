@@ -1,10 +1,6 @@
 package pl.sdk.creatures;
 
 import com.google.common.collect.Range;
-<<<<<<< HEAD
-import lombok.AllArgsConstructor;
-=======
->>>>>>> development
 import lombok.Builder;
 import lombok.Getter;
 
