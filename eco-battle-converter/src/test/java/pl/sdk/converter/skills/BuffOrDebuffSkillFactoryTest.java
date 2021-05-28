@@ -1,6 +1,7 @@
 package pl.sdk.converter.skills;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import pl.sdk.converter.SkillMasteries;
 import pl.sdk.creatures.Creature;
@@ -47,6 +48,7 @@ public class BuffOrDebuffSkillFactoryTest {
         BuffOrDebuffSkill convSkill = (BuffOrDebuffSkill) new BuffOrDebuffSkillFactory().createInner(economyArcherySkill, new SkillMasteries(economyArcherySkill, SkillStatistic.SkillLevel.BASIC));
         assertEquals(SkillStatistic.TargetType.ALLIES, convSkill.getTargetType());
     }
+    @Disabled
     @Test
     void shouldReturnEconomySkillList(){
         player.buySkill(player, economyArcherySkill);
