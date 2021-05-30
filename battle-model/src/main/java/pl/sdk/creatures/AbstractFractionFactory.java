@@ -15,6 +15,8 @@ public abstract class AbstractFractionFactory {
         switch (aFraction) {
             case NECROPOLIS:
                 return new NecropolisFactory();
+            case CASTLE:
+                return new pl.sdk.creatures.CastleFactory();
             case TEST_FRACTION:
                 return new TestingFactory();
             default:
