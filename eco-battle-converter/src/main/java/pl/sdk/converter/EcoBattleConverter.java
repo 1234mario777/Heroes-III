@@ -56,7 +56,7 @@ public class EcoBattleConverter {
                 .collect(Collectors.toList());
 
         List<Creature> creatures = new ArrayList<>();
-        AbstractFractionFactory factory = AbstractFractionFactory.getInstance(Fraction.NECROPOLIS);
+        AbstractFractionFactory factory = AbstractFractionFactory.getInstance(aPlayer1.getFraction());
         aPlayer1.getCreatures().forEach(ecoCreature ->
                 creatures.add(factory.create(ecoCreature.isUpgraded(), ecoCreature.getTier(), ecoCreature.getAmount())));
 
